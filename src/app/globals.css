@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===============================
+   BASE — Background global unique
+   =============================== */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-zinc-50 text-slate-900 antialiased;
+  font-feature-settings: "liga" 1, "kern" 1;
+}
+
+/* ===============================
+   TYPOGRAPHIE
+   =============================== */
+
+h1, h2, h3, h4 {
+  @apply font-semibold tracking-tight;
+}
+
+p {
+  @apply leading-relaxed text-slate-700;
+}
+
+/* ===============================
+   SELECTION & FOCUS (WCAG)
+   =============================== */
+
+::selection {
+  background: rgba(220, 38, 38, 0.15); /* energy red soft */
+}
+
+:focus-visible {
+  outline: 2px solid rgba(220, 38, 38, 0.5);
+  outline-offset: 2px;
+}
+
+/* ===============================
+   UTILITAIRES PREMIUM
+   =============================== */
+
+@layer components {
+  /* Ligne de séparation zinc (A) */
+  .divider-zinc {
+    @apply border-t border-zinc-200 border-opacity-80;
+  }
+
+  /* Card premium (contenu posé) */
+  .premium-card {
+    @apply rounded-3xl border border-zinc-200 border-opacity-80 bg-white
+           shadow-[0_1px_2px_rgba(0,0,0,0.04)];
+  }
+
+  .premium-card-hover {
+    @apply transition-transform transition-shadow duration-200
+           hover:-translate-y-0.5
+           hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)];
+  }
+
+  /* Navbar glass */
+  .glass-nav {
+    @apply backdrop-blur-md bg-white bg-opacity-70 border-b border-zinc-200 border-opacity-80;
+  }
+
+  /* Pills / badges */
+  .pill {
+    @apply inline-flex items-center rounded-full
+           border border-zinc-200 border-opacity-80
+           bg-white px-3 py-1 text-sm text-slate-700;
+  }
+}
+
+/* ===============================
+   RTL SUPPORT (Arabic)
+   =============================== */
+
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+/* ===============================
+   MOTION (safe)
+   =============================== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  button,
+  input,
+  a[target="_blank"] {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+  }
+
+  @page {
+    margin: 14mm;
+  }
+
+  .shadow-sm {
+    box-shadow: none !important;
+  }
+}

@@ -3,24 +3,36 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "test:playwright": "playwright test",
+    "test:axe": "playwright test tests/axe.spec.ts",
+    "e2e": "playwright test",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "framer-motion": "^11.18.2",
+    "lucide-react": "^0.469.0",
     "next": "16.1.0",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
+    "@axe-core/playwright": "^4.11.0",
+    "@playwright/test": "^1.57.0",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.20",
+    "axe-core": "^4.11.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.0",
-    "tailwindcss": "^4",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5"
   }
 }
