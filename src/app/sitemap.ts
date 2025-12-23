@@ -8,19 +8,19 @@ const BASE_URL = 'https://marhabancanada.ca';
  * Served at /sitemap.xml
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const now = new Date().toISOString();
 
   // Core pages per locale
   const mainPages = [
-    { path: '', changeFreq: 'weekly' as const, priority: 1.0 },
-    { path: '/checklist', changeFreq: 'weekly' as const, priority: 0.9 },
-    { path: '/arnaques', changeFreq: 'monthly' as const, priority: 0.8 },
-    { path: '/ressources', changeFreq: 'monthly' as const, priority: 0.8 },
-    { path: '/parcours', changeFreq: 'monthly' as const, priority: 0.8 },
-    { path: '/blog', changeFreq: 'weekly' as const, priority: 0.7 },
-    { path: '/contact', changeFreq: 'monthly' as const, priority: 0.7 },
-    { path: '/about', changeFreq: 'monthly' as const, priority: 0.7 },
-    { path: '/legal', changeFreq: 'monthly' as const, priority: 0.5 },
+    { path: '', changeFrequency: 'weekly' as const, priority: 1.0 },
+    { path: '/checklist', changeFrequency: 'weekly' as const, priority: 0.9 },
+    { path: '/arnaques', changeFrequency: 'monthly' as const, priority: 0.8 },
+    { path: '/ressources', changeFrequency: 'monthly' as const, priority: 0.8 },
+    { path: '/parcours', changeFrequency: 'monthly' as const, priority: 0.8 },
+    { path: '/blog', changeFrequency: 'weekly' as const, priority: 0.7 },
+    { path: '/contact', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/about', changeFrequency: 'monthly' as const, priority: 0.7 },
+    { path: '/legal', changeFrequency: 'monthly' as const, priority: 0.5 },
   ];
 
   // Generate URLs for all locales
@@ -28,7 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     mainPages.map((page) => ({
       url: `${BASE_URL}/${locale}${page.path}`,
       lastModified: now,
-      changeFrequency: page.changeFreq,
+      changeFrequency: page.changeFrequency,
       priority: page.priority,
     }))
   );

@@ -41,7 +41,16 @@ function detectLocale(request: NextRequest): Locale {
 }
 
 export default function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const nextUrl = request.nextUrl;
+  const { pathname } = nextUrl;
+  const host = request.headers.get('host') || '';
+
+  // Enforce apex domain (redirect www -> apex)
+  if (host.startsWith('www.')) {
+    const apexUrl = new URL(nextUrl.toString());
+    apexUrl.host = host.replace(/^www\./, '');
+    return NextResponse.redirect(apexUrl, 301);
+  }
 
   // Ignore Next.js internals, API routes, and static files
   if (
@@ -60,9 +69,9 @@ export default function middleware(request: NextRequest) {
   // Special handling for /resources -> redirect directly to /ressources (locale-aware)
   if (pathname === '/resources') {
     const locale = detectLocale(request);
-    const url = request.nextUrl.clone();
-    url.pathname = `/${locale}/ressources`;
-    return NextResponse.redirect(url);
+    const redirectUrl = nextUrl.clone();
+    redirectUrl.pathname = `/${locale}/ressources`;
+    return NextResponse.redirect(redirectUrl);
   }
 
   // Check if pathname already has a locale
@@ -87,9 +96,9 @@ export default function middleware(request: NextRequest) {
 
   // Detect locale and redirect
   const locale = detectLocale(request);
-  const url = request.nextUrl.clone();
-  url.pathname = `/${locale}${pathname === '/' ? '' : pathname}`;
-  const res = NextResponse.redirect(url);
+  const redirectUrl = nextUrl.clone();
+  redirectUrl.pathname = `/${locale}${pathname === '/' ? '' : pathname}`;
+  const res = NextResponse.redirect(redirectUrl);
   res.cookies.set('mc_locale', locale, {
     path: '/',
     httpOnly: false,
