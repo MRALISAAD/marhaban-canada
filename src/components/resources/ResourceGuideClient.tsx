@@ -2,6 +2,7 @@
 
 import { useLanguage } from '@/components/LanguageProvider';
 import { ResourceGuideTemplate } from '@/components/resources/ResourceGuideTemplate';
+import { getHtmlAttrs } from '@/i18n/locales';
 
 const guideIds = ['documents', 'transport', 'credit'] as const;
 
@@ -12,7 +13,8 @@ type ResourceGuideClientProps = {
 };
 
 export function ResourceGuideClient({ slug }: ResourceGuideClientProps) {
-  const { content, locale, dir } = useLanguage();
+  const { content, locale } = useLanguage();
+  const { dir } = getHtmlAttrs(locale);
   const guideId = slug as GuideId;
 
   if (!guideIds.includes(guideId)) {

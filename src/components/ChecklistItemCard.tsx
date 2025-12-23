@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import LocalizedLink from './LocalizedLink';
 import type { TimelineItem } from '@/content/parcoursTimelineI18n';
 
 type ChecklistItemCardProps = {
@@ -32,12 +32,12 @@ export function ChecklistItemCard({ item, checked, onToggle, labels }: Checklist
           <p className="mt-1 text-sm text-slate-600">{item.why}</p>
           {item.guideHref ? (
             <div className="mt-2">
-              <Link
+              <LocalizedLink
                 href={item.guideHref}
                 className="text-xs font-semibold text-slate-700 underline underline-offset-2 hover:text-slate-900"
               >
                 {labels.viewGuide}
-              </Link>
+              </LocalizedLink>
             </div>
           ) : null}
           <div className="mt-3 grid gap-3 sm:grid-cols-3">

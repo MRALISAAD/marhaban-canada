@@ -23,9 +23,9 @@ export const scamCategories: ScamCategory[] = [
   {
     id: 'housing',
     title: 'Logement',
-    summary: 'Faux proprietaires, depots suspects, pression.',
+    summary: 'Faux propriétaires, dépôts suspects, pression.',
     icon: 'home',
-    keywords: ['logement', 'bail', 'depot', 'visite', 'appartement'],
+    keywords: ['logement', 'bail', 'dépôt', 'visite', 'appartement'],
     guideSlug: 'logement',
   },
   {
@@ -38,10 +38,10 @@ export const scamCategories: ScamCategory[] = [
   },
   {
     id: 'phone',
-    title: 'Telephone / forfaits',
-    summary: 'Forfaits caches, ventes agressives.',
+    title: 'Téléphone / forfaits',
+    summary: 'Forfaits cachés, ventes agressives.',
     icon: 'phone',
-    keywords: ['telephone', 'forfait', 'sim', 'mobile'],
+    keywords: ['téléphone', 'forfait', 'sim', 'mobile'],
     guideSlug: 'telephone',
   },
   {
@@ -95,10 +95,10 @@ export const scamGuides: ScamGuide[] = [
     ],
     neverDo: [
       'Payer avant visite et bail signe',
-      'Envoyer des documents sensibles sans verification',
+      'Envoyer des documents sensibles sans vérification',
       'Accepter un contrat sans adresse claire',
     ],
-    mantra: 'Pas de visite = pas d argent.',
+    mantra: 'Pas de visite = pas d\'argent.',
     sources: [
       { label: 'SCHL - logement', href: 'https://www.cmhc-schl.gc.ca/' },
       { label: 'Canada.ca - fraude', href: 'https://www.antifraudcentre-centreantifraude.ca/' },
@@ -135,7 +135,7 @@ export const scamGuides: ScamGuide[] = [
   },
   {
     slug: 'telephone',
-    title: 'Telephone / forfaits',
+    title: 'Téléphone / forfaits',
     subtitle: 'Arnaques liées aux forfaits mobiles et aux services téléphoniques.',
     scenario: [
       'Appels non sollicités promettant des rabais incroyables sur les forfaits.',
@@ -181,7 +181,7 @@ export const scamGuides: ScamGuide[] = [
       'Vérifier l\'URL des sites web bancaires (https, cadenas).',
       'Signaler les tentatives de fraude à votre banque et à la police.',
     ],
-    neverDo: ['Donner ton PIN', 'Envoyer des codes de verification', 'Transferer de l argent en urgence'],
+    neverDo: ['Donner ton PIN', 'Envoyer des codes de vérification', 'Transférer de l\'argent en urgence'],
     mantra: 'Ta banque ne demande jamais ton PIN.',
     sources: [
       {
@@ -212,7 +212,7 @@ export const scamGuides: ScamGuide[] = [
       'Ne jamais envoyer de documents originaux sans copie certifiée.',
       'Conserver toutes les communications et les preuves de paiement.',
     ],
-    neverDo: ['Payer en crypto', 'Donner tes documents sans verification', 'Croire aux garanties'],
+    neverDo: ['Payer en crypto', 'Donner tes documents sans vérification', 'Croire aux garanties'],
     mantra: 'Personne ne peut garantir un visa.',
     sources: [
       {

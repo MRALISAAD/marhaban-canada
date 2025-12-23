@@ -1,9 +1,10 @@
 'use client';
 
-import Link from 'next/link';
+import LocalizedLink from '../LocalizedLink';
 import { useLanguage } from '@/components/LanguageProvider';
 import { BackButton } from '@/components/BackButton';
 import type { BlogPost } from '@/content/blog';
+import { getHtmlAttrs } from '@/i18n/locales';
 
 type BlogPostContentProps = {
   post: BlogPost;
@@ -11,7 +12,8 @@ type BlogPostContentProps = {
 };
 
 export function BlogPostContent({ post, relatedPosts }: BlogPostContentProps) {
-  const { content, dir } = useLanguage();
+  const { content, locale } = useLanguage();
+  const { dir } = getHtmlAttrs(locale);
   const isRTL = dir === 'rtl';
   const breadcrumbArrow = isRTL ? '←' : '→';
   const nextArrow = isRTL ? '←' : '→';
@@ -22,9 +24,9 @@ export function BlogPostContent({ post, relatedPosts }: BlogPostContentProps) {
     <main className={`mx-auto max-w-3xl px-4 py-8 ${isRTL ? 'text-right' : 'text-left'}`} dir={dir}>
       <div className="flex items-center justify-between gap-3">
         <BackButton fallbackHref="/blog" label={content.microcopy.backLabel} />
-        <Link href="/parcours/guide" className="text-sm text-black/60 hover:underline">
+        <LocalizedLink href="/parcours/guide" className="text-sm text-black/60 hover:underline">
           Voir les guides
-        </Link>
+        </LocalizedLink>
       </div>
 
       <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-black/50">
@@ -88,12 +90,12 @@ export function BlogPostContent({ post, relatedPosts }: BlogPostContentProps) {
           <section className="mt-10 rounded-2xl border bg-black/5 p-5">
             <h3 className="text-base font-semibold">{content.microcopy.recommendedNextStepTitle}</h3>
             <p className="mt-1 text-sm text-black/70">{content.microcopy.recommendedNextStepDesc}</p>
-            <Link
-              href={`/parcours/guide/${post.relatedStep}`}
+            <LocalizedLink
+              href={`/parcours/guide/steps/${post.relatedStep}`}
               className="mt-4 inline-flex rounded-xl bg-black px-4 py-2 text-sm text-white"
             >
               {content.microcopy.viewGuideCta} {nextArrow}
-            </Link>
+            </LocalizedLink>
           </section>
         ) : null}
 
@@ -102,22 +104,22 @@ export function BlogPostContent({ post, relatedPosts }: BlogPostContentProps) {
             <h3 className="text-base font-semibold">{content.microcopy.relatedArticlesTitle}</h3>
             <div className="mt-4 grid gap-3 sm:grid-cols-3">
               {relatedPosts.map((entry) => (
-                <Link key={entry.slug} href={`/blog/${entry.slug}`} className="rounded-xl border p-3 hover:bg-black/5">
+                <LocalizedLink key={entry.slug} href={`/blog/${entry.slug}`} className="rounded-xl border p-3 hover:bg-black/5">
                   <p className="text-xs text-black/60">{entry.category}</p>
                   <p className="mt-1 text-sm font-medium">{entry.title}</p>
-                </Link>
+                </LocalizedLink>
               ))}
             </div>
           </section>
         ) : null}
 
         <div className="mt-10 flex justify-between">
-          <Link href="/blog" className="text-sm underline">
+          <LocalizedLink href="/blog" className="text-sm underline">
             {isRTL ? `${content.microcopy.backLabel} ${backArrow}` : `${backArrow} ${content.microcopy.backLabel}`}
-          </Link>
-          <Link href="/parcours" className="text-sm underline">
+          </LocalizedLink>
+          <LocalizedLink href="/parcours" className="text-sm underline">
             {isRTL ? `${content.microcopy.breadcrumbJourney} ${nextArrow}` : `${content.microcopy.breadcrumbJourney} ${nextArrow}`}
-          </Link>
+          </LocalizedLink>
         </div>
       </div>
     </main>

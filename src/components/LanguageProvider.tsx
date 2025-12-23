@@ -1,85 +1,43 @@
 'use client';
 
-import { createContext, useCallback, useContext, useLayoutEffect, useMemo } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import type { Locale, LocaleContent } from '@/content/siteContent';
-import { defaultLocale, getContent, locales } from '@/content/siteContent';
-import { useLocalStorageState } from '@/lib/useLocalStorageState';
+import { createContext, useContext, useMemo } from 'react';
+import type { Locale } from '@/i18n/locales';
+import type { LocaleContent } from '@/content/fr';
+import { frContent } from '@/content/fr';
+import { arContent } from '@/content/ar';
+import { enContent } from '@/content/en'; // Import enContent
+import { steps as frGuideSteps, type Step } from '@/content/guideSteps';
+import { guideStepsEn } from '@/content/guideSteps.en';
+import { guideStepsAr } from '@/content/guideSteps.ar';
 
-type LanguageContextValue = {
-  locale: Locale;
-  changeLocale: () => void;
-  setLocale: (next: Locale) => void;
-  content: LocaleContent;
-  dir: 'ltr' | 'rtl';
-};
+type EnhancedContent = LocaleContent & { guideSteps: Record<string, Step> };
 
-const LanguageContext = createContext<LanguageContextValue>({
-  locale: defaultLocale,
-  changeLocale: () => {},
-  setLocale: () => {},
-  content: getContent(defaultLocale),
-  dir: getContent(defaultLocale).dir,
-});
+type Ctx = { locale: Locale; content: EnhancedContent };
 
-const STORAGE_KEY = 'mc-lang';
+const LanguageContext = createContext<Ctx | null>(null);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocale] = useLocalStorageState<Locale>(STORAGE_KEY, {
-    defaultValue: defaultLocale,
-    parse: (value) => value as Locale,
-    serialize: (value) => value,
-    validate: (value) => locales.includes(value),
-  });
+export function LanguageProvider({ locale, children }: { locale: Locale; children: React.ReactNode }) {
+  const baseContent = useMemo(() => {
+    if (locale === 'ar') return arContent;
+    if (locale === 'en') return enContent; // Use enContent for 'en' locale
+    return frContent;
+  }, [locale]);
 
-  const changeLocale = useCallback(() => {
-    setLocale((current) => {
-      const currentIndex = locales.indexOf(current);
-      const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % locales.length;
-      return locales[nextIndex];
-    });
-  }, [setLocale]);
+  // Ajoute les guides détaillés, localisés par langue (fallback FR)
+  const localizedGuideSteps: Record<string, Step> =
+    locale === 'ar' ? guideStepsAr : locale === 'en' ? guideStepsEn : frGuideSteps;
 
-  const setLocaleExplicit = useCallback((next: Locale) => {
-    setLocale(next);
-  }, [setLocale]);
-
-  const content = getContent(locale);
-  useLayoutEffect(() => {
-    if (typeof window === 'undefined') return;
-    document.documentElement.lang = locale;
-    document.documentElement.dir = content.dir;
-    document.documentElement.setAttribute('data-locale', locale);
-  }, [locale, content.dir]);
-
-  const value = useMemo(
-    () => ({
-      locale,
-      changeLocale,
-      setLocale: setLocaleExplicit,
-      content,
-      dir: content.dir,
-    }),
-    [locale, content, changeLocale, setLocaleExplicit],
+  const content: EnhancedContent = useMemo(
+    () => ({ ...(baseContent as LocaleContent), guideSteps: localizedGuideSteps }),
+    [baseContent, localizedGuideSteps],
   );
+  const value = useMemo(() => ({ locale, content }), [locale, content]);
 
-  return (
-    <LanguageContext.Provider value={value}>
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={locale}
-          dir={content.dir}
-          lang={locale}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-        >
-          {children}
-        </motion.div>
-      </AnimatePresence>
-    </LanguageContext.Provider>
-  );
+  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }
 
-export const useLanguage = () => useContext(LanguageContext);
+export function useLanguage() {
+  const ctx = useContext(LanguageContext);
+  if (!ctx) throw new Error('useLanguage must be used within LanguageProvider');
+  return ctx;
+}

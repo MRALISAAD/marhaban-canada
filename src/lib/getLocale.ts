@@ -1,5 +1,6 @@
 import { headers } from 'next/headers';
-import { defaultLocale, locales, Locale } from '@/content/siteContent';
+import type { Locale } from '@/i18n/locales';
+import { defaultLocale, locales } from '@/content/siteContent';
 
 export async function getLocale(): Promise<Locale> {
   const headersList = await headers();

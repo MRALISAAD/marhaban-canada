@@ -28,6 +28,10 @@ export type BlogPost = {
     | 'networking'
     | 'integration';
   featured?: boolean;
+  /** SEO: custom title for search engines */
+  seoTitle?: string;
+  /** SEO: custom description for search engines */
+  seoDescription?: string;
 };
 
 export const blogPosts: BlogPost[] = [
@@ -293,12 +297,12 @@ export const blogPosts: BlogPost[] = [
     content: [
       'Le stress vient souvent du desordre.',
       'Un seul dossier (papier + telephone) suffit.',
-      'Classe par etapes : identite, travail, logement, impots.',
+      'Classe par étapes : identité, travail, logement, impôts.',
     ],
     checklist: [
       'Scanner ses documents',
       'Un dossier “Canada” sur le telephone',
-      'Un dossier papier a la maison',
+      'Un dossier papier à la maison',
     ],
   },
   {
@@ -411,7 +415,7 @@ export const blogPosts: BlogPost[] = [
     ],
     checklist: [
       'Adapter son CV',
-      'Parler a des gens du secteur',
+      'Parler à des gens du secteur',
       'Chercher des references',
     ],
   },
@@ -475,20 +479,20 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'impots-declarer-sans-revenu',
     title: 'Impôts : pourquoi déclarer même sans revenu',
-    excerpt: 'Ne rien declarer = perdre des credits.',
+    excerpt: 'Ne rien déclarer = perdre des crédits.',
     category: 'Impôts',
     relatedStep: 'taxes',
     readTime: '3 min',
     date: '2025-12-26',
     content: [
-      'Les credits sont lies a la declaration.',
-      'Ne rien declarer = perdre de l’argent.',
-      'C’est normal la premiere annee.',
+      "Les crédits sont liés à la déclaration.",
+      "Ne rien déclarer = perdre de l'argent.",
+      "C’est normal la premiere annee.",
     ],
     checklist: [
       'Declarer chaque annee',
       'Garder preuves',
-      'Verifier credits',
+      'Vérifier crédits',
     ],
   },
   {
@@ -562,7 +566,7 @@ export const blogPosts: BlogPost[] = [
       'Ca passe avec le temps et les liens.',
     ],
     checklist: [
-      'Parler a quelqu’un',
+      'Parler à quelqu\'un',
       'Sortir regulierement',
       'Ne pas s’isoler',
     ],
@@ -587,3 +591,7 @@ export const blogPosts: BlogPost[] = [
     ],
   },
 ];
+
+export function getBlogPostBySlug(slug: string): BlogPost | undefined {
+  return blogPosts.find((post) => post.slug === slug);
+}

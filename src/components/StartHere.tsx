@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import LocalizedLink from './LocalizedLink';
 import { Container } from '@/components/ui/Container';
 import { useLanguage } from '@/components/LanguageProvider';
 
@@ -29,13 +29,13 @@ export function StartHere() {
           </p>
           <div className="mt-3 grid gap-2 sm:grid-cols-3">
             {items.map((item) => (
-              <Link
+              <LocalizedLink
                 key={item.href}
                 href={item.href}
                 className="rounded-2xl border border-zinc-200/80 bg-white px-4 py-3 text-sm font-semibold text-slate-800 transition hover:border-zinc-300/80 hover:bg-zinc-50"
               >
                 {item.label}
-              </Link>
+              </LocalizedLink>
             ))}
           </div>
         </div>

@@ -21,34 +21,55 @@ export function TrustSection() {
             desc: 'On oriente et on informe. On ne vend pas de logement et on ne “garantit” rien.',
           },
         ]
-      : [
-          {
-            title: 'مصادر رسمية فقط',
-            desc: 'نعتمد على الجهات الحكومية والمنظمات المعترف بها.',
-          },
-          {
-            title: 'مكافحة الاحتيال (قواعد بسيطة)',
-            desc: 'لا عملات رقمية، لا بطاقات هدايا، لا دفع قبل الزيارة/العقد.',
-          },
-          {
-            title: 'شفافية',
-            desc: 'نوجّه ونوضح. لا نبيع السكن ولا نقدم “ضمانات”.',
-          },
-        ];
+      : locale === 'en'
+        ? [
+            {
+              title: 'Official sources only',
+              desc: 'We prioritize government websites and recognized organizations.',
+            },
+            {
+              title: 'Anti‑fraud (simple rules)',
+              desc: 'No crypto, no gift cards, no payment before visit/contract.',
+            },
+            {
+              title: 'Transparency',
+              desc: 'We guide and inform. We do not sell housing and we do not “guarantee” anything.',
+            },
+          ]
+        : [
+            {
+              title: 'مصادر رسمية فقط',
+              desc: 'نعتمد على الجهات الحكومية والمنظمات المعترف بها.',
+            },
+            {
+              title: 'مكافحة الاحتيال (قواعد بسيطة)',
+              desc: 'لا عملات رقمية، لا بطاقات هدايا، لا دفع قبل الزيارة/العقد.',
+            },
+            {
+              title: 'شفافية',
+              desc: 'نوجّه ونوضح. لا نبيع السكن ولا نقدم “ضمانات”.',
+            },
+          ];
 
   return (
     <div className="space-y-6">
       <div className="space-y-2">
         <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-slate-500">
-          {locale === 'fr' ? 'Confiance' : 'الثقة'}
+          {locale === 'fr' ? 'Confiance' : locale === 'en' ? 'Trust' : 'الثقة'}
         </p>
         <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-950">
-          {locale === 'fr' ? 'Clair. Officiel. Sans promesses.' : 'واضح. رسمي. بدون وعود.'}
+          {locale === 'fr'
+            ? 'Clair. Officiel. Sans promesses.'
+            : locale === 'en'
+              ? 'Clear. Official. No promises.'
+              : 'واضح. رسمي. بدون وعود.'}
         </h2>
         <p className="max-w-2xl text-slate-600">
           {locale === 'fr'
             ? 'On préfère te donner un chemin fiable plutôt qu’un discours marketing.'
-            : 'نفضل إعطاءك مسارًا موثوقًا بدل كلام تسويقي.'}
+            : locale === 'en'
+              ? 'We prefer to give you a reliable path rather than marketing talk.'
+              : 'نفضل إعطاءك مسارًا موثوقًا بدل كلام تسويقي.'}
         </p>
       </div>
 

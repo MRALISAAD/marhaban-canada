@@ -119,3 +119,61 @@ p {
     box-shadow: none !important;
   }
 }
+
+/* Easy Read Mode styles - Amélioré pour simplicité et clarté */
+body.easy-read-mode {
+  font-size: 1.15rem; /* ~18.4px - police un peu plus grande */
+  line-height: 1.8;   /* Interligne augmentée pour lisibilité */
+}
+
+body.easy-read-mode p,
+body.easy-read-mode li {
+  font-size: 1.15rem !important; /* Légère augmentation ciblée sur le texte courant */
+  line-height: 1.8 !important;
+  max-width: 65ch; /* Limite la longueur de ligne pour faciliter la lecture */
+}
+
+/* Phrases plus courtes - moins de blocs par écran */
+body.easy-read-mode section,
+body.easy-read-mode article {
+  margin-bottom: 2rem !important; /* Plus d'espace entre les sections */
+}
+
+body.easy-read-mode .rounded-2xl,
+body.easy-read-mode .rounded-3xl {
+  margin-bottom: 1.5rem !important; /* Plus d'espace entre les cartes */
+  padding: 1.5rem !important; /* Plus de padding pour aérer */
+}
+
+/* Ajustement des titres pour le mode lecture facile */
+body.easy-read-mode h1 {
+  font-size: 2.5rem !important;
+  line-height: 1.3 !important;
+  margin-bottom: 1.5rem !important;
+}
+
+body.easy-read-mode h2 {
+  font-size: 2rem !important;
+  line-height: 1.4 !important;
+  margin-bottom: 1.25rem !important;
+}
+
+body.easy-read-mode h3 {
+  font-size: 1.75rem !important;
+  line-height: 1.5 !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Réduction du jargon - simplification visuelle */
+body.easy-read-mode .text-xs {
+  font-size: 0.875rem !important; /* text-xs devient text-sm */
+}
+
+body.easy-read-mode .text-sm {
+  font-size: 1rem !important; /* text-sm devient text-base */
+}
+
+/* RTL - ajustements globaux légers pour la locale ar */
+body.rtl {
+  direction: rtl;
+}

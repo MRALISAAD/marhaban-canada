@@ -5,12 +5,15 @@ export type ChecklistSource = {
   href: string;
 };
 
+export type ChecklistPriority = 'urgent' | 'important' | 'later';
+
 export type ChecklistItem = {
   id: string;
   title: string;
   avoid: string[];
   sources: ChecklistSource[];
   guideHref?: string;
+  priority: ChecklistPriority;
 };
 
 export type ChecklistPhase = {
@@ -37,6 +40,11 @@ export type ChecklistDictionary = {
     sources: string;
     viewGuide: string;
     phaseBadge: string;
+    priorityUrgent: string;
+    priorityImportant: string;
+    priorityLater: string;
+    easyReadOn: string;  // New label
+    easyReadOff: string; // New label
   };
   phases: ChecklistPhase[];
 };
@@ -106,15 +114,20 @@ export const checklistDictionary: Record<ChecklistLocale, ChecklistDictionary> =
       title: 'Checklist — étapes essentielles',
       subtitle: 'Coche les étapes; sauvegarde automatique, sans compte.',
       progressLabel: 'Progression',
-      progressHelper: 'etapes completees',
-      lastVisit: 'Derniere visite',
-      reset: 'Reinitialiser ma checklist',
-      confirmReset: 'Reinitialiser toutes les cases ?',
+      progressHelper: 'étapes complétées',
+      lastVisit: 'Dernière visite',
+      reset: 'Réinitialiser ma checklist',
+      confirmReset: 'Réinitialiser toutes les cases ?',
       checklist: 'Checklist',
-      avoid: 'A eviter',
+      avoid: 'À éviter',
       sources: 'Sources officielles',
       viewGuide: 'Voir le guide',
       phaseBadge: 'Phase',
+      priorityUrgent: 'Urgent (jours 1-7)',
+      priorityImportant: 'Important (mois 1)',
+      priorityLater: 'Plus tard',
+      easyReadOn: 'Mode Lecture facile',
+      easyReadOff: 'Mode Normal',
     },
     phases: [
       {
@@ -128,21 +141,24 @@ export const checklistDictionary: Record<ChecklistLocale, ChecklistDictionary> =
             title: "NAS (Numéro d'assurance sociale)",
             avoid: ['Ne partage jamais ton NAS.'],
             sources: sources.nas,
-            guideHref: '/parcours/guide/nas',
+            guideHref: '/parcours/guide/steps/nas',
+            priority: 'urgent',
           },
           {
             id: 'phone_done',
-            title: 'Telephone (forfait / SIM)',
+            title: 'Téléphone (forfait / SIM)',
             avoid: ['Évite les contrats longs au début.'],
             sources: sources.phone,
-            guideHref: '/parcours/guide/phone',
+            guideHref: '/parcours/guide/steps/phone',
+            priority: 'urgent',
           },
           {
             id: 'bank_done',
             title: 'Banque (compte + carte)',
             avoid: ['Demande les offres pour nouveaux arrivants.'],
             sources: sources.bank,
-            guideHref: '/parcours/guide/bank',
+            guideHref: '/parcours/guide/steps/bank',
+            priority: 'urgent',
           },
         ],
       },
@@ -166,21 +182,24 @@ export const checklistDictionary: Record<ChecklistLocale, ChecklistDictionary> =
               },
               { label: 'AHCIP - Alberta', href: 'https://www.alberta.ca/ahcip' },
             ],
-            guideHref: '/parcours/guide/health',
+            guideHref: '/parcours/guide/steps/health',
+            priority: 'important',
           },
           {
             id: 'housing_done',
-            title: 'Logement long terme (bail, depots)',
+            title: 'Logement long terme (bail, dépôts)',
             avoid: ['Ne paie jamais avant visite et bail signe.'],
             sources: sources.housing,
-            guideHref: '/parcours/guide/housing',
+            guideHref: '/parcours/guide/steps/housing',
+            priority: 'important',
           },
           {
             id: 'license_done',
             title: 'Permis de conduire (selon province)',
             avoid: ['Ne conduis pas sans permis valide et assurance.'],
             sources: sources.license,
-            guideHref: '/parcours/guide/license',
+            guideHref: '/parcours/guide/steps/license',
+            priority: 'important',
           },
         ],
       },
@@ -195,21 +214,24 @@ export const checklistDictionary: Record<ChecklistLocale, ChecklistDictionary> =
             title: 'Integration (services locaux, bibliotheque)',
             avoid: ['Evite de rester isole les premiers mois.'],
             sources: sources.integration,
-            guideHref: '/parcours/guide/integration',
+            guideHref: '/parcours/guide/steps/integration',
+            priority: 'later',
           },
           {
             id: 'network_done',
             title: 'Reseautage (LinkedIn, communautes)',
             avoid: ['Ne reporte pas le reseautage a plus tard.'],
             sources: sources.networking,
-            guideHref: '/parcours/guide/networking',
+            guideHref: '/parcours/guide/steps/integration', // Corrected path
+            priority: 'later',
           },
           {
             id: 'taxes_done',
             title: 'Impots (bases, documents a garder)',
             avoid: ['Ne perds pas les documents importants.'],
             sources: sources.taxes,
-            guideHref: '/parcours/guide/taxes',
+            guideHref: '/parcours/guide/steps/taxes',
+            priority: 'later',
           },
         ],
       },
@@ -231,6 +253,11 @@ export const checklistDictionary: Record<ChecklistLocale, ChecklistDictionary> =
       sources: 'Official sources',
       viewGuide: 'View guide',
       phaseBadge: 'Phase',
+      priorityUrgent: 'Urgent (days 1-7)',
+      priorityImportant: 'Important (month 1)',
+      priorityLater: 'Later',
+      easyReadOn: 'Easy Read Mode',
+      easyReadOff: 'Normal Mode',
     },
     phases: [
       {
@@ -244,18 +271,21 @@ export const checklistDictionary: Record<ChecklistLocale, ChecklistDictionary> =
             title: 'SIN (Social Insurance Number)',
             avoid: ['Never share your SIN over messages or social media.'],
             sources: sources.nas,
+            priority: 'urgent',
           },
           {
             id: 'phone_done',
             title: 'Phone (plan / SIM)',
             avoid: ['Avoid long-term contracts at first.'],
             sources: sources.phone,
+            priority: 'urgent',
           },
           {
             id: 'bank_done',
             title: 'Bank account (card included)',
             avoid: ['Ask for newcomer packages to reduce fees.'],
             sources: sources.bank,
+            priority: 'urgent',
           },
         ],
       },
@@ -279,19 +309,22 @@ export const checklistDictionary: Record<ChecklistLocale, ChecklistDictionary> =
               },
               { label: 'AHCIP - Alberta', href: 'https://www.alberta.ca/ahcip' },
             ],
-            guideHref: '/parcours/guide/health',
+            guideHref: '/parcours/guide/steps/health',
+            priority: 'important',
           },
           {
             id: 'housing_done',
             title: 'Long-term housing (lease, deposits)',
             avoid: ['Never pay before a visit and a signed lease.'],
             sources: sources.housing,
+            priority: 'important',
           },
           {
             id: 'license_done',
             title: "Driver's license (by province)",
             avoid: ['Do not drive without a valid license and insurance.'],
             sources: sources.license,
+            priority: 'important',
           },
         ],
       },
@@ -306,20 +339,24 @@ export const checklistDictionary: Record<ChecklistLocale, ChecklistDictionary> =
             title: 'Integration (local services, library)',
             avoid: ['Avoid staying isolated during the first months.'],
             sources: sources.integration,
-            guideHref: '/parcours/guide/integration',
+            guideHref: '/parcours/guide/steps/integration',
+            priority: 'later',
           },
           {
             id: 'network_done',
             title: 'Networking (LinkedIn, communities)',
             avoid: ['Do not postpone networking.'],
             sources: sources.networking,
-            guideHref: '/parcours/guide/networking',
+            guideHref: '/parcours/guide/steps/integration', // Corrected path
+            priority: 'later',
           },
           {
             id: 'taxes_done',
             title: 'Taxes (basics, keep documents)',
             avoid: ['Do not lose important documents.'],
             sources: sources.taxes,
+            guideHref: '/parcours/guide/steps/taxes',
+            priority: 'later',
           },
         ],
       },
@@ -341,6 +378,11 @@ export const checklistDictionary: Record<ChecklistLocale, ChecklistDictionary> =
       sources: 'مصادر رسمية',
       viewGuide: 'عرض الدليل',
       phaseBadge: 'المرحلة',
+      priorityUrgent: 'عاجل (الايام 1-7)',
+      priorityImportant: 'مهم (الشهر 1)',
+      priorityLater: 'لاحقا',
+      easyReadOn: 'وضع القراءة السهلة',
+      easyReadOff: 'وضع طبيعي',
     },
     phases: [
       {
@@ -354,18 +396,21 @@ export const checklistDictionary: Record<ChecklistLocale, ChecklistDictionary> =
             title: 'رقم التامين الاجتماعي (SIN)',
             avoid: ['لا تشارك الرقم عبر الرسائل او الشبكات.'],
             sources: sources.nas,
+            priority: 'urgent',
           },
           {
             id: 'phone_done',
             title: 'الهاتف (باقة / شريحة)',
             avoid: ['تجنب العقود الطويلة في البداية.'],
             sources: sources.phone,
+            priority: 'urgent',
           },
           {
             id: 'bank_done',
             title: 'حساب بنكي (بطاقة)',
             avoid: ['اطلب عروض القادمين الجدد لتقليل الرسوم.'],
             sources: sources.bank,
+            priority: 'urgent',
           },
         ],
       },
@@ -389,19 +434,22 @@ export const checklistDictionary: Record<ChecklistLocale, ChecklistDictionary> =
               },
               { label: 'AHCIP - Alberta', href: 'https://www.alberta.ca/ahcip' },
             ],
-            guideHref: '/parcours/guide/health',
+            guideHref: '/parcours/guide/steps/health',
+            priority: 'important',
           },
           {
             id: 'housing_done',
             title: 'سكن طويل المدى (عقد, وديعة)',
             avoid: ['لا تدفع قبل الزيارة وتوقيع العقد.'],
             sources: sources.housing,
+            priority: 'important',
           },
           {
             id: 'license_done',
             title: 'رخصة القيادة (حسب المقاطعة)',
             avoid: ['لا تقد بدون رخصة صالحة وتامين.'],
             sources: sources.license,
+            priority: 'important',
           },
         ],
       },
@@ -416,20 +464,24 @@ export const checklistDictionary: Record<ChecklistLocale, ChecklistDictionary> =
             title: 'اندماج (خدمات محلية, مكتبة)',
             avoid: ['تجنب العزلة في الاشهر الاولى.'],
             sources: sources.integration,
-            guideHref: '/parcours/guide/integration',
+            guideHref: '/parcours/guide/steps/integration',
+            priority: 'later',
           },
           {
             id: 'network_done',
             title: 'توسيع العلاقات (لينكدان, مجتمعات)',
             avoid: ['لا تؤجل بناء العلاقات.'],
             sources: sources.networking,
-            guideHref: '/parcours/guide/networking',
+            guideHref: '/parcours/guide/steps/integration', // Corrected path
+            priority: 'later',
           },
           {
             id: 'taxes_done',
             title: 'الضرائب (اساسيات, وثائق)',
             avoid: ['لا تفقد الوثائق المهمة.'],
             sources: sources.taxes,
+            guideHref: '/parcours/guide/steps/taxes',
+            priority: 'later',
           },
         ],
       },

@@ -1,9 +1,10 @@
 'use client';
 
-import Link from 'next/link';
+import LocalizedLink from '../LocalizedLink';
 import { useLanguage } from '@/components/LanguageProvider';
 import { blogPosts } from '@/content/blog';
 import { BlogSearchAndList } from '@/components/blog/BlogSearchAndList';
+import { getHtmlAttrs } from '@/i18n/locales';
 
 type Category = (typeof blogPosts)[number]['category'];
 
@@ -14,7 +15,8 @@ function uniqueCategories(posts: typeof blogPosts): Category[] {
 }
 
 export function BlogIndexContent() {
-  const { content, dir } = useLanguage();
+  const { content, locale } = useLanguage();
+  const { dir } = getHtmlAttrs(locale);
   const categories = uniqueCategories(blogPosts);
   const featuredPosts = blogPosts.filter((post) => post.featured);
   const isRTL = dir === 'rtl';
@@ -32,18 +34,28 @@ export function BlogIndexContent() {
               {content.microcopy.breadcrumbHome} {breadcrumbArrow} {content.microcopy.breadcrumbBlog}
             </span>
           </div>
-          <h1 className="mt-3 text-2xl font-semibold">Blog — Comprendre avant d’agir</h1>
+          <h1 className="mt-3 text-2xl font-semibold">
+            {locale === 'fr'
+              ? 'Blog — Comprendre avant d’agir'
+              : locale === 'en'
+                ? 'Blog — Understand before acting'
+                : 'المدونة — افهم قبل أن تتصرف'}
+          </h1>
           <p className="mt-1 text-sm text-black/60">
-            Des articles courts pour t&apos;aider a eviter les erreurs courantes.
+            {locale === 'fr'
+              ? "Des articles courts pour t'aider à éviter les erreurs courantes."
+              : locale === 'en'
+                ? 'Short articles to help you avoid common mistakes.'
+                : 'مقالات قصيرة لمساعدتك على تجنب الأخطاء الشائعة.'}
           </p>
         </div>
 
-        <Link
+        <LocalizedLink
           href="/parcours"
           className="hidden sm:inline-flex items-center rounded-xl border px-3 py-2 text-sm hover:bg-black/5"
         >
           {content.microcopy.backToJourneyLabel}
-        </Link>
+        </LocalizedLink>
       </div>
 
       {featuredPosts.length > 0 ? (
@@ -52,28 +64,28 @@ export function BlogIndexContent() {
           <p className="mt-1 text-xs text-black/50">{content.microcopy.priorityReadsDesc}</p>
           <div className="mt-4 grid gap-4 sm:grid-cols-3">
             {featuredPosts.map((post) => (
-              <Link key={post.slug} href={`/blog/${post.slug}`} className="rounded-2xl border bg-black/5 p-4">
+              <LocalizedLink key={post.slug} href={`/blog/${post.slug}`} className="rounded-2xl border bg-black/5 p-4">
                 <p className="text-xs text-black/60">{post.category}</p>
                 <p className="mt-1 font-semibold">{post.title}</p>
                 <p className="mt-1 text-sm text-black/70">{post.excerpt}</p>
-              </Link>
+              </LocalizedLink>
             ))}
           </div>
         </section>
       ) : null}
 
       <div className="mt-6 flex flex-wrap gap-2">
-        <Link href="/blog" className="rounded-full border px-3 py-1 text-sm hover:bg-black/5">
-          Tous
-        </Link>
+        <LocalizedLink href="/blog" className="rounded-full border px-3 py-1 text-sm hover:bg-black/5">
+          {locale === 'fr' ? 'Tous' : locale === 'en' ? 'All' : 'الكل'}
+        </LocalizedLink>
         {categories.map((category) => (
-          <Link
+          <LocalizedLink
             key={category}
             href={`/blog?cat=${encodeURIComponent(category)}`}
             className="rounded-full border px-3 py-1 text-sm hover:bg-black/5"
           >
             {category}
-          </Link>
+          </LocalizedLink>
         ))}
       </div>
 

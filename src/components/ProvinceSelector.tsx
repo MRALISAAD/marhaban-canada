@@ -1,18 +1,35 @@
 'use client';
 
 import { provinceOptions, useProvince } from '@/components/ProvinceProvider';
+import { useLanguage } from '@/components/LanguageProvider';
 
 type ProvinceSelectorProps = {
   label?: string;
 };
 
-export function ProvinceSelector({ label = "Ou t'installes-tu ?" }: ProvinceSelectorProps) {
+export function ProvinceSelector({ label }: ProvinceSelectorProps) {
   const { province, setProvince } = useProvince();
+  const { locale } = useLanguage();
+
+  const defaultLabelByLocale: Record<string, string> = {
+    fr: "Où t'installes-tu ?",
+    en: 'Where are you settling?',
+    ar: 'أين ستستقر؟',
+  };
+
+  const helperByLocale: Record<string, string> = {
+    fr: 'Ta sélection adapte automatiquement les étapes locales du parcours.',
+    en: 'Your selection automatically adapts the journey steps to your province.',
+    ar: 'اختيارك يضبط خطوات الرحلة تلقائيًا حسب المقاطعة.',
+  };
+
+  const effectiveLabel = label ?? defaultLabelByLocale[locale] ?? defaultLabelByLocale.fr;
+  const helperText = helperByLocale[locale] ?? helperByLocale.fr;
 
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
       <label htmlFor="province" className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-        {label}
+        {effectiveLabel}
       </label>
       <select
         id="province"
@@ -26,9 +43,7 @@ export function ProvinceSelector({ label = "Ou t'installes-tu ?" }: ProvinceSele
           </option>
         ))}
       </select>
-      <p className="mt-2 text-xs text-slate-600">
-        Ta selection adapte automatiquement les etapes locales du parcours.
-      </p>
+      <p className="mt-2 text-xs text-slate-600">{helperText}</p>
     </div>
   );
 }

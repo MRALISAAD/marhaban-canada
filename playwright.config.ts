@@ -9,5 +9,6 @@ export default defineConfig({
     viewport: { width: 1280, height: 720 },
     ignoreHTTPSErrors: true,
     baseURL: 'http://localhost:3000',
+    locale: 'fr-CA',
   },
 });

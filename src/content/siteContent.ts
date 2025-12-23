@@ -1,4 +1,5 @@
-export type Locale = "fr" | "en" | "ar";
+import type { Locale } from '@/i18n/locales';
+import type { StepId } from './contentTypes';
 
 export type Source = {
   name: string;
@@ -6,7 +7,7 @@ export type Source = {
 };
 
 export type StepGuide = {
-  id: "nas" | "sante" | "banque" | "logement" | "mobile";
+  id: StepId;
   title: string;
   description: string;
   href: string;
@@ -151,7 +152,9 @@ export type ScamMicrocopy = {
   frequentTitle: string;
   startHousingTitle: string;
   startHousingText: string;
+  startHousingSubtext?: string;
   startHousingCta: string;
+  startHousingCtaAria?: string;
   breadcrumb: { home: string; scams: string; };
   backToScams: string;
   goToJourney: string;
@@ -340,10 +343,98 @@ export type LocaleContent = {
   footer: {
     disclaimer: string;
     rights: string;
+    mission?: string;
+    quickGuidesTitle?: string;
+    sources?: string;
+    copyright?: string;
   };
   guides: Record<string, Guide>;
   guideOrder: string[];
   globalDisclaimer: string;
+  aboutPage: {
+    title: string;
+    intro: string;
+    mission: {
+      title: string;
+      content: string;
+    };
+    whatWeDo: {
+      title: string;
+      items: string[];
+    };
+    whatWeDontDo: {
+      title: string;
+      items: string[];
+    };
+    sources: {
+      title: string;
+      intro: string;
+      examples: string[];
+    };
+    cta: {
+      label: string;
+      href: string;
+    };
+  };
+  contactPage: {
+    title: string;
+    question: string;
+    writeToUs: string;
+    privacy: string;
+    responseTime: string;
+    disclaimer: string;
+    intro?: string;
+    safetyNote: string;
+    formName: string;
+    formEmail: string;
+    formMessage: string;
+    formTopic: string;
+    formTopicOptions: { value: string; label: string }[];
+    formSubmit: string;
+    formSuccess: string;
+    formError: string;
+    secondaryLinks: {
+      legal: string;
+      scams: string;
+      checklist: string;
+    };
+  };
+  legalPage: {
+    title: string;
+    editor: {
+      title: string;
+      content: string;
+    };
+    usage: {
+      title: string;
+      content: string;
+    };
+    responsibilities: {
+      title: string;
+      content: string;
+    };
+    dataProtection: {
+      title: string;
+      whatLabel: string;
+      what: string;
+      whyLabel: string;
+      why: string;
+      retentionLabel: string;
+      retention: string;
+    };
+    cookies: {
+      title: string;
+      content: string;
+    };
+    intellectualProperty: {
+      title: string;
+      content: string;
+    };
+    contact: {
+      title: string;
+      email: string;
+    };
+  };
   shared: {
     sourceLabel: string;
     officialLink: string;
@@ -389,10 +480,10 @@ const frSteps: StepGuide[] = [
     ],
   },
   {
-    id: "sante",
+    id: "health",
     title: "Carte santé provinciale",
     description: "Accès au système public dans ta province d’arrivée.",
-    href: "/parcours/guide/steps/sante",
+    href: "/parcours/guide/steps/health",
     summary: "Chaque province gère son assurance maladie. Tant que ta carte n’est pas active, tes soins urgents peuvent coûter très cher.",
     what: "La carte santé prouve ton admissibilité au régime public (RAMQ, OHIP, MSP, etc.).",
     why: "Elle couvre les consultations médicales essentielles et évite d’avancer des frais élevés.",
@@ -410,10 +501,10 @@ const frSteps: StepGuide[] = [
     ],
   },
   {
-    id: "banque",
+    id: "bank",
     title: "Compte bancaire",
     description: "Structure tes finances et prépare ton historique de crédit.",
-    href: "/parcours/guide/steps/banque",
+    href: "/parcours/guide/steps/bank",
     summary: "Ouvrir un compte local facilite les virements d’employeur, la location d’un logement et l’accès aux produits newcomers.",
     what: "Un compte canadien et une carte de crédit sécurisée permettent de recevoir des revenus, de payer et de bâtir ta cote.",
     why: "Les banques demandent souvent un compte actif pour vérifier solvabilité et prévenir le blanchiment.",
@@ -431,10 +522,10 @@ const frSteps: StepGuide[] = [
     ],
   },
   {
-    id: "logement",
+    id: "housing",
     title: "Recherche de logement",
     description: "Montre un dossier propre et sais les règles provinciales.",
-    href: "/parcours/guide/steps/logement",
+    href: "/parcours/guide/steps/housing",
     summary: "Un bail écrit et conforme protège tes droits. Les propriétaires sérieux exigent un dossier complet même sans historique local.",
     what: "Le dossier locataire regroupe tes preuves de revenus, références et dépôt légal selon la province.",
     why: "Il réduit le risque d’arnaques et t’assure que le logement respecte les normes locales.",
@@ -453,10 +544,10 @@ const frSteps: StepGuide[] = [
     ],
   },
   {
-    id: "mobile",
+    id: "phone",
     title: "Téléphone / SIM",
     description: "Obtenir un numéro local pour les démarches et communications.",
-    href: "/parcours/guide/steps/mobile",
+    href: "/parcours/guide/steps/phone",
     summary: "Un numéro local facilite les vérifications d’identité et évite les frais d’itinérance exorbitants.",
     what: "Il s’agit d’acheter une SIM/eSIM canadienne et de choisir un forfait adapté à ton premier mois.",
     why: "Les démarches administratives exigent souvent un numéro local pour confirmer un compte.",
@@ -498,10 +589,10 @@ const arSteps: StepGuide[] = [
     ],
   },
   {
-    id: "sante",
+    id: "health",
     title: "بطاقة التأمين الصحي",
     description: "دخولك إلى النظام الصحي في مقاطعتك.",
-    href: "/parcours/guide/steps/sante",
+    href: "/parcours/guide/steps/health",
     summary: "كل مقاطعة تدير تغطيتها. بدون البطاقة قد تدفع مبالغ مرتفعة للعلاج.",
     what: "البطاقة تثبت أهليتك لبرامج التأمين الصحي العامة (RAMQ، OHIP...).",
     why: "تغطي الزيارات الأساسية وتمنع تحمل التكاليف الكاملة للطوارئ.",
@@ -519,10 +610,10 @@ const arSteps: StepGuide[] = [
     ],
   },
   {
-    id: "banque",
+    id: "bank",
     title: "فتح حساب بنكي",
     description: "لتنظيم أموالك وبناء تاريخ ائتماني.",
-    href: "/parcours/guide/steps/banque",
+    href: "/parcours/guide/steps/bank",
     summary: "الحساب المحلي يسهل تلقي الرواتب ودفع الإيجار والحصول على منتجات الوافدين الجدد.",
     what: "حساب بالدولار الكندي وبطاقة ائتمان مضمونة لتلقي الدخل والبدء بتكوين سجل ائتماني.",
     why: "تطلبه البنوك والمالكون للتحقق من الملاءة ومكافحة الاحتيال.",
@@ -540,10 +631,10 @@ const arSteps: StepGuide[] = [
     ],
   },
   {
-    id: "logement",
+    id: "housing",
     title: "إيجاد سكن",
     description: "ملف مستأجر واضح وبنود إيجار قانونية.",
-    href: "/parcours/guide/steps/logement",
+    href: "/parcours/guide/steps/housing",
     summary: "عقد الإيجار المكتوب يحميك. سيطلب المالك الجاد ملفاً موثقاً حتى بدون تاريخ كندي.",
     what: "ملف مستأجر يضم إثباتات الدخل والمراجع والوديعة القانونية حسب المقاطعة.",
     why: "يقلل من مخاطر الاحتيال ويضمن احترام القوانين المحلية.",
@@ -562,10 +653,10 @@ const arSteps: StepGuide[] = [
     ],
   },
   {
-    id: "mobile",
+    id: "phone",
     title: "خطة الهاتف والبيانات",
     description: "رقم محلي لتأكيد هويتك وإنهاء معاملاتك.",
-    href: "/parcours/guide/steps/mobile",
+    href: "/parcours/guide/steps/phone",
     summary: "الرقم الكندي ضروري للتحقق الثنائي ولتجنب رسوم التجوال المرتفعة.",
     what: "شراء SIM أو eSIM واختيار باقة تناسب الأسابيع الأولى.",
     why: "معظم البنوك والجهات الحكومية ترسل رموزاً لمرة واحدة إلى رقم كندي.",
@@ -600,8 +691,10 @@ const frScamsContent = {
     frequentTitle: "Arnaques fréquentes",
     startHousingTitle: "Commencer par le logement",
     startHousingText:
-      "Si on te demande de payer avant une visite, stop. C’est un signal d’arnaque fréquent.",
-    startHousingCta: "Voir arnaques logement →",
+      "Si on te demande de payer avant une visite, arrête tout : c'est un signal d'arnaque très fréquent.",
+    startHousingSubtext: "Exemples, signaux d'alerte et quoi faire.",
+    startHousingCta: "Voir les arnaques logement →",
+    startHousingCtaAria: "Voir les arnaques liées au logement",
     breadcrumb: { home: "Accueil", scams: "Arnaques" },
     backToScams: "Retour aux arnaques",
     goToJourney: "Aller au parcours",
@@ -611,13 +704,22 @@ const frScamsContent = {
     needMoreCta: "Voir le guide logement →",
     housingLabel: "Logement",
     pageEyebrow: "Arnaques",
-    pageTitle: "Arnaques frequentes : comment les reperer en 2 minutes",
-    pageSubtitle: "Tu n es pas seul. Le but : comprendre, eviter, agir.",
-    rulesTitle: "Regles d or",
-    planTitle: "Plan d action en 5 etapes",
+    pageTitle: "Arnaques fréquentes : comment les repérer en 2 minutes",
+    pageSubtitle: "Tu n'es pas seul. Le but : comprendre, éviter, agir.",
+    rulesTitle: "Règles d'or",
+    planTitle: "Plan d'action en 5 étapes",
     planSubtitle: "Simple, rapide, sans panique.",
-    categoriesTitle: "Categories d arnaques",
-    planLinkLabel: "Plan d action 5 etapes",
+    categoriesTitle: "Catégories d'arnaques",
+    planLinkLabel: "Plan d'action en 5 étapes",
+    victimTitle: "Je pense être victime : quoi faire ?",
+    victimSubtitle: "Plan d'action en 5 étapes, sans panique.",
+    victimPlanSteps: [
+      "Ne panique pas et arrête tout paiement immédiatement.",
+      "Garde toutes les preuves (screenshots, emails, conversations, reçus).",
+      "Contacte ta banque ou ton institution financière pour bloquer les transactions.",
+      "Signale l'arnaque à la police (rapport de police) et à l'organisme approprié (ex: CAFC pour fraude financière).",
+      "Consulte les ressources officielles pour comprendre tes options légales et protéger ton identité.",
+    ],
   },
   housing: {
     rules: [
@@ -639,8 +741,10 @@ const enScamsContent = {
     frequentTitle: "Frequent Scams",
     startHousingTitle: "Start with housing",
     startHousingText:
-      "If you are asked to pay before a visit, stop. It's a common scam red flag.",
+      "If you are asked to pay before a visit, stop everything: it's a very common scam red flag.",
+    startHousingSubtext: "Examples, warning signs and what to do.",
     startHousingCta: "View housing scams →",
+    startHousingCtaAria: "View housing-related scams",
     breadcrumb: { home: "Home", scams: "Scams" },
     backToScams: "Back to scams",
     goToJourney: "Go to journey",
@@ -657,6 +761,15 @@ const enScamsContent = {
     planSubtitle: "Simple, fast, no panic.",
     categoriesTitle: "Scam categories",
     planLinkLabel: "5-step action plan",
+    victimTitle: "I think I am a victim: what should I do?",
+    victimSubtitle: "5-step action plan, don't panic.",
+    victimPlanSteps: [
+      "Don't panic and stop all payments immediately.",
+      "Keep all evidence (screenshots, emails, conversations, receipts).",
+      "Contact your bank or financial institution to block transactions.",
+      "Report the scam to the police (police report) and the appropriate organization (e.g., CAFC for financial fraud).",
+      "Consult official resources to understand your legal options and protect your identity.",
+    ],
   },
   housing: {
     rules: [
@@ -678,8 +791,10 @@ const arScamsContent = {
     frequentTitle: "أنواع الاحتيال الشائعة",
     startHousingTitle: "ابدأ بالسكن",
     startHousingText:
-      "إذا طُلب منك الدفع قبل الزيارة، توقّف. هذه إشارة احتيال شائعة.",
-    startHousingCta: "عرض احتيال السكن →",
+      "إذا طُلب منك الدفع قبل الزيارة، توقّف فورًا: هذه إشارة احتيال شائعة جدًا.",
+    startHousingSubtext: "أمثلة، إشارات التحذير وما يجب فعله.",
+    startHousingCta: "عرض عمليات احتيال السكن →",
+    startHousingCtaAria: "عرض عمليات الاحتيال المتعلقة بالسكن",
     breadcrumb: { home: "الرئيسية", scams: "الاحتيال" },
     backToScams: "العودة إلى الاحتيال",
     goToJourney: "الذهاب إلى المسار",
@@ -696,6 +811,15 @@ const arScamsContent = {
     planSubtitle: "بسيطة، سريعة، بلا هلع.",
     categoriesTitle: "فئات الاحتيال",
     planLinkLabel: "خطة عمل من 5 خطوات",
+    victimTitle: "أعتقد أنني ضحية: ماذا أفعل؟",
+    victimSubtitle: "خطة عمل من 5 خطوات، بلا هلع.",
+    victimPlanSteps: [
+      "لا تشعر بالذعر وتوقف عن جميع المدفوعات فورًا.",
+      "احتفظ بجميع الأدلة (لقطات الشاشة، الرسائل الإلكترونية، المحادثات، الإيصالات).",
+      "اتصل ببنكك أو مؤسستك المالية لحظر المعاملات.",
+      "أبلغ عن الاحتيال للشرطة (تقرير الشرطة) والمنظمة المناسبة (مثل CAFC للاحتيال المالي).",
+      "استشر الموارد الرسمية لفهم خياراتك القانونية وحماية هويتك.",
+    ],
   },
   housing: {
     rules: [
@@ -1430,7 +1554,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
             'Ne jamais virer d\'argent avant la signature d\'un bail légal et la remise des clés.',
             'Utiliser des moyens de paiement traçables (chèque, virement bancaire).',
           ],
-          mantra: 'Pas de visite = pas d argent.',
+          mantra: 'Pas de visite = pas d\'argent.',
         },
         emploi: {
           subtitle: 'Arnaques liées aux offres d\'emploi et au recrutement.',
@@ -1574,13 +1698,126 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       error: "Impossible pour l’instant. Réessaie plus tard.",
     },
     floatingCta: {
-      label: "Besoin d’aide ?",
+      label: "Besoin d'aide ?",
       href: "mailto:contact@marhabancanada.ca",
+    },
+    aboutPage: {
+      title: "À propos de Marhaban Canada",
+      intro: "Un service d'accompagnement et d'orientation pour simplifier ton installation au Canada.",
+      mission: {
+        title: "Notre mission",
+        content: "Marhaban Canada est un service d'accompagnement et d'orientation destiné aux nouveaux arrivants au Canada. Nous simplifions l'installation en fournissant des informations claires, basées sur des sources officielles.",
+      },
+      whatWeDo: {
+        title: "Ce que la plateforme fait",
+        items: [
+          "Fournit des informations fiables et vérifiées pour t'aider à t'installer au Canada.",
+          "Propose une checklist interactive pour suivre tes démarches.",
+          "Explique les étapes complexes avec un langage simple.",
+          "Partage des sources officielles pour chaque information.",
+          "Met en avant les erreurs courantes à éviter.",
+        ],
+      },
+      whatWeDontDo: {
+        title: "Ce que la plateforme ne fait pas",
+        items: [
+          "Ne remplace pas les services d'un cabinet d'immigration.",
+          "Ne collecte aucune donnée personnelle (ta progression est sauvegardée localement sur ton appareil).",
+          "Ne garantit pas l'obtention de documents ou de services (chaque cas est unique).",
+          "Ne fournit pas de conseils juridiques ou financiers personnalisés.",
+          "Ne t'aide pas à remplir des formulaires ou à prendre des rendez-vous.",
+        ],
+      },
+      sources: {
+        title: "Comment on choisit les sources",
+        intro: "Nous sélectionnons uniquement des sources officielles et vérifiables. Voici quelques exemples :",
+        examples: [
+          "Service Canada (NAS, permis, etc.)",
+          "IRCC (Immigration, Réfugiés et Citoyenneté Canada)",
+          "RAMQ, OHIP, MSP (cartes santé provinciales)",
+          "ACFC (Agence de la consommation en matière financière du Canada)",
+          "Sites gouvernementaux provinciaux et municipaux",
+        ],
+      },
+      cta: {
+        label: "Commencer la checklist",
+        href: "/checklist",
+      },
+    },
+    contactPage: {
+      title: "Contact",
+      question: "Vous avez une question ou une suggestion ?",
+      writeToUs: "Écrivez-nous à",
+      privacy: "Aucune donnée personnelle n'est collectée via ce formulaire.",
+      responseTime: "Nous répondons dans les meilleurs délais.",
+      disclaimer:
+        "Service d'information et d'accompagnement. Ne remplace pas les services gouvernementaux. Les démarches officielles doivent toujours être validées sur les sites gouvernementaux.",
+      intro: "Nous sommes là pour t'aider. Pose ta question et nous te répondrons rapidement.",
+      safetyNote: "Ne partage jamais ton NAS, tes mots de passe ou tes informations bancaires par email.",
+      formName: "Nom",
+      formEmail: "Email",
+      formMessage: "Message",
+      formTopic: "Sujet",
+      formTopicOptions: [
+        { value: "general", label: "Question générale" },
+        { value: "checklist", label: "Checklist" },
+        { value: "scams", label: "Arnaques" },
+        { value: "technical", label: "Problème technique" },
+        { value: "other", label: "Autre" },
+      ],
+      formSubmit: "Envoyer le message",
+      formSuccess: "Message envoyé avec succès. Nous te répondrons bientôt.",
+      formError: "Une erreur est survenue. Réessaie plus tard.",
+      secondaryLinks: {
+        legal: "Mentions légales",
+        scams: "Arnaques",
+        checklist: "Checklist",
+      },
+    },
+    legalPage: {
+      title: "Mentions légales",
+      editor: {
+        title: "Éditeur du site",
+        content: "Marhaban Canada est un service d'information et d'accompagnement indépendant, non gouvernemental. Ce site est édité par Marhaban Canada.",
+      },
+      usage: {
+        title: "Utilisation de l'information",
+        content: "Les informations présentes sur ce site sont fournies à titre informatif uniquement. Elles ne constituent pas des conseils juridiques, financiers ou professionnels. Toujours vérifier les informations sur les sites officiels gouvernementaux.",
+      },
+      responsibilities: {
+        title: "Responsabilités et limites",
+        content: "Marhaban Canada ne peut être tenu responsable des décisions prises sur la base des informations fournies. Chaque situation est unique et nécessite une vérification auprès des autorités compétentes. Nous ne garantissons pas l'exactitude, la complétude ou l'actualité des informations.",
+      },
+      dataProtection: {
+        title: "Protection des données",
+        whatLabel: "Ce qui est collecté",
+        what: "Nous ne collectons aucune donnée personnelle via ce site. Ta progression dans la checklist est sauvegardée uniquement sur ton appareil (localStorage).",
+        whyLabel: "Pourquoi",
+        why: "Aucune donnée n'est transmise à nos serveurs. Tout reste local sur ton navigateur.",
+        retentionLabel: "Conservation",
+        retention: "Les données stockées localement peuvent être supprimées à tout moment via le bouton 'Réinitialiser' dans la checklist.",
+      },
+      cookies: {
+        title: "Cookies et stockage local",
+        content: "Ce site utilise uniquement le stockage local (localStorage) de ton navigateur pour sauvegarder ta progression dans la checklist. Aucun cookie de suivi n'est utilisé. Tu peux supprimer ces données à tout moment via les paramètres de ton navigateur.",
+      },
+      intellectualProperty: {
+        title: "Propriété intellectuelle",
+        content: "Le contenu de ce site (textes, structure, design) est protégé par le droit d'auteur. Les sources officielles citées restent la propriété de leurs éditeurs respectifs (gouvernements, organismes publics).",
+      },
+      contact: {
+        title: "Contact légal",
+        email: "contact@marhabancanada.ca",
+      },
     },
     footer: {
       disclaimer:
-        "Ce site propose un service d’accompagnement et d’orientation. Il ne remplace pas les services officiels du gouvernement.",
-      rights: "© 2025 Marhaban Canada. Tous droits réservés.",
+        "Service d'information et d'accompagnement. Ne remplace pas les services gouvernementaux. Les démarches officielles doivent toujours être validées sur les sites gouvernementaux.",
+      rights: "Tous droits réservés.",
+      mission: "Service d'accompagnement et d'orientation pour nouveaux arrivants au Canada.",
+      quickGuidesTitle: "Guides rapides",
+      sources: "Sources",
+      copyright: `© ${new Date().getFullYear()} Marhaban Canada. Tous droits réservés.`,
     },
     shared: {
       sourceLabel: "Source",
@@ -2451,9 +2688,122 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       label: "تحتاج مساعدة؟",
       href: "mailto:contact@marhabancanada.ca",
     },
+    contactPage: {
+      title: "اتصل بنا",
+      question: "هل لديك سؤال أو اقتراح؟",
+      writeToUs: "راسلنا على",
+      privacy: "لا يتم جمع أي بيانات شخصية عبر قناة الاتصال هذه.",
+      responseTime: "نحاول الرد في أقرب وقت ممكن.",
+      disclaimer:
+        "خدمة معلومات ومرافقة. لا تحل محل الخدمات الحكومية. يجب دائمًا التحقق من الإجراءات الرسمية على المواقع الحكومية.",
+      intro: "نحن هنا للمساعدة. اطرح سؤالك وسنرد بسرعة.",
+      safetyNote: "لا تشارك أبدًا رقم التأمين الاجتماعي أو كلمات المرور أو المعلومات المصرفية عبر البريد الإلكتروني.",
+      formName: "الاسم",
+      formEmail: "البريد الإلكتروني",
+      formMessage: "الرسالة",
+      formTopic: "الموضوع",
+      formTopicOptions: [
+        { value: "general", label: "سؤال عام" },
+        { value: "checklist", label: "قائمة التحقق" },
+        { value: "scams", label: "الاحتيال" },
+        { value: "technical", label: "مشكلة تقنية" },
+        { value: "other", label: "أخرى" },
+      ],
+      formSubmit: "إرسال الرسالة",
+      formSuccess: "تم إرسال الرسالة بنجاح. سنرد قريبًا.",
+      formError: "حدث خطأ. يرجى المحاولة مرة أخرى لاحقًا.",
+      secondaryLinks: {
+        legal: "قانوني",
+        scams: "الاحتيال",
+        checklist: "قائمة التحقق",
+      },
+    },
+    aboutPage: {
+      title: "حول مرحبا كندا",
+      intro: "خدمة دعم وتوجيه لتبسيط استقرارك في كندا.",
+      mission: {
+        title: "مهمتنا",
+        content: "مرحبا كندا هي خدمة دعم وتوجيه للمهاجرين الجدد إلى كندا. نبسط الاستقرار من خلال توفير معلومات واضحة مبنية على مصادر رسمية.",
+      },
+      whatWeDo: {
+        title: "ما تفعله المنصة",
+        items: [
+          "توفر معلومات موثوقة ومتحقق منها لمساعدتك على الاستقرار في كندا.",
+          "تقدم قائمة تحقق تفاعلية لمتابعة خطواتك.",
+          "تشرح الخطوات المعقدة بلغة بسيطة.",
+          "تشارك المصادر الرسمية لكل معلومة.",
+          "تسلط الضوء على الأخطاء الشائعة التي يجب تجنبها.",
+        ],
+      },
+      whatWeDontDo: {
+        title: "ما لا تفعله المنصة",
+        items: [
+          "لا تحل محل خدمات مكتب محاماة الهجرة.",
+          "لا تجمع أي بيانات شخصية (يتم حفظ تقدمك محليًا على جهازك).",
+          "لا تضمن الحصول على وثائق أو خدمات (كل حالة فريدة).",
+          "لا تقدم نصائح قانونية أو مالية مخصصة.",
+          "لا تساعدك في ملء النماذج أو حجز المواعيد.",
+        ],
+      },
+      sources: {
+        title: "كيف نختار المصادر",
+        intro: "نختار فقط المصادر الرسمية والقابلة للتحقق. إليك بعض الأمثلة:",
+        examples: [
+          "خدمة كندا (رقم التأمين الاجتماعي، التصاريح، إلخ)",
+          "IRCC (الهجرة واللاجئين والمواطنة الكندية)",
+          "RAMQ, OHIP, MSP (بطاقات الصحة الإقليمية)",
+          "ACFC (وكالة حماية المستهلك المالي في كندا)",
+          "المواقع الحكومية الإقليمية والبلدية",
+        ],
+      },
+      cta: {
+        label: "ابدأ قائمة التحقق",
+        href: "/checklist",
+      },
+    },
+    legalPage: {
+      title: "قانوني",
+      editor: {
+        title: "محرر الموقع",
+        content: "مرحبا كندا هي خدمة معلومات ومرافقة مستقلة وغير حكومية. هذا الموقع منشور من قبل مرحبا كندا.",
+      },
+      usage: {
+        title: "استخدام المعلومات",
+        content: "المعلومات على هذا الموقع مقدمة لأغراض إعلامية فقط. لا تشكل نصيحة قانونية أو مالية أو مهنية. تحقق دائمًا من المعلومات على المواقع الحكومية الرسمية.",
+      },
+      responsibilities: {
+        title: "المسؤوليات والحدود",
+        content: "لا يمكن تحميل مرحبا كندا المسؤولية عن القرارات المتخذة بناءً على المعلومات المقدمة. كل حالة فريدة وتتطلب التحقق من السلطات المختصة. لا نضمن دقة أو اكتمال أو حداثة المعلومات.",
+      },
+      dataProtection: {
+        title: "حماية البيانات",
+        whatLabel: "ما يتم جمعه",
+        what: "لا نجمع أي بيانات شخصية عبر هذا الموقع. يتم حفظ تقدمك في قائمة التحقق فقط على جهازك (localStorage).",
+        whyLabel: "لماذا",
+        why: "لا يتم نقل أي بيانات إلى خوادمنا. كل شيء يبقى محليًا على متصفحك.",
+        retentionLabel: "الاحتفاظ",
+        retention: "يمكن حذف البيانات المخزنة محليًا في أي وقت عبر زر 'إعادة تعيين' في قائمة التحقق.",
+      },
+      cookies: {
+        title: "ملفات تعريف الارتباط والتخزين المحلي",
+        content: "يستخدم هذا الموقع فقط التخزين المحلي لمتصفحك (localStorage) لحفظ تقدمك في قائمة التحقق. لا يتم استخدام ملفات تعريف الارتباط للتتبع. يمكنك حذف هذه البيانات في أي وقت عبر إعدادات متصفحك.",
+      },
+      intellectualProperty: {
+        title: "الملكية الفكرية",
+        content: "محتوى هذا الموقع (النصوص، الهيكل، التصميم) محمي بحقوق النشر. المصادر الرسمية المذكورة تبقى ملكية ناشريها (الحكومات، المنظمات العامة).",
+      },
+      contact: {
+        title: "اتصال قانوني",
+        email: "contact@marhabancanada.ca",
+      },
+    },
     footer: {
       disclaimer: "هذا الموقع يقدم خدمة مرافقة وتوجيه، ولا يُعتبر بديلاً عن الخدمات الحكومية الرسمية.",
-      rights: "© 2025 Marhaban Canada. جميع الحقوق محفوظة.",
+      rights: "جميع الحقوق محفوظة.",
+      mission: "خدمة الدعم والتوجيه للوافدين الجدد إلى كندا.",
+      quickGuidesTitle: "أدلة سريعة",
+      sources: "المصادر",
+      copyright: `© ${new Date().getFullYear()} Marhaban Canada. جميع الحقوق محفوظة.`,
     },
     shared: {
       sourceLabel: "المصدر",
@@ -2759,10 +3109,123 @@ const enContent: LocaleContent = {
     og: "Settlement support service for newcomers in Canada: official steps, housing, banking, phone plans, scam prevention.",
     pdfHeader: "Settlement support service for newcomers in Canada: official steps, housing, banking, phone plans, scam prevention.",
   },
+  contactPage: {
+    title: "Contact",
+    question: "Do you have a question or suggestion?",
+    writeToUs: "Write to us at",
+    privacy: "No personal data is collected via this contact channel.",
+    responseTime: "We reply as soon as possible.",
+    disclaimer:
+      "Information and support service. Does not replace government services. Official procedures must always be validated on government websites.",
+    intro: "We're here to help. Ask your question and we'll reply quickly.",
+    safetyNote: "Never share your SIN, passwords, or banking information by email.",
+    formName: "Name",
+    formEmail: "Email",
+    formMessage: "Message",
+    formTopic: "Topic",
+    formTopicOptions: [
+      { value: "general", label: "General question" },
+      { value: "checklist", label: "Checklist" },
+      { value: "scams", label: "Scams" },
+      { value: "technical", label: "Technical issue" },
+      { value: "other", label: "Other" },
+    ],
+    formSubmit: "Send message",
+    formSuccess: "Message sent successfully. We'll reply soon.",
+    formError: "An error occurred. Please try again later.",
+    secondaryLinks: {
+      legal: "Legal",
+      scams: "Scams",
+      checklist: "Checklist",
+    },
+  },
+  aboutPage: {
+    title: "About Marhaban Canada",
+    intro: "A support and orientation service to simplify your settlement in Canada.",
+    mission: {
+      title: "Our mission",
+      content: "Marhaban Canada is a support and orientation service for newcomers to Canada. We simplify settlement by providing clear information based on official sources.",
+    },
+    whatWeDo: {
+      title: "What the platform does",
+      items: [
+        "Provides reliable and verified information to help you settle in Canada.",
+        "Offers an interactive checklist to track your steps.",
+        "Explains complex steps in simple language.",
+        "Shares official sources for each piece of information.",
+        "Highlights common mistakes to avoid.",
+      ],
+    },
+    whatWeDontDo: {
+      title: "What the platform does not do",
+      items: [
+        "Does not replace immigration law firm services.",
+        "Does not collect any personal data (your progress is saved locally on your device).",
+        "Does not guarantee obtaining documents or services (each case is unique).",
+        "Does not provide personalized legal or financial advice.",
+        "Does not help you fill out forms or book appointments.",
+      ],
+    },
+    sources: {
+      title: "How we choose sources",
+      intro: "We select only official and verifiable sources. Here are some examples:",
+      examples: [
+        "Service Canada (SIN, permits, etc.)",
+        "IRCC (Immigration, Refugees and Citizenship Canada)",
+        "RAMQ, OHIP, MSP (provincial health cards)",
+        "FCAC (Financial Consumer Agency of Canada)",
+        "Provincial and municipal government websites",
+      ],
+    },
+    cta: {
+      label: "Start the checklist",
+      href: "/checklist",
+    },
+  },
+  legalPage: {
+    title: "Legal",
+    editor: {
+      title: "Site editor",
+      content: "Marhaban Canada is an independent, non-governmental information and support service. This site is published by Marhaban Canada.",
+    },
+    usage: {
+      title: "Use of information",
+      content: "The information on this site is provided for informational purposes only. It does not constitute legal, financial, or professional advice. Always verify information on official government websites.",
+    },
+    responsibilities: {
+      title: "Responsibilities and limitations",
+      content: "Marhaban Canada cannot be held responsible for decisions made based on the information provided. Each situation is unique and requires verification with the competent authorities. We do not guarantee the accuracy, completeness, or currency of the information.",
+    },
+    dataProtection: {
+      title: "Data protection",
+      whatLabel: "What is collected",
+      what: "We do not collect any personal data through this site. Your progress in the checklist is saved only on your device (localStorage).",
+      whyLabel: "Why",
+      why: "No data is transmitted to our servers. Everything remains local on your browser.",
+      retentionLabel: "Retention",
+      retention: "Locally stored data can be deleted at any time via the 'Reset' button in the checklist.",
+    },
+    cookies: {
+      title: "Cookies and local storage",
+      content: "This site uses only your browser's local storage (localStorage) to save your progress in the checklist. No tracking cookies are used. You can delete this data at any time via your browser settings.",
+    },
+    intellectualProperty: {
+      title: "Intellectual property",
+      content: "The content of this site (texts, structure, design) is protected by copyright. The official sources cited remain the property of their respective publishers (governments, public organizations).",
+    },
+    contact: {
+      title: "Legal contact",
+      email: "contact@marhabancanada.ca",
+    },
+  },
   footer: {
-    ...baseContent.fr.footer,
     disclaimer:
       "This site provides a settlement guidance and support service. It does not replace official government services.",
+    rights: "All rights reserved.",
+    mission: "Support and orientation service for newcomers to Canada.",
+    quickGuidesTitle: "Quick guides",
+    sources: "Sources",
+    copyright: `© ${new Date().getFullYear()} Marhaban Canada. All rights reserved.`,
   },
 };
 

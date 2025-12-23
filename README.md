@@ -194,6 +194,70 @@ Tests run:
 
 ---
 
+## 🔧 Service Worker & PWA
+
+### Service Worker Configuration
+
+**Important:** Service Worker is **ONLY registered in production** to prevent caching issues during development.
+
+**Strategy:**
+- ✅ **Assets cached:** Images, fonts, static files (network-first with cache fallback)
+- ❌ **Pages NOT cached:** HTML pages, API routes, Next.js internals (network-only)
+- ✅ **Offline support:** Assets available offline in production
+
+### Cleaning Service Worker (Development)
+
+If you see stale content or old navbar versions, the Service Worker may be active from a previous session:
+
+**Method 1: Via Browser DevTools (Recommended)**
+1. Open DevTools (F12)
+2. Go to **Application** → **Service Workers**
+3. Click **"Unregister"** for any active service worker
+4. Go to **Application** → **Storage** → **"Clear site data"**
+5. Hard reload: `Ctrl+Shift+R` (Windows/Linux) or `Cmd+Shift+R` (Mac)
+
+**Method 2: Via Console**
+```javascript
+// Paste in browser console
+(async function() {
+  if ('serviceWorker' in navigator) {
+    const registrations = await navigator.serviceWorker.getRegistrations();
+    for (const registration of registrations) {
+      await registration.unregister();
+      console.log('✅ SW désinscrit');
+    }
+    if ('caches' in window) {
+      const cacheNames = await caches.keys();
+      await Promise.all(cacheNames.map(name => caches.delete(name)));
+      console.log('✅ Caches vidés');
+    }
+    location.reload(true);
+  }
+})();
+```
+
+### Testing Offline Mode (Production)
+
+To test offline functionality:
+
+```bash
+# 1. Build production version
+npm run build
+
+# 2. Start production server
+npm run start
+
+# 3. Open in browser
+# http://localhost:3000
+
+# 4. In DevTools → Network → Check "Offline"
+# 5. Assets should load from cache, pages should show offline message
+```
+
+**Note:** Offline mode only works in production build (`npm run start`), not in development (`npm run dev`).
+
+---
+
 ## 🚀 Deployment
 
 ### Quick Deploy

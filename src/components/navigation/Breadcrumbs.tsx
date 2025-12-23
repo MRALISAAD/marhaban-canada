@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Locale } from '@/i18n/locales';
 
 type Crumb = { label: string; href?: string };
 
@@ -7,7 +8,7 @@ export function Breadcrumbs({
   locale,
 }: {
   items: Crumb[];
-  locale: "fr" | "en" | "ar";
+  locale: Locale;
 }) {
   const isRtl = locale === "ar";
   const separator = isRtl ? "←" : "→";

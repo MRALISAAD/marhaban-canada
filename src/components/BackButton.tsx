@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useLanguage } from '@/components/LanguageProvider';
+import { getHtmlAttrs } from '@/i18n/locales';
 
 export function BackButton({
   fallbackHref = '/',
@@ -11,7 +12,8 @@ export function BackButton({
   label?: string;
 }) {
   const router = useRouter();
-  const { dir } = useLanguage();
+  const { locale } = useLanguage();
+  const { dir } = getHtmlAttrs(locale);
   const arrow = dir === 'rtl' ? '→' : '←';
 
   return (

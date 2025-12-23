@@ -1,11 +1,22 @@
-import type { MetadataRoute } from "next";
+import type { MetadataRoute } from 'next';
 
+const BASE_URL = 'https://marhabancanada.ca';
+
+/**
+ * Robots.txt configuration
+ * Served at /robots.txt
+ */
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-    },
-    sitemap: "https://marhabancanada.ca/sitemap.xml",
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/api/', '/_next/'],
+      },
+    ],
+    sitemap: `${BASE_URL}/sitemap.xml`,
+    host: BASE_URL,
   };
 }
+

@@ -60,8 +60,8 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
     labels: {
       eyebrow: "Parcours d'arrivee",
       title: 'Ton parcours d installation',
-      subtitle: "Voici l'ordre le plus simple pour demarrer sans stress.",
-      provinceLabel: 'Province selectionnee',
+      subtitle: "Voici l'ordre le plus simple pour démarrer sans stress.",
+      provinceLabel: 'Province sélectionnée',
       progressLabel: 'Progression globale',
       progressHelper: 'etapes cochees',
       autoSaveTitle: 'Sauvegarde automatique',
@@ -83,7 +83,7 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
       {
         id: 'week-1',
         title: 'Semaine 1',
-        description: 'Ces etapes te rendent operationnel rapidement. Tu peux les faire tranquillement, une par une.',
+        description: 'Ces étapes te rendent opérationnel rapidement. Tu peux les faire tranquillement, une par une.',
         badge: 'Urgent',
         items: [
           {
@@ -107,7 +107,7 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
           {
             id: 'docs',
             title: 'Organiser tes documents essentiels',
-            why: 'Eviter les pertes et gagner du temps pour chaque demarche.',
+            why: 'Éviter les pertes et gagner du temps pour chaque démarche.',
             how: [
               'Faire des copies papier et numeriques',
               'Scanner passeport, permis et preuves',
@@ -123,10 +123,10 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
           },
           {
             id: 'phone',
-            title: 'Obtenir un numero de telephone canadien',
-            why: "Necessaire pour l'emploi, la banque et les services de base.",
+            title: 'Obtenir un numéro de téléphone canadien',
+            why: "Nécessaire pour l'emploi, la banque et les services de base.",
             how: ['Comparer les forfaits BYOD', 'Prendre une carte SIM', 'Activer la ligne en boutique'],
-            avoid: ['Eviter les engagements longs au debut'],
+            avoid: ['Éviter les engagements longs au début'],
             sources: [
               {
                 label: 'CRTC - services mobiles',
@@ -144,7 +144,7 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
               'Apporter passeport + preuve de statut',
               'Demander une carte de debit et credit',
             ],
-            avoid: ['Eviter les frais mensuels eleves'],
+            avoid: ['Éviter les frais mensuels élevés'],
             sources: [
               {
                 label: 'Agence de la consommation - comptes',
@@ -158,7 +158,7 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
             title: 'Obtenir une carte de transport locale',
             why: 'Economiser sur les trajets et se deplacer facilement.',
             how: ['Verifier la carte locale (OPUS, Compass, PRESTO)', 'Acheter en station ou en ligne'],
-            avoid: ['Eviter les achats au dernier moment'],
+            avoid: ['Éviter les achats au dernier moment'],
             sources: [
               { label: 'Transports Quebec - OPUS', href: 'https://www.stm.info/fr/tarifs' },
               { label: 'TransLink - Compass', href: 'https://www.translink.ca/transit-fares/compass-card' },
@@ -231,15 +231,15 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
       {
         id: 'ongoing',
         title: 'En continu',
-        description: 'Ces etapes t aident sur le long terme. Reviens y quand tu veux.',
+        description: 'Ces étapes t\'aident sur le long terme. Reviens-y quand tu veux.',
         badge: 'En continu',
         items: [
           {
             id: 'integration',
             title: 'Integration locale',
-            why: 'Les services locaux aident a se poser plus vite.',
-            how: ['Identifier les services municipaux', "S'inscrire a la bibliotheque", 'Explorer les activites locales'],
-            avoid: ['Rester isole pendant les premieres semaines'],
+            why: 'Les services locaux aident à se poser plus vite.',
+            how: ['Identifier les services municipaux', "S'inscrire à la bibliothèque", 'Explorer les activités locales'],
+            avoid: ['Rester isolé pendant les premières semaines'],
             sources: [
               {
                 label: 'Canada.ca - nouveaux arrivants',
@@ -265,8 +265,8 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
           {
             id: 'taxes',
             title: 'Impots et documents',
-            why: 'Garde tes preuves pour les declarations annuelles.',
-            how: ['Conserver tes releves et factures', 'Noter les dates limites', 'Consulter un comptable si besoin'],
+            why: 'Garde tes preuves pour les déclarations annuelles.',
+            how: ['Conserver tes relevés et factures', 'Noter les dates limites', 'Consulter un comptable si besoin'],
             avoid: ['Perdre les documents importants'],
             sources: [
               {
