@@ -1,0 +1,163 @@
+{
+  "home": {
+    "title": "Bienvenue au Canada",
+    "subtitle": "Votre guide rassurant pour démarrer sereinement",
+    "presentation": "Marhaban Canada vous accompagne étape par étape pour réussir votre installation, sans stress et sans compte.",
+    "ctaChecklist": "Commencer la checklist",
+    "ctaSteps": "Voir les étapes",
+    "whyTitle": "Pourquoi Marhaban Canada ?",
+    "whyContent": "Un site pensé pour les nouveaux arrivants, simple, fiable et accessible partout.",
+    "howTitle": "Comment ça marche ?",
+    "howSteps": [
+      "Consultez la checklist",
+      "Suivez chaque étape",
+      "Sauvegardez votre progression"
+    ],
+    "disclaimer": "Ce site ne collecte aucune donnée personnelle. Votre progression reste sur votre appareil."
+  },
+  "checklist": {
+    "title": "Checklist d'installation",
+    "description": "Cochez chaque étape pour suivre votre progression. Votre avancée est sauvegardée localement.",
+    "steps": {
+      "nas": "Obtenir votre NAS",
+      "bank": "Ouvrir un compte bancaire",
+      "housing": "Trouver un logement",
+      "phone": "Obtenir un numéro de téléphone",
+      "health": "Accéder aux soins de santé"
+    },
+    "downloadPdf": "Télécharger en PDF",
+    "reset": "Réinitialiser",
+    "progressSaved": "Progression sauvegardée localement."
+  },
+  "steps": {
+    "nas": {
+      "title": "Obtenir votre NAS",
+      "summary": "Le NAS est essentiel pour travailler et accéder à des services au Canada.",
+      "what": "Le NAS (Numéro d’Assurance Sociale) est un identifiant unique.",
+      "why": "Il est requis pour l’emploi, les banques et les démarches administratives.",
+      "how": [
+        "Préparez votre passeport et visa.",
+        "Rendez-vous dans un bureau Service Canada.",
+        "Remplissez le formulaire sur place.",
+        "Recevez votre NAS immédiatement ou par courrier."
+      ],
+      "avoid": "Ne partagez jamais votre NAS sauf si nécessaire.",
+      "actionButtonLabel": "Voir le guide officiel",
+      "externalLink": "https://www.canada.ca/fr/services/finances/nas.html"
+    },
+    "bank": {
+      "title": "Ouvrir un compte bancaire",
+      "summary": "Un compte bancaire est indispensable pour recevoir des paiements et gérer vos finances.",
+      "what": "Un compte courant dans une banque canadienne.",
+      "why": "Nécessaire pour le salaire, le logement et les achats quotidiens.",
+      "how": [
+        "Comparez les offres des banques.",
+        "Prenez rendez-vous en agence.",
+        "Apportez vos documents d’identité et NAS.",
+        "Ouvrez le compte et activez la carte."
+      ],
+      "avoid": "Évitez les frais cachés, lisez les conditions.",
+      "actionButtonLabel": "Comparer les banques",
+      "externalLink": "https://www.canada.ca/fr/services/finances/banques.html"
+    },
+    "housing": {
+      "title": "Trouver un logement",
+      "summary": "Le logement est une étape clé pour votre stabilité.",
+      "what": "Location ou achat d’un appartement ou d’une maison.",
+      "why": "Un domicile est requis pour la plupart des démarches.",
+      "how": [
+        "Définissez votre budget.",
+        "Cherchez sur les sites spécialisés.",
+        "Visitez les logements.",
+        "Signez le bail ou l’acte d’achat."
+      ],
+      "avoid": "Ne payez jamais sans contrat écrit.",
+      "actionButtonLabel": "Voir les annonces",
+      "externalLink": "https://www.cmhc-schl.gc.ca/fr"
+    },
+    "phone": {
+      "title": "Obtenir un numéro de téléphone",
+      "summary": "Un numéro canadien facilite vos démarches et communications.",
+      "what": "Ligne mobile ou carte SIM locale.",
+      "why": "Requis pour l’emploi, la banque et le logement.",
+      "how": [
+        "Comparez les opérateurs.",
+        "Choisissez une offre adaptée.",
+        "Présentez une pièce d’identité.",
+        "Activez votre ligne."
+      ],
+      "avoid": "Attention aux frais d’itinérance.",
+      "actionButtonLabel": "Comparer les forfaits",
+      "externalLink": "https://crtc.gc.ca/fra/phone.htm"
+    },
+    "health": {
+      "title": "Accéder aux soins de santé",
+      "summary": "L’assurance santé est obligatoire pour tous.",
+      "what": "Inscription au régime public de santé.",
+      "why": "Pour bénéficier de soins et consultations médicales.",
+      "how": [
+        "Rassemblez vos documents d’arrivée.",
+        "Rendez-vous au bureau de santé provincial.",
+        "Remplissez le formulaire d’inscription.",
+        "Recevez votre carte santé."
+      ],
+      "avoid": "Ne tardez pas à vous inscrire.",
+      "actionButtonLabel": "Guide santé",
+      "externalLink": "https://www.canada.ca/fr/services/sante.html"
+    }
+  },
+  "about": {
+    "mission": "Faciliter l’installation des nouveaux arrivants au Canada.",
+    "vision": "Un accès simple à l’information essentielle pour tous.",
+    "whatWeDo": "Nous proposons des guides et outils pratiques.",
+    "whatWeDontDo": "Nous ne fournissons pas de conseils juridiques ou services personnalisés."
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "text": "Pour toute question générale, écrivez-nous à :",
+    "email": "contact@marhabancanada.ca",
+    "disclaimer": "Aucune garantie de réponse. Pas de support légal."
+  },
+  "legal": {
+    "title": "Mentions légales",
+    "disclaimer": "Ce site est informatif. Aucune responsabilité sur l’usage des informations.",
+    "privacy": "Aucune donnée personnelle n’est collectée. Votre utilisation reste privée."
+  },
+  "error": {
+    "404": {
+      "title": "Page introuvable",
+      "message": "Désolé, cette page n’existe pas ou a été déplacée.",
+      "cta": "Retour à l’accueil"
+    },
+    "500": {
+      "title": "Erreur interne",
+      "message": "Une erreur est survenue. Essayez de revenir à l’accueil.",
+      "cta": "Retour à l’accueil"
+    },
+    "fallback": {
+      "title": "Langue non prise en charge",
+      "message": "La langue demandée n’est pas disponible. Affichage en français.",
+      "cta": "Retour à l’accueil"
+    }
+  },
+  "blog": {
+    "title": "Blog Marhaban Canada",
+    "subtitle": "Conseils et témoignages pour réussir votre installation",
+    "listEmpty": "Aucun article disponible pour le moment.",
+    "readMore": "Lire la suite",
+    "backToList": "Retour au blog",
+    "article": {
+      "publishedOn": "Publié le",
+      "author": "Par",
+      "notFound": {
+        "title": "Article introuvable",
+        "message": "Cet article n’existe pas ou a été supprimé.",
+        "cta": "Retour au blog"
+      }
+    }
+  },
+  "shared": {
+    "easyReadOn": "Mode Lecture facile",
+    "easyReadOff": "Mode Normal"
+  }
+}

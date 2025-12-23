@@ -1,0 +1,117 @@
+{
+    // VS Code Debug Configuration for Next.js Project
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        // ============================================
+        // Chrome Debug Configurations
+        // ============================================
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Next.js: Chrome (Port 3000)",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}",
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack://_N_E/*": "${webRoot}/*",
+                "webpack:///./*": "${webRoot}/*",
+                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack:///./src/*": "${webRoot}/src/*"
+            },
+            "runtimeArgs": [
+                "--disable-extensions",
+                "--disable-background-timer-throttling",
+                "--disable-backgrounding-occluded-windows",
+                "--disable-renderer-backgrounding"
+            ],
+            "timeout": 30000,
+            "trace": false
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Next.js: Chrome (Port 3001 - Fallback)",
+            "url": "http://localhost:3001",
+            "webRoot": "${workspaceFolder}",
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack://_N_E/*": "${webRoot}/*",
+                "webpack:///./*": "${webRoot}/*",
+                "webpack:///./~/*": "${webRoot}/node_modules/*",
+                "webpack:///./src/*": "${webRoot}/src/*"
+            },
+            "runtimeArgs": [
+                "--disable-extensions",
+                "--disable-background-timer-throttling"
+            ],
+            "timeout": 30000
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Next.js: Chrome (No Source Maps - Faster)",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}",
+            "sourceMaps": false,
+            "runtimeArgs": [
+                "--disable-extensions",
+                "--disable-background-timer-throttling"
+            ],
+            "timeout": 30000
+        },
+        // ============================================
+        // Node.js Debug Configurations
+        // ============================================
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Next.js: Debug Server (npm)",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "dev"],
+            "console": "integratedTerminal",
+            "skipFiles": ["<node_internals>/**"],
+            "env": {
+                "NODE_OPTIONS": "--inspect"
+            },
+            "restart": true,
+            "protocol": "inspector"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Next.js: Attach to Running Server",
+            "port": 9229,
+            "restart": true,
+            "skipFiles": ["<node_internals>/**"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Playwright: Debug Tests",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "test:playwright", "--", "--debug"],
+            "console": "integratedTerminal",
+            "skipFiles": ["<node_internals>/**"],
+            "env": {
+                "PWDEBUG": "1"
+            }
+        }
+    ],
+    // ============================================
+    // Compound Configurations
+    // ============================================
+    "compounds": [
+        {
+            "name": "Next.js: Full Stack Debug",
+            "configurations": [
+                "Next.js: Debug Server (npm)",
+                "Next.js: Chrome (Port 3000)"
+            ],
+            "stopAll": true,
+            "preLaunchTask": null
+        }
+    ]
+}

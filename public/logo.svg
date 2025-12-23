@@ -1,0 +1,33 @@
+<svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Marhaban Canada">
+  <rect width="160" height="160" fill="none" />
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path
+      d="M80 18L85 42L100 30L92 55L115 53L97 68L110 76L90 78L87 102L82 78L60 76L74 70L61 54L86 56L79 26Z"
+      fill="#DC2626"
+      stroke="#9A0000"
+      stroke-width="2"
+    />
+    <path
+      d="M110 70L130 65L122 72L138 75L115 85L130 90L112 90L108 82Z"
+      fill="#0B7F45"
+      stroke="#0B7F45"
+    />
+    <path
+      d="M76 78Q80 90 74 100"
+      stroke="#9A0000"
+      stroke-width="3"
+    />
+  </g>
+  <text
+    x="80"
+    y="140"
+    font-size="26"
+    font-weight="700"
+    font-family="Inter, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+    fill="#9A0000"
+    text-anchor="middle"
+    letter-spacing="6"
+  >
+    MARHABAN
+  </text>
+</svg>

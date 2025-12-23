@@ -1,0 +1,36 @@
+{
+  "home": {
+    "title": "Welcome to Canada",
+    "subtitle": "Your reassuring guide to a smooth start",
+    "presentation": "Marhaban Canada supports you step by step for a stress-free settlement, no account needed.",
+    "ctaChecklist": "Start the checklist",
+    "ctaSteps": "See the steps",
+    "whyTitle": "Why Marhaban Canada?",
+    "whyContent": "A site designed for newcomers: simple, reliable, and accessible everywhere.",
+    "howTitle": "How does it work?",
+    "howSteps": [
+      "Check the checklist",
+      "Follow each step",
+      "Save your progress"
+    ],
+    "disclaimer": "This site does not collect any personal data. Your progress stays on your device."
+  },
+  "checklist": {
+    "title": "Settlement Checklist",
+    "description": "Check each step to track your progress. Your progress is saved locally.",
+    "steps": {
+      "nas": "Get your SIN",
+      "bank": "Open a bank account",
+      "housing": "Find housing",
+      "phone": "Get a phone number",
+      "health": "Access healthcare"
+    },
+    "downloadPdf": "Download PDF",
+    "reset": "Reset",
+    "progressSaved": "Progress saved locally."
+  },
+  "shared": {
+    "easyReadOn": "Easy Read Mode",
+    "easyReadOff": "Normal Mode"
+  }
+}
