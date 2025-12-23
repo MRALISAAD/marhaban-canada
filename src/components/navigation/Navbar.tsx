@@ -327,11 +327,10 @@ export function Navbar() {
           >
             <Image
               src="/logo.png"
-              alt=""
+              alt={content.brand || 'Marhaban Canada'}
               width={32}
               height={32}
               className="h-8 w-8 flex-shrink-0"
-              aria-hidden="true"
             />
             <span className="hidden sm:inline">{content.brand}</span>
           </Link>

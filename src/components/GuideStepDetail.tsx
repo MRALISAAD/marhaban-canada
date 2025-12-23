@@ -21,6 +21,13 @@ function getPhaseLabel(phase: Step['phase'], microcopy: { [key: string]: string 
 
 export function GuideStepDetail({ step, previousStepId, nextStepId }: GuideStepDetailProps) {
   const { content, locale } = useLanguage();
+  if (!step || !content?.microcopy || !content?.shared?.sectionLabels) {
+    return (
+      <main className="mx-auto max-w-3xl px-6 py-10">
+        <p className="text-lg font-semibold text-slate-900">Content coming soon</p>
+      </main>
+    );
+  }
   const { dir } = getHtmlAttrs(locale);
   const isRTL = dir === 'rtl';
   const breadcrumbArrow = isRTL ? '←' : '→';

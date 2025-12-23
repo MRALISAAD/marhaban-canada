@@ -9,8 +9,8 @@ import { isLocale, type Locale } from './src/i18n/locales';
  * 3. Default to 'fr'
  */
 function detectLocale(request: NextRequest): Locale {
-  // Check cookie first
-  const cookieLocale = request.cookies.get('locale')?.value;
+  // Check cookie first (mc_locale is the only essential cookie we set)
+  const cookieLocale = request.cookies.get('mc_locale')?.value;
   if (cookieLocale && isLocale(cookieLocale)) {
     return cookieLocale;
   }
@@ -70,14 +70,34 @@ export default function middleware(request: NextRequest) {
   const firstSegment = segments[0];
   
   if (firstSegment && isLocale(firstSegment)) {
-    return NextResponse.next();
+    // Ensure mc_locale cookie is set even when locale is already in path
+    const res = NextResponse.next();
+    if (!request.cookies.get('mc_locale')) {
+      const lang = detectLocale(request);
+      res.cookies.set('mc_locale', lang, {
+        path: '/',
+        httpOnly: false,
+        sameSite: 'lax',
+        secure: true,
+        maxAge: 60 * 60 * 24 * 365,
+      });
+    }
+    return res;
   }
 
   // Detect locale and redirect
   const locale = detectLocale(request);
   const url = request.nextUrl.clone();
   url.pathname = `/${locale}${pathname === '/' ? '' : pathname}`;
-  return NextResponse.redirect(url);
+  const res = NextResponse.redirect(url);
+  res.cookies.set('mc_locale', locale, {
+    path: '/',
+    httpOnly: false,
+    sameSite: 'lax',
+    secure: true,
+    maxAge: 60 * 60 * 24 * 365,
+  });
+  return res;
 }
 
 export const config = {

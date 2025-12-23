@@ -9,6 +9,7 @@ import { enContent } from '@/content/en'; // Import enContent
 import { steps as frGuideSteps, type Step } from '@/content/guideSteps';
 import { guideStepsEn } from '@/content/guideSteps.en';
 import { guideStepsAr } from '@/content/guideSteps.ar';
+import { mergeWithFallback } from '@/lib/i18nFallback';
 
 type EnhancedContent = LocaleContent & { guideSteps: Record<string, Step> };
 
@@ -27,10 +28,11 @@ export function LanguageProvider({ locale, children }: { locale: Locale; childre
   const localizedGuideSteps: Record<string, Step> =
     locale === 'ar' ? guideStepsAr : locale === 'en' ? guideStepsEn : frGuideSteps;
 
-  const content: EnhancedContent = useMemo(
-    () => ({ ...(baseContent as LocaleContent), guideSteps: localizedGuideSteps }),
-    [baseContent, localizedGuideSteps],
-  );
+  const content: EnhancedContent = useMemo(() => {
+    // Deep merge with FR as fallback to avoid undefined access at runtime
+    const merged = mergeWithFallback<LocaleContent>(baseContent, frContent);
+    return { ...merged, guideSteps: localizedGuideSteps };
+  }, [baseContent, localizedGuideSteps]);
   const value = useMemo(() => ({ locale, content }), [locale, content]);
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;

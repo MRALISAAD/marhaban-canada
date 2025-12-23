@@ -20,6 +20,14 @@ export function GuideStepPageClient({ stepId, previousStepId, nextStepId }: Prop
   const guideSteps = (content as ContentWithGuideSteps).guideSteps;
   const step = guideSteps?.[stepId];
 
+  if (!step) {
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-12 text-center">
+        <p className="text-lg font-semibold text-slate-900">Content coming soon</p>
+      </div>
+    );
+  }
+
   return <GuideStepDetail step={step as Step} previousStepId={previousStepId} nextStepId={nextStepId} />;
 }
 
