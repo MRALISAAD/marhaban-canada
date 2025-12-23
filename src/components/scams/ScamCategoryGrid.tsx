@@ -1,0 +1,113 @@
+'use client';
+
+import LocalizedLink from '../LocalizedLink';
+import { Briefcase, CreditCard, Home, Phone, Shield, Store } from 'lucide-react';
+import type { ScamCategory } from '@/content/scams';
+import { useLanguage } from '@/components/LanguageProvider';
+
+const iconMap = {
+  home: Home,
+  briefcase: Briefcase,
+  phone: Phone,
+  credit: CreditCard,
+  shield: Shield,
+  store: Store,
+};
+
+type ScamCategoryGridProps = {
+  categories: ScamCategory[];
+};
+
+export function ScamCategoryGrid({ categories }: ScamCategoryGridProps) {
+  const { locale } = useLanguage();
+
+  const labelsByLocale: Record<
+    string,
+    Partial<Record<string, { title: string; summary: string }>>
+  > = {
+    fr: {}, // on garde les valeurs par défaut issues du contenu FR
+    en: {
+      housing: {
+        title: 'Housing',
+        summary: 'Fake landlords, suspicious deposits, pressure.',
+      },
+      jobs: {
+        title: 'Jobs',
+        summary: 'Too‑good offers, fake recruiters, hidden fees.',
+      },
+      phone: {
+        title: 'Phone / plans',
+        summary: 'Hidden fees, aggressive sales.',
+      },
+      bank: {
+        title: 'Bank / cards / fees',
+        summary: 'Fee requests, suspicious accounts.',
+      },
+      immigration: {
+        title: 'Immigration / fake agents',
+        summary: 'Fake consultants, paid dossiers.',
+      },
+      marketplace: {
+        title: 'Marketplace (Kijiji/FB)',
+        summary: 'Fake sellers, advance payment.',
+      },
+    },
+    ar: {
+      housing: {
+        title: 'السكن',
+        summary: 'ملاك وهميون، ودائع مشبوهة، وضغط.',
+      },
+      jobs: {
+        title: 'العمل',
+        summary: 'عروض مبالغ فيها، مجندون مزيفون، ورسوم خفية.',
+      },
+      phone: {
+        title: 'الهاتف / الباقات',
+        summary: 'رسوم مخفية، مبيعات عدوانية.',
+      },
+      bank: {
+        title: 'البنك / البطاقات / الرسوم',
+        summary: 'طلبات رسوم، حسابات مشبوهة.',
+      },
+      immigration: {
+        title: 'الهجرة / وكلاء مزيفون',
+        summary: 'مستشارون مزيفون وملفات مدفوعة.',
+      },
+      marketplace: {
+        title: 'البيع عبر المنصات (Kijiji/FB)',
+        summary: 'بائعون وهميون ودفع مسبق.',
+      },
+    },
+  };
+
+  const localeLabels = labelsByLocale[locale] ?? labelsByLocale.fr;
+
+  return (
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {categories.map((category) => {
+        const Icon = iconMap[category.icon];
+        const override = localeLabels[category.id];
+        const title = override?.title ?? category.title;
+        const summary = override?.summary ?? category.summary;
+
+        return (
+          <LocalizedLink
+            key={category.id}
+            href={`/arnaques/${category.guideSlug}`}
+            className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-slate-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/30"
+          >
+            <div className="flex items-start gap-3">
+              <span className="mt-1 rounded-full border border-slate-200 bg-slate-50 p-2">
+                <Icon className="h-4 w-4 text-slate-600" />
+              </span>
+              <div>
+                <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
+                <p className="mt-1 text-xs text-slate-600">{summary}</p>
+              </div>
+            </div>
+          </LocalizedLink>
+        );
+      })}
+    </div>
+  );
+}
