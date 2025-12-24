@@ -54,14 +54,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" dir="ltr" suppressHydrationWarning>
       <head>
-        {/* Plausible official snippet (one script, prod only) */}
+        {/* Plausible official snippet (one script) */}
         {process.env.NODE_ENV === 'production' && (
-          <Script
-            defer
-            data-domain="marhabancanada.ca"
-            src="https://plausible.io/js/script.js"
-            strategy="afterInteractive"
-          />
+          <Script src="https://plausible.io/js/pa-UCvIRsD-h_4rGEzp47UXW.js" strategy="afterInteractive" />
         )}
       </head>
       <body className="min-h-screen bg-slate-50 text-slate-900">
