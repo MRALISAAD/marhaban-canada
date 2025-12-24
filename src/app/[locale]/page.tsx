@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { CTA } from '@/components/CTA';
 import { ProgressBar } from '@/components/ProgressBar';
 import { ProvinceSelector } from '@/components/ProvinceSelector';
@@ -18,6 +18,19 @@ export default function HomePage() {
   const handleStart = useCallback(() => {
     setHasStarted(true);
   }, [setHasStarted]);
+
+  useEffect(() => {
+    if (
+      process.env.NODE_ENV === 'production' &&
+      locale === 'fr' &&
+      typeof window !== 'undefined' &&
+      window.plausible &&
+      !sessionStorage.getItem('plausible_test_event_sent')
+    ) {
+      window.plausible('test_event');
+      sessionStorage.setItem('plausible_test_event_sent', '1');
+    }
+  }, [locale]);
 
   const homeTexts = {
     fr: {

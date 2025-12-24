@@ -11,9 +11,14 @@ import { getHtmlAttrs } from '@/i18n/locales';
 import LocalizedLink from '@/components/LocalizedLink';
 import { JustArrivedMode } from '@/components/JustArrivedMode';
 import { ContentUpdateDate } from '@/components/ContentUpdateDate';
-import { SmartPDFExport } from '@/components/checklist/SmartPDFExport';
 import { FEATURE_FLAGS } from '@/lib/featureFlags';
 import { AccessibleModal } from '@/components/ui/AccessibleModal';
+
+declare global {
+  interface Window {
+    plausible?: (event: string, options?: Record<string, unknown>) => void;
+  }
+}
 
 function pct(done: number, total: number) {
   if (total <= 0) return 0;
@@ -103,7 +108,6 @@ export default function ChecklistPage() {
               </p>
             </div>
             <div className="flex items-center gap-3 flex-wrap">
-              {FEATURE_FLAGS.ENABLE_PDF && <SmartPDFExport />}
               <button
                 type="button"
                 onClick={handleResetClick}

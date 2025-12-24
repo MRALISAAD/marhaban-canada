@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { GoogleAnalytics, CookieBanner } from '@/components/analytics';
+import Script from 'next/script';
 
 /**
  * Root layout: must include <html> and <body>.
@@ -15,9 +15,12 @@ export const metadata: Metadata = {
   description:
     'Service d\'accompagnement pour nouveaux arrivants au Canada : démarches, logement, banque, téléphone, prévention des arnaques.',
   icons: {
-    icon: [{ url: '/logo.png', type: 'image/png' }],
-    apple: [{ url: '/logo.png', type: 'image/png' }],
-    other: [{ rel: 'mask-icon', url: '/logo.svg' }],
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
   manifest: '/manifest.json',
   openGraph: {
@@ -51,13 +54,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" dir="ltr" suppressHydrationWarning>
       <head>
-        {/* Analytics disabled by default (essential cookies only) */}
-        <GoogleAnalytics />
+        {/* Plausible official snippet (one script, prod only) */}
+        {process.env.NODE_ENV === 'production' && (
+          <Script
+            defer
+            data-domain="marhabancanada.ca"
+            src="https://plausible.io/js/script.js"
+            strategy="afterInteractive"
+          />
+        )}
       </head>
       <body className="min-h-screen bg-slate-50 text-slate-900">
         {children}
-        {/* Cookie consent banner removed (essential cookie only) */}
-        <CookieBanner />
       </body>
     </html>
   );

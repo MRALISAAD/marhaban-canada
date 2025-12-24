@@ -60,7 +60,7 @@ export default async function LocaleLayout({
               </div>
             </div>
           )}
-          <main id="main-content" className="min-h-[calc(100vh-64px)]" tabIndex={-1}>
+          <main id="main-content" className="min-h-[calc(100vh-64px)]" tabIndex={-1} data-page-main>
             {children}
           </main>
           <Footer />

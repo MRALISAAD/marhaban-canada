@@ -1,6 +1,6 @@
 // English content is sparse and safely falls back to FR to avoid runtime crashes.
 import { frContent, type LocaleContent } from './fr';
-import { mergeWithFallback } from '@/lib/i18nFallback';
+import { fillMissingWithPlaceholders } from '@/lib/i18nPlaceholders';
 
 const enOverrides: Partial<LocaleContent> = {
   locale: 'en',
@@ -98,5 +98,5 @@ const enOverrides: Partial<LocaleContent> = {
   },
 };
 
-export const enContent: LocaleContent = mergeWithFallback<LocaleContent>(enOverrides, frContent);
+export const enContent: LocaleContent = fillMissingWithPlaceholders<LocaleContent>(enOverrides, frContent, 'en');
 

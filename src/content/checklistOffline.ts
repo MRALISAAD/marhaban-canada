@@ -490,5 +490,9 @@ export const checklistDictionary: Record<ChecklistLocale, ChecklistDictionary> =
 };
 
 export function getChecklistDictionary(locale: ChecklistLocale) {
-  return checklistDictionary[locale] ?? checklistDictionary.fr;
+  const dict = checklistDictionary[locale];
+  if (!dict) {
+    throw new Error(`Missing checklist dictionary for locale: ${locale}`);
+  }
+  return dict;
 }
