@@ -40,7 +40,7 @@ export function PageHeader({
   return (
     <header
       className={cn(
-        'rounded-3xl border border-slate-200 bg-white p-6 shadow-sm',
+        'rounded-3xl border border-stone-200/80 bg-white/90 p-6 shadow-warm-sm',
         className
       )}
       dir={dir}
@@ -48,11 +48,11 @@ export function PageHeader({
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className={cn('flex-1', alignClass)}>
           {eyebrow && (
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-marhaban-clay">
               {eyebrow}
             </p>
           )}
-          <h1 className={cn('mt-2 text-2xl font-semibold text-slate-900 sm:text-3xl', alignClass)}>
+          <h1 className={cn('mt-2 text-2xl font-semibold text-marhaban-ink sm:text-3xl', alignClass)}>
             {title}
           </h1>
           {subtitle && (
@@ -65,7 +65,7 @@ export function PageHeader({
             <div className={cn('mt-4', alignClass)}>
               <LocalizedLink
                 href={cta.href}
-                className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/40 focus-visible:ring-offset-2"
+                className="inline-flex items-center gap-2 rounded-full bg-marhaban-ink px-4 py-2 text-sm font-semibold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream"
               >
                 {cta.label}
               </LocalizedLink>

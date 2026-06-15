@@ -12,7 +12,7 @@ body {
 }
 
 body {
-  @apply bg-zinc-50 text-slate-900 antialiased;
+  @apply bg-marhaban-cream text-marhaban-ink antialiased;
   font-feature-settings: "liga" 1, "kern" 1;
 }
 
@@ -33,11 +33,11 @@ p {
    =============================== */
 
 ::selection {
-  background: rgba(220, 38, 38, 0.15); /* energy red soft */
+  background: rgba(182, 106, 74, 0.18);
 }
 
 :focus-visible {
-  outline: 2px solid rgba(220, 38, 38, 0.5);
+  outline: 2px solid rgba(97, 115, 90, 0.55);
   outline-offset: 2px;
 }
 
@@ -53,8 +53,8 @@ p {
 
   /* Card premium (contenu posé) */
   .premium-card {
-    @apply rounded-3xl border border-zinc-200 border-opacity-80 bg-white
-           shadow-[0_1px_2px_rgba(0,0,0,0.04)];
+    @apply rounded-3xl border border-stone-200/80 bg-white/90
+           shadow-warm-sm;
   }
 
   .premium-card-hover {
@@ -65,14 +65,35 @@ p {
 
   /* Navbar glass */
   .glass-nav {
-    @apply backdrop-blur-md bg-white bg-opacity-70 border-b border-zinc-200 border-opacity-80;
+    @apply backdrop-blur-md bg-marhaban-cream/85 border-b border-stone-200/80;
   }
 
   /* Pills / badges */
   .pill {
     @apply inline-flex items-center rounded-full
-           border border-zinc-200 border-opacity-80
-           bg-white px-3 py-1 text-sm text-slate-700;
+           border border-stone-200/80
+           bg-white/80 px-3 py-1 text-sm text-slate-700;
+  }
+
+  .warm-page {
+    background:
+      radial-gradient(circle at top left, rgba(232, 239, 227, 0.95), transparent 34rem),
+      linear-gradient(180deg, #fbf7ef 0%, #f8f3ea 48%, #fffaf3 100%);
+  }
+
+  .warm-surface {
+    @apply border border-stone-200/80 bg-white/[0.88] shadow-warm-sm;
+  }
+
+  .warm-button {
+    @apply bg-marhaban-ink text-white shadow-warm-sm transition
+           hover:bg-marhaban-leaf focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40
+           focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream;
+  }
+
+  .warm-button-secondary {
+    @apply border border-stone-300/90 bg-white/85 text-marhaban-ink transition
+           hover:border-marhaban-leaf/60 hover:bg-marhaban-mint/60;
   }
 }
 

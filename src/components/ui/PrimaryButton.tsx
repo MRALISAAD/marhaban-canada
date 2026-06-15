@@ -35,11 +35,11 @@ export function PrimaryButton({
   const isRTL = dir === 'rtl';
   const arrowDirection = isRTL ? 'rtl-flip' : '';
 
-  const baseClasses = 'inline-flex items-center gap-2 rounded-xl font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2';
+  const baseClasses = 'inline-flex items-center gap-2 rounded-full font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2';
 
   const variantClasses = {
-    primary: 'bg-slate-900 text-white hover:bg-slate-800 focus-visible:ring-slate-900/40',
-    secondary: 'border-2 border-slate-900 bg-white text-slate-900 hover:bg-slate-50 focus-visible:ring-slate-900/40',
+    primary: 'bg-marhaban-ink text-white shadow-warm-sm hover:bg-marhaban-leaf focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-marhaban-cream',
+    secondary: 'border border-stone-300 bg-white/85 text-marhaban-ink hover:border-marhaban-leaf/60 hover:bg-marhaban-mint/60 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-marhaban-cream',
   };
 
   const sizeClasses = {

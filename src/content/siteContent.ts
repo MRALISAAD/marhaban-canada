@@ -904,7 +904,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
     serviceAccompagnementPillar:
       "Marhaban Canada est un service d’accompagnement et d’orientation destiné aux nouveaux arrivants au Canada.",
     serviceAccompagnementDisclaimer:
-      "Ce site propose un service d’accompagnement et d’orientation. Il ne remplace pas les services officiels du gouvernement.",
+      "Marhaban Canada propose un accompagnement général et informatif. Ce service ne remplace pas un avocat, un consultant réglementé en immigration ou un organisme gouvernemental.",
     seoDescriptions: {
       meta: "Service d’accompagnement pour nouveaux arrivants au Canada : démarches officielles, logement, banque, téléphone, prévention des arnaques.",
       og: "Service d’accompagnement pour nouveaux arrivants au Canada : démarches officielles, logement, banque, téléphone, prévention des arnaques.",
@@ -1751,7 +1751,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       privacy: "Aucune donnée personnelle n'est collectée via ce formulaire.",
       responseTime: "Nous répondons dans les meilleurs délais.",
       disclaimer:
-        "Service d'information et d'accompagnement. Ne remplace pas les services gouvernementaux. Les démarches officielles doivent toujours être validées sur les sites gouvernementaux.",
+        "Accompagnement général et informatif uniquement. Ne remplace pas un avocat, un consultant réglementé en immigration ou un organisme gouvernemental. Les démarches officielles doivent toujours être validées sur les sites gouvernementaux.",
       intro: "Nous sommes là pour t'aider. Pose ta question et nous te répondrons rapidement.",
       safetyNote: "Ne partage jamais ton NAS, tes mots de passe ou tes informations bancaires par email.",
       formName: "Nom",
@@ -1812,7 +1812,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
     },
     footer: {
       disclaimer:
-        "Service d'information et d'accompagnement. Ne remplace pas les services gouvernementaux. Les démarches officielles doivent toujours être validées sur les sites gouvernementaux.",
+        "Accompagnement général et informatif uniquement. Ne remplace pas un avocat, un consultant réglementé en immigration ou un organisme gouvernemental. Les démarches officielles doivent toujours être validées sur les sites gouvernementaux.",
       rights: "Tous droits réservés.",
       mission: "Service d'accompagnement et d'orientation pour nouveaux arrivants au Canada.",
       quickGuidesTitle: "Guides rapides",
@@ -1823,7 +1823,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       sourceLabel: "Source",
       officialLink: "Lien officiel",
       budgetLegend: "Loyer + transport + épicerie x coefficient foyer.",
-      disclaimer: "Information et orientation uniquement. Réfère-toi toujours aux sites officiels.",
+      disclaimer: "Information et orientation uniquement. Ne remplace pas un avocat, un consultant réglementé en immigration ou un organisme gouvernemental. Réfère-toi toujours aux sites officiels.",
       radarTitle: "Radar anti-arnaque",
       radarBody: "Vérifie toujours les expéditeurs, refuse les paiements en cartes cadeaux et garde des copies numériques de tes preuves.",
       sourcesIntro: "Chaque recommandation s’appuie sur un site gouvernemental ou parapublic vérifiable.",
@@ -1903,7 +1903,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
     serviceAccompagnementNoProxy: "نحن لا نقوم بأي إجراء رسمي نيابةً عنك.",
     serviceAccompagnementPillar: "مارحبا كندا هي خدمة مرافقة وتوجيه مخصصة للقادمين الجدد إلى كندا.",
     serviceAccompagnementDisclaimer:
-      "هذا الموقع يقدم خدمة مرافقة وتوجيه، ولا يُعتبر بديلاً عن الخدمات الحكومية الرسمية.",
+      "تقدم مرحبا كندا مرافقة عامة ومعلوماتية فقط. لا تحل محل محامٍ أو مستشار هجرة مرخّص أو جهة حكومية.",
     seoDescriptions: {
       meta: "خدمة مرافقة للقادمين الجدد إلى كندا: الخطوات الرسمية، السكن، البنك، الهاتف، تجنب الاحتيال.",
       og: "خدمة مرافقة للقادمين الجدد إلى كندا: الخطوات الرسمية، السكن، البنك، الهاتف، تجنب الاحتيال.",
@@ -2695,7 +2695,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       privacy: "لا يتم جمع أي بيانات شخصية عبر قناة الاتصال هذه.",
       responseTime: "نحاول الرد في أقرب وقت ممكن.",
       disclaimer:
-        "خدمة معلومات ومرافقة. لا تحل محل الخدمات الحكومية. يجب دائمًا التحقق من الإجراءات الرسمية على المواقع الحكومية.",
+        "مرافقة عامة ومعلوماتية فقط. لا تحل محل محامٍ أو مستشار هجرة مرخّص أو جهة حكومية. يجب دائمًا التحقق من الإجراءات الرسمية على المواقع الحكومية.",
       intro: "نحن هنا للمساعدة. اطرح سؤالك وسنرد بسرعة.",
       safetyNote: "لا تشارك أبدًا رقم التأمين الاجتماعي أو كلمات المرور أو المعلومات المصرفية عبر البريد الإلكتروني.",
       formName: "الاسم",
@@ -2798,7 +2798,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       },
     },
     footer: {
-      disclaimer: "هذا الموقع يقدم خدمة مرافقة وتوجيه، ولا يُعتبر بديلاً عن الخدمات الحكومية الرسمية.",
+      disclaimer: "مرافقة عامة ومعلوماتية فقط. لا تحل محل محامٍ أو مستشار هجرة مرخّص أو جهة حكومية. يجب دائماً التحقق من الإجراءات الرسمية عبر المواقع الحكومية.",
       rights: "جميع الحقوق محفوظة.",
       mission: "خدمة الدعم والتوجيه للوافدين الجدد إلى كندا.",
       quickGuidesTitle: "أدلة سريعة",
@@ -2809,7 +2809,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       sourceLabel: "المصدر",
       officialLink: "رابط رسمي",
       budgetLegend: "الإيجار + النقل + البقالة × معامل الأسرة.",
-      disclaimer: "معلومات وإرشاد فقط. عد دائماً إلى المواقع الرسمية.",
+      disclaimer: "معلومات وإرشاد فقط. لا تحل محل محامٍ أو مستشار هجرة مرخّص أو جهة حكومية. عد دائماً إلى المواقع الرسمية.",
       radarTitle: "رادار مكافحة الاحتيال",
       radarBody: "تحقق من هوية الأطراف، لا تدفع عبر بطاقات هدايا واحتفظ بنسخ رقمية لكل إيصال.",
       sourcesIntro: "كل توصية مبنية على موقع حكومي أو جهة عامة يمكن التحقق منها.",
@@ -2869,7 +2869,7 @@ const enContent: LocaleContent = {
     },
     accompaniment: {
       shortDefinition:
-        "This site provides a settlement guidance and support service. It does not replace official government services.",
+        "Marhaban Canada provides general informational support. It does not replace a lawyer, a regulated immigration consultant, or a government organization.",
       noProxyLine: "We do not perform any official procedure on your behalf.",
       footerHelp:
         "Need help knowing what to do first? The settlement guidance service can orient you based on your situation.",
@@ -3103,7 +3103,7 @@ const enContent: LocaleContent = {
   serviceAccompagnementPillar:
     "Marhaban Canada is a settlement guidance and support service for newcomers to Canada.",
   serviceAccompagnementDisclaimer:
-    "This site provides a settlement guidance and support service. It does not replace official government services.",
+    "Marhaban Canada provides general informational support. It does not replace a lawyer, a regulated immigration consultant, or a government organization.",
   seoDescriptions: {
     meta: "Settlement support service for newcomers in Canada: official steps, housing, banking, phone plans, scam prevention.",
     og: "Settlement support service for newcomers in Canada: official steps, housing, banking, phone plans, scam prevention.",
@@ -3116,7 +3116,7 @@ const enContent: LocaleContent = {
     privacy: "No personal data is collected via this contact channel.",
     responseTime: "We reply as soon as possible.",
     disclaimer:
-      "Information and support service. Does not replace government services. Official procedures must always be validated on government websites.",
+      "General informational support only. This does not replace a lawyer, a regulated immigration consultant, or a government organization. Official procedures must always be validated on government websites.",
     intro: "We're here to help. Ask your question and we'll reply quickly.",
     safetyNote: "Never share your SIN, passwords, or banking information by email.",
     formName: "Name",
@@ -3220,7 +3220,7 @@ const enContent: LocaleContent = {
   },
   footer: {
     disclaimer:
-      "This site provides a settlement guidance and support service. It does not replace official government services.",
+      "General informational support only. This does not replace a lawyer, a regulated immigration consultant, or a government organization. Official procedures must always be validated on government websites.",
     rights: "All rights reserved.",
     mission: "Support and orientation service for newcomers to Canada.",
     quickGuidesTitle: "Quick guides",
