@@ -48,7 +48,7 @@ export const blogPosts: BlogPost[] = [
       "À l’arrivée, vouloir tout faire en même temps crée du stress.",
       "Ton objectif n’est pas la perfection. C’est d’être opérationnel.",
       "Ordre conseillé : téléphone pour être joignable, NAS pour travailler, banque pour recevoir l’argent.",
-      "Ensuite seulement : santé, logement long terme, permis.",
+      "Ensuite seulement : santé, logement long terme, conduite.",
     ],
     checklist: [
       'Avoir un numéro local',
@@ -181,7 +181,7 @@ export const blogPosts: BlogPost[] = [
       'Note la date de début de couverture.',
     ],
     checklist: [
-      'Vérifier l’admissibilité',
+      'Vérifier les conditions d’accès',
       'Demander la carte santé',
       'Garder une assurance temporaire si besoin',
     ],

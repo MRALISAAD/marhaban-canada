@@ -33,18 +33,18 @@ const provinceOverrides: Record<
     },
     on: {
       healthTitle: "Carte sante - OHIP (Ontario)",
-      healthWhy: "OHIP gere l'assurance maladie en Ontario. Verifie les conditions d'admissibilite.",
-      licenseWhy: 'En Ontario, ServiceOntario gere les echanges de permis.',
+      healthWhy: "OHIP gere l'assurance maladie en Ontario. Verifie les conditions d'acces.",
+      licenseWhy: 'En Ontario, ServiceOntario gere les etapes de conduite.',
     },
     bc: {
       healthTitle: "Carte sante - MSP (Colombie-Britannique)",
       healthWhy: "Le MSP couvre les soins essentiels en Colombie-Britannique.",
-      licenseWhy: 'En C.-B., ICBC gere le permis et les equivalences.',
+      licenseWhy: 'En C.-B., ICBC gere les etapes de conduite et les equivalences.',
     },
     ab: {
       healthTitle: "Carte sante - AHCIP (Alberta)",
       healthWhy: "L'AHCIP couvre les soins essentiels en Alberta.",
-      licenseWhy: "En Alberta, les registries gerent l'echange de permis.",
+      licenseWhy: "En Alberta, les registries gerent les etapes de conduite.",
     },
     other: {
       healthTitle: "Carte sante - programme provincial",

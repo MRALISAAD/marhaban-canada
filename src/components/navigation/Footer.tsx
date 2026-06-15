@@ -90,10 +90,10 @@ export function Footer() {
   const disclaimer =
     footerContent.disclaimer ??
     (locale === 'fr'
-      ? 'Information et orientation uniquement. Ne remplace pas les services gouvernementaux officiels.'
+      ? 'Marhaban Canada offre de l’orientation pratique et de l’information générale. Nous ne fournissons pas de conseils juridiques ni de conseils en immigration. Pour les questions liées aux visas, permis, résidence permanente, admissibilité ou stratégie d’immigration, veuillez consulter un représentant autorisé.'
       : locale === 'en'
-        ? 'Information and orientation only. Does not replace official government services.'
-        : 'معلومات وتوجيه فقط. لا يحل محل الخدمات الحكومية الرسمية.');
+        ? 'Marhaban Canada offers practical orientation and general information. We do not provide legal advice or immigration advice. For questions related to visas, permits, permanent residence, admissibility, or immigration strategy, please consult an authorized representative.'
+        : 'تقدم مرحبا كندا توجيهاً عملياً ومعلومات عامة. نحن لا نقدم نصائح قانونية ولا نصائح في الهجرة. للأسئلة المتعلقة بالتأشيرات أو التصاريح أو الإقامة الدائمة أو الأهلية أو استراتيجية الهجرة، يرجى استشارة ممثل معتمد.');
 
   return (
     <footer

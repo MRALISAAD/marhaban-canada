@@ -9,6 +9,7 @@ import { ProvinceProvider } from '@/components/ProvinceProvider';
 import { GlobalProgressBar } from '@/components/GlobalProgressBar';
 import { EasyReadProvider } from '@/components/EasyReadProvider'; // Import EasyReadProvider
 import { FocusManager } from '@/components/FocusManager';
+import { FloatingBookCallButton } from '@/components/FloatingBookCallButton';
 import { FEATURE_FLAGS } from '@/lib/featureFlags';
 import type { Metadata } from 'next';
 
@@ -60,9 +61,10 @@ export default async function LocaleLayout({
               </div>
             </div>
           )}
-          <main id="main-content" className="min-h-[calc(100vh-64px)]" tabIndex={-1}>
+          <main id="main-content" className="min-h-[calc(100vh-64px)] pb-24 md:pb-0" tabIndex={-1}>
             {children}
           </main>
+          <FloatingBookCallButton />
           <Footer />
         </EasyReadProvider>
       </ProvinceProvider>
