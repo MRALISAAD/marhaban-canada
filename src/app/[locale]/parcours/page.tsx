@@ -226,24 +226,24 @@ export default function ParcoursPage() {
   const modalLabels = resetModalLabels[dictionary.locale] || resetModalLabels.fr;
 
   return (
-    <main className="bg-slate-50 px-4 py-12" dir={dir} lang={dictionary.locale}>
+    <main className="warm-page px-4 py-12" dir={dir} lang={dictionary.locale}>
       <div className="mx-auto w-full max-w-5xl space-y-6">
-        <header className="space-y-2">
+        <header className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-6 shadow-warm-sm sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">{dictionary.labels.eyebrow}</p>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-clay">{dictionary.labels.eyebrow}</p>
           </div>
-          <p className="text-xs text-slate-500">
+          <p className="mt-3 text-xs font-medium text-marhaban-leaf">
             {microcopy.breadcrumbHome} {breadcrumbArrow} {microcopy.breadcrumbJourney}
           </p>
-          <h1 className="text-2xl font-semibold text-slate-900 sm:text-3xl">{microcopy.journeyTitle}</h1>
-          <p className="text-sm text-slate-600">{microcopy.journeySubtitle}</p>
-          <p className="text-xs text-slate-500">
+          <h1 className="mt-3 text-3xl font-semibold leading-tight text-marhaban-ink sm:text-4xl">{microcopy.journeyTitle}</h1>
+          <p className="mt-3 max-w-3xl text-sm text-slate-700 sm:text-base">{microcopy.journeySubtitle}</p>
+          <p className="mt-3 text-xs font-semibold text-slate-600">
             {dictionary.labels.provinceLabel}: {getProvinceLabel(province)}
           </p>
         </header>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+        <div className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-5 shadow-warm-sm">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">
             {dictionary.labels.filtersTitle}
           </p>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
@@ -251,9 +251,9 @@ export default function ParcoursPage() {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder={dictionary.labels.searchPlaceholder}
-              className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/20"
+              className="w-full rounded-2xl border border-marhaban-leaf/15 bg-marhaban-cream/70 px-3 py-2.5 text-sm text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/30"
             />
-            <label className="flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-sm text-slate-700">
+            <label className="flex items-center gap-2 rounded-2xl border border-marhaban-leaf/15 bg-marhaban-cream/70 px-3 py-2.5 text-sm text-slate-700">
               <input
                 type="checkbox"
                 checked={onlyTodo}
@@ -271,17 +271,17 @@ export default function ParcoursPage() {
             label={dictionary.labels.progressLabel}
             helper={`${done}/${total} ${dictionary.labels.progressHelper}`}
           />
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-5 shadow-warm-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-semibold text-slate-900">{dictionary.labels.autoSaveTitle}</p>
+                <p className="text-sm font-semibold text-marhaban-ink">{dictionary.labels.autoSaveTitle}</p>
                 <p className="text-xs text-slate-600">{dictionary.labels.autoSaveSubtitle}</p>
               </div>
               <button
                 type="button"
                 onClick={handleResetClick}
                 aria-label={dictionary.labels.resetLabel}
-                className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:border-slate-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/30 focus-visible:ring-offset-2 active:bg-slate-100"
+                className="rounded-full border border-marhaban-leaf/20 bg-marhaban-cream px-3 py-1.5 text-xs font-semibold text-marhaban-ink transition-colors hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/30 focus-visible:ring-offset-2 active:bg-marhaban-mint"
               >
                 {dictionary.labels.resetLabel}
               </button>
@@ -296,7 +296,7 @@ export default function ParcoursPage() {
 
         <div className="space-y-5">
           {filteredSections.length === 0 ? (
-            <div className="rounded-2xl border border-slate-200 bg-white p-5 text-sm text-slate-600 shadow-sm">
+            <div className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-5 text-sm text-slate-600 shadow-warm-sm">
               {dictionary.labels.emptyState}
             </div>
           ) : null}
