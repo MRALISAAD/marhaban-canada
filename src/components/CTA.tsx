@@ -38,7 +38,7 @@ export function CTA({ onStart, primaryLabel, secondaryLabel }: CTAProps) {
   return (
     <div className="flex flex-wrap items-center gap-3">
       <LocalizedLink
-        href="/contact"
+        href="/book"
         className="inline-flex min-h-[46px] items-center gap-2 rounded-full bg-marhaban-ink px-5 py-2.5 text-sm font-semibold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream"
       >
         {effectivePrimary}

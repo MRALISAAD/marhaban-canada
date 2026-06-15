@@ -119,7 +119,7 @@ export const arContent: LocaleContent = {
 
   microcopy: {
     homeTitle: "الخطوات الأولى بعد وصولك إلى كندا",
-    homeSubtitle: "مرحبًا كندا هي خدمة دعم وتوجيه للقادمين الجدد إلى كندا.",
+    homeSubtitle: "مرحبا كندا — توجيه عملي للقادمين الجدد إلى كندا.",
     homeCtaPrimary: "ابدأ الرحلة",
     homeCtaSub: "مجاني · يستند إلى مصادر رسمية · لا يتطلب التسجيل",
     journeyTitle: "رحلة استقرارك",
@@ -182,7 +182,7 @@ export const arContent: LocaleContent = {
   serviceAccompagnementWhatIsTitle: "ما هذه الخدمة",
   serviceAccompagnementWhatIsNotTitle: "ما ليست هذه الخدمة",
   serviceAccompagnementNoProxy: "لا نقوم بأي إجراءات رسمية نيابة عنك.",
-  serviceAccompagnementPillar: "مرحبًا كندا هي خدمة دعم وتوجيه للقادمين الجدد إلى كندا.",
+  serviceAccompagnementPillar: "مرحبا كندا — توجيه عملي للقادمين الجدد إلى كندا.",
   serviceAccompagnementDisclaimer: "تقدم مرحبا كندا توجيهاً عملياً ومعلومات عامة. نحن لا نقدم نصائح قانونية ولا نصائح في الهجرة. للأسئلة المتعلقة بالتأشيرات أو التصاريح أو الإقامة الدائمة أو الأهلية أو استراتيجية الهجرة، يرجى استشارة ممثل معتمد.",
 
   seoDescriptions: {

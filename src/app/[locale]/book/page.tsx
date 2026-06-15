@@ -215,7 +215,7 @@ export default async function BookCallPage({ params }: Props) {
                 className={`rounded-[2rem] border p-6 shadow-warm-sm ${
                   index === 0
                     ? 'border-marhaban-ink bg-marhaban-ink text-white'
-                    : 'border-stone-200 bg-white/88 text-marhaban-ink'
+                    : 'border-stone-200 bg-white/[0.88] text-marhaban-ink'
                 }`}
               >
                 <p className={`text-xs font-bold uppercase tracking-[0.16em] ${index === 0 ? 'text-marhaban-gold' : 'text-marhaban-clay'}`}>
@@ -237,7 +237,7 @@ export default async function BookCallPage({ params }: Props) {
         </section>
 
         <section id="booking-placeholder" className="grid gap-6 pb-12 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-[2rem] border border-stone-200 bg-white/88 p-6 shadow-warm-sm">
+          <div className="rounded-[2rem] border border-stone-200 bg-white/[0.88] p-6 shadow-warm-sm">
             <CalendarCheck className="h-8 w-8 text-marhaban-leaf" />
             <h2 className="mt-5 text-2xl font-semibold text-marhaban-ink">{t.bookingTitle}</h2>
             <p className="mt-3 text-sm text-slate-700">{t.bookingText}</p>

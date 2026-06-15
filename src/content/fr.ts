@@ -533,7 +533,7 @@ export const frContent: LocaleContent = {
 
   microcopy: {
     homeTitle: "Les premières étapes après ton arrivée au Canada",
-    homeSubtitle: "Marhaban Canada est un service d’accompagnement et d’orientation destiné aux nouveaux arrivants au Canada.",
+    homeSubtitle: "Marhaban Canada — Orientation pratique pour nouveaux arrivants au Canada.",
     homeCtaPrimary: "Commencer le parcours",
     homeCtaSub: "Gratuit · Basé sur des sources officielles · Sans inscription",
     journeyTitle: "Ton parcours d'installation",
@@ -574,7 +574,7 @@ export const frContent: LocaleContent = {
   },
 
   serviceAccompagnementDefinition: {
-    title: "Service d’accompagnement",
+    title: "Orientation pratique",
     body: "Un service qui guide, explique et oriente les nouveaux arrivants, étape par étape, sans effectuer les démarches à leur place et sans facturer pour des services officiels. L’objectif est d’aider à comprendre, éviter les erreurs et avancer en sécurité, en s’appuyant uniquement sur des sources officielles.",
   },
   serviceAccompagnementWhatIs: [
@@ -596,13 +596,13 @@ export const frContent: LocaleContent = {
   serviceAccompagnementWhatIsTitle: "Ce que ce service est",
   serviceAccompagnementWhatIsNotTitle: "Ce que ce service n’est pas",
   serviceAccompagnementNoProxy: "Nous n’effectuons aucune démarche officielle à votre place.",
-  serviceAccompagnementPillar: "Marhaban Canada est un service d’accompagnement et d’orientation destiné aux nouveaux arrivants au Canada.",
+  serviceAccompagnementPillar: "Marhaban Canada — Orientation pratique pour nouveaux arrivants au Canada.",
   serviceAccompagnementDisclaimer: "Marhaban Canada offre de l’orientation pratique et de l’information générale. Nous ne fournissons pas de conseils juridiques ni de conseils en immigration. Pour les questions liées aux visas, permis, résidence permanente, admissibilité ou stratégie d’immigration, veuillez consulter un représentant autorisé.",
 
   seoDescriptions: {
-    meta: "Service d’accompagnement pour nouveaux arrivants au Canada : démarches officielles, logement, banque, téléphone, prévention des arnaques.",
-    og: "Service d’accompagnement pour nouveaux arrivants au Canada : démarches officielles, logement, banque, téléphone, prévention des arnaques.",
-    pdfHeader: "Service d’accompagnement pour nouveaux arrivants au Canada : démarches officielles, logement, banque, téléphone, prévention des arnaques.",
+    meta: "Orientation pratique pour nouveaux arrivants au Canada : démarches officielles, logement, banque, téléphone, prévention des arnaques.",
+    og: "Orientation pratique pour nouveaux arrivants au Canada : démarches officielles, logement, banque, téléphone, prévention des arnaques.",
+    pdfHeader: "Orientation pratique pour nouveaux arrivants au Canada : démarches officielles, logement, banque, téléphone, prévention des arnaques.",
   },
 
   services: {
@@ -1320,7 +1320,7 @@ export const frContent: LocaleContent = {
   footer: {
     disclaimer: "Marhaban Canada offre de l’orientation pratique et de l’information générale. Nous ne fournissons pas de conseils juridiques ni de conseils en immigration. Pour les questions liées aux visas, permis, résidence permanente, admissibilité ou stratégie d’immigration, veuillez consulter un représentant autorisé.",
     rights: "Tous droits réservés.",
-    mission: "Service d'accompagnement et d'orientation pour nouveaux arrivants au Canada.",
+    mission: "Orientation pratique pour nouveaux arrivants au Canada.",
     quickGuidesTitle: "Guides rapides",
     sources: "Sources",
     copyright: `© ${new Date().getFullYear()} Marhaban Canada. Tous droits réservés.`,
@@ -1475,7 +1475,7 @@ export const frContent: LocaleContent = {
     intro: "Un service d'accompagnement et d'orientation pour simplifier ton installation au Canada.",
     mission: {
       title: "Notre mission",
-      content: "Marhaban Canada est un service d'accompagnement et d'orientation destiné aux nouveaux arrivants au Canada. Nous simplifions l'installation en fournissant des informations claires, basées sur des sources officielles.",
+      content: "Marhaban Canada — Orientation pratique pour nouveaux arrivants au Canada. Nous simplifions l'installation en fournissant des informations claires, basées sur des sources officielles.",
     },
     whatWeDo: {
       title: "Ce que la plateforme fait",
