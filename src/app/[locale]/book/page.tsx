@@ -302,20 +302,20 @@ export default async function BookCallPage({ params }: Props) {
           </div>
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {t.offers.map((offer, index) => (
-              <OfferCard key={offer.name} offer={offer} cta={t.reserve} featured={index === 1} href={bookingActionsHref} />
+              <OfferCard key={offer.name} offer={offer} cta={t.reserve} featured={index === 0} href={bookingActionsHref} />
             ))}
           </div>
         </section>
 
         <section id="booking-flow" className="grid gap-6 pb-12 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-3xl border border-stone-200 bg-white/[0.9] p-6 shadow-warm-sm sm:p-8">
+          <div className="rounded-3xl border border-marhaban-leaf/15 bg-white/[0.92] p-6 shadow-warm-sm sm:p-8">
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-clay">{t.flowTitle}</p>
             <h2 className="mt-4 text-3xl font-semibold text-marhaban-ink">{t.flowTitle}</h2>
             <div className="mt-7 grid gap-4">
               {t.flow.map((step, index) => {
                 const Icon = step.icon;
                 return (
-                  <article key={step.title} className="flex gap-4 rounded-2xl border border-stone-200 bg-marhaban-cream/70 p-4">
+                  <article key={step.title} className="flex gap-4 rounded-2xl border border-marhaban-leaf/10 bg-marhaban-cream/80 p-4">
                     <span className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-2xl bg-marhaban-mint text-marhaban-leaf">
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
@@ -408,12 +408,20 @@ function OfferCard({
   return (
     <article
       className={cn(
-        'flex min-h-[380px] flex-col rounded-3xl border p-6 shadow-warm-sm',
+        'relative flex min-h-[390px] flex-col overflow-hidden rounded-3xl border p-6 shadow-warm-sm transition hover:-translate-y-1 hover:shadow-warm',
         featured
-          ? 'border-marhaban-ink bg-marhaban-ink text-white'
-          : 'border-stone-200 bg-white/[0.9] text-marhaban-ink',
+          ? 'border-marhaban-forest bg-marhaban-forest text-white xl:scale-[1.03]'
+          : 'border-marhaban-leaf/12 bg-white/[0.92] text-marhaban-ink',
       )}
     >
+      {featured ? (
+        <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-marhaban-gold/25 blur-2xl" aria-hidden="true" />
+      ) : null}
+      {featured ? (
+        <span className="relative mb-4 inline-flex w-fit rounded-full bg-marhaban-gold px-3 py-1 text-xs font-bold text-marhaban-forest">
+          {offer.price}
+        </span>
+      ) : null}
       <p className={cn('text-xs font-bold uppercase tracking-[0.12em]', featured ? 'text-marhaban-gold' : 'text-marhaban-clay')}>
         {offer.duration}
       </p>
@@ -433,7 +441,7 @@ function OfferCard({
         className={cn(
           'mt-auto inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
           featured
-            ? 'bg-white text-marhaban-ink hover:bg-marhaban-mint focus-visible:ring-white/50 focus-visible:ring-offset-marhaban-ink'
+            ? 'bg-white text-marhaban-forest hover:bg-marhaban-mint focus-visible:ring-white/50 focus-visible:ring-offset-marhaban-forest'
             : 'bg-marhaban-ink text-white hover:bg-marhaban-leaf focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-white',
         )}
       >
@@ -460,7 +468,7 @@ function ActionPanel({
   warm?: boolean;
 }) {
   return (
-    <article className={cn('rounded-3xl border p-6 shadow-warm-sm sm:p-8', warm ? 'border-amber-200 bg-[#FFF4E3]' : 'border-stone-200 bg-white/[0.9]')}>
+    <article className={cn('rounded-3xl border p-6 shadow-warm-sm sm:p-8', warm ? 'border-amber-200 bg-[#FFF4E3]' : 'border-marhaban-leaf/15 bg-white/[0.92]')}>
       <span className={cn('grid h-12 w-12 place-items-center rounded-2xl', warm ? 'bg-amber-900 text-white' : 'bg-marhaban-mint text-marhaban-leaf')}>
         {icon}
       </span>

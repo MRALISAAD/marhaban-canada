@@ -364,7 +364,7 @@ export default async function ContactPage({ params }: Props) {
         <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
           <SectionBlock title={labels.scopeTitle} icon="ShieldCheck" dir={dir}>
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-2xl border border-stone-200 bg-white/80 p-4">
+              <div className="rounded-2xl border border-marhaban-leaf/15 bg-marhaban-cream/70 p-4">
                 <h3 className="font-semibold text-marhaban-ink">{labels.doesTitle}</h3>
                 <ul className="mt-3 space-y-2 text-sm text-slate-700">
                   {labels.does.map((item) => (
@@ -386,7 +386,7 @@ export default async function ContactPage({ params }: Props) {
           <SectionBlock title={labels.bookingTitle} icon="CalendarCheck" dir={dir}>
             <ol className="grid gap-3">
               {labels.bookingSteps.map((step, index) => (
-                <li key={step} className="flex items-start gap-3 rounded-2xl border border-stone-200 bg-white/80 p-4">
+                <li key={step} className="flex items-start gap-3 rounded-2xl border border-marhaban-leaf/15 bg-marhaban-cream/70 p-4">
                   <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-marhaban-mint text-sm font-semibold text-marhaban-leaf">
                     {index + 1}
                   </span>
@@ -452,7 +452,7 @@ export default async function ContactPage({ params }: Props) {
         </Callout>
 
         <section
-          className="rounded-3xl border border-stone-200/80 bg-marhaban-ink p-6 text-white shadow-warm sm:p-8"
+          className="rounded-3xl border border-marhaban-gold/20 bg-marhaban-ink p-6 text-white shadow-warm sm:p-8"
           data-floating-book-call-hide
         >
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">

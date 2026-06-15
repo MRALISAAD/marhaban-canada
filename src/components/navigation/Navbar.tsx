@@ -6,8 +6,6 @@ import { usePathname } from 'next/navigation';
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
 import { LOCALES, type Locale, getHtmlAttrs } from '@/i18n/locales';
-import { EasyReadToggle } from '@/components/EasyReadToggle';
-import { FEATURE_FLAGS } from '@/lib/featureFlags';
 import { withLocale } from '@/lib/i18n-utils';
 
 // Types for Navbar labels based on content.shared.nav
@@ -438,8 +436,6 @@ export function Navbar() {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            {FEATURE_FLAGS.ENABLE_EASY_READ && <EasyReadToggle />}
-
             <Link
               href={localizeHref('/book')}
               className="hidden min-h-[44px] items-center justify-center rounded-full bg-marhaban-ink px-4 py-2 text-sm font-semibold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 sm:inline-flex"

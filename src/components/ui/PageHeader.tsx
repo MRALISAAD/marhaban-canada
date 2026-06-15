@@ -40,26 +40,27 @@ export function PageHeader({
   return (
     <header
       className={cn(
-        'rounded-3xl border border-stone-200/80 bg-white/90 p-6 shadow-warm-sm',
+        'relative overflow-hidden rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-6 shadow-warm-sm sm:p-8',
         className
       )}
       dir={dir}
     >
+      <div className="pointer-events-none absolute -top-16 end-8 h-44 w-44 rounded-full bg-marhaban-mint/70 blur-2xl" aria-hidden="true" />
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className={cn('flex-1', alignClass)}>
+        <div className={cn('relative flex-1', alignClass)}>
           {eyebrow && (
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-marhaban-clay">
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-clay">
               {eyebrow}
             </p>
           )}
-          <h1 className={cn('mt-2 text-2xl font-semibold text-marhaban-ink sm:text-3xl', alignClass)}>
+          <h1 className={cn('mt-3 max-w-4xl text-3xl font-semibold leading-tight text-marhaban-ink sm:text-4xl', alignClass)}>
             {title}
           </h1>
           {subtitle && (
-            <p className={cn('mt-2 text-sm text-slate-600', alignClass)}>{subtitle}</p>
+            <p className={cn('mt-3 max-w-3xl text-sm text-slate-700 sm:text-base', alignClass)}>{subtitle}</p>
           )}
           {intro && (
-            <p className={cn('mt-2 text-sm text-slate-600', alignClass)}>{intro}</p>
+            <p className={cn('mt-3 max-w-3xl text-sm text-slate-700 sm:text-base', alignClass)}>{intro}</p>
           )}
           {cta && (
             <div className={cn('mt-4', alignClass)}>
@@ -73,7 +74,7 @@ export function PageHeader({
           )}
         </div>
         {actions && (
-          <div className="flex items-center gap-3 flex-wrap">{actions}</div>
+          <div className="relative flex flex-wrap items-center gap-3">{actions}</div>
         )}
       </div>
     </header>

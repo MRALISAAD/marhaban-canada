@@ -20,8 +20,8 @@ type TimelineSectionProps = {
 
 const badgeStyles: Record<TimelineSectionType['badge'], string> = {
   Urgent: 'bg-rose-50 text-rose-700 border-rose-200',
-  Important: 'bg-amber-50 text-amber-700 border-amber-200',
-  'En continu': 'bg-slate-100 text-slate-700 border-slate-200',
+  Important: 'bg-[#FFF4E3] text-marhaban-clay border-amber-200',
+  'En continu': 'bg-marhaban-mint text-marhaban-leaf border-marhaban-leaf/20',
 };
 
 const iconMap: Record<TimelineSectionType['id'], ReactNode> = {
@@ -41,10 +41,10 @@ export function TimelineSection({ section, checked, onToggle, labels }: Timeline
   const sectionPct = pct(sectionDone, sectionTotal);
 
   return (
-    <section id={section.id} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+    <section id={section.id} className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-5 shadow-warm-sm">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-start gap-3">
-          <div className="mt-1 rounded-full border border-slate-200 bg-white p-2">{iconMap[section.id]}</div>
+          <div className="mt-1 rounded-2xl border border-marhaban-leaf/15 bg-marhaban-mint p-2">{iconMap[section.id]}</div>
           <div>
             <p
               className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${
@@ -53,17 +53,17 @@ export function TimelineSection({ section, checked, onToggle, labels }: Timeline
             >
               {section.badge}
             </p>
-            <h2 className="mt-2 text-lg font-semibold text-slate-900">{section.title}</h2>
+            <h2 className="mt-2 text-lg font-semibold text-marhaban-ink">{section.title}</h2>
             <p className="mt-1 text-sm text-slate-600">{section.description}</p>
           </div>
         </div>
         <div className="text-right">
-          <p className="text-sm text-slate-600">{sectionPct}%</p>
+          <p className="text-sm font-bold text-marhaban-ink">{sectionPct}%</p>
           <p className="text-xs text-slate-500">
             {sectionDone}/{sectionTotal} {labels.steps}
           </p>
-          <div className="mt-2 h-2 w-32 overflow-hidden rounded-full bg-slate-100">
-            <div className="h-full rounded-full bg-slate-900" style={{ width: `${sectionPct}%` }} />
+          <div className="mt-2 h-2 w-32 overflow-hidden rounded-full bg-marhaban-mint">
+            <div className="h-full rounded-full bg-marhaban-clay" style={{ width: `${sectionPct}%` }} />
           </div>
         </div>
       </div>

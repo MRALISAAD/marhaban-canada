@@ -94,7 +94,7 @@ export function Footer() {
 
   return (
     <footer
-      className="border-t border-marhaban-leaf/10 bg-marhaban-cream"
+      className="border-t border-marhaban-leaf/10 bg-marhaban-cream/95"
       aria-label={locale === 'fr' ? 'Pied de page' : locale === 'en' ? 'Footer' : 'تذييل الصفحة'}
       dir={dir}
     >
@@ -199,7 +199,7 @@ export function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="mt-12 border-t border-marhaban-leaf/10 pt-8">
+        <div className="mt-12 rounded-3xl border border-marhaban-leaf/10 bg-white/45 p-5">
           {/* Bottom section */}
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             {/* Disclaimer */}

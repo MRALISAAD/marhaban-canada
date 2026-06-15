@@ -38,7 +38,7 @@ export default async function AboutPage({ params }: Props) {
   const { aboutPage } = content;
 
   return (
-    <main className="bg-slate-50 px-4 py-12" dir={dir} lang={locale}>
+    <main className="warm-page px-4 py-12" dir={dir} lang={locale}>
       <div className="mx-auto w-full max-w-5xl space-y-6">
         <PageHeader
           title={aboutPage.title}

@@ -11,6 +11,10 @@ body {
   height: 100%;
 }
 
+html {
+  scroll-padding-top: 6rem;
+}
+
 body {
   @apply bg-marhaban-cream text-marhaban-ink antialiased;
   font-feature-settings: "liga" 1, "kern" 1;
