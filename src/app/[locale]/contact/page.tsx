@@ -305,13 +305,13 @@ export default async function ContactPage({ params }: Props) {
           dir={dir}
           actions={
             <>
-              <a
-                href="#booking-form"
+              <LocalizedLink
+                href="/book"
                 className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-marhaban-ink px-4 py-2 text-sm font-semibold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
               >
                 {labels.primaryCta}
                 <CalendarCheck className="h-4 w-4" />
-              </a>
+              </LocalizedLink>
               <LocalizedLink
                 href="/arnaques"
                 className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-stone-300 bg-white/80 px-4 py-2 text-sm font-semibold text-marhaban-ink transition hover:bg-marhaban-mint/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2"
@@ -462,13 +462,13 @@ export default async function ContactPage({ params }: Props) {
               <p className="mt-2 text-sm text-white/75">{labels.intro}</p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <a
-                href="#booking-form"
+              <LocalizedLink
+                href="/book"
                 className="inline-flex min-h-[46px] items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-marhaban-ink shadow-warm-sm transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-ink"
               >
                 {labels.primaryCta}
                 <CalendarCheck className="h-4 w-4" />
-              </a>
+              </LocalizedLink>
               <LocalizedLink
                 href="/arnaques"
                 className="inline-flex min-h-[46px] items-center gap-2 rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-ink"

@@ -5,7 +5,7 @@ import { useLanguage } from '@/components/LanguageProvider';
 import { useChecklistStorage } from '@/hooks/useChecklistStorage';
 import { getChecklistDictionary } from '@/content/checklistOffline';
 import { FEATURE_FLAGS } from '@/lib/featureFlags';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Sparkles } from 'lucide-react';
 import LocalizedLink from './LocalizedLink';
 
@@ -67,7 +67,7 @@ export function JustArrivedMode() {
           <p className="mt-1 text-sm text-slate-700">{t.description}</p>
           <div className="mt-4">
             <LocalizedLink href="/checklist/semaine-1">
-              <Button variant="primary" size="sm">
+              <Button variant="default" size="sm">
                 {t.cta}
               </Button>
             </LocalizedLink>
