@@ -44,8 +44,8 @@ export function ScamCategoryGrid({ categories }: ScamCategoryGridProps) {
         summary: 'Fee requests, suspicious accounts.',
       },
       immigration: {
-        title: 'Immigration / fake agents',
-        summary: 'Fake consultants, paid dossiers.',
+        title: 'Fake representatives / fake agents',
+        summary: 'Paid dossiers, guarantees, suspicious pressure.',
       },
       marketplace: {
         title: 'Marketplace (Kijiji/FB)',
@@ -70,8 +70,8 @@ export function ScamCategoryGrid({ categories }: ScamCategoryGridProps) {
         summary: 'طلبات رسوم، حسابات مشبوهة.',
       },
       immigration: {
-        title: 'الهجرة / وكلاء مزيفون',
-        summary: 'مستشارون مزيفون وملفات مدفوعة.',
+        title: 'ممثلون مزيفون / وكلاء مزيفون',
+        summary: 'ملفات مدفوعة وضمانات وضغط مشبوه.',
       },
       marketplace: {
         title: 'البيع عبر المنصات (Kijiji/FB)',

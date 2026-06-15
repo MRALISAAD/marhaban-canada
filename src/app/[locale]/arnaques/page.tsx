@@ -26,7 +26,7 @@ export default function ArnaquesPage() {
       jobs: 'Jobs',
       phone: 'Phone / plans',
       bank: 'Bank / cards / fees',
-      immigration: 'Immigration / fake agents',
+      immigration: 'Fake representatives / fake agents',
       marketplace: 'Marketplace (Kijiji/FB)',
     },
     ar: {
@@ -34,7 +34,7 @@ export default function ArnaquesPage() {
       jobs: 'العمل',
       phone: 'الهاتف / الباقات',
       bank: 'البنك / البطاقات / الرسوم',
-      immigration: 'الهجرة / وكلاء مزيفون',
+      immigration: 'ممثلون مزيفون / وكلاء مزيفون',
       marketplace: 'البيع عبر المنصات',
     },
   };

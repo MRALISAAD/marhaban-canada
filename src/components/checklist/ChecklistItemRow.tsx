@@ -40,8 +40,8 @@ const frequentErrors: Record<string, Record<string, string[]>> = {
       'Ne pas vérifier l\'état du logement.',
     ],
     license_done: [
-      'Conduire sans permis valide.',
-      'Oublier de renouveler le permis.',
+      'Conduire sans autorisation valide.',
+      'Oublier de renouveler ton document de conduite.',
     ],
     integration_done: [
       'Rester isolé les premiers mois.',
