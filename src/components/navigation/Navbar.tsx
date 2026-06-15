@@ -441,7 +441,7 @@ export function Navbar() {
             {FEATURE_FLAGS.ENABLE_EASY_READ && <EasyReadToggle />}
 
             <Link
-              href={localizeHref('/contact')}
+              href={localizeHref('/book')}
               className="hidden min-h-[44px] items-center justify-center rounded-full bg-marhaban-ink px-4 py-2 text-sm font-semibold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 sm:inline-flex"
             >
               {bookCallLabel}
@@ -580,7 +580,7 @@ export function Navbar() {
             </div>
             <div className="px-4 pb-2 pt-4">
               <Link
-                href={localizeHref('/contact')}
+                href={localizeHref('/book')}
                 className="flex min-h-[48px] w-full items-center justify-center rounded-full bg-marhaban-ink px-4 py-3 text-base font-semibold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
                 onClick={() => {
                   setIsMobileMenuOpen(false);

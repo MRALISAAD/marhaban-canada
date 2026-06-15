@@ -116,7 +116,7 @@ export const enContent: LocaleContent = {
 
   microcopy: {
     homeTitle: "First steps after arriving in Canada",
-    homeSubtitle: "Marhaban Canada is a support and orientation service for newcomers to Canada.",
+    homeSubtitle: "Marhaban Canada — Practical orientation for newcomers to Canada.",
     homeCtaPrimary: "Start the journey",
     homeCtaSub: "Free · Based on official sources · No registration required",
     journeyTitle: "Your settlement journey",
@@ -179,7 +179,7 @@ export const enContent: LocaleContent = {
   serviceAccompagnementWhatIsTitle: "What this service is",
   serviceAccompagnementWhatIsNotTitle: "What this service is not",
   serviceAccompagnementNoProxy: "We do not perform any official procedures on your behalf.",
-  serviceAccompagnementPillar: "Marhaban Canada is a support and orientation service for newcomers to Canada.",
+  serviceAccompagnementPillar: "Marhaban Canada — Practical orientation for newcomers to Canada.",
   serviceAccompagnementDisclaimer: "Marhaban Canada offers practical orientation and general information. We do not provide legal advice or immigration advice. For questions related to visas, permits, permanent residence, admissibility, or immigration strategy, please consult an authorized representative.",
 
   seoDescriptions: {
@@ -1007,10 +1007,10 @@ export const enContent: LocaleContent = {
 
   aboutPage: {
     title: "About Marhaban Canada",
-    intro: "A support and orientation service to simplify your settlement in Canada.",
+    intro: "Practical orientation to simplify your settlement in Canada.",
     mission: {
       title: "Our mission",
-      content: "Marhaban Canada is a support and orientation service for newcomers to Canada. We simplify settlement by providing clear information based on official sources.",
+      content: "Marhaban Canada — Practical orientation for newcomers to Canada. We simplify settlement by providing clear information based on official sources.",
     },
     whatWeDo: {
       title: "What the platform does",
