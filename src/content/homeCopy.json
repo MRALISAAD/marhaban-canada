@@ -1,0 +1,575 @@
+{
+  "fr": {
+    "heroTitle": "Arrive au Canada avec un plan clair, pas avec du stress.",
+    "heroSubtitle": "Marhaban Canada t'aide à organiser tes premières étapes : priorités, documents, logement, ressources utiles et erreurs à éviter.",
+    "primaryCta": "Réserver un appel",
+    "secondaryCta": "Voir le parcours",
+    "trust": [
+      "Orientation pratique",
+      "FR / EN / AR",
+      "Pas de conseil juridique",
+      "Pas de conseil en immigration"
+    ],
+    "checklist": [
+      "Prioriser les démarches utiles",
+      "Préparer documents et budget",
+      "Repérer les signaux d'alerte",
+      "Recevoir un résumé après l'appel"
+    ],
+    "valueLabels": [
+      "30 minutes pour clarifier",
+      "Priorités claires",
+      "Ressources utiles",
+      "Erreurs à éviter"
+    ],
+    "needsEyebrow": "Choisis ton besoin",
+    "needsTitle": "Commence par ce qui te bloque maintenant.",
+    "needsText": "Six parcours simples pour avancer sans te disperser.",
+    "needsCta": "Explorer",
+    "needs": [
+      {
+        "title": "Préparer mon arrivée",
+        "description": "Budget, documents utiles et premières décisions avant le départ.",
+        "href": "/parcours"
+      },
+      {
+        "title": "Première semaine au Canada",
+        "description": "Un ordre clair pour ne pas tout faire en même temps.",
+        "href": "/checklist/semaine-1"
+      },
+      {
+        "title": "Logement",
+        "description": "Questions à poser, preuves à vérifier et signaux d'alerte.",
+        "href": "/ressources"
+      },
+      {
+        "title": "Documents essentiels",
+        "description": "NAS, santé, preuves utiles et liens officiels.",
+        "href": "/parcours/guide/steps/nas"
+      },
+      {
+        "title": "Éviter une arnaque",
+        "description": "Repère les demandes suspectes avant de payer ou d'envoyer des documents.",
+        "href": "/arnaques"
+      },
+      {
+        "title": "Parler à quelqu'un",
+        "description": "Un appel humain pour clarifier ta situation et tes prochaines étapes.",
+        "href": "/reserver"
+      }
+    ],
+    "stepsEyebrow": "Du flou au plan clair",
+    "stepsTitle": "Quatre étapes simples, sans jargon.",
+    "steps": [
+      {
+        "title": "Tu expliques ta situation",
+        "text": "Tu partages où tu en es et ce qui te bloque, simplement."
+      },
+      {
+        "title": "On clarifie tes priorités",
+        "text": "On trie ce qui est urgent, ce qui peut attendre et ce qu'il faut vérifier."
+      },
+      {
+        "title": "Tu réserves un appel",
+        "text": "Tu choisis l'offre qui correspond à ton besoin du moment."
+      },
+      {
+        "title": "Tu reçois une mini-feuille de route",
+        "text": "Tu repars avec les prochaines étapes et les ressources utiles."
+      }
+    ],
+    "offersEyebrow": "Nos offres",
+    "offersTitle": "Des appels clairs, avec des limites transparentes.",
+    "offersText": "Chaque offre indique ce qui est inclus et ce qui n'est pas promis.",
+    "reserve": "Réserver",
+    "offers": [
+      {
+        "title": "Appel Orientation bêta",
+        "price": "10 $",
+        "duration": "30 minutes",
+        "bestFor": "Pour clarifier ta situation et savoir quoi faire en premier.",
+        "included": [
+          "Priorités pratiques",
+          "Ressources utiles",
+          "Résumé après l'appel"
+        ],
+        "notPromised": "Ce n'est pas du conseil juridique ni une promesse de résultat.",
+        "betaLabel": "Pour les premiers appels de validation"
+      },
+      {
+        "title": "Appel Orientation",
+        "price": "29 $",
+        "duration": "30 minutes",
+        "bestFor": "Pour quelqu'un qui veut un plan clair et des ressources utiles.",
+        "included": [
+          "Ordre des étapes",
+          "Erreurs à éviter",
+          "Résumé après l'appel"
+        ],
+        "notPromised": "Ce n'est pas du conseil juridique ni une promesse de résultat."
+      },
+      {
+        "title": "Pack Installation",
+        "price": "69 $",
+        "duration": "45 minutes + checklist personnalisée",
+        "bestFor": "Pour préparer ton arrivée ou organiser ta première semaine.",
+        "included": [
+          "Checklist personnalisée",
+          "Première semaine",
+          "Documents pratiques"
+        ],
+        "notPromised": "Ce n'est pas une garantie de logement ou d'emploi."
+      },
+      {
+        "title": "Pack Complet",
+        "price": "99 $",
+        "duration": "60 minutes + résumé détaillé",
+        "bestFor": "Pour repartir avec un plan structuré et facile à suivre.",
+        "included": [
+          "Plan structuré",
+          "Résumé détaillé",
+          "Priorités et erreurs à éviter"
+        ],
+        "notPromised": "Ce n'est pas une représentation officielle."
+      }
+    ],
+    "scopeEyebrow": "Cadre clair",
+    "scopeTitle": "Ce qu'on fait / Ce qu'on ne fait pas",
+    "scope": {
+      "doesTitle": "Ce qu'on fait",
+      "does": [
+        "Clarifier tes priorités",
+        "Expliquer les étapes pratiques",
+        "Organiser documents et ressources",
+        "Repérer les erreurs fréquentes",
+        "Identifier les situations suspectes"
+      ],
+      "doesNotTitle": "Ce qu'on ne fait pas",
+      "doesNot": [
+        "Conseil juridique",
+        "Conseil en immigration",
+        "Demande de visa/permis",
+        "Garantie logement/emploi",
+        "Représentation officielle",
+        "Promesse de résultat"
+      ]
+    },
+    "scamTitle": "Avant d'envoyer de l'argent ou tes documents, prends 2 minutes pour vérifier les signaux d'alerte.",
+    "scamExamples": [
+      "Dépôt avant visite",
+      "Faux recruteur",
+      "Frais urgents",
+      "Faux agent",
+      "Pression pour payer vite"
+    ],
+    "scamCta": "Vérifier une situation",
+    "guidesEyebrow": "Guides pratiques",
+    "guidesTitle": "Des repères concrets pour avancer dans le bon ordre.",
+    "guides": [
+      {
+        "title": "Checklist avant d'arriver au Canada",
+        "description": "Prépare les premières décisions avant le départ.",
+        "href": "/checklist"
+      },
+      {
+        "title": "Première semaine au Canada",
+        "description": "Commence par l'ordre le plus utile.",
+        "href": "/checklist/semaine-1"
+      },
+      {
+        "title": "Éviter les arnaques au logement",
+        "description": "Repère les signaux d'alerte avant de payer.",
+        "href": "/arnaques"
+      },
+      {
+        "title": "Banque, téléphone et documents essentiels",
+        "description": "Les repères pratiques pour tes premières démarches.",
+        "href": "/parcours/guide/steps/nas"
+      }
+    ],
+    "finalTitle": "Tu ne sais pas par quoi commencer ?",
+    "finalText": "Réserve un appel d'orientation et repars avec tes prochaines étapes."
+  },
+  "en": {
+    "heroTitle": "Arrive in Canada with a clear plan, not with stress.",
+    "heroSubtitle": "Marhaban Canada helps you organize your first steps: priorities, documents, housing, useful resources, and mistakes to avoid.",
+    "primaryCta": "Book a call",
+    "secondaryCta": "See the path",
+    "trust": [
+      "Practical orientation",
+      "FR / EN / AR",
+      "No legal advice",
+      "No immigration advice"
+    ],
+    "checklist": [
+      "Prioritize useful steps",
+      "Prepare documents and budget",
+      "Spot warning signs",
+      "Receive a summary after the call"
+    ],
+    "valueLabels": [
+      "30 minutes to clarify",
+      "Clear priorities",
+      "Useful resources",
+      "Mistakes to avoid"
+    ],
+    "needsEyebrow": "Choose your need",
+    "needsTitle": "Start with what is blocking you now.",
+    "needsText": "Six simple paths so you do not spread yourself too thin.",
+    "needsCta": "Explore",
+    "needs": [
+      {
+        "title": "Prepare my arrival",
+        "description": "Budget, useful documents, and first decisions before departure.",
+        "href": "/parcours"
+      },
+      {
+        "title": "First week in Canada",
+        "description": "A clear order so you do not do everything at once.",
+        "href": "/checklist/semaine-1"
+      },
+      {
+        "title": "Housing",
+        "description": "Questions to ask, proof to check, and warning signs.",
+        "href": "/ressources"
+      },
+      {
+        "title": "Essential documents",
+        "description": "SIN, health, useful proofs, and official links.",
+        "href": "/parcours/guide/steps/nas"
+      },
+      {
+        "title": "Avoid a scam",
+        "description": "Spot suspicious requests before paying or sharing documents.",
+        "href": "/arnaques"
+      },
+      {
+        "title": "Talk to someone",
+        "description": "A human call to clarify your situation and next steps.",
+        "href": "/reserver"
+      }
+    ],
+    "stepsEyebrow": "From confusion to clarity",
+    "stepsTitle": "Four simple steps, without jargon.",
+    "steps": [
+      {
+        "title": "You explain your situation",
+        "text": "Share where you are and what is blocking you, simply."
+      },
+      {
+        "title": "We clarify your priorities",
+        "text": "We sort what is urgent, what can wait, and what to verify."
+      },
+      {
+        "title": "You book a call",
+        "text": "Choose the offer that fits your need right now."
+      },
+      {
+        "title": "You receive a mini-roadmap",
+        "text": "Leave with next steps and useful resources."
+      }
+    ],
+    "offersEyebrow": "Our offers",
+    "offersTitle": "Clear calls with transparent limits.",
+    "offersText": "Each offer shows what is included and what is not promised.",
+    "reserve": "Book",
+    "offers": [
+      {
+        "title": "Beta Orientation Call",
+        "price": "$10",
+        "duration": "30 minutes",
+        "bestFor": "Clarify your situation and know what to do first.",
+        "included": [
+          "Practical priorities",
+          "Useful resources",
+          "Summary after the call"
+        ],
+        "notPromised": "This is not legal advice or a guaranteed outcome.",
+        "betaLabel": "For the first validation calls"
+      },
+      {
+        "title": "Orientation Call",
+        "price": "$29",
+        "duration": "30 minutes",
+        "bestFor": "For someone who wants a clear plan and useful resources.",
+        "included": [
+          "Step order",
+          "Mistakes to avoid",
+          "Summary after the call"
+        ],
+        "notPromised": "This is not legal advice or a guaranteed outcome."
+      },
+      {
+        "title": "Settlement Pack",
+        "price": "$69",
+        "duration": "45 minutes + personalized checklist",
+        "bestFor": "Prepare your arrival or organize your first week.",
+        "included": [
+          "Personalized checklist",
+          "First week",
+          "Practical documents"
+        ],
+        "notPromised": "This is not a housing or job guarantee."
+      },
+      {
+        "title": "Complete Pack",
+        "price": "$99",
+        "duration": "60 minutes + detailed summary",
+        "bestFor": "Leave with a structured plan that is easy to follow.",
+        "included": [
+          "Structured plan",
+          "Detailed summary",
+          "Priorities and mistakes to avoid"
+        ],
+        "notPromised": "This is not official representation."
+      }
+    ],
+    "scopeEyebrow": "Clear scope",
+    "scopeTitle": "What we do / What we do not do",
+    "scope": {
+      "doesTitle": "What we do",
+      "does": [
+        "Clarify your priorities",
+        "Explain practical steps",
+        "Organize documents and resources",
+        "Spot common mistakes",
+        "Identify suspicious situations"
+      ],
+      "doesNotTitle": "What we do not do",
+      "doesNot": [
+        "Legal advice",
+        "Immigration advice",
+        "Visa/permit applications",
+        "Housing/job guarantee",
+        "Official representation",
+        "Guaranteed outcome"
+      ]
+    },
+    "scamTitle": "Before sending money or documents, take 2 minutes to check the warning signs.",
+    "scamExamples": [
+      "Deposit before visit",
+      "Fake recruiter",
+      "Urgent fees",
+      "Fake agent",
+      "Pressure to pay quickly"
+    ],
+    "scamCta": "Check a situation",
+    "guidesEyebrow": "Practical guides",
+    "guidesTitle": "Concrete markers to move in the right order.",
+    "guides": [
+      {
+        "title": "Checklist before arriving in Canada",
+        "description": "Prepare first decisions before departure.",
+        "href": "/checklist"
+      },
+      {
+        "title": "First week in Canada",
+        "description": "Start with the most useful order.",
+        "href": "/checklist/semaine-1"
+      },
+      {
+        "title": "Avoid housing scams",
+        "description": "Spot warning signs before paying.",
+        "href": "/arnaques"
+      },
+      {
+        "title": "Bank, phone, and essential documents",
+        "description": "Practical markers for your first steps.",
+        "href": "/parcours/guide/steps/nas"
+      }
+    ],
+    "finalTitle": "Not sure where to start?",
+    "finalText": "Book an orientation call and leave with your next steps."
+  },
+  "ar": {
+    "heroTitle": "صل إلى كندا بخطة واضحة، لا بالتوتر.",
+    "heroSubtitle": "مرحبا كندا يساعدك على تنظيم خطواتك الأولى: الأولويات، الوثائق، السكن، الموارد المفيدة والأخطاء التي يجب تجنبها.",
+    "primaryCta": "احجز مكالمة",
+    "secondaryCta": "شاهد المسار",
+    "trust": [
+      "توجيه عملي",
+      "FR / EN / AR",
+      "لا نصيحة قانونية",
+      "لا نصيحة في الهجرة"
+    ],
+    "checklist": [
+      "ترتيب الخطوات المفيدة",
+      "تحضير الوثائق والميزانية",
+      "رصد إشارات التحذير",
+      "ملخص بعد المكالمة"
+    ],
+    "valueLabels": [
+      "30 دقيقة للتوضيح",
+      "أولويات واضحة",
+      "موارد مفيدة",
+      "أخطاء يجب تجنبها"
+    ],
+    "needsEyebrow": "اختر حاجتك",
+    "needsTitle": "ابدأ بما يوقفك الآن.",
+    "needsText": "ستة مسارات بسيطة لتتقدم دون تشتت.",
+    "needsCta": "استكشف",
+    "needs": [
+      {
+        "title": "تحضير وصولي",
+        "description": "ميزانية ووثائق مفيدة وقرارات أولى قبل السفر.",
+        "href": "/parcours"
+      },
+      {
+        "title": "الأسبوع الأول في كندا",
+        "description": "ترتيب واضح حتى لا تفعل كل شيء دفعة واحدة.",
+        "href": "/checklist/semaine-1"
+      },
+      {
+        "title": "السكن",
+        "description": "أسئلة مهمة وأدلة يجب التحقق منها.",
+        "href": "/ressources"
+      },
+      {
+        "title": "الوثائق الأساسية",
+        "description": "رقم التأمين، الصحة، الإثباتات والروابط الرسمية.",
+        "href": "/parcours/guide/steps/nas"
+      },
+      {
+        "title": "تجنب احتيال",
+        "description": "انتبه للطلبات المشبوهة قبل الدفع أو مشاركة الوثائق.",
+        "href": "/arnaques"
+      },
+      {
+        "title": "التحدث مع شخص",
+        "description": "مكالمة إنسانية لتوضيح وضعك وخطواتك التالية.",
+        "href": "/reserver"
+      }
+    ],
+    "stepsEyebrow": "من التشتت إلى الوضوح",
+    "stepsTitle": "أربع خطوات بسيطة، بدون تعقيد.",
+    "steps": [
+      {
+        "title": "تشرح وضعك",
+        "text": "تشارك أين أنت وما يعيقك، ببساطة."
+      },
+      {
+        "title": "نوضح أولوياتك",
+        "text": "نرتب ما هو عاجل وما يمكن تأجيله وما يجب التحقق منه."
+      },
+      {
+        "title": "تحجز مكالمة",
+        "text": "تختار العرض المناسب لحاجتك الآن."
+      },
+      {
+        "title": "تستلم خارطة طريق صغيرة",
+        "text": "تخرج بالخطوات التالية والموارد المفيدة."
+      }
+    ],
+    "offersEyebrow": "عروضنا",
+    "offersTitle": "مكالمات واضحة بحدود شفافة.",
+    "offersText": "كل عرض يوضح ما يشمله وما لا يُعد به.",
+    "reserve": "احجز",
+    "offers": [
+      {
+        "title": "مكالمة توجيه بيتا",
+        "price": "10 $",
+        "duration": "30 دقيقة",
+        "bestFor": "لتوضيح وضعك ومعرفة ما تفعله أولاً.",
+        "included": [
+          "أولويات عملية",
+          "موارد مفيدة",
+          "ملخص بعد المكالمة"
+        ],
+        "notPromised": "ليست نصيحة قانونية ولا ضمان لنتيجة.",
+        "betaLabel": "لأول مكالمات التحقق"
+      },
+      {
+        "title": "مكالمة توجيه",
+        "price": "29 $",
+        "duration": "30 دقيقة",
+        "bestFor": "لمن يريد خطة واضحة وموارد مفيدة.",
+        "included": [
+          "ترتيب الخطوات",
+          "أخطاء يجب تجنبها",
+          "ملخص بعد المكالمة"
+        ],
+        "notPromised": "ليست نصيحة قانونية ولا ضمان لنتيجة."
+      },
+      {
+        "title": "حزمة الاستقرار",
+        "price": "69 $",
+        "duration": "45 دقيقة + قائمة تحقق مخصصة",
+        "bestFor": "لتحضير وصولك أو تنظيم أسبوعك الأول.",
+        "included": [
+          "قائمة تحقق مخصصة",
+          "الأسبوع الأول",
+          "وثائق عملية"
+        ],
+        "notPromised": "ليست ضماناً للسكن أو العمل."
+      },
+      {
+        "title": "الحزمة الكاملة",
+        "price": "99 $",
+        "duration": "60 دقيقة + ملخص مفصل",
+        "bestFor": "لخطة منظمة وسهلة المتابعة.",
+        "included": [
+          "خطة منظمة",
+          "ملخص مفصل",
+          "أولويات وأخطاء يجب تجنبها"
+        ],
+        "notPromised": "ليست تمثيلاً رسمياً."
+      }
+    ],
+    "scopeEyebrow": "إطار واضح",
+    "scopeTitle": "ما نفعله / ما لا نفعله",
+    "scope": {
+      "doesTitle": "ما نفعله",
+      "does": [
+        "توضيح أولوياتك",
+        "شرح الخطوات العملية",
+        "تنظيم الوثائق والموارد",
+        "رصد الأخطاء الشائعة",
+        "تحديد المواقف المشبوهة"
+      ],
+      "doesNotTitle": "ما لا نفعله",
+      "doesNot": [
+        "نصيحة قانونية",
+        "نصيحة في الهجرة",
+        "طلب تأشيرة/تصريح",
+        "ضمان سكن/عمل",
+        "تمثيل رسمي",
+        "وعد بنتيجة"
+      ]
+    },
+    "scamTitle": "قبل إرسال المال أو الوثائق، خذ دقيقتين للتحقق من إشارات التحذير.",
+    "scamExamples": [
+      "وديعة قبل الزيارة",
+      "مُوظّف وهمي",
+      "رسوم عاجلة",
+      "وكيل مزيف",
+      "ضغط للدفع بسرعة"
+    ],
+    "scamCta": "تحقق من وضع",
+    "guidesEyebrow": "أدلة عملية",
+    "guidesTitle": "إرشادات ملموسة للتقدم بالترتيب الصحيح.",
+    "guides": [
+      {
+        "title": "قائمة تحقق قبل الوصول إلى كندا",
+        "description": "حضّر القرارات الأولى قبل السفر.",
+        "href": "/checklist"
+      },
+      {
+        "title": "الأسبوع الأول في كندا",
+        "description": "ابدأ بالترتيب الأكثر فائدة.",
+        "href": "/checklist/semaine-1"
+      },
+      {
+        "title": "تجنب احتيال السكن",
+        "description": "انتبه للإشارات قبل الدفع.",
+        "href": "/arnaques"
+      },
+      {
+        "title": "البنك والهاتف والوثائق الأساسية",
+        "description": "مرجع عملي لخطواتك الأولى.",
+        "href": "/parcours/guide/steps/nas"
+      }
+    ],
+    "finalTitle": "لا تعرف من أين تبدأ؟",
+    "finalText": "احجز مكالمة توجيه واخرج بخطواتك التالية."
+  }
+}
