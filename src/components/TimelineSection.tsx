@@ -39,6 +39,7 @@ export function TimelineSection({ section, checked, onToggle, labels }: Timeline
   const sectionTotal = section.items.length;
   const sectionDone = section.items.reduce((acc, item) => acc + (checked[item.id] ? 1 : 0), 0);
   const sectionPct = pct(sectionDone, sectionTotal);
+  const badgeClass = badgeStyles[section.badge as keyof typeof badgeStyles] ?? badgeStyles['En continu'];
 
   return (
     <section id={section.id} className="relative overflow-hidden rounded-[2rem] border border-marhaban-leaf/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(251,247,239,0.94))] p-5 shadow-[0_18px_54px_rgba(31,45,43,0.08)]">
@@ -47,11 +48,7 @@ export function TimelineSection({ section, checked, onToggle, labels }: Timeline
         <div className="flex items-start gap-3">
           <div className="mt-1 rounded-2xl border border-marhaban-leaf/15 bg-marhaban-mint p-2">{iconMap[section.id]}</div>
           <div>
-            <p
-              className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${
-                badgeStyles[section.badge]
-              }`}
-            >
+            <p className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${badgeClass}`}>
               {section.badge}
             </p>
             <h2 className="mt-2 text-lg font-semibold text-marhaban-ink">{section.title}</h2>

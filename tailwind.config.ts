@@ -18,6 +18,10 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-heading)', 'ui-serif', 'Georgia', 'serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -65,6 +69,7 @@ const config = {
         marhaban: {
           cream: "#F7F1E6",
           warm: "#FBF6ED",
+          obsidian: "#0F1B14",
           forest: "#123D35",
           forestDark: "#082A24",
           sage: "#C9D8B6",

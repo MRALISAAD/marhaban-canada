@@ -5,6 +5,7 @@ import { CalendarCheck } from 'lucide-react';
 import LocalizedLink from '@/components/LocalizedLink';
 import { useLanguage } from '@/components/LanguageProvider';
 import { getHtmlAttrs } from '@/i18n/locales';
+import { bookingPath } from '@/lib/routes';
 
 export function FloatingBookCallButton() {
   const { locale } = useLanguage();
@@ -71,9 +72,9 @@ export function FloatingBookCallButton() {
       dir={dir}
     >
       <LocalizedLink
-        href="/reserver"
+        href={bookingPath(locale)}
         aria-label={label}
-        className="inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-[1.25rem] border border-marhaban-gold/30 bg-marhaban-ink px-5 py-3 text-sm font-bold text-white shadow-[0_18px_45px_rgba(31,45,43,0.22)] transition hover:bg-marhaban-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream md:w-auto md:min-w-[184px] md:rounded-full"
+        className="inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-[1.25rem] border border-marhaban-gold/35 bg-marhaban-forestDark px-5 py-3 text-sm font-bold text-white shadow-[0_18px_55px_rgba(8,42,36,0.28)] transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream md:w-auto md:min-w-[184px] md:rounded-full"
       >
         <CalendarCheck className="h-4 w-4" aria-hidden="true" />
         <span>{label}</span>

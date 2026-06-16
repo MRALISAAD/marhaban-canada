@@ -7,6 +7,7 @@ import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
 import { LOCALES, type Locale } from '@/i18n/locales';
 import { withLocale } from '@/lib/i18n-utils';
+import { bookingPath } from '@/lib/routes';
 
 // Types for Navbar labels based on content.shared.nav
 type NavbarLabels = {
@@ -74,6 +75,7 @@ export function Navbar() {
   const pathname = usePathname() || `/${LOCALES[0]}`;
   const { locale, content } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const firstMenuItemRef = useRef<HTMLAnchorElement>(null);
@@ -153,6 +155,13 @@ export function Navbar() {
     if (locale === 'en') return 'Book a call';
     return 'احجز مكالمة';
   }, [locale]);
+
+  // Scroll-aware shadow
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -273,7 +282,7 @@ export function Navbar() {
   const secondaryLinks = useMemo(() => navLinks.filter((link) => link.group === 'secondary'), [navLinks]);
   
   return (
-    <header className="sticky top-0 z-50 border-b border-forest/5 bg-marhaban-cream/90 backdrop-blur-md">
+    <header className={`sticky top-0 z-50 border-b border-forest/5 bg-marhaban-cream/90 backdrop-blur-md transition-shadow duration-300${scrolled ? ' shadow-warm-sm' : ''}`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-3">
           {/* Brand */}
@@ -337,8 +346,8 @@ export function Navbar() {
           {/* Actions */}
           <div className="flex items-center gap-2">
             <Link
-              href={localizeHref('/reserver')}
-              className="hidden min-h-[44px] items-center justify-center rounded-xl bg-forest px-5 py-2.5 text-sm font-medium text-cream shadow-warm-sm transition hover:bg-forest/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest/40 focus-visible:ring-offset-2 sm:inline-flex"
+              href={bookingPath(locale)}
+              className="hidden min-h-[44px] items-center justify-center rounded-full bg-marhaban-forestDark px-5 py-2.5 text-sm font-bold text-white shadow-[0_14px_38px_rgba(8,42,36,0.2)] transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/45 focus-visible:ring-offset-2 sm:inline-flex"
             >
               {bookCallLabel}
             </Link>
@@ -434,8 +443,8 @@ export function Navbar() {
             ))}
             <div className="px-4 pb-2 pt-4">
               <Link
-                href={localizeHref('/reserver')}
-                className="flex min-h-[48px] w-full items-center justify-center rounded-xl bg-forest px-4 py-3 text-base font-semibold text-cream shadow-warm-sm transition hover:bg-forest/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest/40 focus-visible:ring-offset-2"
+                href={bookingPath(locale)}
+                className="flex min-h-[48px] w-full items-center justify-center rounded-full bg-marhaban-forestDark px-4 py-3 text-base font-bold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/45 focus-visible:ring-offset-2"
                 onClick={() => {
                   setIsMobileMenuOpen(false);
                 }}
