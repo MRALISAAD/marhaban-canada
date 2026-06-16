@@ -14,7 +14,7 @@ export function SecureExternalLink({ href, label }: SecureExternalLinkProps) {
       target="_blank"
       rel="noopener noreferrer"
       referrerPolicy="no-referrer"
-      className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-700 hover:text-slate-900"
+      className="inline-flex items-center gap-1 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs text-slate-700 hover:text-marhaban-ink"
       aria-label={label}
     >
       {label}
