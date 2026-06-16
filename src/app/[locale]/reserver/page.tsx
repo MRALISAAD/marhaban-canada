@@ -84,7 +84,7 @@ export default async function ReserverPage({ params }: Props) {
   };
 
   return (
-    <main className="warm-page" dir={dir} lang={lang}>
+    <div className="warm-page" dir={dir} lang={lang}>
       <SectionReveal className="border-b border-marhaban-leaf/10 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-4xl font-semibold leading-tight text-marhaban-ink sm:text-5xl">{t.title}</h1>
@@ -139,6 +139,6 @@ export default async function ReserverPage({ params }: Props) {
       </MarketingSection>
 
       <FinalCTA title={t.finalTitle} text={t.finalText} cta={t.finalCta} href={formAnchor} />
-    </main>
+    </div>
   );
 }
