@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
-import { LOCALES, type Locale, getHtmlAttrs } from '@/i18n/locales';
+import { LOCALES, type Locale } from '@/i18n/locales';
 import { withLocale } from '@/lib/i18n-utils';
 
 // Types for Navbar labels based on content.shared.nav
@@ -18,7 +18,6 @@ type NavbarLabels = {
   about: string;
   contact: string;
   legal: string;
-  plus: string;
   switchToFr: string;
   switchToEn: string;
   switchToAr: string;
@@ -74,15 +73,10 @@ function switchLocaleInPath(pathname: string, nextLocale: Locale): string {
 export function Navbar() {
   const pathname = usePathname() || `/${LOCALES[0]}`;
   const { locale, content } = useLanguage();
-  const { dir } = getHtmlAttrs(locale);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isPlusMenuOpen, setIsPlusMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const plusButtonRef = useRef<HTMLButtonElement>(null);
-  const plusMenuRef = useRef<HTMLDivElement>(null);
   const firstMenuItemRef = useRef<HTMLAnchorElement>(null);
-  const firstPlusMenuItemRef = useRef<HTMLAnchorElement>(null);
   const prevPathnameRef = useRef<string>(pathname);
 
   // Access navigation labels from content.shared.nav, with fallbacks for safety
@@ -97,7 +91,6 @@ export function Navbar() {
       about: navData?.about ?? 'About',
       contact: navData?.contact ?? 'Contact',
       legal: navData?.legal ?? 'Legal',
-      plus: (navData && 'plus' in navData ? (navData as { plus: string }).plus : undefined) ?? 'Plus',
       switchToFr: navData?.switchToFr ?? 'FR',
       switchToEn: navData?.switchToEn ?? 'EN',
       switchToAr: navData?.switchToAr ?? 'AR',
@@ -186,36 +179,11 @@ export function Navbar() {
     };
   }, [isMobileMenuOpen]);
 
-  // Close Plus dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent): void => {
-      if (
-        plusMenuRef.current &&
-        !plusMenuRef.current.contains(event.target as Node) &&
-        plusButtonRef.current &&
-        !plusButtonRef.current.contains(event.target as Node)
-      ) {
-        setIsPlusMenuOpen(false);
-      }
-    };
-
-    if (isPlusMenuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isPlusMenuOpen]);
-
   // Handle Escape key to close menus
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent): void => {
       if (event.key === 'Escape') {
-        if (isPlusMenuOpen) {
-          setIsPlusMenuOpen(false);
-          plusButtonRef.current?.focus();
-        } else if (isMobileMenuOpen) {
+        if (isMobileMenuOpen) {
           setIsMobileMenuOpen(false);
           menuButtonRef.current?.focus();
         }
@@ -224,7 +192,7 @@ export function Navbar() {
 
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
-  }, [isMobileMenuOpen, isPlusMenuOpen]);
+  }, [isMobileMenuOpen]);
 
   // Focus first menu item when menu opens (focus trap)
   useEffect(() => {
@@ -237,17 +205,6 @@ export function Navbar() {
     }
   }, [isMobileMenuOpen]);
 
-  // Focus first Plus menu item when dropdown opens
-  useEffect(() => {
-    if (isPlusMenuOpen && firstPlusMenuItemRef.current) {
-      // Small delay to ensure menu is rendered
-      const timeoutId = setTimeout(() => {
-        firstPlusMenuItemRef.current?.focus();
-      }, 100);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [isPlusMenuOpen]);
-
   // Close menus when pathname changes (navigation occurred)
   useEffect(() => {
     if (prevPathnameRef.current !== pathname) {
@@ -255,7 +212,6 @@ export function Navbar() {
       // Use setTimeout to avoid synchronous setState in effect
       setTimeout(() => {
         setIsMobileMenuOpen(false);
-        setIsPlusMenuOpen(false);
       }, 0);
     }
   }, [pathname]);
@@ -316,11 +272,8 @@ export function Navbar() {
   const primaryLinks = useMemo(() => navLinks.filter((link) => link.group === 'primary'), [navLinks]);
   const secondaryLinks = useMemo(() => navLinks.filter((link) => link.group === 'secondary'), [navLinks]);
   
-  // Check if any secondary link is active (for "Plus" button styling)
-  const isSecondaryActive = useMemo(() => secondaryLinks.some((link) => link.isActive), [secondaryLinks]);
-
   return (
-    <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-marhaban-cream/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-forest/5 bg-marhaban-cream/90 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-3">
           {/* Brand */}
@@ -341,12 +294,12 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden items-center gap-1 text-sm text-slate-700 md:flex" aria-label={navAriaLabel}>
+          <nav className="hidden items-center gap-1 text-sm text-marhaban-ink/70 md:flex" aria-label={navAriaLabel}>
             {primaryLinks.map((link) => (
               <Link
                 key={link.key}
                 className={`relative flex min-h-[44px] items-center px-3 transition-all duration-150 ease-in-out hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md ${
-                  link.isActive ? 'font-semibold text-marhaban-ink' : 'font-medium text-slate-600'
+                  link.isActive ? 'font-semibold text-marhaban-ink' : 'font-medium text-marhaban-ink/60'
                 }`}
                 href={link.href}
                 aria-current={link.isActive ? 'page' : undefined}
@@ -360,12 +313,12 @@ export function Navbar() {
                 )}
               </Link>
             ))}
-            <span className="mx-1 h-5 w-px bg-stone-200" aria-hidden="true" />
+            <span className="mx-1 h-5 w-px bg-marhaban-leaf/20" aria-hidden="true" />
             {secondaryLinks.map((link) => (
               <Link
                 key={link.key}
                 className={`relative flex min-h-[44px] items-center px-3 transition-all duration-150 ease-in-out hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md ${
-                  link.isActive ? 'font-semibold text-marhaban-ink' : 'font-medium text-slate-600'
+                  link.isActive ? 'font-semibold text-marhaban-ink' : 'font-medium text-marhaban-ink/60'
                 }`}
                 href={link.href}
                 aria-current={link.isActive ? 'page' : undefined}
@@ -384,8 +337,8 @@ export function Navbar() {
           {/* Actions */}
           <div className="flex items-center gap-2">
             <Link
-              href={localizeHref('/book')}
-              className="hidden min-h-[44px] items-center justify-center rounded-full bg-marhaban-ink px-4 py-2 text-sm font-semibold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 sm:inline-flex"
+              href={localizeHref('/reserver')}
+              className="hidden min-h-[44px] items-center justify-center rounded-xl bg-forest px-5 py-2.5 text-sm font-medium text-cream shadow-warm-sm transition hover:bg-forest/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest/40 focus-visible:ring-offset-2 sm:inline-flex"
             >
               {bookCallLabel}
             </Link>
@@ -393,7 +346,7 @@ export function Navbar() {
             {/* Language Switch */}
             <Link
               href={otherHref}
-              className="flex min-h-[44px] items-center justify-center rounded-full border border-stone-300 bg-white/70 px-3 py-2 text-sm font-medium transition-colors hover:bg-marhaban-mint/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2"
+              className="flex min-h-[44px] items-center justify-center rounded-full border border-marhaban-leaf/20 bg-white/70 px-3 py-2 text-sm font-medium transition-colors hover:bg-marhaban-mint/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2"
               aria-label={languageSwitchAriaLabel}
             >
               {otherLocale === 'fr' ? nav.switchToFr : otherLocale === 'en' ? nav.switchToEn : nav.switchToAr}
@@ -404,7 +357,7 @@ export function Navbar() {
               ref={menuButtonRef}
               type="button"
               onClick={toggleMobileMenu}
-              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full p-2 text-slate-700 transition-all duration-200 ease-in-out hover:bg-marhaban-mint/60 active:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 md:hidden"
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full p-2 text-marhaban-ink/70 transition-all duration-200 ease-in-out hover:bg-marhaban-mint/60 active:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 md:hidden"
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
               aria-label={menuButtonAriaLabel}
@@ -441,7 +394,7 @@ export function Navbar() {
         <div
           ref={menuRef}
           id="mobile-menu"
-          className={`border-t border-stone-200 bg-marhaban-cream/[0.98] transition-all duration-300 ease-in-out md:hidden ${
+          className={`border-t border-marhaban-leaf/10 bg-marhaban-cream/[0.98] transition-all duration-300 ease-in-out md:hidden ${
             isMobileMenuOpen
               ? 'visible max-h-screen opacity-100'
               : 'invisible max-h-0 overflow-hidden opacity-0'
@@ -454,7 +407,7 @@ export function Navbar() {
               <Link
                 key={link.key}
                 ref={index === 0 ? firstMenuItemRef : null}
-                className={`flex min-h-[44px] items-center px-4 py-3 text-base text-slate-700 transition-all duration-150 ease-in-out hover:bg-marhaban-mint/50 hover:text-marhaban-ink active:bg-marhaban-mint/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-inset ${
+                className={`flex min-h-[44px] items-center px-4 py-3 text-base text-marhaban-ink/70 transition-all duration-150 ease-in-out hover:bg-marhaban-mint/50 hover:text-marhaban-ink active:bg-marhaban-mint/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-inset ${
                   link.isActive ? 'bg-marhaban-mint/60 font-semibold text-marhaban-ink' : ''
                 }`}
                 href={link.href}
@@ -465,69 +418,26 @@ export function Navbar() {
               </Link>
             ))}
             
-            {/* Plus section separator */}
-            <div className="border-t border-stone-200 my-2" />
-            
-            {/* Plus button (mobile accordion trigger) */}
-            <button
-              ref={plusButtonRef}
-              type="button"
-              onClick={() => setIsPlusMenuOpen((prev) => !prev)}
-              className={`flex min-h-[44px] items-center justify-between px-4 py-3 text-base text-slate-700 transition-all duration-150 ease-in-out hover:bg-marhaban-mint/50 hover:text-marhaban-ink active:bg-marhaban-mint/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-inset ${
-                isSecondaryActive ? 'bg-marhaban-mint/60 font-semibold text-marhaban-ink' : ''
-              }`}
-              aria-expanded={isPlusMenuOpen}
-              aria-controls="mobile-plus-menu"
-            >
-              <span>{nav.plus}</span>
-              <svg
-                className={`h-5 w-5 transition-transform duration-200 ${
-                  dir === 'rtl' ? 'mr-auto' : 'ml-auto'
-                } ${isPlusMenuOpen ? 'rotate-180' : ''}`}
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
+            {/* Secondary links */}
+            {secondaryLinks.map((link) => (
+              <Link
+                key={link.key}
+                className={`flex min-h-[44px] items-center px-4 py-3 text-base text-marhaban-ink/70 transition-all duration-150 ease-in-out hover:bg-marhaban-mint/50 hover:text-marhaban-ink active:bg-marhaban-mint/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-inset ${
+                  link.isActive ? 'bg-marhaban-mint/60 font-semibold text-marhaban-ink' : ''
+                }`}
+                href={link.href}
+                aria-current={link.isActive ? 'page' : undefined}
+                onClick={() => setIsMobileMenuOpen(false)}
               >
-                <path d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            
-            {/* Secondary links (accordion) */}
-            <div
-              id="mobile-plus-menu"
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                isPlusMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-              }`}
-              aria-hidden={!isPlusMenuOpen}
-            >
-              {secondaryLinks.map((link) => (
-                <Link
-                  key={link.key}
-                  className={`flex min-h-[44px] items-center px-8 py-3 text-base text-slate-700 transition-all duration-150 ease-in-out hover:bg-marhaban-mint/50 hover:text-marhaban-ink active:bg-marhaban-mint/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-inset ${
-                    link.isActive ? 'bg-marhaban-mint/60 font-semibold text-marhaban-ink' : ''
-                  }`}
-                  href={link.href}
-                  aria-current={link.isActive ? 'page' : undefined}
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    setIsPlusMenuOpen(false);
-                  }}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
+                {link.label}
+              </Link>
+            ))}
             <div className="px-4 pb-2 pt-4">
               <Link
-                href={localizeHref('/book')}
-                className="flex min-h-[48px] w-full items-center justify-center rounded-full bg-marhaban-ink px-4 py-3 text-base font-semibold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
+                href={localizeHref('/reserver')}
+                className="flex min-h-[48px] w-full items-center justify-center rounded-xl bg-forest px-4 py-3 text-base font-semibold text-cream shadow-warm-sm transition hover:bg-forest/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest/40 focus-visible:ring-offset-2"
                 onClick={() => {
                   setIsMobileMenuOpen(false);
-                  setIsPlusMenuOpen(false);
                 }}
               >
                 {bookCallLabel}

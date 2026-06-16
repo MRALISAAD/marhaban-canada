@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { getHtmlAttrs, isLocale, type Locale } from '@/i18n/locales';
 import { cn } from '@/lib/cn';
+import { AnimatedCTA, AnimatedCard, FloatingVisual, SectionReveal, StaggerGroup } from '@/components/animations/MarketingMotion';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -270,35 +271,39 @@ export default async function BookCallPage({ params }: Props) {
   return (
     <main className="warm-page px-4 py-10 sm:px-6 lg:px-8" dir={dir} lang={lang}>
       <div className="mx-auto max-w-7xl">
-        <section className="relative overflow-hidden rounded-3xl border border-marhaban-leaf/10 bg-marhaban-mint/75 p-6 shadow-warm sm:p-8 lg:grid lg:grid-cols-[1fr_0.92fr] lg:items-center lg:gap-8">
-          <div className="absolute -top-20 end-10 h-52 w-52 rounded-[45%_55%_60%_40%/45%_35%_65%_55%] bg-marhaban-sand/40 blur-2xl" aria-hidden="true" />
+        <SectionReveal className="relative overflow-hidden rounded-[2rem] border border-marhaban-leaf/10 bg-[linear-gradient(180deg,rgba(232,239,227,0.72),rgba(255,250,242,0.95))] p-6 shadow-warm sm:p-8 lg:grid lg:grid-cols-[1fr_0.96fr] lg:items-center lg:gap-8">
           <div className="relative z-10">
-            <p className="inline-flex rounded-full bg-white/80 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-marhaban-leaf">
+            <p className="inline-flex rounded-full border border-marhaban-leaf/10 bg-white/82 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-marhaban-leaf shadow-warm-sm">
               {t.eyebrow}
             </p>
-            <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-tight text-marhaban-ink sm:text-5xl lg:text-6xl">
+            <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-[0.94] text-marhaban-ink sm:text-5xl lg:text-[4.8rem]">
               {t.title}
             </h1>
-            <p className="mt-5 max-w-2xl text-base text-slate-700 sm:text-lg">{t.intro}</p>
+            <p className="mt-5 max-w-2xl text-base text-marhaban-ink/78 sm:text-lg">{t.intro}</p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <a href="#booking-flow" className="inline-flex min-h-[50px] items-center gap-2 rounded-full bg-marhaban-ink px-6 py-3 text-sm font-bold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2">
-                {t.primary}
-                <CalendarCheck className="h-4 w-4" aria-hidden="true" />
-              </a>
-              <a href="#offers" className="inline-flex min-h-[50px] items-center gap-2 rounded-full border border-marhaban-leaf/20 bg-white/85 px-6 py-3 text-sm font-bold text-marhaban-ink transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2">
-                {t.secondary}
-              </a>
+              <AnimatedCTA className="inline-flex">
+                <a href="#booking-flow" className="inline-flex min-h-[52px] items-center gap-2 rounded-full bg-marhaban-ink px-6 py-3 text-sm font-bold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2">
+                  {t.primary}
+                  <CalendarCheck className="h-4 w-4" aria-hidden="true" />
+                </a>
+              </AnimatedCTA>
+              <AnimatedCTA className="inline-flex">
+                <a href="#offers" className="inline-flex min-h-[52px] items-center gap-2 rounded-full border border-marhaban-leaf/20 bg-white/90 px-6 py-3 text-sm font-bold text-marhaban-ink transition hover:border-marhaban-leaf/35 hover:bg-marhaban-mint/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2">
+                  {t.secondary}
+                </a>
+              </AnimatedCTA>
             </div>
             <div className="mt-7 flex flex-wrap gap-2">
               {t.trust.map((item) => (
-                <span key={item} className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1.5 text-xs font-semibold text-marhaban-ink">
+                <span key={item} className="inline-flex items-center gap-2 rounded-full border border-marhaban-leaf/10 bg-white/80 px-3 py-1.5 text-xs font-semibold text-marhaban-ink shadow-[0_10px_24px_rgba(31,45,43,0.05)]">
                   <CheckCircle2 className="h-3.5 w-3.5 text-marhaban-leaf" aria-hidden="true" />
                   {item}
                 </span>
               ))}
             </div>
           </div>
-          <div className="relative z-10 mt-8 overflow-hidden rounded-3xl border border-white/20 bg-marhaban-ink shadow-warm lg:mt-0">
+          <FloatingVisual className="relative z-10 mt-8 lg:mt-0" float="gentle">
+            <div className="overflow-hidden rounded-[2rem] border border-white/20 bg-marhaban-ink shadow-premium-card">
             <div className="relative aspect-[4/5] min-h-[340px]">
               <Image
                 src="/assets/marhaban/visuel-appel.jpg"
@@ -308,29 +313,52 @@ export default async function BookCallPage({ params }: Props) {
                 sizes="(min-width: 1024px) 42vw, calc(100vw - 3rem)"
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-marhaban-ink/42 via-marhaban-ink/12 to-transparent" aria-hidden="true" />
-              <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-gold">{t.eyebrow}</p>
-                <p className="mt-2 max-w-md text-sm leading-relaxed text-white/84">{t.intro}</p>
+              <div className="absolute inset-0 bg-gradient-to-t from-marhaban-ink/54 via-marhaban-ink/12 to-transparent" aria-hidden="true" />
+              <div className="absolute left-4 right-4 top-4">
+                <span className="inline-flex rounded-full bg-white/86 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-marhaban-leaf shadow-warm-sm">
+                  {t.betaBadge}
+                </span>
+              </div>
+              <div className="absolute inset-x-4 bottom-4 rounded-[1.75rem] border border-white/18 bg-white/88 p-4 shadow-warm backdrop-blur-sm">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">{t.offersEyebrow}</p>
+                    <p className="mt-1 text-2xl font-semibold text-marhaban-ink">{t.offers[0].name}</p>
+                  </div>
+                  <p className="rounded-full bg-marhaban-ink px-3 py-1 text-sm font-bold text-white">{t.offers[0].price}</p>
+                </div>
+                <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                  {[
+                    t.offers[0].duration,
+                    t.offers[0].benefit,
+                    t.offers[0].points[0],
+                    t.offers[0].points[3],
+                  ].map((item) => (
+                    <div key={item} className="rounded-2xl bg-marhaban-cream/90 px-3 py-2 text-sm text-marhaban-ink/82">
+                      {item}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+            </div>
+          </FloatingVisual>
+        </SectionReveal>
 
-        <section id="offers" className="py-12 sm:py-16">
+        <SectionReveal id="offers" className="py-12 sm:py-16">
           <div className="max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-clay">{t.offersEyebrow}</p>
             <h2 className="mt-4 text-3xl font-semibold text-marhaban-ink sm:text-4xl">{t.offersTitle}</h2>
             <p className="mt-3 text-base text-slate-700">{t.offersIntro}</p>
           </div>
-          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          <StaggerGroup className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {t.offers.map((offer, index) => (
               <OfferCard key={offer.name} offer={offer} cta={t.reserve} featured={index === 0} featuredLabel={t.betaBadge} href={bookingActionsHref} />
             ))}
-          </div>
-        </section>
+          </StaggerGroup>
+        </SectionReveal>
 
-        <section className="pb-12">
+        <SectionReveal className="pb-12">
           <div className="rounded-3xl border border-marhaban-leaf/12 bg-marhaban-cream/90 p-6 shadow-warm-sm sm:p-8">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
               <div className="max-w-3xl">
@@ -340,17 +368,17 @@ export default async function BookCallPage({ params }: Props) {
               <ShieldCheck className="h-8 w-8 flex-shrink-0 text-marhaban-leaf" aria-hidden="true" />
             </div>
           </div>
-        </section>
+        </SectionReveal>
 
-        <section id="booking-flow" className="grid gap-6 pb-12 lg:grid-cols-[0.9fr_1.1fr]">
+        <SectionReveal id="booking-flow" className="grid gap-6 pb-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-3xl border border-marhaban-leaf/15 bg-white/[0.92] p-6 shadow-warm-sm sm:p-8">
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-clay">{t.flowTitle}</p>
             <h2 className="mt-4 text-3xl font-semibold text-marhaban-ink">{t.flowTitle}</h2>
-            <div className="mt-7 grid gap-4">
+            <StaggerGroup className="mt-7 grid gap-4">
               {t.flow.map((step, index) => {
                 const Icon = step.icon;
                 return (
-                  <article key={step.title} className="flex gap-4 rounded-2xl border border-marhaban-leaf/10 bg-marhaban-cream/80 p-4">
+                  <AnimatedCard key={step.title} className="flex gap-4 rounded-2xl border border-marhaban-leaf/10 bg-marhaban-cream/80 p-4 shadow-sm">
                     <span className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-2xl bg-marhaban-mint text-marhaban-leaf">
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
@@ -359,10 +387,10 @@ export default async function BookCallPage({ params }: Props) {
                       <h3 className="mt-1 font-semibold text-marhaban-ink">{step.title}</h3>
                       <p className="mt-1 text-sm text-slate-700">{step.text}</p>
                     </div>
-                  </article>
+                  </AnimatedCard>
                 );
               })}
-            </div>
+            </StaggerGroup>
           </div>
 
           <div id="booking-actions" className="grid gap-6 scroll-mt-24">
@@ -382,9 +410,9 @@ export default async function BookCallPage({ params }: Props) {
               warm
             />
           </div>
-        </section>
+        </SectionReveal>
 
-        <section className="grid gap-6 pb-12 lg:grid-cols-[1fr_0.9fr]">
+        <SectionReveal className="grid gap-6 pb-12 lg:grid-cols-[1fr_0.9fr]">
           <div className="rounded-3xl border border-marhaban-leaf/15 bg-marhaban-mint/75 p-6 shadow-warm-sm sm:p-8">
             <ClipboardCheck className="h-8 w-8 text-marhaban-leaf" aria-hidden="true" />
             <h2 className="mt-5 text-3xl font-semibold text-marhaban-ink">{t.summaryTitle}</h2>
@@ -409,21 +437,23 @@ export default async function BookCallPage({ params }: Props) {
               ))}
             </div>
           </div>
-        </section>
+        </SectionReveal>
 
-        <section className="rounded-3xl bg-marhaban-ink p-6 text-white shadow-warm sm:p-8" data-floating-book-call-hide>
+        <SectionReveal className="rounded-3xl bg-marhaban-ink p-6 text-white shadow-warm sm:p-8" data-floating-book-call-hide>
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
               <MailCheck className="h-8 w-8 text-marhaban-gold" aria-hidden="true" />
               <h2 className="mt-4 text-3xl font-semibold">{t.finalTitle}</h2>
               <p className="mt-2 text-sm text-white/75">{t.finalText}</p>
             </div>
-            <a href={bookingActionsHref} className="inline-flex min-h-[50px] items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-marhaban-ink transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-ink">
-              {t.formCta}
-              <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
-            </a>
+            <AnimatedCTA className="inline-flex">
+              <a href={bookingActionsHref} className="inline-flex min-h-[50px] items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-marhaban-ink transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-ink">
+                {t.formCta}
+                <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+              </a>
+            </AnimatedCTA>
           </div>
-        </section>
+        </SectionReveal>
       </div>
     </main>
   );

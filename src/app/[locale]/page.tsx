@@ -25,7 +25,7 @@ import {
 import LocalizedLink from '@/components/LocalizedLink';
 import { ProvinceSelector } from '@/components/ProvinceSelector';
 import { useLanguage } from '@/components/LanguageProvider';
-import { HomepageGsapEffects } from '@/components/animations/HomepageGsapEffects';
+import { AnimatedCTA, AnimatedCard, FloatingVisual, SectionReveal, StaggerGroup } from '@/components/animations/MarketingMotion';
 import { getHtmlAttrs, type Locale } from '@/i18n/locales';
 import { cn } from '@/lib/cn';
 
@@ -383,31 +383,34 @@ export default function HomePage() {
   const t = homeTexts[locale] ?? homeTexts.fr;
 
   return (
-    <HomepageGsapEffects>
-      <main className="warm-page overflow-hidden" dir={dir}>
+    <main className="warm-page overflow-hidden" dir={dir}>
         <AnnouncementBar message={t.announcement} cta={t.announcementCta} />
 
-        <section className="relative px-4 pb-10 pt-8 sm:px-6 lg:px-8">
+        <SectionReveal className="relative px-4 pb-10 pt-8 sm:px-6 lg:px-8">
           <div className="mx-auto grid min-h-[calc(100svh-132px)] max-w-7xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
             <div className="relative z-10 max-w-3xl py-8 sm:py-12">
               <p className="inline-flex rounded-full border border-marhaban-leaf/15 bg-white/75 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-marhaban-leaf shadow-warm-sm" data-animate="hero-item">
                 {t.heroEyebrow}
               </p>
-              <h1 className="mt-6 text-5xl font-semibold leading-[0.98] text-marhaban-ink sm:text-6xl lg:text-7xl" data-animate="hero-item">
+              <h1 className="mt-6 text-5xl font-semibold leading-[0.96] text-marhaban-ink sm:text-6xl lg:text-7xl" data-animate="hero-item">
                 {t.heroTitle}
               </h1>
-              <p className="mt-6 max-w-2xl text-base text-slate-700 sm:text-lg" data-animate="hero-item">
+              <p className="mt-6 max-w-2xl text-base text-marhaban-ink/78 sm:text-lg" data-animate="hero-item">
                 {t.heroSubtitle}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-3" data-animate="hero-item">
-                <LocalizedLink href="/book" className="inline-flex min-h-[54px] items-center gap-2 rounded-full bg-marhaban-ink px-6 py-3 text-sm font-bold text-white shadow-warm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream">
-                  {t.primaryCta}
-                  <CalendarCheck className="h-4 w-4" aria-hidden="true" />
-                </LocalizedLink>
-                <LocalizedLink href="/parcours" className="inline-flex min-h-[54px] items-center gap-2 rounded-full border border-marhaban-leaf/25 bg-white/85 px-6 py-3 text-sm font-bold text-marhaban-ink shadow-warm-sm transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream">
-                  {t.secondaryCta}
-                  <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
-                </LocalizedLink>
+                <AnimatedCTA className="inline-flex">
+                  <LocalizedLink href="/book" className="inline-flex min-h-[54px] items-center gap-2 rounded-full bg-marhaban-ink px-6 py-3 text-sm font-bold text-white shadow-warm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream">
+                    {t.primaryCta}
+                    <CalendarCheck className="h-4 w-4" aria-hidden="true" />
+                  </LocalizedLink>
+                </AnimatedCTA>
+                <AnimatedCTA className="inline-flex">
+                  <LocalizedLink href="/parcours" className="inline-flex min-h-[54px] items-center gap-2 rounded-full border border-marhaban-leaf/25 bg-white/85 px-6 py-3 text-sm font-bold text-marhaban-ink shadow-warm-sm transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream">
+                    {t.secondaryCta}
+                    <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+                  </LocalizedLink>
+                </AnimatedCTA>
               </div>
               <div className="mt-8 grid gap-2 sm:grid-cols-2" data-animate="hero-item">
                 {t.proof.map((item) => (
@@ -419,13 +422,17 @@ export default function HomePage() {
               </div>
             </div>
 
-            <HeroVisual
-              alt={t.heroImageAlt}
+            <HeroComposition
+              locale={locale}
+              checklistLabel={t.visualChecklist}
+              scamLabel={t.visualScam}
+              planLabel={t.visualPlan}
+              docLabel={t.visualDoc}
             />
           </div>
-        </section>
+        </SectionReveal>
 
-        <section className="bg-marhaban-ink px-4 py-5 text-white sm:px-6 lg:px-8">
+        <SectionReveal className="bg-marhaban-ink px-4 py-5 text-white sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-[1.05fr_0.95fr] md:items-center" data-animate="section">
             <div className="rounded-premium border border-white/10 bg-white/[0.06] p-5 shadow-warm-sm">
               <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-gold">{t.progressLabel}</p>
@@ -436,7 +443,7 @@ export default function HomePage() {
               <ProvinceSelector />
             </div>
           </div>
-        </section>
+        </SectionReveal>
 
         <SectionBand>
             <SectionHeader eyebrow={t.needsEyebrow} title={t.needsTitle} text={t.needsText} />
@@ -454,46 +461,50 @@ export default function HomePage() {
               <p className="text-sm font-semibold leading-relaxed text-marhaban-ink">{disclaimer[locale]}</p>
             </div>
           </div>
-          <BrandImagePanel
-            src="/assets/marhaban/visuel-appel.jpg"
-            alt={t.offerImageAlt}
-            sizes="(min-width: 1024px) 1120px, calc(100vw - 2rem)"
-            className="mt-8 aspect-[16/7] min-h-[260px]"
-          />
-          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4" data-animate-group>
+          <FloatingVisual className="mt-8" float="gentle">
+            <BrandImagePanel
+              src="/assets/marhaban/visuel-appel.jpg"
+              alt={t.offerImageAlt}
+              sizes="(min-width: 1024px) 1120px, calc(100vw - 2rem)"
+              className="aspect-[16/7] min-h-[260px]"
+            />
+          </FloatingVisual>
+          <StaggerGroup className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {t.offers.map((offer, index) => (
               <OfferCard key={offer.title} offer={offer} cta={t.reserve} featured={index === 1} />
             ))}
-          </div>
+          </StaggerGroup>
         </SectionBand>
 
         <SectionBand>
           <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
             <div className="space-y-6">
               <SectionHeader eyebrow={t.howEyebrow} title={t.howTitle} />
-              <BrandImagePanel
-                src="/assets/marhaban/visuel-checklist.jpg"
-                alt={t.howImageAlt}
-                sizes="(min-width: 1024px) 38vw, calc(100vw - 2rem)"
-                className="aspect-[4/3] min-h-[280px]"
-              />
+              <FloatingVisual float="gentle">
+                <BrandImagePanel
+                  src="/assets/marhaban/visuel-checklist.jpg"
+                  alt={t.howImageAlt}
+                  sizes="(min-width: 1024px) 38vw, calc(100vw - 2rem)"
+                  className="aspect-[4/3] min-h-[280px]"
+                />
+              </FloatingVisual>
             </div>
-            <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-1" data-animate-group>
+            <StaggerGroup className="grid gap-4 md:grid-cols-3 lg:grid-cols-1">
               {t.howSteps.map((step, index) => (
                 <StepCard key={step.title} step={step} index={index} />
               ))}
-            </div>
+            </StaggerGroup>
           </div>
         </SectionBand>
 
         <SectionBand className="bg-marhaban-mint/70">
           <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
             <SectionHeader eyebrow={t.pathsEyebrow} title={t.pathsTitle} />
-            <div className="flex flex-wrap gap-3 rounded-3xl border border-marhaban-leaf/15 bg-marhaban-cream/85 p-5 shadow-warm-sm">
+            <StaggerGroup className="flex flex-wrap gap-3 rounded-3xl border border-marhaban-leaf/15 bg-marhaban-cream/85 p-5 shadow-warm-sm">
               {t.tags.map((tag, index) => (
                 <JourneyTag key={tag.label} tag={tag} index={index} />
               ))}
-            </div>
+            </StaggerGroup>
           </div>
         </SectionBand>
 
@@ -541,11 +552,11 @@ export default function HomePage() {
 
         <SectionBand>
           <SectionHeader eyebrow={t.guidesEyebrow} title={t.guidesTitle} />
-          <div className="mt-8 grid gap-5 lg:grid-cols-[1.05fr_0.95fr_0.95fr]" data-animate-group>
+          <StaggerGroup className="mt-8 grid gap-5 lg:grid-cols-[1.05fr_0.95fr_0.95fr]">
             {t.guides.map((guide, index) => (
               <GuideCard key={guide.title} guide={guide} featured={index === 0} />
             ))}
-          </div>
+          </StaggerGroup>
         </SectionBand>
 
         <SectionBand className="bg-white/65">
@@ -553,19 +564,19 @@ export default function HomePage() {
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-leaf">{t.socialEyebrow}</p>
               <h2 className="mt-4 text-3xl font-semibold text-marhaban-ink sm:text-4xl">{t.socialTitle}</h2>
-              <p className="mt-3 text-sm text-slate-700">{t.socialText}</p>
+              <p className="mt-3 text-sm text-marhaban-ink/70">{t.socialText}</p>
             </div>
-            <div className="grid gap-4 sm:grid-cols-3">
+            <StaggerGroup className="grid gap-4 sm:grid-cols-3">
               {t.socialQuotes.map((quote) => (
                 <p key={quote} className="rounded-2xl bg-white/85 p-5 text-sm font-semibold text-marhaban-ink shadow-warm-sm">
                   “{quote}”
                 </p>
               ))}
-            </div>
+            </StaggerGroup>
           </div>
         </SectionBand>
 
-        <section className="px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8" data-floating-book-call-hide>
+        <SectionReveal className="px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8" data-floating-book-call-hide>
           <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl bg-marhaban-ink text-white shadow-warm">
             <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
               <div>
@@ -588,9 +599,8 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </section>
-      </main>
-    </HomepageGsapEffects>
+        </SectionReveal>
+    </main>
   );
 }
 
@@ -609,9 +619,9 @@ function AnnouncementBar({ message, cta }: { message: string; cta: string }) {
 
 function SectionBand({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <section className={cn('px-4 py-12 sm:px-6 sm:py-16 lg:px-8', className)} data-animate="section">
+    <SectionReveal className={cn('px-4 py-12 sm:px-6 sm:py-16 lg:px-8', className)}>
       <div className="mx-auto max-w-7xl">{children}</div>
-    </section>
+    </SectionReveal>
   );
 }
 
@@ -620,39 +630,137 @@ function SectionHeader({ eyebrow, title, text }: { eyebrow: string; title: strin
     <div className="max-w-3xl">
       <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-clay">{eyebrow}</p>
       <h2 className="mt-4 text-3xl font-semibold leading-tight text-marhaban-ink sm:text-4xl lg:text-5xl">{title}</h2>
-      {text ? <p className="mt-4 text-base text-slate-700 sm:text-lg">{text}</p> : null}
+      {text ? <p className="mt-4 text-base text-marhaban-ink/70 sm:text-lg">{text}</p> : null}
     </div>
   );
 }
 
-function HeroVisual({
-  alt,
+function HeroComposition({
+  locale,
+  checklistLabel,
+  scamLabel,
+  planLabel,
+  docLabel,
 }: {
-  alt: string;
+  locale: Locale;
+  checklistLabel: string;
+  scamLabel: string;
+  planLabel: string;
+  docLabel: string;
 }) {
+  const copy = {
+    fr: {
+      city: 'Canada / arrivée',
+      title: 'Premiers repères',
+      subtitle: 'Un espace clair pour prioriser, vérifier et avancer sans bruit.',
+      badge: 'Orientation pratique',
+      note: 'Le parcours reste simple, rassurant et centré sur les vrais besoins.',
+      scam: 'Vérifier avant de payer',
+      scamDetail: 'Ralentir, vérifier les preuves et protéger tes premières démarches au Canada.',
+      call: 'Appel d’orientation',
+      duration: '30 minutes',
+    },
+    en: {
+      city: 'Canada / arrival',
+      title: 'First markers',
+      subtitle: 'A clear space to prioritize, verify, and move forward without noise.',
+      badge: 'Practical orientation',
+      note: 'The journey stays simple, reassuring, and focused on real needs.',
+      scam: 'Check before you pay',
+      scamDetail: 'Slow down, verify proof, and protect your first steps in Canada.',
+      call: 'Orientation call',
+      duration: '30 minutes',
+    },
+    ar: {
+      city: 'كندا / الوصول',
+      title: 'أول المؤشرات',
+      subtitle: 'مساحة واضحة للترتيب والتحقق والتقدم بدون ضجيج.',
+      badge: 'توجيه عملي',
+      note: 'تبقى التجربة بسيطة ومطمئنة ومبنية على الاحتياجات الحقيقية.',
+      scam: 'تحقق قبل الدفع',
+      scamDetail: 'تمهل، تحقق من الأدلة، واحمِ خطواتك الأولى في كندا.',
+      call: 'مكالمة توجيه',
+      duration: '30 دقيقة',
+    },
+  } as const;
+  const t = copy[locale];
+
   return (
-    <div className="order-first lg:order-none" data-animate="hero-card">
-      <div className="relative min-h-[360px] overflow-hidden rounded-premium bg-marhaban-mint shadow-premium-card sm:min-h-[460px] lg:min-h-[680px]">
-        <Image
-          src="/assets/marhaban/hero-image.jpg"
-          alt={alt}
-          fill
-          priority
-          sizes="(min-width: 1024px) 54vw, calc(100vw - 2rem)"
-          className="object-cover"
-        />
-        <video
-          className="absolute inset-0 h-full w-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/assets/marhaban/hero-image.jpg"
-          aria-hidden="true"
-        >
-          <source src="/assets/marhaban/hero-video.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-t from-marhaban-ink/28 via-transparent to-transparent" aria-hidden="true" />
+    <div className="relative order-first lg:order-none">
+      <div className="relative min-h-[360px] overflow-hidden rounded-[2rem] border border-marhaban-leaf/10 bg-[linear-gradient(180deg,rgba(248,241,230,0.88),rgba(232,239,227,0.72))] p-5 shadow-premium-card sm:min-h-[460px] lg:min-h-[680px] lg:p-7">
+        <div className="absolute inset-0 opacity-70">
+          <div className="absolute -left-12 top-10 h-40 w-40 rounded-full bg-marhaban-sand/45 blur-3xl" aria-hidden="true" />
+          <div className="absolute right-0 top-1/3 h-44 w-44 rounded-full bg-marhaban-mint/70 blur-3xl" aria-hidden="true" />
+          <div className="absolute bottom-0 left-1/3 h-36 w-36 rounded-full bg-white/80 blur-3xl" aria-hidden="true" />
+        </div>
+
+        <div className="relative grid h-full gap-4 lg:grid-cols-[1.08fr_0.92fr]">
+          <FloatingVisual className="relative flex items-end" float="gentle" delay={0.1}>
+            <AnimatedCard className="w-full rounded-[1.9rem] border border-white/65 bg-white/86 p-5 shadow-warm-sm backdrop-blur-sm sm:p-6" featured>
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">{t.city}</p>
+                  <h2 className="mt-3 text-3xl font-semibold leading-tight text-marhaban-ink sm:text-4xl">{t.title}</h2>
+                </div>
+                <span className="rounded-full bg-marhaban-ink px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-white">
+                  {t.badge}
+                </span>
+              </div>
+              <p className="mt-4 max-w-md text-sm leading-relaxed text-marhaban-ink/74">{t.subtitle}</p>
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/90 p-4">
+                  <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-leaf">{checklistLabel}</p>
+                  <p className="mt-2 text-sm text-marhaban-ink/76">{docLabel}</p>
+                </div>
+                <div className="rounded-2xl border border-marhaban-leaf/12 bg-white/90 p-4">
+                  <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-leaf">{planLabel}</p>
+                  <p className="mt-2 text-sm text-marhaban-ink/76">{t.note}</p>
+                </div>
+              </div>
+            </AnimatedCard>
+          </FloatingVisual>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+            <FloatingVisual className="sm:translate-y-4 lg:translate-y-0" float="soft" delay={0.25}>
+              <AnimatedCard className="rounded-[1.75rem] border border-marhaban-leaf/12 bg-marhaban-ink p-5 text-white shadow-warm-sm" featured>
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-gold">{scamLabel}</p>
+                <p className="mt-3 text-2xl font-semibold leading-tight sm:text-3xl">{t.scam}</p>
+                <p className="mt-3 text-sm leading-relaxed text-white/72">{t.scamDetail}</p>
+              </AnimatedCard>
+            </FloatingVisual>
+
+            <FloatingVisual className="sm:translate-y-2 lg:translate-y-0" float="gentle" delay={0.35}>
+              <AnimatedCard className="rounded-[1.75rem] border border-marhaban-leaf/10 bg-white/90 p-5 shadow-warm-sm" featured>
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-clay">{t.badge}</p>
+                    <p className="mt-2 text-xl font-semibold text-marhaban-ink">{checklistLabel}</p>
+                  </div>
+                  <div className="grid h-12 w-12 place-items-center rounded-2xl bg-marhaban-mint text-marhaban-leaf">
+                    <CalendarCheck className="h-5 w-5" aria-hidden="true" />
+                  </div>
+                </div>
+                <div className="mt-4 space-y-3">
+                  {[planLabel, docLabel, scamLabel].map((item) => (
+                    <div key={item} className="rounded-2xl bg-marhaban-cream/90 px-4 py-3 text-sm text-marhaban-ink/76">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </AnimatedCard>
+            </FloatingVisual>
+
+            <FloatingVisual className="lg:ml-20" float="soft" delay={0.45}>
+              <AnimatedCard className="rounded-[1.75rem] border border-marhaban-leaf/12 bg-[linear-gradient(135deg,rgba(255,255,255,0.95),rgba(232,239,227,0.8))] p-5 shadow-warm-sm" featured>
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-leaf">{t.call}</p>
+                <p className="mt-2 text-xl font-semibold text-marhaban-ink">{t.duration}</p>
+                <p className="mt-3 text-sm leading-relaxed text-marhaban-ink/72">
+                  {t.note}
+                </p>
+              </AnimatedCard>
+            </FloatingVisual>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -679,90 +787,102 @@ function BrandImagePanel({
 function NeedCard({ item }: { item: NeedCardData }) {
   const Icon = item.icon;
   return (
-    <LocalizedLink href={item.href} className="group flex min-h-[240px] flex-col justify-between rounded-3xl border border-marhaban-leaf/10 bg-white p-5 shadow-warm-sm transition hover:-translate-y-1 hover:shadow-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35" data-animate="card">
-      <div>
-        <div className="flex items-start justify-between gap-4">
-          <span className="rounded-full bg-marhaban-mint px-3 py-1 text-xs font-bold uppercase tracking-[0.1em] text-marhaban-leaf">{item.label}</span>
-          <span className="grid h-11 w-11 place-items-center rounded-2xl bg-marhaban-ink text-white">
-            <Icon className="h-5 w-5" aria-hidden="true" />
-          </span>
+    <AnimatedCard className="group">
+      <LocalizedLink href={item.href} className="flex min-h-[240px] flex-col justify-between rounded-3xl border border-marhaban-leaf/10 bg-white p-5 shadow-warm-sm transition hover:shadow-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35">
+        <div>
+          <div className="flex items-start justify-between gap-4">
+            <span className="rounded-full bg-marhaban-mint px-3 py-1 text-xs font-bold uppercase tracking-[0.1em] text-marhaban-leaf">{item.label}</span>
+            <span className="grid h-11 w-11 place-items-center rounded-2xl bg-marhaban-ink text-white">
+              <Icon className="h-5 w-5" aria-hidden="true" />
+            </span>
+          </div>
+          <h3 className="mt-7 text-xl font-semibold text-marhaban-ink">{item.title}</h3>
+          <p className="mt-3 text-sm text-marhaban-ink/65">{item.text}</p>
         </div>
-        <h3 className="mt-7 text-xl font-semibold text-marhaban-ink">{item.title}</h3>
-        <p className="mt-3 text-sm text-slate-600">{item.text}</p>
-      </div>
-      <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-marhaban-leaf">
-        <ArrowRight className="h-4 w-4 rtl-flip transition group-hover:translate-x-1" aria-hidden="true" />
-      </span>
-    </LocalizedLink>
+        <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-marhaban-leaf">
+          <ArrowRight className="h-4 w-4 rtl-flip transition group-hover:translate-x-1" aria-hidden="true" />
+        </span>
+      </LocalizedLink>
+    </AnimatedCard>
   );
 }
 
 function OfferCard({ offer, cta, featured }: { offer: OfferData; cta: string; featured: boolean }) {
   return (
-    <article className={cn('flex min-h-[350px] flex-col rounded-3xl border p-6 shadow-warm-sm', featured ? 'border-marhaban-ink bg-marhaban-ink text-white' : 'border-stone-200 bg-marhaban-cream text-marhaban-ink')} data-animate="offer-card">
-      <p className={cn('text-xs font-bold uppercase tracking-[0.12em]', featured ? 'text-marhaban-gold' : 'text-marhaban-clay')}>{offer.duration}</p>
-      <h3 className={cn('mt-4 text-2xl font-semibold', featured ? 'text-white' : 'text-marhaban-ink')}>{offer.title}</h3>
-      <p className={cn('mt-3 text-4xl font-semibold', featured ? 'text-white' : 'text-marhaban-leaf')}>{offer.price}</p>
-      <p className={cn('mt-4 text-sm', featured ? 'text-white/76' : 'text-slate-700')}>{offer.benefit}</p>
-      <p className={cn('mt-4 rounded-2xl px-3 py-2 text-xs font-semibold', featured ? 'bg-white/[0.08] text-white/70' : 'bg-white/75 text-slate-600')}>{offer.note}</p>
-      <LocalizedLink href="/book" className={cn('mt-auto inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2', featured ? 'bg-white text-marhaban-ink hover:bg-marhaban-mint focus-visible:ring-white/50 focus-visible:ring-offset-marhaban-ink' : 'bg-marhaban-ink text-white hover:bg-marhaban-leaf focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-marhaban-cream')}>
-        {cta}
-        <CalendarCheck className="h-4 w-4" aria-hidden="true" />
-      </LocalizedLink>
-    </article>
+    <AnimatedCard featured={featured}>
+      <article className={cn('flex min-h-[350px] flex-col rounded-3xl border p-6 shadow-warm-sm', featured ? 'border-marhaban-ink bg-marhaban-ink text-white' : 'border-marhaban-leaf/10 bg-marhaban-cream text-marhaban-ink')}>
+        <p className={cn('text-xs font-bold uppercase tracking-[0.12em]', featured ? 'text-marhaban-gold' : 'text-marhaban-clay')}>{offer.duration}</p>
+        <h3 className={cn('mt-4 text-2xl font-semibold', featured ? 'text-white' : 'text-marhaban-ink')}>{offer.title}</h3>
+        <p className={cn('mt-3 text-4xl font-semibold', featured ? 'text-white' : 'text-marhaban-leaf')}>{offer.price}</p>
+        <p className={cn('mt-4 text-sm', featured ? 'text-white/76' : 'text-marhaban-ink/70')}>{offer.benefit}</p>
+        <p className={cn('mt-4 rounded-2xl px-3 py-2 text-xs font-semibold', featured ? 'bg-white/[0.08] text-white/70' : 'bg-white/75 text-marhaban-ink/60')}>{offer.note}</p>
+        <LocalizedLink href="/book" className={cn('mt-auto inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2', featured ? 'bg-white text-marhaban-ink hover:bg-marhaban-mint focus-visible:ring-white/50 focus-visible:ring-offset-marhaban-ink' : 'bg-marhaban-ink text-white hover:bg-marhaban-leaf focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-marhaban-cream')}>
+          {cta}
+          <CalendarCheck className="h-4 w-4" aria-hidden="true" />
+        </LocalizedLink>
+      </article>
+    </AnimatedCard>
   );
 }
 
 function StepCard({ step, index }: { step: StepData; index: number }) {
   const Icon = step.icon;
   return (
-    <article className="rounded-3xl border border-stone-200 bg-white p-5 shadow-warm-sm" data-animate="card">
-      <div className="flex items-center justify-between">
-        <span className="grid h-11 w-11 place-items-center rounded-2xl bg-marhaban-mint text-marhaban-leaf">
-          <Icon className="h-5 w-5" aria-hidden="true" />
-        </span>
-        <span className="text-3xl font-semibold text-marhaban-clay/30">{index + 1}</span>
-      </div>
-      <h3 className="mt-6 text-xl font-semibold text-marhaban-ink">{step.title}</h3>
-      <p className="mt-3 text-sm text-slate-600">{step.text}</p>
-    </article>
+    <AnimatedCard className="rounded-3xl border border-marhaban-leaf/10 bg-white p-5 shadow-warm-sm">
+      <article>
+        <div className="flex items-center justify-between">
+          <span className="grid h-11 w-11 place-items-center rounded-2xl bg-marhaban-mint text-marhaban-leaf">
+            <Icon className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <span className="text-3xl font-semibold text-marhaban-clay/30">{index + 1}</span>
+        </div>
+        <h3 className="mt-6 text-xl font-semibold text-marhaban-ink">{step.title}</h3>
+        <p className="mt-3 text-sm text-marhaban-ink/65">{step.text}</p>
+      </article>
+    </AnimatedCard>
   );
 }
 
 function JourneyTag({ tag, index }: { tag: { label: string; href: string }; index: number }) {
   const isDark = index % 4 === 0;
   return (
-    <LocalizedLink href={tag.href} className={cn('inline-flex min-h-[48px] items-center rounded-full px-5 py-3 text-sm font-bold shadow-warm-sm transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35', isDark ? 'bg-marhaban-ink text-white' : 'bg-white text-marhaban-ink')} data-animate="pill">
-      {tag.label}
-    </LocalizedLink>
+    <AnimatedCard className="inline-flex">
+      <LocalizedLink href={tag.href} className={cn('inline-flex min-h-[48px] items-center rounded-full px-5 py-3 text-sm font-bold shadow-warm-sm transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35', isDark ? 'bg-marhaban-ink text-white' : 'bg-white text-marhaban-ink')}>
+        {tag.label}
+      </LocalizedLink>
+    </AnimatedCard>
   );
 }
 
 function ScopeCards({ scope }: { scope: ScopeData }) {
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      <article className="rounded-3xl border border-marhaban-leaf/15 bg-marhaban-mint/75 p-6 shadow-warm-sm">
-        <h3 className="text-xl font-semibold text-marhaban-ink">{scope.doesTitle}</h3>
-        <ul className="mt-5 space-y-3">
-          {scope.does.map((item) => (
-            <li key={item} className="flex items-start gap-3 text-sm text-slate-700">
-              <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-marhaban-leaf" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </article>
-      <article className="rounded-3xl border border-amber-200 bg-[#FFF4E3] p-6 shadow-warm-sm">
-        <h3 className="text-xl font-semibold text-marhaban-ink">{scope.doesNotTitle}</h3>
-        <ul className="mt-5 space-y-3">
-          {scope.doesNot.map((item) => (
-            <li key={item} className="flex items-start gap-3 text-sm text-amber-950/80">
-              <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0 text-marhaban-clay" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </article>
+      <AnimatedCard className="rounded-3xl border border-marhaban-leaf/15 bg-marhaban-mint/75 p-6 shadow-warm-sm">
+        <article>
+          <h3 className="text-xl font-semibold text-marhaban-ink">{scope.doesTitle}</h3>
+          <ul className="mt-5 space-y-3">
+            {scope.does.map((item) => (
+              <li key={item} className="flex items-start gap-3 text-sm text-marhaban-ink/70">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-marhaban-leaf" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      </AnimatedCard>
+      <AnimatedCard className="rounded-3xl border border-amber-200 bg-[#FFF4E3] p-6 shadow-warm-sm">
+        <article>
+          <h3 className="text-xl font-semibold text-marhaban-ink">{scope.doesNotTitle}</h3>
+          <ul className="mt-5 space-y-3">
+            {scope.doesNot.map((item) => (
+              <li key={item} className="flex items-start gap-3 text-sm text-amber-950/80">
+                <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0 text-marhaban-clay" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      </AnimatedCard>
     </div>
   );
 }
@@ -770,18 +890,20 @@ function ScopeCards({ scope }: { scope: ScopeData }) {
 function GuideCard({ guide, featured }: { guide: LinkCardData; featured: boolean }) {
   const Icon = guide.icon;
   return (
-    <article className={cn('flex min-h-[260px] flex-col justify-between rounded-3xl border p-5 shadow-warm-sm', featured ? 'bg-marhaban-ink text-white lg:row-span-2' : 'border-stone-200 bg-white text-marhaban-ink')} data-animate="card">
-      <div>
-        <span className={cn('grid h-11 w-11 place-items-center rounded-2xl', featured ? 'bg-white/10 text-marhaban-gold' : 'bg-marhaban-mint text-marhaban-leaf')}>
-          <Icon className="h-5 w-5" aria-hidden="true" />
-        </span>
-        <h3 className={cn('mt-6 text-xl font-semibold leading-tight', featured ? 'text-white sm:text-3xl' : 'text-marhaban-ink')}>{guide.title}</h3>
-        <p className={cn('mt-3 text-sm', featured ? 'text-white/72' : 'text-slate-600')}>{guide.text}</p>
-      </div>
-      <LocalizedLink href={guide.href} className={cn('mt-6 inline-flex items-center gap-2 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35', featured ? 'text-white' : 'text-marhaban-leaf hover:text-marhaban-ink')}>
-        <BookOpenCheck className="h-4 w-4" aria-hidden="true" />
-        <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
-      </LocalizedLink>
-    </article>
+    <AnimatedCard featured={featured}>
+      <article className={cn('flex min-h-[260px] flex-col justify-between rounded-3xl border p-5 shadow-warm-sm', featured ? 'bg-marhaban-ink text-white lg:row-span-2' : 'border-marhaban-leaf/10 bg-white text-marhaban-ink')}>
+        <div>
+          <span className={cn('grid h-11 w-11 place-items-center rounded-2xl', featured ? 'bg-white/10 text-marhaban-gold' : 'bg-marhaban-mint text-marhaban-leaf')}>
+            <Icon className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <h3 className={cn('mt-6 text-xl font-semibold leading-tight', featured ? 'text-white sm:text-3xl' : 'text-marhaban-ink')}>{guide.title}</h3>
+          <p className={cn('mt-3 text-sm', featured ? 'text-white/72' : 'text-marhaban-ink/65')}>{guide.text}</p>
+        </div>
+        <LocalizedLink href={guide.href} className={cn('mt-6 inline-flex items-center gap-2 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35', featured ? 'text-white' : 'text-marhaban-leaf hover:text-marhaban-ink')}>
+          <BookOpenCheck className="h-4 w-4" aria-hidden="true" />
+          <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+        </LocalizedLink>
+      </article>
+    </AnimatedCard>
   );
 }

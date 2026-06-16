@@ -54,6 +54,14 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
 
+        cream: '#FAF7F2',
+        offwhite: '#FFFDF9',
+        forest: '#1F3D2E',
+        sage: '#7A9082',
+        sand: '#E8DCC4',
+        warm: '#D97847',
+        ink: '#1A1A1A',
+
         marhaban: {
           cream: "#F7F1E6",
           warm: "#FBF6ED",

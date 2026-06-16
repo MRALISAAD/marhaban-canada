@@ -120,7 +120,7 @@ export function Footer() {
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
               <Link
-                href={localizeHref('/book')}
+                href={localizeHref('/reserver')}
                 className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-bold text-marhaban-ink transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-ink"
               >
                 {bookCallLabel}
@@ -155,7 +155,7 @@ export function Footer() {
                 {content.brand}
               </span>
             </Link>
-            <p className="mt-4 text-sm leading-relaxed text-slate-700">
+            <p className="mt-4 text-sm leading-relaxed text-marhaban-ink/70">
               {mission}
             </p>
           </div>
@@ -170,7 +170,7 @@ export function Footer() {
                 <Link
                   key={link.id}
                   href={localizeHref(link.path)}
-                  className="block text-sm text-slate-700 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
+                  className="block text-sm text-marhaban-ink/70 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
                 >
                   {labels[link.id as keyof typeof labels]}
                 </Link>
@@ -188,7 +188,7 @@ export function Footer() {
                 <Link
                   key={link.id}
                   href={localizeHref(link.path)}
-                  className="block text-sm text-slate-700 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
+                  className="block text-sm text-marhaban-ink/70 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
                 >
                   {labels[link.id as keyof typeof labels]}
                 </Link>
@@ -206,7 +206,7 @@ export function Footer() {
                 <Link
                   key={link.id}
                   href={localizeHref(link.path)}
-                  className="block text-sm text-slate-700 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
+                  className="block text-sm text-marhaban-ink/70 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
                 >
                   {labels[link.id as keyof typeof labels]}
                 </Link>
@@ -224,7 +224,7 @@ export function Footer() {
                 <Link
                   key={link.id}
                   href={link.path}
-                  className="block text-sm text-slate-700 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
+                  className="block text-sm text-marhaban-ink/70 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
                   hrefLang={link.id}
                 >
                   {labels[link.id as keyof typeof labels]}
@@ -239,12 +239,12 @@ export function Footer() {
           {/* Bottom section */}
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             {/* Disclaimer */}
-            <p className="max-w-3xl text-xs leading-relaxed text-slate-600">
+            <p className="max-w-3xl text-xs leading-relaxed text-marhaban-ink/60">
               {disclaimer}
             </p>
 
             {/* Copyright and email */}
-            <div className="flex flex-col gap-2 text-xs text-slate-600 sm:items-end">
+            <div className="flex flex-col gap-2 text-xs text-marhaban-ink/60 sm:items-end">
               <a
                 href="mailto:contact@marhabancanada.ca"
                 className="transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"

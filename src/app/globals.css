@@ -17,7 +17,7 @@ html {
 
 body {
   @apply bg-marhaban-cream text-marhaban-ink antialiased;
-  font-feature-settings: "liga" 1, "kern" 1;
+  font-feature-settings: "liga" 1, "kern" 1, "ss01" 1, "cv11" 1;
 }
 
 /* ===============================
@@ -29,7 +29,7 @@ h1, h2, h3, h4 {
 }
 
 p {
-  @apply leading-relaxed text-slate-700;
+  @apply leading-relaxed text-marhaban-ink/70;
 }
 
 /* ===============================
@@ -52,12 +52,12 @@ p {
 @layer components {
   /* Ligne de séparation zinc (A) */
   .divider-zinc {
-    @apply border-t border-zinc-200 border-opacity-80;
+    @apply border-t border-marhaban-leaf/10;
   }
 
   /* Card premium (contenu posé) */
   .premium-card {
-    @apply rounded-3xl border border-stone-200/80 bg-white/90
+    @apply rounded-3xl border border-marhaban-leaf/10 bg-white/90
            shadow-warm-sm;
   }
 
@@ -69,14 +69,14 @@ p {
 
   /* Navbar glass */
   .glass-nav {
-    @apply backdrop-blur-md bg-marhaban-cream/85 border-b border-stone-200/80;
+    @apply backdrop-blur-md bg-marhaban-cream/85 border-b border-forest/5;
   }
 
   /* Pills / badges */
   .pill {
     @apply inline-flex items-center rounded-full
-           border border-stone-200/80
-           bg-white/80 px-3 py-1 text-sm text-slate-700;
+           border border-marhaban-leaf/10
+           bg-white/80 px-3 py-1 text-sm text-marhaban-ink/70;
   }
 
   .warm-page {
@@ -86,7 +86,7 @@ p {
   }
 
   .warm-surface {
-    @apply border border-stone-200/80 bg-white/[0.88] shadow-warm-sm;
+    @apply border border-marhaban-leaf/10 bg-white/[0.88] shadow-warm-sm;
   }
 
   .warm-button {
@@ -96,7 +96,7 @@ p {
   }
 
   .warm-button-secondary {
-    @apply border border-stone-300/90 bg-white/85 text-marhaban-ink transition
+    @apply border border-marhaban-leaf/20 bg-white/85 text-marhaban-ink transition
            hover:border-marhaban-leaf/60 hover:bg-marhaban-mint/60;
   }
 }
