@@ -124,7 +124,7 @@ export default async function ReserverPage({ params }: Props) {
             <h1 className="mt-6 text-4xl font-semibold leading-tight text-marhaban-ink sm:text-5xl">
               {t.title}
             </h1>
-            <p className="mt-4 text-base text-slate-700 sm:text-lg">{t.subtitle}</p>
+            <p className="mt-4 text-base text-marhaban-ink/70 sm:text-lg">{t.subtitle}</p>
           </section>
 
           <section className="rounded-3xl border border-marhaban-leaf/15 bg-white/[0.92] p-6 shadow-warm-sm sm:p-8">
@@ -137,7 +137,7 @@ export default async function ReserverPage({ params }: Props) {
                 className="mt-0.5 h-5 w-5 flex-shrink-0 text-marhaban-leaf"
                 aria-hidden="true"
               />
-              <p className="text-xs leading-relaxed text-slate-700">{disclaimer[locale]}</p>
+              <p className="text-xs leading-relaxed text-marhaban-ink/70">{disclaimer[locale]}</p>
             </div>
           </section>
         </div>
