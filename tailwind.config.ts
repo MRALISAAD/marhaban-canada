@@ -80,6 +80,7 @@ const config = {
         "2xl": "1.5rem",
         "3xl": "2rem",
         "4xl": "2.5rem",
+        premium: "2rem",
       },
       boxShadow: {
         soft: "0 18px 60px rgba(18, 61, 53, 0.12)",
@@ -87,6 +88,7 @@ const config = {
         glow: "0 0 0 1px rgba(18, 61, 53, 0.08), 0 20px 60px rgba(18, 61, 53, 0.16)",
         warm: "0 24px 70px rgba(70, 55, 38, 0.10)",
         "warm-sm": "0 12px 32px rgba(70, 55, 38, 0.08)",
+        "premium-card": "0 28px 80px rgba(31, 45, 43, 0.18)",
       },
       keyframes: {
         "accordion-down": {
