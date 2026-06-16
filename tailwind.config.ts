@@ -67,22 +67,37 @@ const config = {
         ink: '#1A1A1A',
 
         marhaban: {
-          cream: "#F7F1E6",
-          warm: "#FBF6ED",
-          obsidian: "#0F1B14",
-          forest: "#123D35",
-          forestDark: "#082A24",
-          sage: "#C9D8B6",
-          sageSoft: "#E7EEDB",
-          sand: "#E9B66F",
-          orange: "#D97732",
-          clay: "#B86B3F",
-          leaf: "#61735A",
-          mint: "#E8EFE3",
-          gold: "#D5A84F",
-          ink: "#1F2D2B",
-          muted: "#5E6B66",
-          night: "#24224F",
+          // ── Backgrounds ──────────────────────────────
+          cream:      "#F7F1E6",   // page background (warmest)
+          warm:       "#FBF6ED",   // page background (lightest)
+          offwhite:   "#FFFDF9",   // card / elevated surface
+          mint:       "#E8EFE3",   // subtle tinted surface
+          sageSoft:   "#E7EEDB",   // soft green wash
+
+          // ── Brand greens (primary) ───────────────────
+          obsidian:   "#0F1B14",   // deepest — rarely used
+          forestDark: "#082A24",   // primary button bg
+          forest:     "#123D35",   // hover / dark accents
+          leaf:       "#61735A",   // border, icon, link accent
+          sage:       "#C9D8B6",   // decorative / soft element
+
+          // ── Warm accent (secondary) ──────────────────
+          clay:       "#B86B3F",   // scam alert icon, accent CTA
+          orange:     "#D97732",   // clay hover state
+          sand:       "#E9B66F",   // decorative warm highlight
+          gold:       "#D5A84F",   // eyebrow on dark backgrounds
+
+          // ── Ink / text ───────────────────────────────
+          ink:        "#1F2D2B",   // primary text (dark card bg too)
+          muted:      "#5E6B66",   // secondary / caption text
+
+          // ── Alert (scam / warning contexts) ──────────
+          alertBg:    "#FFF4E3",   // amber-tinted bg
+          alertBorder:"#F5C77E",   // amber border
+          alertText:  "#7A4A0E",   // readable amber-dark text
+
+          // ── Unused / reserved ────────────────────────
+          night:      "#24224F",   // deep navy (not used on site)
         },
       },
       borderRadius: {
@@ -96,12 +111,17 @@ const config = {
         premium: "2rem",
       },
       boxShadow: {
-        soft: "0 18px 60px rgba(18, 61, 53, 0.12)",
-        card: "0 12px 30px rgba(31, 45, 43, 0.08)",
-        glow: "0 0 0 1px rgba(18, 61, 53, 0.08), 0 20px 60px rgba(18, 61, 53, 0.16)",
-        warm: "0 24px 70px rgba(70, 55, 38, 0.10)",
-        "warm-sm": "0 12px 32px rgba(70, 55, 38, 0.08)",
-        "premium-card": "0 28px 80px rgba(31, 45, 43, 0.18)",
+        // Semantic shadows — always tinted green-warm, never grey
+        "warm-xs":     "0 4px 14px rgba(70, 55, 38, 0.06)",
+        "warm-sm":     "0 12px 32px rgba(70, 55, 38, 0.08)",
+        "warm":        "0 24px 70px rgba(70, 55, 38, 0.10)",
+        "warm-lg":     "0 40px 90px rgba(70, 55, 38, 0.13)",
+        "premium-card":"0 28px 80px rgba(31, 45, 43, 0.18)",
+        "soft":        "0 18px 60px rgba(18, 61, 53, 0.12)",
+        "card":        "0 12px 30px rgba(31, 45, 43, 0.08)",
+        "glow":        "0 0 0 1px rgba(18, 61, 53, 0.08), 0 20px 60px rgba(18, 61, 53, 0.16)",
+        // Focus ring (used by focus-visible utilities)
+        "focus-ring":  "0 0 0 3px rgba(97, 115, 90, 0.40)",
       },
       keyframes: {
         "accordion-down": {

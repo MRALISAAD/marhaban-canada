@@ -1,4 +1,10 @@
 export const bookingIntegrationLinks = {
-  tallyForm: 'https://tally.so/r/marhaban-canada-booking-placeholder',
-  calendly: 'https://cal.com/marhaban-canada/orientation-placeholder',
+  tallyForm: {
+    label: 'Calendly – formulaire de réservation',
+    href: 'https://calendly.com/marhaban-canada',
+  },
+  calendly: {
+    label: 'Calendly – appel orientation',
+    href: 'https://calendly.com/marhaban-canada/orientation-call-30-min',
+  },
 } as const;

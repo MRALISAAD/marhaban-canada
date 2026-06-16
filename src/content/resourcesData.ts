@@ -133,7 +133,7 @@ export const resourcesData: ResourceDataItem[] = [
     tags: ['documents', 'checklist'],
     official: false,
     recommended: true,
-    url: '/ressources/guides/documents',
+    url: '/ressources/documents',
     priority: 1,
   },
   {
@@ -143,7 +143,7 @@ export const resourcesData: ResourceDataItem[] = [
     tags: ['transport', 'license'],
     official: false,
     recommended: true,
-    url: '/ressources/guides/transport',
+    url: '/ressources/transport',
     priority: 1,
   },
   {
@@ -153,7 +153,7 @@ export const resourcesData: ResourceDataItem[] = [
     tags: ['credit', 'score'],
     official: false,
     recommended: true,
-    url: '/ressources/guides/credit',
+    url: '/ressources/credit',
     priority: 1,
   },
   {

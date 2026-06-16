@@ -11,7 +11,7 @@ type Props = {
 
 const variants = {
   default: "bg-transparent",
-  muted: "bg-white/60",
+  muted: "bg-marhaban-warm/50",
   contrast: "bg-marhaban-forestDark text-white",
 };
 
@@ -19,7 +19,7 @@ export function MarketingSection({ children, className, id, variant = "default" 
   return (
     <SectionReveal
       id={id}
-      className={cn("px-4 py-12 sm:px-6 sm:py-14 lg:px-8", variants[variant], className)}
+      className={cn("px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-32", variants[variant], className)}
     >
       <div className="mx-auto max-w-6xl">{children}</div>
     </SectionReveal>

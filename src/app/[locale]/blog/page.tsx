@@ -1,41 +1,18 @@
-import React from 'react';
+import { redirect } from 'next/navigation';
 import type { Metadata } from 'next';
-import { BlogIndexContent } from '@/components/blog/BlogIndexContent';
+import { isLocale, type Locale } from '@/i18n/locales';
+import { resourcesPath } from '@/lib/routes';
 
-type PageProps = {
-  params: Promise<{ locale: string }>;
-};
+type Props = { params: Promise<{ locale: string }> };
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale } = await params;
-
-  const titles: Record<string, string> = {
-    fr: 'Blog — Comprendre avant d\'agir | Marhaban Canada',
-    en: 'Blog — Understand before acting | Marhaban Canada',
-    ar: 'المدونة — افهم قبل أن تتصرف | Marhaban Canada',
-  };
-
-  const descriptions: Record<string, string> = {
-    fr: 'Des articles courts pour aider les nouveaux arrivants au Canada à éviter les erreurs courantes.',
-    en: 'Short articles to help newcomers to Canada avoid common mistakes.',
-    ar: 'مقالات قصيرة لمساعدة القادمين الجدد إلى كندا على تجنب الأخطاء الشائعة.',
-  };
-
-  return {
-    title: titles[locale] || titles.fr,
-    description: descriptions[locale] || descriptions.fr,
-    openGraph: {
-      title: titles[locale] || titles.fr,
-      description: descriptions[locale] || descriptions.fr,
-      type: 'website',
-    },
-  };
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+  const locale = isLocale(localeParam) ? localeParam : 'fr';
+  return { title: locale === 'fr' ? 'Ressources | Marhaban Canada' : locale === 'en' ? 'Resources | Marhaban Canada' : 'الموارد | مرحبا كندا' };
 }
 
-export default function BlogPage() {
-  return (
-    <React.Suspense fallback={<div />}> 
-      <BlogIndexContent />
-    </React.Suspense>
-  );
+export default async function BlogRedirectPage({ params }: Props) {
+  const { locale: localeParam } = await params;
+  const locale: Locale = isLocale(localeParam) ? localeParam : 'fr';
+  redirect(resourcesPath(locale));
 }

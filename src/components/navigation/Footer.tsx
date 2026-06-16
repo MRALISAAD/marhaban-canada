@@ -8,19 +8,19 @@ import { getHtmlAttrs } from '@/i18n/locales';
 import { bookingPath } from '@/lib/routes';
 
 const SUPPORT_LINKS = [
-  { id: 'book', path: '/reserver' },
-  { id: 'contact', path: '/contact' },
-  { id: 'parcours', path: '/parcours' },
+  { id: 'services', path: '/services' },
+  { id: 'start', path: '/commencer' },
+  { id: 'orientation', path: '/services/orientation' },
 ] as const;
 
 const RESOURCE_LINKS = [
-  { id: 'checklist', path: '/checklist' },
+  { id: 'antiScam', path: '/services/anti-arnaque' },
   { id: 'ressources', path: '/ressources' },
-  { id: 'guides', path: '/parcours/guide' },
+  { id: 'checklist', path: '/checklist' },
 ] as const;
 
 const TRUST_LINKS = [
-  { id: 'arnaques', path: '/arnaques' },
+  { id: 'about', path: '/a-propos' },
   { id: 'sources', path: '/sources' },
   { id: 'legal', path: '/legal' },
 ] as const;
@@ -55,13 +55,14 @@ export function Footer() {
   // Labels based on locale
   const labels = {
     book: locale === 'fr' ? 'Réserver un appel' : locale === 'en' ? 'Book a call' : 'احجز مكالمة',
-    contact: locale === 'fr' ? 'Contact' : locale === 'en' ? 'Contact' : 'اتصل بنا',
-    parcours: locale === 'fr' ? 'Parcours' : locale === 'en' ? 'Journey' : 'المسار',
+    services: locale === 'fr' ? 'Services' : locale === 'en' ? 'Services' : 'الخدمات',
+    start: locale === 'fr' ? 'Commencer' : locale === 'en' ? 'Start' : 'ابدأ',
+    orientation: locale === 'fr' ? 'Appel orientation' : locale === 'en' ? 'Orientation call' : 'مكالمة توجيه',
     checklist: locale === 'fr' ? 'Checklist' : locale === 'en' ? 'Checklist' : 'قائمة التحقق',
     ressources: locale === 'fr' ? 'Ressources' : locale === 'en' ? 'Resources' : 'الموارد',
-    guides: locale === 'fr' ? 'Guides pratiques' : locale === 'en' ? 'Practical guides' : 'أدلة عملية',
-    arnaques: locale === 'fr' ? 'Arnaques' : locale === 'en' ? 'Scams' : 'الاحتيالات',
+    antiScam: locale === 'fr' ? 'Anti-arnaque' : locale === 'en' ? 'Anti-scam' : 'مكافحة الاحتيال',
     sources: locale === 'fr' ? 'Sources officielles' : locale === 'en' ? 'Official sources' : 'مصادر رسمية',
+    about: locale === 'fr' ? 'À propos' : locale === 'en' ? 'About' : 'من نحن',
     legal: locale === 'fr' ? 'Mentions légales' : locale === 'en' ? 'Legal' : 'إشعار قانوني',
     fr: 'Français',
     en: 'English',
@@ -73,11 +74,13 @@ export function Footer() {
   };
 
   const bookCallLabel = locale === 'fr' ? 'Réserver un appel' : locale === 'en' ? 'Book a call' : 'احجز مكالمة';
+  const orientationLabel =
+    locale === 'fr' ? 'Découvrir l’appel orientation' : locale === 'en' ? 'Discover the orientation call' : 'اكتشف مكالمة التوجيه';
   const footerLead =
     locale === 'fr'
-      ? 'Une orientation pratique, claire et humaine pour avancer sans confusion.'
+      ? 'Commence par l’appel orientation, puis avance sans confusion.'
       : locale === 'en'
-        ? 'Practical, clear, human orientation to move forward without confusion.'
+        ? 'Start with the orientation call, then move forward without confusion.'
         : 'توجيه عملي وواضح وإنساني للتقدم بدون تشويش.';
 
   // Footer content with fallbacks
@@ -109,30 +112,30 @@ export function Footer() {
       aria-label={locale === 'fr' ? 'Pied de page' : locale === 'en' ? 'Footer' : 'تذييل الصفحة'}
       dir={dir}
     >
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mb-10 overflow-hidden rounded-[2rem] border border-marhaban-leaf/14 bg-marhaban-ink p-6 text-white shadow-[0_24px_70px_rgba(31,45,43,0.18)]">
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-gold">
                 Marhaban Canada
               </p>
-              <h2 className="mt-3 text-2xl font-semibold leading-tight text-white sm:text-3xl">
+              <h2 className="mt-3 font-heading text-2xl font-semibold leading-tight text-white sm:text-3xl lg:text-4xl lg:leading-[1.1]">
                 {footerLead}
               </h2>
-              <p className="mt-3 max-w-2xl text-sm text-white/74">{disclaimer}</p>
+              <p className="mt-3 max-w-2xl text-sm text-white/90">{disclaimer}</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
               <Link
-                href={bookingPath(locale)}
-                className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-bold text-marhaban-ink transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-ink"
+                href={localizeHref('/services/orientation')}
+                className="inline-flex min-h-[48px] items-center justify-center rounded-full border border-white/15 bg-white/[0.06] px-5 py-3 text-sm font-bold text-white transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-ink"
               >
-                {bookCallLabel}
+                {orientationLabel}
               </Link>
               <Link
-                href={localizeHref('/about')}
-                className="inline-flex min-h-[48px] items-center justify-center rounded-full border border-white/25 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-ink"
+                href={bookingPath(locale)}
+                className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-bold text-marhaban-ink shadow-[0_14px_40px_rgba(0,0,0,0.14)] transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-ink"
               >
-                {locale === 'fr' ? 'En savoir plus' : locale === 'en' ? 'Learn more' : 'اعرف المزيد'}
+                {bookCallLabel}
               </Link>
             </div>
           </div>
@@ -154,11 +157,11 @@ export function Footer() {
                 className="h-10 w-10"
                 aria-hidden="true"
               />
-              <span className="text-lg font-semibold text-marhaban-ink">
+              <span className="text-xl font-semibold text-marhaban-ink">
                 {content.brand}
               </span>
             </Link>
-            <p className="mt-4 text-sm leading-relaxed text-marhaban-ink/70">
+            <p className="mt-4 text-sm leading-relaxed text-marhaban-ink/82">
               {mission}
             </p>
           </div>
@@ -173,9 +176,9 @@ export function Footer() {
                 <Link
                   key={link.id}
                   href={localizeHref(link.path)}
-                  className="block text-sm text-marhaban-ink/70 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
+                  className="block text-sm text-marhaban-ink/82 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
                 >
-                  {labels[link.id as keyof typeof labels]}
+              {labels[link.id as keyof typeof labels]}
                 </Link>
               ))}
             </nav>
@@ -191,7 +194,7 @@ export function Footer() {
                 <Link
                   key={link.id}
                   href={localizeHref(link.path)}
-                  className="block text-sm text-marhaban-ink/70 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
+                  className="block text-sm text-marhaban-ink/82 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
                 >
                   {labels[link.id as keyof typeof labels]}
                 </Link>
@@ -209,7 +212,7 @@ export function Footer() {
                 <Link
                   key={link.id}
                   href={localizeHref(link.path)}
-                  className="block text-sm text-marhaban-ink/70 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
+                  className="block text-sm text-marhaban-ink/82 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
                 >
                   {labels[link.id as keyof typeof labels]}
                 </Link>
@@ -227,7 +230,7 @@ export function Footer() {
                 <Link
                   key={link.id}
                   href={link.path}
-                  className="block text-sm text-marhaban-ink/70 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
+                  className="block text-sm text-marhaban-ink/82 transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"
                   hrefLang={link.id}
                 >
                   {labels[link.id as keyof typeof labels]}
@@ -242,12 +245,12 @@ export function Footer() {
           {/* Bottom section */}
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             {/* Disclaimer */}
-            <p className="max-w-3xl text-xs leading-relaxed text-marhaban-ink/60">
+            <p className="max-w-3xl text-xs leading-relaxed text-marhaban-ink/74">
               {disclaimer}
             </p>
 
             {/* Copyright and email */}
-            <div className="flex flex-col gap-2 text-xs text-marhaban-ink/60 sm:items-end">
+            <div className="flex flex-col gap-2 text-xs text-marhaban-ink/74 sm:items-end">
               <a
                 href="mailto:contact@marhabancanada.ca"
                 className="transition-colors hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:rounded-md"

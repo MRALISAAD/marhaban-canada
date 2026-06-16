@@ -10,8 +10,9 @@ export function ensureLeadingSlash(path: string) {
  */
 export function localizePath(locale: string, href: string) {
   if (!href) return `/${locale}`;
-  // external URL
-  if (/^https?:\/\//i.test(href)) return href;
+  if (href.startsWith('#')) return href;
+  // External or protocol-based URL
+  if (/^[a-z][a-z0-9+.-]*:/i.test(href)) return href;
 
   const path = ensureLeadingSlash(href);
   const segments = path.split('/').filter(Boolean);

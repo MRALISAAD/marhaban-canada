@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-heading: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+}
+
 /* ===============================
    BASE — Background global unique
    =============================== */
@@ -29,7 +34,7 @@ h1, h2, h3, h4 {
 }
 
 p {
-  @apply leading-relaxed text-marhaban-ink/70;
+  @apply leading-relaxed text-marhaban-ink/75;
 }
 
 /* ===============================
@@ -62,14 +67,14 @@ p {
   }
 
   .premium-card-hover {
-    @apply transition-transform transition-shadow duration-200
-           hover:-translate-y-0.5
-           hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)];
+    @apply transition-all duration-300
+           hover:-translate-y-2
+           hover:shadow-premium-card;
   }
 
   /* Navbar glass */
   .glass-nav {
-    @apply backdrop-blur-md bg-marhaban-cream/85 border-b border-forest/5;
+    @apply backdrop-blur-xl bg-marhaban-cream/92 border-b border-marhaban-leaf/8;
   }
 
   /* Pills / badges */
@@ -106,9 +111,184 @@ p {
            hover:border-marhaban-leaf/60 hover:bg-marhaban-mint/60;
   }
 
+  /* ── Buttons ── */
 
+  /* Base — apply to all btn-* variants */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2
+           rounded-full font-semibold transition
+           focus-visible:outline-none focus-visible:ring-2
+           focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
 
+  /* Sizes */
+  .btn-sm  { @apply min-h-[40px] px-4 py-2 text-sm; }
+  .btn-md  { @apply min-h-[48px] px-6 py-3 text-base; }
+  .btn-lg  { @apply min-h-[60px] px-10 py-4 text-lg font-bold tracking-wide; }
 
+  /* Variants */
+  .btn-primary {
+    @apply bg-marhaban-forestDark text-white shadow-warm-sm
+           hover:bg-marhaban-leaf
+           focus-visible:ring-offset-marhaban-cream;
+  }
+
+  .btn-secondary {
+    @apply border border-marhaban-leaf/25 bg-offwhite text-marhaban-ink
+           hover:border-marhaban-leaf/50 hover:bg-marhaban-mint/60;
+  }
+
+  .btn-clay {
+    @apply bg-marhaban-clay text-white shadow-warm-sm
+           hover:bg-marhaban-orange;
+  }
+
+  .btn-ghost {
+    @apply text-marhaban-leaf
+           hover:text-marhaban-forest;
+  }
+
+  .btn-dark-outline {
+    @apply border border-white/25 text-white
+           hover:bg-white/10;
+  }
+
+  /* ── Typography utilities ── */
+
+  /* Eyebrow — small all-caps label above headings */
+  .eyebrow {
+    @apply text-sm font-bold uppercase tracking-[0.14em] text-marhaban-clay;
+  }
+
+  .eyebrow-light {
+    @apply text-sm font-bold uppercase tracking-[0.14em] text-marhaban-gold;
+  }
+
+  /* Section heading presets */
+  .heading-display {
+    @apply font-heading text-4xl font-semibold leading-tight tracking-tight
+           text-marhaban-ink sm:text-5xl lg:text-[4.5rem] lg:leading-[1.04];
+  }
+
+  .heading-section {
+    @apply font-heading text-3xl font-semibold leading-tight text-marhaban-ink
+           sm:text-4xl lg:text-[3.5rem] lg:leading-[1.08];
+  }
+
+  .heading-card {
+    @apply font-heading text-xl font-semibold leading-snug text-marhaban-ink
+           sm:text-2xl;
+  }
+
+  /* Body text presets */
+  .body-lead {
+    @apply text-lg leading-relaxed text-marhaban-ink/80;
+  }
+
+  .body-default {
+    @apply text-base leading-relaxed text-marhaban-ink/80;
+  }
+
+  .body-sm {
+    @apply text-sm leading-relaxed text-marhaban-ink/75;
+  }
+
+  .caption {
+    @apply text-xs leading-relaxed text-marhaban-muted;
+  }
+
+  /* ── Cards ── */
+
+  /* Standard white card */
+  .card-default {
+    @apply rounded-3xl border border-marhaban-leaf/15 bg-white
+           p-6 shadow-warm-sm sm:p-8;
+  }
+
+  /* On muted / cream backgrounds */
+  .card-muted {
+    @apply rounded-3xl border border-marhaban-leaf/10 bg-marhaban-offwhite
+           p-6 shadow-warm-xs sm:p-8;
+  }
+
+  /* Dark promo card */
+  .card-dark {
+    @apply rounded-3xl bg-marhaban-ink p-8 sm:p-10;
+  }
+
+  /* Scam alert / warning card */
+  .card-alert {
+    @apply rounded-2xl border border-marhaban-alertBorder
+           bg-marhaban-alertBg p-4 sm:p-5;
+  }
+
+  /* Trust / checklist item */
+  .card-item {
+    @apply rounded-2xl border border-marhaban-leaf/12 bg-white p-4;
+  }
+
+  /* ── Forms ── */
+
+  .input-field {
+    @apply w-full rounded-2xl border border-marhaban-leaf/20
+           bg-white px-4 py-3 text-base text-marhaban-ink
+           placeholder:text-marhaban-muted
+           focus-visible:outline-none focus-visible:ring-2
+           focus-visible:ring-marhaban-leaf/30 focus-visible:border-marhaban-leaf/40
+           disabled:opacity-60 disabled:cursor-not-allowed
+           transition;
+  }
+
+  .input-label {
+    @apply block text-sm font-semibold text-marhaban-ink mb-1.5;
+  }
+
+  .input-hint {
+    @apply mt-1.5 text-xs text-marhaban-muted;
+  }
+
+  .input-error {
+    @apply mt-1.5 text-xs text-marhaban-clay font-medium;
+  }
+
+  /* ── Badges / Pills ── */
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full
+           border border-marhaban-leaf/15 bg-marhaban-mint/60
+           px-3 py-1 text-xs font-semibold text-marhaban-leaf;
+  }
+
+  .badge-clay {
+    @apply inline-flex items-center gap-1.5 rounded-full
+           border border-marhaban-clay/20 bg-marhaban-clay/8
+           px-3 py-1 text-xs font-bold uppercase tracking-wide
+           text-marhaban-clay;
+  }
+
+  .badge-gold {
+    @apply inline-flex items-center gap-1.5 rounded-full
+           border border-marhaban-gold/30 bg-marhaban-sand/20
+           px-3 py-1 text-xs font-semibold text-marhaban-clay;
+  }
+
+  /* ── Section layout helpers ── */
+
+  /* Standard section content wrapper */
+  .section-inner {
+    @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Section vertical rhythm */
+  .section-pad {
+    @apply py-12 sm:py-14 lg:py-16;
+  }
+
+  /* Divider line */
+  .divider {
+    @apply border-t border-marhaban-leaf/10;
+  }
 }
 
 /* ===============================
@@ -281,15 +461,8 @@ body.rtl {
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.547 0.021 43.1);
   }
-  .theme {
-    --font-sans: var(--font-sans);
-    --font-heading: var(--font-heading);
-  }
   * {
     @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
   }
   html {
     @apply font-sans;
