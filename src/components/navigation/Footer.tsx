@@ -71,6 +71,14 @@ export function Footer() {
     languagesTitle: locale === 'fr' ? 'Langues' : locale === 'en' ? 'Languages' : 'اللغات',
   };
 
+  const bookCallLabel = locale === 'fr' ? 'Réserver un appel' : locale === 'en' ? 'Book a call' : 'احجز مكالمة';
+  const footerLead =
+    locale === 'fr'
+      ? 'Une orientation pratique, claire et humaine pour avancer sans confusion.'
+      : locale === 'en'
+        ? 'Practical, clear, human orientation to move forward without confusion.'
+        : 'توجيه عملي وواضح وإنساني للتقدم بدون تشويش.';
+
   // Footer content with fallbacks
   const footerContent = content.footer ?? {};
 
@@ -94,11 +102,39 @@ export function Footer() {
 
   return (
     <footer
-      className="border-t border-marhaban-leaf/10 bg-marhaban-cream/95"
+      className="border-t border-marhaban-leaf/10 bg-[linear-gradient(180deg,rgba(247,241,230,0.98),rgba(243,233,218,0.96))]"
       aria-label={locale === 'fr' ? 'Pied de page' : locale === 'en' ? 'Footer' : 'تذييل الصفحة'}
       dir={dir}
     >
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <div className="mb-10 overflow-hidden rounded-[2rem] border border-marhaban-leaf/14 bg-marhaban-ink p-6 text-white shadow-[0_24px_70px_rgba(31,45,43,0.18)]">
+          <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-gold">
+                Marhaban Canada
+              </p>
+              <h2 className="mt-3 text-2xl font-semibold leading-tight text-white sm:text-3xl">
+                {footerLead}
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm text-white/74">{disclaimer}</p>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
+              <Link
+                href={localizeHref('/book')}
+                className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-bold text-marhaban-ink transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-ink"
+              >
+                {bookCallLabel}
+              </Link>
+              <Link
+                href={localizeHref('/about')}
+                className="inline-flex min-h-[48px] items-center justify-center rounded-full border border-white/25 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-ink"
+              >
+                {locale === 'fr' ? 'En savoir plus' : locale === 'en' ? 'Learn more' : 'اعرف المزيد'}
+              </Link>
+            </div>
+          </div>
+        </div>
+
         {/* Main footer grid */}
         <div className="grid grid-cols-2 gap-8 md:grid-cols-5 lg:gap-12">
           {/* Column 1: Brand */}
@@ -199,7 +235,7 @@ export function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="mt-12 rounded-3xl border border-marhaban-leaf/10 bg-white/45 p-5">
+        <div className="mt-12 rounded-[2rem] border border-marhaban-leaf/10 bg-white/55 p-5">
           {/* Bottom section */}
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             {/* Disclaimer */}

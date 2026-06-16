@@ -7,7 +7,7 @@ import { useLanguage } from '../LanguageProvider';
 export function EmergencyCTA() {
   const { content } = useLanguage();
   return (
-    <div className="rounded-3xl border border-amber-200 bg-[#FFF4E3] p-5 shadow-warm-sm">
+    <div className="rounded-[2rem] border border-amber-200 bg-[#FFF4E3] p-5 shadow-[0_16px_48px_rgba(122,78,24,0.08)]">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <p className="text-sm font-semibold text-amber-900">{content.scams.microcopy.victimTitle}</p>

@@ -8,7 +8,7 @@ export function ProgressBar({ progress, label, helper }: ProgressBarProps) {
   const clamped = Math.min(100, Math.max(0, progress));
 
   return (
-    <div className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-5 shadow-warm-sm">
+    <div className="rounded-[2rem] border border-marhaban-leaf/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(247,241,230,0.92))] p-5 shadow-[0_18px_54px_rgba(31,45,43,0.08)]">
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm font-semibold text-marhaban-ink">{label}</p>
         <span className="rounded-full bg-marhaban-mint px-2.5 py-1 text-xs font-bold text-marhaban-leaf">{clamped}%</span>

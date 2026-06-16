@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import Image from 'next/image';
 import {
   ArrowRight,
   CalendarCheck,
@@ -41,8 +42,11 @@ const pageTexts = {
     primary: 'Commencer la réservation',
     secondary: 'Voir les offres',
     trust: ['Orientation pratique', 'Pas de conseil juridique', 'Pas de conseil en immigration'],
+    heroImageAlt: 'Appel d’orientation Marhaban Canada dans un intérieur chaleureux et rassurant',
+    offersEyebrow: 'Les offres',
     offersTitle: 'Choisis ton appel',
     offersIntro: 'Chaque offre aide à clarifier ton profil général, tes priorités et les erreurs à éviter.',
+    betaBadge: 'Bêta · 10 premières places',
     reserve: 'Réserver',
     offers: [
       {
@@ -108,8 +112,11 @@ const pageTexts = {
     primary: 'Start booking',
     secondary: 'View offers',
     trust: ['Practical orientation', 'No legal advice', 'No immigration advice'],
+    heroImageAlt: 'Marhaban Canada orientation call in a warm, reassuring interior',
+    offersEyebrow: 'Offers',
     offersTitle: 'Choose your call',
     offersIntro: 'Each offer helps clarify your general profile, priorities, and mistakes to avoid.',
+    betaBadge: 'Beta · first 10 spots',
     reserve: 'Book',
     offers: [
       {
@@ -175,8 +182,11 @@ const pageTexts = {
     primary: 'ابدأ الحجز',
     secondary: 'عرض العروض',
     trust: ['توجيه عملي', 'لا توجد نصيحة قانونية', 'لا توجد نصيحة في الهجرة'],
+    heroImageAlt: 'مكالمة توجيه من مرحبا كندا في أجواء دافئة ومطمئنة',
+    offersEyebrow: 'العروض',
     offersTitle: 'اختر مكالمتك',
     offersIntro: 'كل عرض يساعد على توضيح ملفك العام، أولوياتك، والأخطاء التي يجب تجنبها.',
+    betaBadge: 'بيتا · أول 10 أماكن',
     reserve: 'احجز',
     offers: [
       {
@@ -260,7 +270,7 @@ export default async function BookCallPage({ params }: Props) {
   return (
     <main className="warm-page px-4 py-10 sm:px-6 lg:px-8" dir={dir} lang={lang}>
       <div className="mx-auto max-w-7xl">
-        <section className="relative overflow-hidden rounded-3xl border border-marhaban-leaf/10 bg-marhaban-mint/75 p-6 shadow-warm sm:p-8 lg:grid lg:grid-cols-[1fr_0.78fr] lg:items-center lg:gap-8">
+        <section className="relative overflow-hidden rounded-3xl border border-marhaban-leaf/10 bg-marhaban-mint/75 p-6 shadow-warm sm:p-8 lg:grid lg:grid-cols-[1fr_0.92fr] lg:items-center lg:gap-8">
           <div className="absolute -top-20 end-10 h-52 w-52 rounded-[45%_55%_60%_40%/45%_35%_65%_55%] bg-marhaban-sand/40 blur-2xl" aria-hidden="true" />
           <div className="relative z-10">
             <p className="inline-flex rounded-full bg-white/80 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-marhaban-leaf">
@@ -288,22 +298,47 @@ export default async function BookCallPage({ params }: Props) {
               ))}
             </div>
           </div>
-          <div className="relative z-10 mt-8 rounded-3xl bg-marhaban-ink p-6 text-white shadow-warm lg:mt-0">
-            <ShieldCheck className="h-9 w-9 text-marhaban-gold" aria-hidden="true" />
-            <p className="mt-6 text-sm leading-relaxed text-white/78">{disclaimer[locale]}</p>
+          <div className="relative z-10 mt-8 overflow-hidden rounded-3xl border border-white/20 bg-marhaban-ink shadow-warm lg:mt-0">
+            <div className="relative aspect-[4/5] min-h-[340px]">
+              <Image
+                src="/assets/marhaban/visuel-appel.jpg"
+                alt={t.heroImageAlt}
+                fill
+                priority
+                sizes="(min-width: 1024px) 42vw, calc(100vw - 3rem)"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-marhaban-ink/42 via-marhaban-ink/12 to-transparent" aria-hidden="true" />
+              <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-gold">{t.eyebrow}</p>
+                <p className="mt-2 max-w-md text-sm leading-relaxed text-white/84">{t.intro}</p>
+              </div>
+            </div>
           </div>
         </section>
 
         <section id="offers" className="py-12 sm:py-16">
           <div className="max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-clay">{t.offersTitle}</p>
+            <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-clay">{t.offersEyebrow}</p>
             <h2 className="mt-4 text-3xl font-semibold text-marhaban-ink sm:text-4xl">{t.offersTitle}</h2>
             <p className="mt-3 text-base text-slate-700">{t.offersIntro}</p>
           </div>
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {t.offers.map((offer, index) => (
-              <OfferCard key={offer.name} offer={offer} cta={t.reserve} featured={index === 0} href={bookingActionsHref} />
+              <OfferCard key={offer.name} offer={offer} cta={t.reserve} featured={index === 0} featuredLabel={t.betaBadge} href={bookingActionsHref} />
             ))}
+          </div>
+        </section>
+
+        <section className="pb-12">
+          <div className="rounded-3xl border border-marhaban-leaf/12 bg-marhaban-cream/90 p-6 shadow-warm-sm sm:p-8">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-3xl">
+                <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-clay">Disclaimer</p>
+                <p className="mt-3 text-sm leading-relaxed text-marhaban-ink/85">{disclaimer[locale]}</p>
+              </div>
+              <ShieldCheck className="h-8 w-8 flex-shrink-0 text-marhaban-leaf" aria-hidden="true" />
+            </div>
           </div>
         </section>
 
@@ -398,28 +433,37 @@ function OfferCard({
   offer,
   cta,
   featured,
+  featuredLabel,
   href,
 }: {
   offer: Offer;
   cta: string;
   featured: boolean;
+  featuredLabel: string;
   href: string;
 }) {
   return (
     <article
       className={cn(
-        'relative flex min-h-[390px] flex-col overflow-hidden rounded-3xl border p-6 shadow-warm-sm transition hover:-translate-y-1 hover:shadow-warm',
+        'relative flex min-h-[390px] flex-col overflow-hidden rounded-[2rem] border p-6 shadow-warm-sm transition hover:-translate-y-1 hover:shadow-premium-card',
         featured
           ? 'border-marhaban-forest bg-marhaban-forest text-white xl:scale-[1.03]'
-          : 'border-marhaban-leaf/12 bg-white/[0.92] text-marhaban-ink',
+          : 'border-marhaban-leaf/12 bg-white/[0.94] text-marhaban-ink',
       )}
     >
+      <div
+        className={cn(
+          'absolute inset-x-0 top-0 h-1',
+          featured ? 'bg-marhaban-gold' : 'bg-gradient-to-r from-marhaban-sand via-marhaban-mint to-marhaban-sage',
+        )}
+        aria-hidden="true"
+      />
       {featured ? (
         <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-marhaban-gold/25 blur-2xl" aria-hidden="true" />
       ) : null}
       {featured ? (
-        <span className="relative mb-4 inline-flex w-fit rounded-full bg-marhaban-gold px-3 py-1 text-xs font-bold text-marhaban-forest">
-          {offer.price}
+        <span className="relative mb-4 inline-flex w-fit rounded-full bg-white/14 px-3 py-1 text-xs font-bold text-marhaban-gold ring-1 ring-white/10">
+          {featuredLabel}
         </span>
       ) : null}
       <p className={cn('text-xs font-bold uppercase tracking-[0.12em]', featured ? 'text-marhaban-gold' : 'text-marhaban-clay')}>
