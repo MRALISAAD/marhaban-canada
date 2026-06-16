@@ -7,7 +7,7 @@ import { useLanguage } from '@/components/LanguageProvider';
 import { useChecklistStorage } from '@/hooks/useChecklistStorage';
 import { getChecklistDictionary } from '@/content/checklistOffline';
 import { FEATURE_FLAGS } from '@/lib/featureFlags';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { AccessibleAlert } from '@/components/ui/AccessibleAlert';
 
 type CompletedItem = {

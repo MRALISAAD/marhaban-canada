@@ -75,7 +75,7 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
       sourcesLabel: 'Sources officielles',
       viewGuideLabel: 'Voir le guide',
       filtersTitle: 'Filtrer les etapes',
-      searchPlaceholder: 'Rechercher (NAS, logement, permis...)',
+      searchPlaceholder: 'Rechercher (NAS, logement, conduite...)',
       todoOnlyLabel: 'Afficher seulement a faire',
       emptyState: 'Aucune etape ne correspond a ces filtres.',
     },
@@ -92,7 +92,7 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
             why: 'Indispensable pour travailler et acceder aux services publics.',
             how: [
               'Trouver un bureau Service Canada',
-              'Preparer passeport + permis ou visa',
+              'Preparer piece d’identite + preuve utile',
               'Recevoir le numero par lettre',
             ],
             avoid: ['Ne jamais partager ton NAS par message non securise'],
@@ -110,7 +110,7 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
             why: 'Éviter les pertes et gagner du temps pour chaque démarche.',
             how: [
               'Faire des copies papier et numeriques',
-              'Scanner passeport, permis et preuves',
+              'Scanner les papiers utiles et preuves',
               'Garder une version hors ligne',
             ],
             avoid: ['Ne pas laisser les originaux sans surveillance'],
@@ -141,7 +141,7 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
             why: 'Pour recevoir un salaire et payer sans frais inutiles.',
             how: [
               'Choisir une banque avec offre nouvel arrivant',
-              'Apporter passeport + preuve de statut',
+              'Apporter pièce d’identité + preuve de profil général',
               'Demander une carte de debit et credit',
             ],
             avoid: ['Éviter les frais mensuels élevés'],
@@ -210,13 +210,13 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
           },
           {
             id: 'driver-license',
-            title: 'Permis de conduire (demarches provinciales)',
-            why: 'Les regles changent selon la province et ton permis actuel.',
+            title: 'Conduite (etapes provinciales)',
+            why: 'Les regles changent selon la province et ta situation de conduite.',
             how: ['Verifier les equivalences', 'Prendre rendez-vous', 'Passer les tests si requis'],
-            avoid: ['Conduire sans permis valide ou assurance'],
+            avoid: ['Conduire sans autorisation valide ou assurance'],
             sources: [
               {
-                label: 'Canada.ca - permis',
+                label: 'Canada.ca - conduite',
                 href: 'https://www.canada.ca/fr/services/transport/conduire.html',
               },
               { label: 'SAAQ - Quebec', href: 'https://saaq.gouv.qc.ca/' },
@@ -329,7 +329,7 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
             id: 'nas',
             title: 'Get your SIN (Social Insurance Number)',
             why: 'Required to work and access public services.',
-            how: ['Find a Service Canada office', 'Bring passport + permit/visa', 'Receive the number by letter'],
+            how: ['Find a Service Canada office', 'Bring ID + useful proof for settlement', 'Receive the number by letter'],
             avoid: ['Never share your SIN by unsecured message'],
             sources: [
               {
@@ -343,7 +343,7 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
             id: 'docs',
             title: 'Organize your essential documents',
             why: 'Save time and avoid losing critical papers.',
-            how: ['Make paper and digital copies', 'Scan passport and permits', 'Keep an offline copy'],
+            how: ['Make paper and digital copies', 'Scan useful settlement papers', 'Keep an offline copy'],
             avoid: ['Do not leave originals unattended'],
             sources: [
               {
@@ -370,7 +370,7 @@ export const timelineDictionary: Record<TimelineLocale, TimelineDictionary> = {
             id: 'bank',
             title: 'Open a bank account',
             why: 'Receive your salary and pay without extra fees.',
-            how: ['Choose a newcomer offer', 'Bring passport + status proof', 'Request debit and credit cards'],
+            how: ['Choose a newcomer offer', 'Bring ID + general profile proof', 'Request debit and credit cards'],
             avoid: ['Avoid high monthly fees'],
             sources: [
               {

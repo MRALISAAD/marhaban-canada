@@ -95,7 +95,7 @@ export const scamGuides: ScamGuide[] = [
     ],
     neverDo: [
       'Payer avant visite et bail signe',
-      'Envoyer des documents sensibles sans vérification',
+      'Envoyer des documents pratiques d’installation sensibles sans vérification',
       'Accepter un contrat sans adresse claire',
     ],
     mantra: 'Pas de visite = pas d\'argent.',
@@ -192,12 +192,12 @@ export const scamGuides: ScamGuide[] = [
   },
   {
     slug: 'immigration',
-    title: 'Immigration / faux agents',
-    subtitle: 'Arnaques liées aux services d\'immigration et aux faux consultants.',
+    title: 'Faux représentants / faux agents',
+    subtitle: 'Arnaques liées aux promesses garanties et aux faux représentants.',
     scenario: [
-      'Promesses de visa ou de résidence permanente garanties, sans conditions.',
+      'Promesses garanties pour des démarches réglementées, sans conditions.',
       'Demande de paiement élevé pour des services qui sont gratuits ou peu coûteux.',
-      'Faux agents d\'immigration vous contactant par email ou téléphone.',
+      'Faux agents vous contactant par email ou téléphone.',
       'Demande de documents originaux ou d\'argent en espèces.',
     ],
     redFlags: [
@@ -207,16 +207,16 @@ export const scamGuides: ScamGuide[] = [
       'Absence de licence ou de numéro d\'enregistrement pour le consultant.',
     ],
     actions: [
-      'Vérifier la légitimité des consultants en immigration sur les sites officiels (IRCC, ICCRC).',
+      'Vérifier la personne ou l’entreprise sur les sites officiels avant de payer.',
       'Ne jamais payer pour des services qui sont gratuits via le gouvernement.',
       'Ne jamais envoyer de documents originaux sans copie certifiée.',
       'Conserver toutes les communications et les preuves de paiement.',
     ],
     neverDo: ['Payer en crypto', 'Donner tes documents sans vérification', 'Croire aux garanties'],
-    mantra: 'Personne ne peut garantir un visa.',
+    mantra: 'Personne ne peut garantir un résultat officiel.',
     sources: [
       {
-        label: 'IRCC - immigration',
+        label: 'IRCC - site officiel',
         href: 'https://www.canada.ca/fr/immigration-refugies-citoyennete.html',
       },
       { label: 'Centre antifraude', href: 'https://www.antifraudcentre-centreantifraude.ca/' },

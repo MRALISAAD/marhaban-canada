@@ -26,7 +26,7 @@ export default function ArnaquesPage() {
       jobs: 'Jobs',
       phone: 'Phone / plans',
       bank: 'Bank / cards / fees',
-      immigration: 'Immigration / fake agents',
+      immigration: 'Fake representatives / fake agents',
       marketplace: 'Marketplace (Kijiji/FB)',
     },
     ar: {
@@ -34,7 +34,7 @@ export default function ArnaquesPage() {
       jobs: 'العمل',
       phone: 'الهاتف / الباقات',
       bank: 'البنك / البطاقات / الرسوم',
-      immigration: 'الهجرة / وكلاء مزيفون',
+      immigration: 'ممثلون مزيفون / وكلاء مزيفون',
       marketplace: 'البيع عبر المنصات',
     },
   };
@@ -52,16 +52,16 @@ export default function ArnaquesPage() {
   }, [query, activeCategory]);
 
   return (
-    <main className="bg-slate-50 px-4 py-12" dir={dir} lang={locale}>
+    <main className="warm-page px-4 py-12" dir={dir} lang={locale}>
       <div className="mx-auto w-full max-w-6xl space-y-8">
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
+        <div className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-6 shadow-warm-sm sm:p-8">
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-clay">
             {content.scams.microcopy.pageEyebrow}
           </p>
-          <h1 className="mt-3 text-2xl font-semibold text-slate-900 sm:text-3xl">
+          <h1 className="mt-3 text-3xl font-semibold leading-tight text-marhaban-ink sm:text-4xl">
             {content.scams.microcopy.pageTitle}
           </h1>
-          <p className="mt-2 text-sm text-slate-600">{content.scams.microcopy.pageSubtitle}</p>
+          <p className="mt-3 max-w-3xl text-sm text-slate-700 sm:text-base">{content.scams.microcopy.pageSubtitle}</p>
           <p className="mt-2 text-xs text-slate-500">{content.serviceAccompagnementDefinition.body}</p>
           <p className="mt-2 text-xs font-semibold text-slate-600">{content.serviceAccompagnementNoProxy}</p>
           <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 sm:p-5">
@@ -92,13 +92,13 @@ export default function ArnaquesPage() {
             </div>
           </div>
           <div className="mt-4 grid gap-3 md:grid-cols-[1.2fr_0.8fr]">
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+            <div className="rounded-2xl border border-marhaban-leaf/15 bg-marhaban-cream/75 p-4">
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">
                 {content.scams.microcopy.rulesTitle}
               </p>
               <ul className="mt-3 grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
                 {content.scams.housing.rules.map((rule: string) => (
-                  <li key={rule} className="rounded-xl border border-slate-200 bg-white px-3 py-2">
+                  <li key={rule} className="rounded-2xl border border-marhaban-leaf/12 bg-white/85 px-3 py-2">
                     {rule}
                   </li>
                 ))}
@@ -115,7 +115,7 @@ export default function ArnaquesPage() {
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
                   placeholder={content.scams.microcopy.searchPlaceholder}
-                  className={`w-full rounded-xl border border-slate-200 bg-white py-2 text-sm text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/20 ${
+                  className={`w-full rounded-2xl border border-marhaban-leaf/15 bg-white py-2.5 text-sm text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/30 ${
                     isRTL ? 'pr-9 pl-3' : 'pl-9 pr-3'
                   }`}
                 />
@@ -125,7 +125,7 @@ export default function ArnaquesPage() {
                   type="button"
                   onClick={() => setActiveCategory(null)}
                   className={`rounded-full border px-3 py-1 text-xs ${
-                    activeCategory === null ? 'border-slate-900 text-slate-900' : 'border-slate-200 text-slate-600'
+                    activeCategory === null ? 'border-marhaban-ink bg-marhaban-ink text-white' : 'border-marhaban-leaf/20 bg-white text-slate-600'
                   }`}
                 >
                   {filterAllLabel}
@@ -137,8 +137,8 @@ export default function ArnaquesPage() {
                     onClick={() => setActiveCategory(category.id)}
                     className={`rounded-full border px-3 py-1 text-xs ${
                       activeCategory === category.id
-                        ? 'border-slate-900 text-slate-900'
-                        : 'border-slate-200 text-slate-600'
+                        ? 'border-marhaban-ink bg-marhaban-ink text-white'
+                        : 'border-marhaban-leaf/20 bg-white text-slate-600'
                     }`}
                   >
                     {titleMap[category.id] ?? category.title}
@@ -151,13 +151,13 @@ export default function ArnaquesPage() {
         </div>
 
         <section className="space-y-4">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+          <h2 className="text-sm font-bold uppercase tracking-[0.14em] text-marhaban-clay">
             {content.scams.microcopy.categoriesTitle}
           </h2>
           <ScamCategoryGrid categories={filtered} />
         </section>
 
-        <section id="victim-action" className="rounded-3xl border border-amber-200 bg-amber-50 p-6 shadow-sm">
+        <section id="victim-action" className="rounded-3xl border border-amber-200 bg-[#FFF4E3] p-6 shadow-warm-sm">
           <h2 className="text-lg font-semibold text-amber-900">{content.scams.microcopy.victimTitle}</h2>
           <p className="mt-2 text-sm text-amber-800">{content.scams.microcopy.victimSubtitle}</p>
           <ol className="mt-4 list-decimal space-y-3 ps-4 text-sm text-amber-900">

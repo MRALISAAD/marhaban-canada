@@ -468,7 +468,7 @@ const frSteps: StepGuide[] = [
     why: "Il sécurise ton dossier fiscal et évite que quelqu’un d’autre utilise ton identité pour travailler ou toucher des crédits.",
     how: [
       "Réserve une visite dans un centre Service Canada (ou applique en ligne si ton dossier le permet).",
-      "Apporte passeport, permis d’études ou de travail et une preuve d’adresse canadienne.",
+      "Apporte une pièce d’identité, une preuve utile pour ton installation et une preuve d’adresse canadienne.",
       "Garde la lettre NAS dans un dossier physique, ne partage jamais ce numéro par messagerie.",
     ],
     avoid: [
@@ -485,11 +485,11 @@ const frSteps: StepGuide[] = [
     description: "Accès au système public dans ta province d’arrivée.",
     href: "/parcours/guide/steps/health",
     summary: "Chaque province gère son assurance maladie. Tant que ta carte n’est pas active, tes soins urgents peuvent coûter très cher.",
-    what: "La carte santé prouve ton admissibilité au régime public (RAMQ, OHIP, MSP, etc.).",
+    what: "La carte santé confirme ton accès au régime public selon les règles provinciales (RAMQ, OHIP, MSP, etc.).",
     why: "Elle couvre les consultations médicales essentielles et évite d’avancer des frais élevés.",
     how: [
       "Consulte le site de ta province pour confirmer formulaires et délais.",
-      "Réunis pièces d’identité, permis et preuve de résidence (bail, facture).",
+      "Réunis pièces d’identité, preuves utiles pour ton installation et preuve de résidence (bail, facture).",
       "Dépose ta demande en ligne ou en personne, puis surveille la poste.",
     ],
     avoid: [
@@ -510,7 +510,7 @@ const frSteps: StepGuide[] = [
     why: "Les banques demandent souvent un compte actif pour vérifier solvabilité et prévenir le blanchiment.",
     how: [
       "Compare les programmes d’accueil (frais réduits, transfert international).",
-      "Prends rendez-vous en succursale avec passeport, permis et preuve d’adresse.",
+      "Prends rendez-vous en succursale avec pièce d’identité et preuve d’adresse.",
       "Demande une carte de crédit sécurisée ou un programme newcomer adapté.",
     ],
     avoid: [
@@ -850,7 +850,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
     microcopy: {
       homeTitle: "Les premières étapes après ton arrivée au Canada",
       homeSubtitle:
-        "Marhaban Canada est un service d’accompagnement et d’orientation destiné aux nouveaux arrivants au Canada.",
+        "Marhaban Canada — Orientation pratique pour nouveaux arrivants au Canada.",
       homeCtaPrimary: "Commencer le parcours",
       homeCtaSub: "Gratuit · Basé sur des sources officielles · Sans inscription",
       journeyTitle: "Ton parcours d'installation",
@@ -879,7 +879,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       searchPlaceholder: "Rechercher (logement, crédit, NAS...)",
     },
     serviceAccompagnementDefinition: {
-      title: "Service d’accompagnement",
+      title: "Orientation pratique",
       body: "Un service qui guide, explique et oriente les nouveaux arrivants, étape par étape, sans effectuer les démarches à leur place et sans facturer pour des services officiels. L’objectif est d’aider à comprendre, éviter les erreurs et avancer en sécurité, en s’appuyant uniquement sur des sources officielles.",
     },
     serviceAccompagnementWhatIs: [
@@ -892,7 +892,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
     ],
     serviceAccompagnementWhatIsNot: [
       "Ce n’est pas un service gouvernemental",
-      "Ce n’est pas un service d’immigration",
+      "Ce n’est pas un service de conseils réglementés",
       "Ce n’est pas un agent ou consultant payant",
       "Nous ne remplissons aucun formulaire à votre place",
       "Nous ne prenons aucun rendez-vous à votre place",
@@ -902,13 +902,13 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
     serviceAccompagnementWhatIsNotTitle: "Ce que ce service n’est pas",
     serviceAccompagnementNoProxy: "Nous n’effectuons aucune démarche officielle à votre place.",
     serviceAccompagnementPillar:
-      "Marhaban Canada est un service d’accompagnement et d’orientation destiné aux nouveaux arrivants au Canada.",
+      "Marhaban Canada — Orientation pratique pour nouveaux arrivants au Canada.",
     serviceAccompagnementDisclaimer:
-      "Ce site propose un service d’accompagnement et d’orientation. Il ne remplace pas les services officiels du gouvernement.",
+      "Marhaban Canada offre de l’orientation pratique et de l’information générale. Nous ne fournissons pas de conseils juridiques ni de conseils en immigration. Pour les questions liées aux visas, permis, résidence permanente, admissibilité ou stratégie d’immigration, veuillez consulter un représentant autorisé.",
     seoDescriptions: {
-      meta: "Service d’accompagnement pour nouveaux arrivants au Canada : démarches officielles, logement, banque, téléphone, prévention des arnaques.",
-      og: "Service d’accompagnement pour nouveaux arrivants au Canada : démarches officielles, logement, banque, téléphone, prévention des arnaques.",
-      pdfHeader: "Service d’accompagnement pour nouveaux arrivants au Canada : démarches officielles, logement, banque, téléphone, prévention des arnaques.",
+      meta: "Orientation pratique pour nouveaux arrivants au Canada : démarches officielles, logement, banque, téléphone, prévention des arnaques.",
+      og: "Orientation pratique pour nouveaux arrivants au Canada : démarches officielles, logement, banque, téléphone, prévention des arnaques.",
+      pdfHeader: "Orientation pratique pour nouveaux arrivants au Canada : démarches officielles, logement, banque, téléphone, prévention des arnaques.",
     },
     services: {
       title: "Services prioritaires",
@@ -1071,13 +1071,13 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       },
       quickGuides: {
         documentsCard: {
-          title: "Documents essentiels",
+          title: "Documents pratiques d’installation",
           body: "Prépare tes papiers une fois pour éviter les blocages.",
-          ctaLabel: "Voir le guide documents",
+          ctaLabel: "Voir le guide d’installation",
           href: "/parcours/guide/steps/integration",
         },
         transportCard: {
-          title: "Transport et permis",
+          title: "Transport et conduite",
           body: "Comprendre les règles locales avant de conduire.",
           ctaLabel: "Voir le guide transport",
           href: "/parcours/guide/steps/license",
@@ -1107,12 +1107,12 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
           hint: "Utile pour chercher un emploi sans tomber dans les pièges.",
         },
         documents: {
-          title: "Documents",
+          title: "Documents pratiques d’installation",
           hint: "Pour préparer tes papiers une fois, et gagner du temps.",
         },
         transport: {
           title: "Transport",
-          hint: "Pour comprendre permis et transport selon ta province.",
+          hint: "Pour comprendre conduite et transport selon ta province.",
         },
         credit: {
           title: "Crédit",
@@ -1140,7 +1140,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
         eyebrow: "Ressources",
         title: "Ressources officielles et communautaires",
         subtitle: "Liens vérifiés, classés par besoin.",
-        searchPlaceholder: "Rechercher (immigration, santé, emploi...)",
+        searchPlaceholder: "Rechercher (logement, santé, emploi...)",
         provinceLabel: "Province",
         categoryLabel: "Catégorie",
         filterAll: "Toutes",
@@ -1169,12 +1169,12 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
         { value: "other", label: "Autre province" },
       ],
       categories: [
-        { id: "arrival", title: "Arrivée", description: "Statut, démarches et installation." },
+        { id: "arrival", title: "Arrivée", description: "Profil général, étapes pratiques et installation." },
         { id: "housing", title: "Logement", description: "Bail, dépôt, règles locales." },
         { id: "health", title: "Santé", description: "Carte santé, couverture, cliniques." },
         { id: "employment", title: "Emploi", description: "Offres, droits, normes." },
-        { id: "documents", title: "Documents", description: "Papiers essentiels et copies." },
-        { id: "transport", title: "Transport", description: "Permis et cartes de transport." },
+        { id: "documents", title: "Documents pratiques d’installation", description: "Papiers utiles et copies." },
+        { id: "transport", title: "Transport", description: "Conduite et cartes de transport." },
         { id: "credit", title: "Crédit", description: "Score et bonnes pratiques." },
         { id: "taxes", title: "Impôts", description: "Déclaration et documents." },
         { id: "integration", title: "Intégration", description: "Services locaux et réseaux." },
@@ -1185,8 +1185,8 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
           description: "Infos d’accueil et services officiels.",
         },
         ircc: {
-          title: "IRCC - immigration",
-          description: "Portail officiel pour l’immigration.",
+          title: "IRCC - site officiel",
+          description: "Portail officiel Canada.ca.",
         },
         cmhc: {
           title: "SCHL - logement",
@@ -1225,36 +1225,36 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
           description: "Droits et protections officielles.",
         },
         "documents-guide": {
-          title: "Guide Documents",
-          description: "Checklist documents à préparer.",
+          title: "Guide d’installation",
+          description: "Checklist de documents pratiques d’installation.",
         },
         "transport-guide": {
           title: "Guide Transport",
-          description: "Permis + démarches par province.",
+          description: "Conduite + étapes par province.",
         },
         "credit-guide": {
           title: "Guide Crédit",
           description: "Score et démarrage propre.",
         },
         driving: {
-          title: "Permis de conduire",
+          title: "Conduite au Canada",
           description: "Informations officielles Canada.",
         },
         saaq: {
           title: "SAAQ (Québec)",
-          description: "Permis et véhicules au Québec.",
+          description: "Conduite et véhicules au Québec.",
         },
         "service-ontario-driving": {
-          title: "ServiceOntario - permis",
-          description: "Permis et routes en Ontario.",
+          title: "ServiceOntario - conduite",
+          description: "Conduite et routes en Ontario.",
         },
         icbc: {
           title: "ICBC (C.-B.)",
-          description: "Permis et assurances en C.-B.",
+          description: "Conduite et assurances en C.-B.",
         },
         "alberta-registries": {
           title: "Alberta registries",
-          description: "Permis et services en Alberta.",
+          description: "Conduite et services en Alberta.",
         },
         "credit-score": {
           title: "Score de crédit (ACFC)",
@@ -1262,7 +1262,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
         },
         taxes: {
           title: "Impôts (ARC)",
-          description: "Déclaration annuelle et documents.",
+          description: "Déclaration annuelle et papiers utiles.",
         },
         integration: {
           title: "211 Canada",
@@ -1271,37 +1271,37 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       },
       guides: {
         documents: {
-          title: "Documents essentiels",
+          title: "Documents pratiques d’installation",
           summary: "Prépare tes papiers une fois, gagne du temps à chaque étape.",
           callout: "Une copie claire vaut une heure de stress en moins.",
-          what: "Les documents essentiels servent à toutes les démarches (emploi, santé, logement).",
+          what: "Les documents pratiques d’installation servent aux étapes courantes (emploi, santé, logement).",
           why: ["Éviter les blocages administratifs", "Gagner du temps", "Protéger tes originaux"],
           how: [
-            "Scanner passeport et permis",
+            "Scanner tes pièces utiles pour l’installation",
             "Créer un dossier numérique",
             "Imprimer des copies clés",
             "Stocker une copie hors ligne",
           ],
           pitfalls: [
-            "Partager tes documents sans vérification",
+            "Partager tes documents pratiques d’installation sans vérification",
             "Perdre les originaux",
             "Ne pas sauvegarder les copies",
           ],
           actions: ["Préparer une checklist personnelle", "Créer un dossier cloud sécurisé"],
-          ctaLabel: "Checklist documents à préparer",
+          ctaLabel: "Checklist de documents pratiques d’installation",
           ctaHref: "/checklist",
           sources: [{ name: "IRCC", url: "https://www.canada.ca/fr/immigration-refugies-citoyennete.html" }],
         },
         transport: {
-          title: "Transport et permis",
+          title: "Transport et conduite",
           summary: "Comprendre les démarches selon ta province.",
-          callout: "Un permis valide = liberté + sécurité.",
-          what: "Le permis et les cartes de transport varient selon la province.",
+          callout: "Des règles de conduite claires = liberté + sécurité.",
+          what: "Les règles de conduite et les cartes de transport varient selon la province.",
           why: ["Éviter les amendes", "Se déplacer facilement", "Assurance valide"],
-          how: ["Vérifier les règles provinciales", "Préparer les documents", "Réserver les tests si requis"],
-          pitfalls: ["Conduire sans permis valide", "Ignorer les délais de conversion"],
+          how: ["Vérifier les règles provinciales", "Préparer les papiers utiles", "Réserver les tests si requis"],
+          pitfalls: ["Conduire sans autorisation valide", "Ignorer les délais provinciaux"],
           actions: ["Choisir un mode de transport temporaire", "Planifier un rendez-vous"],
-          ctaLabel: "Voir démarches permis (selon province)",
+          ctaLabel: "Voir les étapes de conduite (selon province)",
           ctaHref: "https://www.canada.ca/fr/services/transport/conduire.html",
           sources: [{ name: "Canada.ca", url: "https://www.canada.ca/fr/services/transport.html" }],
         },
@@ -1378,7 +1378,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
           },
           documents: {
             items: [
-              "Passeport et permis (travail, étude ou résidence permanente)",
+              "Pièce d’identité et preuve utile pour ton installation",
               "Preuve de résidence (bail, facture d’énergie)",
               "Formulaire provincial rempli",
             ],
@@ -1418,7 +1418,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
           },
           documents: {
             items: [
-              "Passeport et preuve de statut (permis, confirmation de RP)",
+              "Pièce d’identité et preuve de profil général",
               "Preuve d’adresse canadienne",
               "NAS (facultatif mais souvent demandé)",
             ],
@@ -1528,7 +1528,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
     globalDisclaimer: "Information et orientation uniquement. Vérifie toujours les conditions sur les sites officiels avant de te déplacer.",
     antiFraud: {
       title: "Intégrité et anti-fraude",
-      body: "Nous n’accélérons aucun visa, ne fabriquons aucun document et nous renvoyons systématiquement vers les sites gouvernementaux.",
+      body: "Nous n’accélérons aucune démarche officielle, ne fabriquons aucun document pratique d’installation et nous renvoyons systématiquement vers les sites gouvernementaux.",
       note: "Signale tout comportement suspect à l’ASFC ou à IRCC (lien officiel dans chaque étape).",
     },
     scams: {
@@ -1623,11 +1623,11 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
           mantra: 'Ta banque ne demande jamais ton PIN.',
         },
         immigration: {
-          subtitle: 'Arnaques liées aux services d\'immigration et aux faux consultants.',
+          subtitle: 'Arnaques liées aux promesses garanties et aux faux représentants.',
           scenario: [
-            'Promesses de visa ou de résidence permanente garanties, sans conditions.',
+            'Promesses garanties pour des démarches réglementées, sans conditions.',
             'Demande de paiement élevé pour des services qui sont gratuits ou peu coûteux.',
-            'Faux agents d\'immigration vous contactant par email ou téléphone.',
+            'Faux agents vous contactant par email ou téléphone.',
             'Demande de documents originaux ou d\'argent en espèces.',
           ],
           redFlags: [
@@ -1637,12 +1637,12 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
             'Absence de licence ou de numéro d\'enregistrement pour le consultant.',
           ],
           actions: [
-            'Vérifier la légitimité des consultants en immigration sur les sites officiels (IRCC, ICCRC).',
+            'Vérifier la personne ou l’entreprise sur les sites officiels avant de payer.',
             'Ne jamais payer pour des services qui sont gratuits via le gouvernement.',
             'Ne jamais envoyer de documents originaux sans copie certifiée.',
             'Conserver toutes les communications et les preuves de paiement.',
           ],
-          mantra: 'Personne ne peut garantir un visa.',
+          mantra: 'Personne ne peut garantir un résultat officiel.',
         },
         marketplace: {
           subtitle: 'Arnaques lors d\'achats ou ventes sur les plateformes en ligne.',
@@ -1706,7 +1706,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       intro: "Un service d'accompagnement et d'orientation pour simplifier ton installation au Canada.",
       mission: {
         title: "Notre mission",
-        content: "Marhaban Canada est un service d'accompagnement et d'orientation destiné aux nouveaux arrivants au Canada. Nous simplifions l'installation en fournissant des informations claires, basées sur des sources officielles.",
+        content: "Marhaban Canada — Orientation pratique pour nouveaux arrivants au Canada. Nous simplifions l'installation en fournissant des informations claires, basées sur des sources officielles.",
       },
       whatWeDo: {
         title: "Ce que la plateforme fait",
@@ -1721,7 +1721,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       whatWeDontDo: {
         title: "Ce que la plateforme ne fait pas",
         items: [
-          "Ne remplace pas les services d'un cabinet d'immigration.",
+          "Ne remplace pas les services d'un représentant autorisé.",
           "Ne collecte aucune donnée personnelle (ta progression est sauvegardée localement sur ton appareil).",
           "Ne garantit pas l'obtention de documents ou de services (chaque cas est unique).",
           "Ne fournit pas de conseils juridiques ou financiers personnalisés.",
@@ -1732,7 +1732,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
         title: "Comment on choisit les sources",
         intro: "Nous sélectionnons uniquement des sources officielles et vérifiables. Voici quelques exemples :",
         examples: [
-          "Service Canada (NAS, permis, etc.)",
+          "Service Canada (NAS, services pratiques, etc.)",
           "IRCC (Immigration, Réfugiés et Citoyenneté Canada)",
           "RAMQ, OHIP, MSP (cartes santé provinciales)",
           "ACFC (Agence de la consommation en matière financière du Canada)",
@@ -1751,7 +1751,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       privacy: "Aucune donnée personnelle n'est collectée via ce formulaire.",
       responseTime: "Nous répondons dans les meilleurs délais.",
       disclaimer:
-        "Service d'information et d'accompagnement. Ne remplace pas les services gouvernementaux. Les démarches officielles doivent toujours être validées sur les sites gouvernementaux.",
+        "Marhaban Canada offre de l’orientation pratique et de l’information générale. Nous ne fournissons pas de conseils juridiques ni de conseils en immigration. Pour les questions liées aux visas, permis, résidence permanente, admissibilité ou stratégie d’immigration, veuillez consulter un représentant autorisé.",
       intro: "Nous sommes là pour t'aider. Pose ta question et nous te répondrons rapidement.",
       safetyNote: "Ne partage jamais ton NAS, tes mots de passe ou tes informations bancaires par email.",
       formName: "Nom",
@@ -1812,9 +1812,9 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
     },
     footer: {
       disclaimer:
-        "Service d'information et d'accompagnement. Ne remplace pas les services gouvernementaux. Les démarches officielles doivent toujours être validées sur les sites gouvernementaux.",
+        "Marhaban Canada offre de l’orientation pratique et de l’information générale. Nous ne fournissons pas de conseils juridiques ni de conseils en immigration. Pour les questions liées aux visas, permis, résidence permanente, admissibilité ou stratégie d’immigration, veuillez consulter un représentant autorisé.",
       rights: "Tous droits réservés.",
-      mission: "Service d'accompagnement et d'orientation pour nouveaux arrivants au Canada.",
+      mission: "Orientation pratique pour nouveaux arrivants au Canada.",
       quickGuidesTitle: "Guides rapides",
       sources: "Sources",
       copyright: `© ${new Date().getFullYear()} Marhaban Canada. Tous droits réservés.`,
@@ -1823,7 +1823,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       sourceLabel: "Source",
       officialLink: "Lien officiel",
       budgetLegend: "Loyer + transport + épicerie x coefficient foyer.",
-      disclaimer: "Information et orientation uniquement. Réfère-toi toujours aux sites officiels.",
+      disclaimer: "Marhaban Canada offre de l’orientation pratique et de l’information générale. Nous ne fournissons pas de conseils juridiques ni de conseils en immigration. Pour les questions liées aux visas, permis, résidence permanente, admissibilité ou stratégie d’immigration, veuillez consulter un représentant autorisé.",
       radarTitle: "Radar anti-arnaque",
       radarBody: "Vérifie toujours les expéditeurs, refuse les paiements en cartes cadeaux et garde des copies numériques de tes preuves.",
       sourcesIntro: "Chaque recommandation s’appuie sur un site gouvernemental ou parapublic vérifiable.",
@@ -1850,7 +1850,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
     },
     microcopy: {
       homeTitle: "الخطوات الأولى بعد وصولك إلى كندا",
-      homeSubtitle: "مارحبا كندا هي خدمة مرافقة وتوجيه مخصصة للقادمين الجدد إلى كندا.",
+      homeSubtitle: "مرحبا كندا — توجيه عملي للقادمين الجدد إلى كندا.",
       homeCtaPrimary: "ابدأ المسار",
       homeCtaSub: "مجاني · يعتمد على مصادر رسمية · بدون تسجيل",
       journeyTitle: "مسارك بعد الوصول",
@@ -1892,7 +1892,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
     ],
     serviceAccompagnementWhatIsNot: [
       "ليست خدمة حكومية",
-      "ليست خدمة هجرة",
+      "ليست خدمة نصائح منظمة",
       "ليست وكيلًا أو مستشارًا مدفوع الأجر",
       "لا نقوم بملء أي استمارات نيابةً عنك",
       "لا نحجز مواعيد نيابةً عنك",
@@ -1901,9 +1901,9 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
     serviceAccompagnementWhatIsTitle: "ما الذي تقدمه هذه الخدمة",
     serviceAccompagnementWhatIsNotTitle: "ما الذي لا تقدمه هذه الخدمة",
     serviceAccompagnementNoProxy: "نحن لا نقوم بأي إجراء رسمي نيابةً عنك.",
-    serviceAccompagnementPillar: "مارحبا كندا هي خدمة مرافقة وتوجيه مخصصة للقادمين الجدد إلى كندا.",
+    serviceAccompagnementPillar: "مرحبا كندا — توجيه عملي للقادمين الجدد إلى كندا.",
     serviceAccompagnementDisclaimer:
-      "هذا الموقع يقدم خدمة مرافقة وتوجيه، ولا يُعتبر بديلاً عن الخدمات الحكومية الرسمية.",
+      "تقدم مرحبا كندا توجيهاً عملياً ومعلومات عامة. نحن لا نقدم نصائح قانونية ولا نصائح في الهجرة. للأسئلة المتعلقة بالتأشيرات أو التصاريح أو الإقامة الدائمة أو الأهلية أو استراتيجية الهجرة، يرجى استشارة ممثل معتمد.",
     seoDescriptions: {
       meta: "خدمة مرافقة للقادمين الجدد إلى كندا: الخطوات الرسمية، السكن، البنك، الهاتف، تجنب الاحتيال.",
       og: "خدمة مرافقة للقادمين الجدد إلى كندا: الخطوات الرسمية، السكن، البنك، الهاتف، تجنب الاحتيال.",
@@ -2063,19 +2063,19 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       },
       accompaniment: {
         shortDefinition:
-          "هذا الموقع يقدم خدمة مرافقة وتوجيه، ولا يُعتبر بديلاً عن الخدمات الحكومية الرسمية.",
+          "هذا الموقع يقدم توجيهاً عملياً ومعلومات عامة للقادمين الجدد.",
         noProxyLine: "نحن لا نقوم بأي إجراء رسمي نيابةً عنك.",
         footerHelp: "تحتاج مساعدة لمعرفة ما تبدأ به؟ خدمة المرافقة يمكن أن توجهك حسب وضعك.",
       },
       quickGuides: {
         documentsCard: {
-          title: "الوثائق الأساسية",
+          title: "وثائق عملية للاستقرار",
           body: "حضّر أوراقك مرة واحدة لتجنّب التعطّل.",
-          ctaLabel: "عرض دليل الوثائق",
+          ctaLabel: "عرض دليل الاستقرار",
           href: "/parcours/guide/steps/integration",
         },
         transportCard: {
-          title: "النقل والرخصة",
+          title: "النقل والقيادة",
           body: "افهم القواعد المحلية قبل القيادة.",
           ctaLabel: "عرض دليل النقل",
           href: "/parcours/guide/steps/license",
@@ -2105,12 +2105,12 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
           hint: "مفيد للبحث عن عمل بدون الوقوع في الفخاخ.",
         },
         documents: {
-          title: "الوثائق",
+          title: "وثائق عملية للاستقرار",
           hint: "جهّز أوراقك مرة واحدة لتوفير الوقت.",
         },
         transport: {
           title: "النقل",
-          hint: "لفهم الرخصة والنقل حسب المقاطعة.",
+          hint: "لفهم القيادة والنقل حسب المقاطعة.",
         },
         credit: {
           title: "الائتمان",
@@ -2138,7 +2138,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
         eyebrow: "الموارد",
         title: "موارد رسمية ومجتمعية",
         subtitle: "روابط موثوقة ومصنفة حسب الحاجة.",
-        searchPlaceholder: "ابحث (هجرة، صحة، عمل...)",
+        searchPlaceholder: "ابحث (سكن، صحة، عمل...)",
         provinceLabel: "المقاطعة",
         categoryLabel: "الفئة",
         filterAll: "الكل",
@@ -2167,12 +2167,12 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
         { value: "other", label: "مقاطعة اخرى" },
       ],
       categories: [
-        { id: "arrival", title: "الوصول", description: "الوضع والتهيئة والاقامة." },
+        { id: "arrival", title: "الوصول", description: "الملف العام والخطوات العملية والاستقرار." },
         { id: "housing", title: "السكن", description: "العقود والودائع والقواعد." },
         { id: "health", title: "الصحة", description: "بطاقة صحية وتغطية." },
         { id: "employment", title: "العمل", description: "فرص وحقوق ومعايير." },
-        { id: "documents", title: "الوثائق", description: "الاوراق الاساسية والنسخ." },
-        { id: "transport", title: "النقل", description: "الرخص وبطاقات النقل." },
+        { id: "documents", title: "وثائق عملية للاستقرار", description: "أوراق مفيدة ونسخ." },
+        { id: "transport", title: "النقل", description: "القيادة وبطاقات النقل." },
         { id: "credit", title: "الائتمان", description: "السكور والممارسات." },
         { id: "taxes", title: "الضرائب", description: "التصريح والوثائق." },
         { id: "integration", title: "الاندماج", description: "خدمات محلية وشبكات." },
@@ -2183,8 +2183,8 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
           description: "معلومات وخدمات رسمية.",
         },
         ircc: {
-          title: "IRCC - الهجرة",
-          description: "البوابة الرسمية للهجرة.",
+          title: "IRCC - الموقع الرسمي",
+          description: "بوابة Canada.ca الرسمية.",
         },
         cmhc: {
           title: "CMHC - السكن",
@@ -2695,7 +2695,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       privacy: "لا يتم جمع أي بيانات شخصية عبر قناة الاتصال هذه.",
       responseTime: "نحاول الرد في أقرب وقت ممكن.",
       disclaimer:
-        "خدمة معلومات ومرافقة. لا تحل محل الخدمات الحكومية. يجب دائمًا التحقق من الإجراءات الرسمية على المواقع الحكومية.",
+        "تقدم مرحبا كندا توجيهاً عملياً ومعلومات عامة. نحن لا نقدم نصائح قانونية ولا نصائح في الهجرة. للأسئلة المتعلقة بالتأشيرات أو التصاريح أو الإقامة الدائمة أو الأهلية أو استراتيجية الهجرة، يرجى استشارة ممثل معتمد.",
       intro: "نحن هنا للمساعدة. اطرح سؤالك وسنرد بسرعة.",
       safetyNote: "لا تشارك أبدًا رقم التأمين الاجتماعي أو كلمات المرور أو المعلومات المصرفية عبر البريد الإلكتروني.",
       formName: "الاسم",
@@ -2798,9 +2798,9 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       },
     },
     footer: {
-      disclaimer: "هذا الموقع يقدم خدمة مرافقة وتوجيه، ولا يُعتبر بديلاً عن الخدمات الحكومية الرسمية.",
+      disclaimer: "تقدم مرحبا كندا توجيهاً عملياً ومعلومات عامة. نحن لا نقدم نصائح قانونية ولا نصائح في الهجرة. للأسئلة المتعلقة بالتأشيرات أو التصاريح أو الإقامة الدائمة أو الأهلية أو استراتيجية الهجرة، يرجى استشارة ممثل معتمد.",
       rights: "جميع الحقوق محفوظة.",
-      mission: "خدمة الدعم والتوجيه للوافدين الجدد إلى كندا.",
+      mission: "توجيه عملي للقادمين الجدد إلى كندا.",
       quickGuidesTitle: "أدلة سريعة",
       sources: "المصادر",
       copyright: `© ${new Date().getFullYear()} Marhaban Canada. جميع الحقوق محفوظة.`,
@@ -2809,7 +2809,7 @@ const baseContent: Record<"fr" | "ar", LocaleContent> = {
       sourceLabel: "المصدر",
       officialLink: "رابط رسمي",
       budgetLegend: "الإيجار + النقل + البقالة × معامل الأسرة.",
-      disclaimer: "معلومات وإرشاد فقط. عد دائماً إلى المواقع الرسمية.",
+      disclaimer: "تقدم مرحبا كندا توجيهاً عملياً ومعلومات عامة. نحن لا نقدم نصائح قانونية ولا نصائح في الهجرة. للأسئلة المتعلقة بالتأشيرات أو التصاريح أو الإقامة الدائمة أو الأهلية أو استراتيجية الهجرة، يرجى استشارة ممثل معتمد.",
       radarTitle: "رادار مكافحة الاحتيال",
       radarBody: "تحقق من هوية الأطراف، لا تدفع عبر بطاقات هدايا واحتفظ بنسخ رقمية لكل إيصال.",
       sourcesIntro: "كل توصية مبنية على موقع حكومي أو جهة عامة يمكن التحقق منها.",
@@ -2831,7 +2831,7 @@ const enContent: LocaleContent = {
   dir: "ltr",
   microcopy: {
     homeTitle: "First steps after your arrival in Canada",
-    homeSubtitle: "Marhaban Canada is a settlement guidance and support service for newcomers to Canada.",
+    homeSubtitle: "Marhaban Canada — Practical orientation for newcomers to Canada.",
     homeCtaPrimary: "Start the journey",
     homeCtaSub: "Free · Based on official sources · No sign-up",
     journeyTitle: "Your arrival journey",
@@ -2869,7 +2869,7 @@ const enContent: LocaleContent = {
     },
     accompaniment: {
       shortDefinition:
-        "This site provides a settlement guidance and support service. It does not replace official government services.",
+        "Marhaban Canada offers practical orientation and general information. We do not provide legal advice or immigration advice. For questions related to visas, permits, permanent residence, admissibility, or immigration strategy, please consult an authorized representative.",
       noProxyLine: "We do not perform any official procedure on your behalf.",
       footerHelp:
         "Need help knowing what to do first? The settlement guidance service can orient you based on your situation.",
@@ -3032,11 +3032,11 @@ const enContent: LocaleContent = {
         mantra: 'Your bank never asks for your PIN.',
       },
       immigration: {
-        subtitle: 'Scams related to immigration services and fake consultants.',
+        subtitle: 'Scams related to guaranteed promises and fake representatives.',
         scenario: [
-          'Promises of guaranteed visa or permanent residency, without conditions.',
+          'Guaranteed promises for regulated processes, without conditions.',
           'Request for high payment for services that are free or inexpensive.',
-          'Fake immigration agents contacting you by email or phone.',
+          'Fake agents contacting you by email or phone.',
           'Request for original documents or cash.',
         ],
         redFlags: [
@@ -3046,12 +3046,12 @@ const enContent: LocaleContent = {
           'Lack of license or registration number for the consultant.',
         ],
         actions: [
-          'Verify the legitimacy of immigration consultants on official websites (IRCC, ICCRC).',
+          'Verify the person or company through official websites before paying.',
           'Never pay for services that are free through the government.',
           'Never send original documents without a certified copy.',
           'Keep all communications and proof of payment.',
         ],
-        mantra: 'No one can guarantee a visa.',
+        mantra: 'No one can guarantee an official outcome.',
       },
       marketplace: {
         subtitle: 'Scams when buying or selling on online platforms.',
@@ -3091,7 +3091,7 @@ const enContent: LocaleContent = {
   ],
   serviceAccompagnementWhatIsNot: [
     "Not a government service",
-    "Not an immigration service",
+    "Not a regulated advice service",
     "Not a paid agent or consultant",
     "We do not submit applications on your behalf",
     "We do not book appointments for you",
@@ -3101,9 +3101,9 @@ const enContent: LocaleContent = {
   serviceAccompagnementWhatIsNotTitle: "What this service is not",
   serviceAccompagnementNoProxy: "We do not perform any official procedure on your behalf.",
   serviceAccompagnementPillar:
-    "Marhaban Canada is a settlement guidance and support service for newcomers to Canada.",
+    "Marhaban Canada — Practical orientation for newcomers to Canada.",
   serviceAccompagnementDisclaimer:
-    "This site provides a settlement guidance and support service. It does not replace official government services.",
+    "Marhaban Canada offers practical orientation and general information. We do not provide legal advice or immigration advice. For questions related to visas, permits, permanent residence, admissibility, or immigration strategy, please consult an authorized representative.",
   seoDescriptions: {
     meta: "Settlement support service for newcomers in Canada: official steps, housing, banking, phone plans, scam prevention.",
     og: "Settlement support service for newcomers in Canada: official steps, housing, banking, phone plans, scam prevention.",
@@ -3116,7 +3116,7 @@ const enContent: LocaleContent = {
     privacy: "No personal data is collected via this contact channel.",
     responseTime: "We reply as soon as possible.",
     disclaimer:
-      "Information and support service. Does not replace government services. Official procedures must always be validated on government websites.",
+      "Marhaban Canada offers practical orientation and general information. We do not provide legal advice or immigration advice. For questions related to visas, permits, permanent residence, admissibility, or immigration strategy, please consult an authorized representative.",
     intro: "We're here to help. Ask your question and we'll reply quickly.",
     safetyNote: "Never share your SIN, passwords, or banking information by email.",
     formName: "Name",
@@ -3141,10 +3141,10 @@ const enContent: LocaleContent = {
   },
   aboutPage: {
     title: "About Marhaban Canada",
-    intro: "A support and orientation service to simplify your settlement in Canada.",
+    intro: "Practical orientation to simplify your settlement in Canada.",
     mission: {
       title: "Our mission",
-      content: "Marhaban Canada is a support and orientation service for newcomers to Canada. We simplify settlement by providing clear information based on official sources.",
+      content: "Marhaban Canada — Practical orientation for newcomers to Canada. We simplify settlement by providing clear information based on official sources.",
     },
     whatWeDo: {
       title: "What the platform does",
@@ -3159,7 +3159,7 @@ const enContent: LocaleContent = {
     whatWeDontDo: {
       title: "What the platform does not do",
       items: [
-        "Does not replace immigration law firm services.",
+        "Does not replace legal advice, immigration advice, or an authorized representative.",
         "Does not collect any personal data (your progress is saved locally on your device).",
         "Does not guarantee obtaining documents or services (each case is unique).",
         "Does not provide personalized legal or financial advice.",
@@ -3220,9 +3220,9 @@ const enContent: LocaleContent = {
   },
   footer: {
     disclaimer:
-      "This site provides a settlement guidance and support service. It does not replace official government services.",
+      "Marhaban Canada offers practical orientation and general information. We do not provide legal advice or immigration advice. For questions related to visas, permits, permanent residence, admissibility, or immigration strategy, please consult an authorized representative.",
     rights: "All rights reserved.",
-    mission: "Support and orientation service for newcomers to Canada.",
+    mission: "Practical orientation for newcomers to Canada.",
     quickGuidesTitle: "Quick guides",
     sources: "Sources",
     copyright: `© ${new Date().getFullYear()} Marhaban Canada. All rights reserved.`,

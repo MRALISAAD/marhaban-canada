@@ -6,8 +6,6 @@ import { usePathname } from 'next/navigation';
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
 import { LOCALES, type Locale, getHtmlAttrs } from '@/i18n/locales';
-import { EasyReadToggle } from '@/components/EasyReadToggle';
-import { FEATURE_FLAGS } from '@/lib/featureFlags';
 import { withLocale } from '@/lib/i18n-utils';
 
 // Types for Navbar labels based on content.shared.nav
@@ -156,6 +154,12 @@ export function Navbar() {
     if (locale === 'en') return `${nav.switchToAr}, Switch to Arabic`;
     return `${nav.switchToAr}, التبديل إلى العربية`;
   }, [otherLocale, locale, nav]);
+
+  const bookCallLabel = useMemo(() => {
+    if (locale === 'fr') return 'Réserver un appel';
+    if (locale === 'en') return 'Book a call';
+    return 'احجز مكالمة';
+  }, [locale]);
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -316,13 +320,13 @@ export function Navbar() {
   const isSecondaryActive = useMemo(() => secondaryLinks.some((link) => link.isActive), [secondaryLinks]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-marhaban-cream/90 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-3">
           {/* Brand */}
           <Link
             href={localizeHref('/')}
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 font-semibold tracking-tight text-slate-900 transition-colors hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 focus-visible:rounded-md sm:justify-start"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 font-semibold tracking-tight text-marhaban-ink transition-colors hover:text-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md sm:justify-start"
             aria-label={brandAriaLabel}
           >
             <Image
@@ -342,9 +346,9 @@ export function Navbar() {
             {primaryLinks.map((link) => (
               <Link
                 key={link.key}
-                className={`relative flex min-h-[44px] items-center px-3 transition-all duration-150 ease-in-out hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 focus-visible:rounded-md ${
-                  link.isActive 
-                    ? 'font-semibold text-slate-900' 
+                className={`relative flex min-h-[44px] items-center px-3 transition-all duration-150 ease-in-out hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md ${
+                  link.isActive
+                    ? 'font-semibold text-marhaban-ink'
                     : 'font-medium text-slate-600'
                 }`}
                 href={link.href}
@@ -352,8 +356,8 @@ export function Navbar() {
               >
                 {link.label}
                 {link.isActive && (
-                  <span 
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-900" 
+                  <span
+                    className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-marhaban-leaf"
                     aria-hidden="true"
                   />
                 )}
@@ -367,9 +371,9 @@ export function Navbar() {
                 type="button"
                 onClick={() => setIsPlusMenuOpen((prev) => !prev)}
                 onMouseEnter={() => setIsPlusMenuOpen(true)}
-                className={`relative flex min-h-[44px] items-center px-3 transition-all duration-150 ease-in-out hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 focus-visible:rounded-md ${
-                  isSecondaryActive 
-                    ? 'font-semibold text-slate-900' 
+                className={`relative flex min-h-[44px] items-center px-3 transition-all duration-150 ease-in-out hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md ${
+                  isSecondaryActive
+                    ? 'font-semibold text-marhaban-ink'
                     : 'font-medium text-slate-600'
                 }`}
                 aria-expanded={isPlusMenuOpen}
@@ -392,8 +396,8 @@ export function Navbar() {
                   <path d="M19 9l-7 7-7-7" />
                 </svg>
                 {isSecondaryActive && (
-                  <span 
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-900" 
+                  <span
+                    className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-marhaban-leaf"
                     aria-hidden="true"
                   />
                 )}
@@ -403,7 +407,7 @@ export function Navbar() {
               {isPlusMenuOpen && (
                 <div
                   ref={plusMenuRef}
-                  className={`absolute ${dir === 'rtl' ? 'left-0' : 'right-0'} top-full mt-2 w-56 rounded-lg border border-slate-200 bg-white shadow-xl z-50 py-1`}
+                  className={`absolute ${dir === 'rtl' ? 'left-0' : 'right-0'} top-full mt-2 w-56 rounded-2xl border border-stone-200 bg-white/95 shadow-warm z-50 py-1`}
                   role="menu"
                   aria-orientation="vertical"
                   onMouseLeave={() => setIsPlusMenuOpen(false)}
@@ -413,9 +417,9 @@ export function Navbar() {
                       key={link.key}
                       ref={index === 0 ? firstPlusMenuItemRef : null}
                       href={link.href}
-                      className={`block min-h-[44px] px-4 py-2.5 text-sm transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-inset ${
-                        link.isActive 
-                          ? 'bg-slate-50 font-semibold text-slate-900' 
+                      className={`block min-h-[44px] px-4 py-2.5 text-sm transition-colors hover:bg-marhaban-mint/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-inset ${
+                        link.isActive
+                          ? 'bg-marhaban-mint/60 font-semibold text-marhaban-ink'
                           : 'text-slate-700'
                       }`}
                       role="menuitem"
@@ -432,12 +436,17 @@ export function Navbar() {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            {FEATURE_FLAGS.ENABLE_EASY_READ && <EasyReadToggle />}
+            <Link
+              href={localizeHref('/book')}
+              className="hidden min-h-[44px] items-center justify-center rounded-full bg-marhaban-ink px-4 py-2 text-sm font-semibold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 sm:inline-flex"
+            >
+              {bookCallLabel}
+            </Link>
 
             {/* Language Switch */}
             <Link
               href={otherHref}
-              className="flex min-h-[44px] items-center justify-center rounded-xl border border-slate-200 px-3 py-2 text-sm font-medium transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
+              className="flex min-h-[44px] items-center justify-center rounded-full border border-stone-300 bg-white/70 px-3 py-2 text-sm font-medium transition-colors hover:bg-marhaban-mint/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2"
               aria-label={languageSwitchAriaLabel}
             >
               {otherLocale === 'fr' ? nav.switchToFr : otherLocale === 'en' ? nav.switchToEn : nav.switchToAr}
@@ -448,7 +457,7 @@ export function Navbar() {
               ref={menuButtonRef}
               type="button"
               onClick={toggleMobileMenu}
-              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl p-2 text-slate-700 transition-all duration-200 ease-in-out hover:bg-slate-100 active:bg-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 md:hidden"
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full p-2 text-slate-700 transition-all duration-200 ease-in-out hover:bg-marhaban-mint/60 active:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 md:hidden"
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
               aria-label={menuButtonAriaLabel}
@@ -485,7 +494,7 @@ export function Navbar() {
         <div
           ref={menuRef}
           id="mobile-menu"
-          className={`border-t border-slate-200 bg-white transition-all duration-300 ease-in-out md:hidden ${
+          className={`border-t border-stone-200 bg-marhaban-cream/[0.98] transition-all duration-300 ease-in-out md:hidden ${
             isMobileMenuOpen
               ? 'visible max-h-screen opacity-100'
               : 'invisible max-h-0 overflow-hidden opacity-0'
@@ -498,8 +507,8 @@ export function Navbar() {
               <Link
                 key={link.key}
                 ref={index === 0 ? firstMenuItemRef : null}
-                className={`flex min-h-[44px] items-center px-4 py-3 text-base text-slate-700 transition-all duration-150 ease-in-out hover:bg-slate-50 hover:text-slate-900 active:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-inset ${
-                  link.isActive ? 'bg-slate-50 font-semibold text-slate-900' : ''
+                className={`flex min-h-[44px] items-center px-4 py-3 text-base text-slate-700 transition-all duration-150 ease-in-out hover:bg-marhaban-mint/50 hover:text-marhaban-ink active:bg-marhaban-mint/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-inset ${
+                  link.isActive ? 'bg-marhaban-mint/60 font-semibold text-marhaban-ink' : ''
                 }`}
                 href={link.href}
                 aria-current={link.isActive ? 'page' : undefined}
@@ -510,15 +519,15 @@ export function Navbar() {
             ))}
             
             {/* Plus section separator */}
-            <div className="border-t border-slate-200 my-2" />
+            <div className="border-t border-stone-200 my-2" />
             
             {/* Plus button (mobile accordion trigger) */}
             <button
               ref={plusButtonRef}
               type="button"
               onClick={() => setIsPlusMenuOpen((prev) => !prev)}
-              className={`flex min-h-[44px] items-center justify-between px-4 py-3 text-base text-slate-700 transition-all duration-150 ease-in-out hover:bg-slate-50 hover:text-slate-900 active:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-inset ${
-                isSecondaryActive ? 'bg-slate-50 font-semibold text-slate-900' : ''
+              className={`flex min-h-[44px] items-center justify-between px-4 py-3 text-base text-slate-700 transition-all duration-150 ease-in-out hover:bg-marhaban-mint/50 hover:text-marhaban-ink active:bg-marhaban-mint/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-inset ${
+                isSecondaryActive ? 'bg-marhaban-mint/60 font-semibold text-marhaban-ink' : ''
               }`}
               aria-expanded={isPlusMenuOpen}
               aria-controls="mobile-plus-menu"
@@ -551,8 +560,8 @@ export function Navbar() {
               {secondaryLinks.map((link) => (
                 <Link
                   key={link.key}
-                  className={`flex min-h-[44px] items-center px-8 py-3 text-base text-slate-700 transition-all duration-150 ease-in-out hover:bg-slate-50 hover:text-slate-900 active:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-inset ${
-                    link.isActive ? 'bg-slate-50 font-semibold text-slate-900' : ''
+                  className={`flex min-h-[44px] items-center px-8 py-3 text-base text-slate-700 transition-all duration-150 ease-in-out hover:bg-marhaban-mint/50 hover:text-marhaban-ink active:bg-marhaban-mint/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-inset ${
+                    link.isActive ? 'bg-marhaban-mint/60 font-semibold text-marhaban-ink' : ''
                   }`}
                   href={link.href}
                   aria-current={link.isActive ? 'page' : undefined}
@@ -564,6 +573,18 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
+            </div>
+            <div className="px-4 pb-2 pt-4">
+              <Link
+                href={localizeHref('/book')}
+                className="flex min-h-[48px] w-full items-center justify-center rounded-full bg-marhaban-ink px-4 py-3 text-base font-semibold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setIsPlusMenuOpen(false);
+                }}
+              >
+                {bookCallLabel}
+              </Link>
             </div>
           </nav>
         </div>
