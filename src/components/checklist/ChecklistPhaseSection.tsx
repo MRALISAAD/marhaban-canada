@@ -30,20 +30,20 @@ export function ChecklistPhaseSection({
   const progress = pct(done, total);
 
   return (
-    <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+    <section className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-5 shadow-warm-sm">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{phase.badge}</p>
-          <h2 className="mt-2 text-xl font-semibold text-slate-900">{phase.title}</h2>
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">{phase.badge}</p>
+          <h2 className="mt-2 text-xl font-semibold text-marhaban-ink">{phase.title}</h2>
           <p className="mt-1 text-sm text-slate-600">{phase.subtitle}</p>
         </div>
         <div className="text-right">
-          <p className="text-sm text-slate-600">{progress}%</p>
+          <p className="text-sm font-bold text-marhaban-ink">{progress}%</p>
           <p className="text-xs text-slate-500">
             {done}/{total}
           </p>
-          <div className="mt-2 h-2 w-28 overflow-hidden rounded-full bg-slate-100">
-            <div className="h-full rounded-full bg-amber-600" style={{ width: `${progress}%` }} />
+          <div className="mt-2 h-2 w-28 overflow-hidden rounded-full bg-marhaban-mint">
+            <div className="h-full rounded-full bg-marhaban-clay" style={{ width: `${progress}%` }} />
           </div>
         </div>
       </div>

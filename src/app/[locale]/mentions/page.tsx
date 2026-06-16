@@ -14,7 +14,7 @@ export default function MentionsPage() {
       antiFraudTitle: 'Contrôle anti-fraude',
       extraLines: [
         'Ce site ne remplace pas un conseiller autorisé.',
-        'Ne partage jamais de documents sensibles sans vérifier la source.',
+        'Ne partage jamais de documents pratiques d’installation sensibles sans vérifier la source.',
         'Signale toute approche douteuse aux autorités compétentes.',
       ],
       backHome: "Retour à l'accueil",
@@ -26,7 +26,7 @@ export default function MentionsPage() {
       antiFraudTitle: 'Anti‑fraud checks',
       extraLines: [
         'This site does not replace a licensed advisor.',
-        'Never share sensitive documents without checking the source.',
+        'Never share sensitive practical settlement documents without checking the source.',
         'Report any suspicious approach to the appropriate authorities.',
       ],
       backHome: 'Back to home',

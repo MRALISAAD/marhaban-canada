@@ -82,7 +82,7 @@ const sources = {
   ],
   license: [
     {
-      label: 'Canada.ca - permis',
+      label: 'Canada.ca - conduite',
       href: 'https://www.canada.ca/fr/services/transport/conduire.html',
     },
   ],
@@ -196,7 +196,7 @@ export const checklistDictionary: Record<ChecklistLocale, ChecklistDictionary> =
           {
             id: 'license_done',
             title: 'Permis de conduire (selon province)',
-            avoid: ['Ne conduis pas sans permis valide et assurance.'],
+            avoid: ['Ne conduis pas sans autorisation valide et assurance.'],
             sources: sources.license,
             guideHref: '/parcours/guide/steps/license',
             priority: 'important',

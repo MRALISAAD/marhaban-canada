@@ -6,10 +6,9 @@ import { HtmlAttributes } from '@/components/HtmlAttributes';
 import { Navbar } from '@/components/navigation/Navbar';
 import { Footer } from '@/components/navigation/Footer';
 import { ProvinceProvider } from '@/components/ProvinceProvider';
-import { GlobalProgressBar } from '@/components/GlobalProgressBar';
-import { EasyReadProvider } from '@/components/EasyReadProvider'; // Import EasyReadProvider
+import { EasyReadProvider } from '@/components/EasyReadProvider';
 import { FocusManager } from '@/components/FocusManager';
-import { FEATURE_FLAGS } from '@/lib/featureFlags';
+import { FloatingBookCallButton } from '@/components/FloatingBookCallButton';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -40,7 +39,7 @@ export default async function LocaleLayout({
       <HtmlAttributes lang={lang} dir={dir} />
       <LanguageProvider locale={locale}>
         <ProvinceProvider>
-          <EasyReadProvider> {/* Wrap with EasyReadProvider */}
+          <EasyReadProvider>
             <FocusManager />
           <a
             href="#main-content"
@@ -53,16 +52,10 @@ export default async function LocaleLayout({
                 : 'انتقل إلى المحتوى الرئيسي'}
           </a>
           <Navbar />
-          {FEATURE_FLAGS.ENABLE_PROGRESS && (
-            <div className="w-full px-0">
-              <div className="sticky top-0 z-40 bg-white/80 backdrop-blur">
-                <GlobalProgressBar />
-              </div>
-            </div>
-          )}
-          <main id="main-content" className="min-h-[calc(100vh-64px)]" tabIndex={-1}>
+          <main id="main-content" className="min-h-[calc(100vh-64px)] scroll-mt-24 pb-32 md:pb-0" tabIndex={-1}>
             {children}
           </main>
+          <FloatingBookCallButton />
           <Footer />
         </EasyReadProvider>
       </ProvinceProvider>

@@ -81,19 +81,19 @@ export function SectionBlock({
     <section
       id={id}
       className={cn(
-        'rounded-3xl border border-slate-200 bg-white p-6 shadow-sm',
+        'rounded-3xl border border-marhaban-leaf/12 bg-white/90 p-6 shadow-warm-sm',
         className
       )}
       dir={dir}
     >
       <div className="flex items-start gap-3">
         {IconComponent && (
-          <span className="mt-1 rounded-full border border-slate-200 bg-slate-50 p-2 flex-shrink-0">
-            <IconComponent className="h-4 w-4 text-slate-600" />
+          <span className="mt-1 flex-shrink-0 rounded-2xl border border-marhaban-leaf/15 bg-marhaban-mint p-2.5">
+            <IconComponent className="h-4 w-4 text-marhaban-leaf" />
           </span>
         )}
         <div className="flex-1">
-          <h2 className={cn('text-lg font-semibold text-slate-900', alignClass)}>{title}</h2>
+          <h2 className={cn('text-xl font-semibold text-marhaban-ink', alignClass)}>{title}</h2>
           <div className={cn('mt-4', alignClass)}>{children}</div>
         </div>
       </div>

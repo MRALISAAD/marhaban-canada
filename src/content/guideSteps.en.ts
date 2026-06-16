@@ -20,8 +20,8 @@ export const guideStepsEn: Record<string, Step> = {
       'Access certain federal services and tax credits.',
     ],
     how: [
-      'Check that your status or permit is valid.',
-      'Gather the required original documents (passport, permit, proof of address).',
+      'Check the useful proofs linked to your general profile.',
+      'Gather the required practical settlement documents (ID, useful proof, proof of address).',
       'Find a nearby Service Canada Centre.',
       'Go in person if possible (often faster than online).',
       'Follow the instructions and verify all information before leaving.',
@@ -29,7 +29,7 @@ export const guideStepsEn: Record<string, Step> = {
     ],
     docs: [
       'Passport',
-      'Valid study or work permit (or other status document)',
+      'Useful proof linked to your general profile',
       'Proof of Canadian address (if required)',
     ],
     avoid: [
@@ -70,7 +70,7 @@ export const guideStepsEn: Record<string, Step> = {
       'Compare newcomer offers (monthly fees, free transactions, welcome bonuses).',
       'Choose a bank that is convenient for you (branch, ATMs, mobile app).',
       'Book an appointment if possible.',
-      'Bring your passport, status document, and proof of address (if available).',
+      'Bring your ID, general profile proof, and proof of address (if available).',
       'Open a chequing account and get a debit card for daily spending.',
       'If appropriate, ask for a small, reasonable credit card limit.',
     ],
@@ -199,7 +199,7 @@ export const guideStepsEn: Record<string, Step> = {
       'Pass the road test if required.',
       'Get your local license and keep your proof.',
     ],
-    docs: ['Current license', 'ID document', 'Proof of status', 'Driving record (if required)'],
+    docs: ['Current driving document', 'ID document', 'General profile proof', 'Driving record (if required)'],
     avoid: [
       'Driving without valid insurance.',
       'Ignoring conversion deadlines.',
@@ -235,7 +235,7 @@ export const guideStepsEn: Record<string, Step> = {
     ],
     how: [
       'Check eligibility rules and waiting periods in your province.',
-      'Gather your documents (status, ID, proof of address).',
+      'Gather your practical settlement documents (general profile, ID, proof of address).',
       'Submit the application online or in person, depending on the province.',
       'Note the estimated start date of coverage.',
       'Consider temporary private insurance if there is a waiting period.',

@@ -2,7 +2,7 @@
 
 import { useEasyRead } from '@/components/EasyReadProvider';
 import { FEATURE_FLAGS } from '@/lib/featureFlags';
-import { Button } from '@/components/ui/Button'; // Assuming a Button component exists or using a generic HTML button
+import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/components/LanguageProvider'; // To get locale for translations
 
 export function EasyReadToggle() {
