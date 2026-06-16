@@ -32,32 +32,59 @@ export function HeroVisual({ locale, checklist }: Props) {
 
   return (
     <div className="relative">
+      {/* Ambient blurs */}
       <div
-        className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-marhaban-sage/30 blur-2xl"
+        className="pointer-events-none absolute -right-10 -top-10 h-52 w-52 rounded-full bg-marhaban-sage/20 blur-3xl"
         aria-hidden="true"
       />
-      <div className="relative rounded-3xl border border-marhaban-leaf/15 bg-offwhite p-6 shadow-warm sm:p-8">
-        <div className="flex flex-wrap gap-2">
-          <span className="rounded-full bg-marhaban-mint px-3 py-1.5 text-sm font-semibold text-marhaban-leaf">
-            {t.badge30}
-          </span>
-          <span className="rounded-full bg-marhaban-mint px-3 py-1.5 text-sm font-semibold text-marhaban-leaf">
-            {t.badgeSummary}
-          </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#FFF0E6] px-3 py-1.5 text-sm font-semibold text-marhaban-clay">
-            <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-            {t.badgeShield}
-          </span>
+      <div
+        className="pointer-events-none absolute -bottom-8 -left-8 h-36 w-36 rounded-full bg-marhaban-sand/25 blur-2xl"
+        aria-hidden="true"
+      />
+
+      {/* Card */}
+      <div className="relative overflow-hidden rounded-3xl border border-marhaban-leaf/15 bg-marhaban-warm shadow-premium-card">
+        {/* Top accent strip */}
+        <div
+          className="h-1 w-full bg-gradient-to-r from-marhaban-forestDark via-marhaban-leaf to-marhaban-sage/60"
+          aria-hidden="true"
+        />
+
+        <div className="p-8 sm:p-10">
+          {/* Badges */}
+          <div className="flex flex-wrap gap-2">
+            <span className="inline-flex items-center rounded-full border border-marhaban-leaf/20 bg-marhaban-mint/60 px-3 py-1.5 text-sm font-semibold text-marhaban-leaf">
+              {t.badge30}
+            </span>
+            <span className="inline-flex items-center rounded-full border border-marhaban-leaf/20 bg-marhaban-mint/60 px-3 py-1.5 text-sm font-semibold text-marhaban-leaf">
+              {t.badgeSummary}
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-marhaban-clay/20 bg-[#FFF0E6] px-3 py-1.5 text-sm font-semibold text-marhaban-clay">
+              <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+              {t.badgeShield}
+            </span>
+          </div>
+
+          {/* Title */}
+          <h2 className="mt-6 font-heading text-xl font-semibold leading-snug text-marhaban-ink sm:text-2xl lg:text-3xl">
+            {t.title}
+          </h2>
+
+          {/* Divider */}
+          <div className="mt-5 h-px bg-marhaban-leaf/10" aria-hidden="true" />
+
+          {/* Checklist */}
+          <ul className="mt-5 space-y-4">
+            {checklist.map((item) => (
+              <li key={item} className="flex items-start gap-3">
+                <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-marhaban-mint">
+                  <CheckCircle2 className="h-4 w-4 text-marhaban-leaf" aria-hidden="true" />
+                </span>
+                <span className="text-base leading-relaxed text-marhaban-ink/85">{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <h2 className="mt-6 text-2xl font-semibold text-marhaban-ink">{t.title}</h2>
-        <ul className="mt-5 space-y-3">
-          {checklist.map((item) => (
-            <li key={item} className="flex items-start gap-3 text-base text-marhaban-ink/80">
-              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-marhaban-leaf" aria-hidden="true" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

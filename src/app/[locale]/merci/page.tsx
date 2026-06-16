@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ArrowRight, CheckCircle2, MailCheck, CalendarCheck, FileText } from 'lucide-react';
 import LocalizedLink from '@/components/LocalizedLink';
-import { AnimatedCTA, AnimatedCard, SectionReveal, StaggerGroup } from '@/components/animations/MarketingMotion';
+import { AnimatedCTA, AnimatedCard } from '@/components/animations/MarketingMotion';
 import { getHtmlAttrs, isLocale, type Locale } from '@/i18n/locales';
+import { bookingIntegrationLinks } from '@/lib/booking-links';
 import { bookingPath } from '@/lib/routes';
 
 type Props = {
@@ -64,7 +65,7 @@ const thankYouTexts = {
     ],
     note: 'ستتلقى تأكيداً قبل المكالمة.',
     safety: 'لا تشارك رقم التأمين أو كلمات المرور أو المعلومات المصرفية.',
-    disclaimer: 'مرحبا كندا تقدم توجيهاً عملياً، لا نصائح قانونية أو هجرية.',
+    disclaimer: 'مرحبا كندا تقدم توجيهاً عملياً، لا نصائح قانونية أو نصائح في الهجرة.',
     cta: 'العودة إلى الحجز',
     secondary: 'شاهد المسار',
   },
@@ -100,7 +101,7 @@ export default async function MerciPage({ params }: Props) {
     <main className="warm-page overflow-hidden" dir={dir} lang={lang}>
       <section className="marhaban-hero-shell px-4 pb-10 pt-8 text-white sm:px-6 sm:pb-12 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-          <SectionReveal className="space-y-6">
+          <div className="space-y-6">
             <p className="inline-flex rounded-full border border-white/14 bg-white/[0.08] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-marhaban-gold backdrop-blur">
               {t.eyebrow}
             </p>
@@ -121,7 +122,7 @@ export default async function MerciPage({ params }: Props) {
                 </LocalizedLink>
               </AnimatedCTA>
             </div>
-          </SectionReveal>
+          </div>
 
           <AnimatedCard className="rounded-[2rem] border border-white/12 bg-white/[0.06] p-5 text-white shadow-[0_28px_100px_rgba(0,0,0,0.28)] backdrop-blur-sm">
             <div className="grid gap-3">
@@ -136,8 +137,12 @@ export default async function MerciPage({ params }: Props) {
                   {locale === 'fr' ? 'À venir' : locale === 'en' ? 'Coming next' : 'قريباً'}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold text-white/74">
-                  <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-2">Tally form placeholder</span>
-                  <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-2">Calendly / Cal.com placeholder</span>
+                  <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-2">
+                    {bookingIntegrationLinks.tallyForm.label}
+                  </span>
+                  <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-2">
+                    {bookingIntegrationLinks.calendly.label}
+                  </span>
                 </div>
               </div>
             </div>
@@ -150,7 +155,7 @@ export default async function MerciPage({ params }: Props) {
           <div className="max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-clay">{t.stepsTitle}</p>
           </div>
-          <StaggerGroup className="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {t.steps.map((step, index) => (
               <AnimatedCard key={step.title} className="rounded-3xl border border-marhaban-leaf/12 bg-white p-5 shadow-warm-sm">
                 <div className="flex gap-4">
@@ -165,7 +170,7 @@ export default async function MerciPage({ params }: Props) {
                 </div>
               </AnimatedCard>
             ))}
-          </StaggerGroup>
+          </div>
         </div>
       </section>
 

@@ -1,219 +1,315 @@
 {
   "fr": {
-    "title": "Réserver un appel d'orientation",
-    "subtitle": "Choisis ton besoin, envoie ta demande, puis reçois une confirmation avant l'appel.",
-    "offersEyebrow": "Les offres",
-    "offersTitle": "Choisis l'appel qui correspond à ta situation.",
+    "title": "Réserve un appel clair, simple et humain.",
+    "subtitle": "Explique ta situation, choisis ton besoin, et repars avec une prochaine étape claire.",
+    "heroCta": "Commencer",
+    "heroSecondary": "Voir les services",
+    "trustPills": [
+      "Orientation pratique",
+      "FR / EN / AR",
+      "Pas de conseil juridique",
+      "Pas de promesse de résultat"
+    ],
+    "valueTitle": "Ce que tu gagnes tout de suite",
+    "valueItems": [
+      "30 minutes pour clarifier",
+      "Des priorités simples",
+      "Des ressources utiles",
+      "Des erreurs à éviter"
+    ],
+    "servicesEyebrow": "Choisis ton besoin",
+    "servicesTitle": "Commence par la situation qui te ressemble.",
+    "servicesText": "Choisis le point de départ le plus utile. Si besoin, on t’orientera vers le bon appel.",
     "reserve": "Réserver",
-    "formMicrocopy": "Réponds simplement. Pas besoin d'écrire un long message.",
-    "formSafety": "Ne partage pas ton NAS, tes mots de passe ou tes informations bancaires.",
-    "processEyebrow": "Processus",
-    "processTitle": "Ce qui se passe après ta demande.",
-    "faqEyebrow": "Questions fréquentes",
-    "faqTitle": "Avant de réserver.",
-    "finalTitle": "Tu ne sais pas par quoi commencer ?",
-    "finalText": "Réserve un appel d'orientation et repars avec tes prochaines étapes.",
-    "finalCta": "Réserver un appel",
-    "offers": [
+    "services": [
       {
-        "title": "Appel Orientation bêta",
-        "price": "10 $",
+        "title": "Appel découverte gratuit",
+        "price": "Gratuit",
+        "duration": "15 minutes",
+        "bestFor": "Pour voir rapidement si tu es au bon endroit et si l’échange peut t’aider.",
+        "included": [
+          "Mise au point du besoin",
+          "Première prochaine étape",
+          "Réponse par email"
+        ],
+        "notPromised": "Pas de conseil juridique ni de promesse de résultat."
+      },
+      {
+        "title": "Appel orientation",
+        "price": "29 $",
         "duration": "30 minutes",
-        "bestFor": "Pour clarifier ta situation et savoir quoi faire en premier.",
+        "bestFor": "Pour clarifier ta situation si tu arrives bientôt ou si tu es déjà sur place.",
         "included": [
           "Priorités pratiques",
           "Ressources utiles",
-          "Résumé après l'appel"
+          "Résumé après l’appel"
         ],
-        "notPromised": "Ce n'est pas du conseil juridique ni une promesse de résultat.",
-        "betaLabel": "Pour les premiers appels de validation"
+        "notPromised": "Pas de visa, permis, logement ou emploi garantis.",
+        "betaLabel": "Point de départ recommandé"
       },
       {
-        "title": "Appel Orientation",
-        "price": "29 $",
+        "title": "Plan première semaine",
+        "price": "49 $",
+        "duration": "45 minutes",
+        "bestFor": "Pour arriver avec une première semaine déjà structurée.",
+        "included": [
+          "Checklist d’installation",
+          "Ordre des tâches",
+          "Points à vérifier"
+        ],
+        "notPromised": "Pas de service gouvernemental."
+      },
+      {
+        "title": "Vérification anti-arnaque",
+        "price": "19 $",
+        "duration": "20 minutes",
+        "bestFor": "Pour vérifier une annonce, un message ou une demande d’argent avant de répondre.",
+        "included": [
+          "Lecture des signaux d’alerte",
+          "Checklist de prudence",
+          "Prochaine action"
+        ],
+        "notPromised": "Pas d’enquête légale ni d’avis juridique."
+      },
+      {
+        "title": "Organisation documents",
+        "price": "39 $",
         "duration": "30 minutes",
-        "bestFor": "Pour quelqu'un qui veut un plan clair et des ressources utiles.",
+        "bestFor": "Pour ranger tes documents avant le départ ou après l’arrivée.",
         "included": [
-          "Ordre des étapes",
-          "Erreurs à éviter",
-          "Résumé après l'appel"
+          "Classement simple",
+          "Documents essentiels",
+          "Ce qu’il faut préparer"
         ],
-        "notPromised": "Ce n'est pas du conseil juridique ni une promesse de résultat."
+        "notPromised": "Pas de dépôt officiel ni de conseil légal."
       },
       {
-        "title": "Pack Installation",
-        "price": "69 $",
-        "duration": "45 minutes + checklist personnalisée",
-        "bestFor": "Pour préparer ton arrivée ou organiser ta première semaine.",
+        "title": "Accompagnement étudiant",
+        "price": "59 $",
+        "duration": "45 minutes",
+        "bestFor": "Pour les étudiants qui veulent un repère concret avant ou après l’arrivée.",
         "included": [
-          "Checklist personnalisée",
-          "Première semaine",
-          "Documents pratiques"
+          "Priorités étudiantes",
+          "Ressources utiles",
+          "Résumé clair"
         ],
-        "notPromised": "Ce n'est pas une garantie de logement ou d'emploi."
-      },
-      {
-        "title": "Pack Complet",
-        "price": "99 $",
-        "duration": "60 minutes + résumé détaillé",
-        "bestFor": "Pour repartir avec un plan structuré et facile à suivre.",
-        "included": [
-          "Plan structuré",
-          "Résumé détaillé",
-          "Priorités et erreurs à éviter"
-        ],
-        "notPromised": "Ce n'est pas une représentation officielle."
+        "notPromised": "Pas de garantie d’admission, de permis ou de logement."
       }
     ],
-    "steps": [
+    "formIntro": "Explique simplement ta situation. Pas besoin d’un long message.",
+    "formSafety": "Ne partage pas ton NAS, tes mots de passe ou tes informations bancaires.",
+    "processEyebrow": "Du flou au plan clair",
+    "processTitle": "Ce qui se passe après ta demande.",
+    "processSteps": [
       {
-        "title": "Remplis le formulaire",
-        "text": "Deux minutes suffisent pour dire ce que tu veux clarifier."
+        "title": "Tu expliques ta situation",
+        "text": "Tu remplis le formulaire avec le contexte, la ville et ce qui te bloque."
       },
       {
         "title": "On confirme le bon format",
-        "text": "On vérifie que l'appel d'orientation correspond à ta situation."
+        "text": "On vérifie que le service choisi correspond bien à ton besoin."
       },
       {
-        "title": "Tu fais l'appel",
-        "text": "On clarifie les priorités, les étapes pratiques et les signaux à vérifier."
+        "title": "Tu fais l’appel",
+        "text": "On clarifie les priorités, les étapes pratiques et les points à vérifier."
       },
       {
         "title": "Tu reçois un résumé clair",
         "text": "Tu repars avec une mini-feuille de route simple et utile."
       }
     ],
+    "faqEyebrow": "Questions fréquentes",
+    "faqTitle": "Avant de réserver.",
     "faq": [
       {
-        "q": "Est-ce un service d'immigration ?",
-        "a": "Non. Marhaban Canada offre de l'orientation pratique et de l'information générale, pas de conseil en immigration."
+        "q": "Est-ce un service d’immigration ?",
+        "a": "Non. Marhaban Canada offre de l’orientation pratique et de l’information générale, pas du conseil en immigration."
       },
       {
-        "q": "Est-ce que je peux réserver avant d'arriver ?",
+        "q": "Est-ce que je peux réserver avant d’arriver ?",
         "a": "Oui. Tu peux réserver avant ton arrivée ou une fois sur place."
       },
       {
         "q": "Est-ce que vous aidez pour le logement ?",
-        "a": "On aide à mieux préparer la recherche et repérer les signaux d'alerte, sans garantir un logement."
+        "a": "On t’aide à mieux préparer la recherche et à repérer les signaux d’alerte, sans garantir un logement."
       },
       {
-        "q": "Est-ce que l'appel garantit un résultat ?",
+        "q": "Est-ce que l’appel garantit un résultat ?",
         "a": "Non. Aucune promesse de visa, permis, logement ou emploi."
       },
       {
-        "q": "Qu'est-ce que je reçois après l'appel ?",
+        "q": "Qu’est-ce que je reçois après l’appel ?",
         "a": "Un résumé clair avec tes priorités, les étapes utiles et les points à vérifier."
       },
       {
         "q": "Puis-je parler en arabe ou en anglais ?",
-        "a": "Oui. Tu peux demander un appel en français, anglais ou arabe."
+        "a": "Oui. Tu peux demander l’appel en français, anglais ou arabe."
       }
     ],
     "form": {
       "name": "Prénom",
       "email": "Email",
-      "status": "Statut",
+      "phone": "Téléphone (optionnel)",
+      "status": "Statut actuel",
+      "statusPlaceholder": "Choisis ta situation",
       "statusOptions": {
-        "student": "Étudiant international",
-        "worker": "Travailleur temporaire",
-        "pr": "Résident permanent",
         "preparing": "Je prépare mon arrivée",
         "arrived": "Je suis déjà arrivé",
+        "student": "Étudiant",
+        "worker": "Travailleur",
+        "housing": "Je cherche un logement",
+        "scam": "Je crains une arnaque",
         "other": "Autre"
       },
       "city": "Ville cible au Canada",
+      "service": "Service souhaité",
+      "serviceHint": "Choisis le service qui te semble le plus proche",
+      "urgency": "Niveau d’urgence",
+      "urgencyHint": "Choisis le niveau d’urgence",
+      "urgencyOptions": {
+        "low": "Faible",
+        "medium": "Moyen",
+        "high": "Élevé"
+      },
+      "language": "Langue préférée",
+      "languageHint": "Choisis la langue de l’appel",
+      "languageOptions": {
+        "fr": "Français",
+        "en": "Anglais",
+        "ar": "Arabe"
+      },
       "need": "Besoin principal",
-      "message": "Message",
       "needPlaceholder": "Décris en quelques mots ce qui te bloque ou ce que tu veux clarifier",
+      "consent": "Je comprends que Marhaban Canada offre de l’accompagnement général et informatif, et ne remplace pas un avocat, un consultant réglementé en immigration ou une institution gouvernementale.",
       "submit": "Envoyer ma demande"
     },
     "confirmation": "Merci. On te recontacte par email dans les 24 h pour confirmer ton créneau.",
-    "errorText": "Une erreur est survenue. Réessaie."
+    "errorText": "Une erreur est survenue. Réessaie.",
+    "finalTitle": "Tu ne sais pas par quoi commencer ?",
+    "finalText": "Réserve un appel d’orientation et repars avec tes prochaines étapes.",
+    "finalCta": "Réserver un appel"
   },
   "en": {
-    "title": "Book an orientation call",
-    "subtitle": "Choose your need, send your request, then receive confirmation before the call.",
-    "offersEyebrow": "Offers",
-    "offersTitle": "Choose the call that fits your situation.",
+    "title": "Book a clear, simple, human call.",
+    "subtitle": "Share your situation, choose your need, and leave with a clear next step.",
+    "heroCta": "Get started",
+    "heroSecondary": "See services",
+    "trustPills": [
+      "Practical orientation",
+      "FR / EN / AR",
+      "No legal advice",
+      "No guarantee of outcome"
+    ],
+    "valueTitle": "What you get right away",
+    "valueItems": [
+      "30 minutes to clarify",
+      "Simple priorities",
+      "Useful resources",
+      "Mistakes to avoid"
+    ],
+    "servicesEyebrow": "Choose your need",
+    "servicesTitle": "Start with the situation that feels closest to yours.",
+    "servicesText": "Pick the most useful starting point. If needed, we’ll guide you toward the right call.",
     "reserve": "Book",
-    "formMicrocopy": "Answer simply. No need to write a long message.",
-    "formSafety": "Do not share your SIN, passwords, or banking details.",
-    "processEyebrow": "Process",
-    "processTitle": "What happens after your request.",
-    "faqEyebrow": "FAQ",
-    "faqTitle": "Before you book.",
-    "finalTitle": "Not sure where to start?",
-    "finalText": "Book an orientation call and leave with your next steps.",
-    "finalCta": "Book a call",
-    "offers": [
+    "services": [
       {
-        "title": "Beta Orientation Call",
-        "price": "$10",
+        "title": "Free discovery call",
+        "price": "Free",
+        "duration": "15 minutes",
+        "bestFor": "A quick check to see whether this is the right place to start.",
+        "included": [
+          "Need clarification",
+          "First next step",
+          "Email response"
+        ],
+        "notPromised": "No legal advice and no guaranteed outcome."
+      },
+      {
+        "title": "Orientation call",
+        "price": "$29",
         "duration": "30 minutes",
-        "bestFor": "Clarify your situation and know what to do first.",
+        "bestFor": "Clarify your situation if you’re arriving soon or already in Canada.",
         "included": [
           "Practical priorities",
           "Useful resources",
           "Summary after the call"
         ],
-        "notPromised": "This is not legal advice or a guaranteed outcome.",
-        "betaLabel": "For the first validation calls"
+        "notPromised": "No guaranteed visa, permit, housing, or job.",
+        "betaLabel": "Recommended starting point"
       },
       {
-        "title": "Orientation Call",
-        "price": "$29",
+        "title": "First-week plan",
+        "price": "$49",
+        "duration": "45 minutes",
+        "bestFor": "Leave with a structured first week plan.",
+        "included": [
+          "Settlement checklist",
+          "Task order",
+          "Things to verify"
+        ],
+        "notPromised": "Not a government service."
+      },
+      {
+        "title": "Anti-scam check",
+        "price": "$19",
+        "duration": "20 minutes",
+        "bestFor": "Check a message, listing, or money request before you respond.",
+        "included": [
+          "Warning sign review",
+          "Safety checklist",
+          "Next action"
+        ],
+        "notPromised": "No legal investigation or legal advice."
+      },
+      {
+        "title": "Document organization",
+        "price": "$39",
         "duration": "30 minutes",
-        "bestFor": "For someone who wants a clear plan and useful resources.",
+        "bestFor": "Get your documents organized before or after arrival.",
         "included": [
-          "Step order",
-          "Mistakes to avoid",
-          "Summary after the call"
+          "Simple filing",
+          "Essential documents",
+          "What to prepare"
         ],
-        "notPromised": "This is not legal advice or a guaranteed outcome."
+        "notPromised": "No official filing and no legal advice."
       },
       {
-        "title": "Settlement Pack",
-        "price": "$69",
-        "duration": "45 minutes + personalized checklist",
-        "bestFor": "Prepare your arrival or organize your first week.",
+        "title": "Student support",
+        "price": "$59",
+        "duration": "45 minutes",
+        "bestFor": "A practical reference point for students before or after arrival.",
         "included": [
-          "Personalized checklist",
-          "First week",
-          "Practical documents"
+          "Student priorities",
+          "Useful resources",
+          "Clear summary"
         ],
-        "notPromised": "This is not a housing or job guarantee."
-      },
-      {
-        "title": "Complete Pack",
-        "price": "$99",
-        "duration": "60 minutes + detailed summary",
-        "bestFor": "Leave with a structured plan that is easy to follow.",
-        "included": [
-          "Structured plan",
-          "Detailed summary",
-          "Priorities and mistakes to avoid"
-        ],
-        "notPromised": "This is not official representation."
+        "notPromised": "No guarantee of admission, permit, or housing."
       }
     ],
-    "steps": [
+    "formIntro": "Answer simply. No need for a long message.",
+    "formSafety": "Do not share your SIN, passwords, or banking details.",
+    "processEyebrow": "From uncertainty to a clear plan",
+    "processTitle": "What happens after your request.",
+    "processSteps": [
       {
-        "title": "Fill out the form",
-        "text": "Two minutes is enough to say what you want to clarify."
+        "title": "You explain your situation",
+        "text": "Share the context, city, and what you’re trying to solve."
       },
       {
         "title": "We confirm the right format",
-        "text": "We check that the orientation call fits your situation."
+        "text": "We check whether the selected service matches your need."
       },
       {
         "title": "You have the call",
-        "text": "We clarify priorities, practical steps, and warning signs."
+        "text": "We clarify priorities, practical steps, and what to verify."
       },
       {
         "title": "You receive a clear summary",
-        "text": "You leave with a simple, useful mini-roadmap."
+        "text": "You leave with a short, useful mini-roadmap."
       }
     ],
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Before you book.",
     "faq": [
       {
         "q": "Is this an immigration service?",
@@ -243,108 +339,167 @@
     "form": {
       "name": "First name",
       "email": "Email",
-      "status": "Status",
+      "phone": "Phone (optional)",
+      "status": "Current status",
+      "statusPlaceholder": "Choose your situation",
       "statusOptions": {
-        "student": "International student",
-        "worker": "Temporary worker",
-        "pr": "Permanent resident",
-        "preparing": "I'm preparing my arrival",
-        "arrived": "I've already arrived",
+        "preparing": "Preparing my arrival",
+        "arrived": "Already arrived",
+        "student": "Student",
+        "worker": "Worker",
+        "housing": "Looking for housing",
+        "scam": "Worried about a scam",
         "other": "Other"
       },
       "city": "Target city in Canada",
+      "service": "Service needed",
+      "serviceHint": "Choose the service that feels closest",
+      "urgency": "Urgency",
+      "urgencyHint": "Choose the urgency level",
+      "urgencyOptions": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High"
+      },
+      "language": "Preferred language",
+      "languageHint": "Choose the call language",
+      "languageOptions": {
+        "fr": "French",
+        "en": "English",
+        "ar": "Arabic"
+      },
       "need": "Main need",
-      "message": "Message",
       "needPlaceholder": "Briefly describe what is blocking you or what you want to clarify",
+      "consent": "I understand that Marhaban Canada provides general orientation and information, and does not replace a lawyer, a regulated immigration consultant, or a government institution.",
       "submit": "Send my request"
     },
     "confirmation": "Thank you. We will contact you by email within 24 hours to confirm your time slot.",
-    "errorText": "An error occurred. Please try again."
+    "errorText": "An error occurred. Please try again.",
+    "finalTitle": "Not sure where to start?",
+    "finalText": "Book an orientation call and leave with your next steps.",
+    "finalCta": "Book a call"
   },
   "ar": {
-    "title": "احجز مكالمة توجيه",
-    "subtitle": "اختر حاجتك، أرسل طلبك، ثم استلم التأكيد قبل المكالمة.",
-    "offersEyebrow": "العروض",
-    "offersTitle": "اختر المكالمة المناسبة لوضعك.",
+    "title": "احجز مكالمة واضحة وبسيطة وإنسانية.",
+    "subtitle": "اشرح وضعك، اختر حاجتك، واخرج بخطوة تالية واضحة.",
+    "heroCta": "ابدأ",
+    "heroSecondary": "عرض الخدمات",
+    "trustPills": [
+      "توجيه عملي",
+      "FR / EN / AR",
+      "لا نصائح قانونية",
+      "لا ضمانات للنتيجة"
+    ],
+    "valueTitle": "ما الذي تحصل عليه فوراً",
+    "valueItems": [
+      "30 دقيقة للتوضيح",
+      "أولويات واضحة",
+      "موارد مفيدة",
+      "أخطاء يجب تجنبها"
+    ],
+    "servicesEyebrow": "اختر حاجتك",
+    "servicesTitle": "ابدأ من الحالة الأقرب لوضعك.",
+    "servicesText": "اختر نقطة البداية الأكثر فائدة، وسنوجهك إلى المكالمة المناسبة عند الحاجة.",
     "reserve": "احجز",
-    "formMicrocopy": "أجب ببساطة. لا حاجة إلى رسالة طويلة.",
-    "formSafety": "لا تشارك رقم التأمين أو كلمات المرور أو المعلومات المصرفية.",
-    "processEyebrow": "العملية",
-    "processTitle": "ما يحدث بعد طلبك.",
-    "faqEyebrow": "أسئلة شائعة",
-    "faqTitle": "قبل الحجز.",
-    "finalTitle": "لا تعرف من أين تبدأ؟",
-    "finalText": "احجز مكالمة توجيه واخرج بخطواتك التالية.",
-    "finalCta": "احجز مكالمة",
-    "offers": [
+    "services": [
       {
-        "title": "مكالمة توجيه بيتا",
-        "price": "10 $",
-        "duration": "30 دقيقة",
-        "bestFor": "لتوضيح وضعك ومعرفة ما تفعله أولاً.",
+        "title": "مكالمة استكشاف مجانية",
+        "price": "مجانية",
+        "duration": "15 دقيقة",
+        "bestFor": "للتأكد بسرعة إن كانت هذه هي البداية المناسبة لك.",
         "included": [
-          "أولويات عملية",
-          "موارد مفيدة",
-          "ملخص بعد المكالمة"
+          "توضيح الحاجة",
+          "أول خطوة تالية",
+          "رد عبر البريد"
         ],
-        "notPromised": "ليست نصيحة قانونية ولا ضمان لنتيجة.",
-        "betaLabel": "لأول مكالمات التحقق"
+        "notPromised": "ليست نصيحة قانونية ولا يوجد ضمان للنتيجة."
       },
       {
         "title": "مكالمة توجيه",
         "price": "29 $",
         "duration": "30 دقيقة",
-        "bestFor": "لمن يريد خطة واضحة وموارد مفيدة.",
+        "bestFor": "لتوضيح وضعك إذا كنت على وشك الوصول أو موجوداً بالفعل في كندا.",
         "included": [
-          "ترتيب الخطوات",
-          "أخطاء يجب تجنبها",
+          "أولويات عملية",
+          "موارد مفيدة",
           "ملخص بعد المكالمة"
         ],
-        "notPromised": "ليست نصيحة قانونية ولا ضمان لنتيجة."
+        "notPromised": "لا يوجد ضمان لتأشيرة أو تصريح أو سكن أو عمل.",
+        "betaLabel": "نقطة البداية الموصى بها"
       },
       {
-        "title": "حزمة الاستقرار",
-        "price": "69 $",
-        "duration": "45 دقيقة + قائمة تحقق مخصصة",
-        "bestFor": "لتحضير وصولك أو تنظيم أسبوعك الأول.",
+        "title": "خطة الأسبوع الأول",
+        "price": "49 $",
+        "duration": "45 دقيقة",
+        "bestFor": "لخطة أسبوع أول منظمة وواضحة.",
         "included": [
-          "قائمة تحقق مخصصة",
-          "الأسبوع الأول",
-          "وثائق عملية"
+          "قائمة استقرار",
+          "ترتيب المهام",
+          "ما يجب التحقق منه"
         ],
-        "notPromised": "ليست ضماناً للسكن أو العمل."
+        "notPromised": "ليست خدمة حكومية."
       },
       {
-        "title": "الحزمة الكاملة",
-        "price": "99 $",
-        "duration": "60 دقيقة + ملخص مفصل",
-        "bestFor": "لخطة منظمة وسهلة المتابعة.",
+        "title": "فحص ضد الاحتيال",
+        "price": "19 $",
+        "duration": "20 دقيقة",
+        "bestFor": "للتحقق من إعلان أو رسالة أو طلب مال قبل الرد.",
         "included": [
-          "خطة منظمة",
-          "ملخص مفصل",
-          "أولويات وأخطاء يجب تجنبها"
+          "قراءة إشارات التحذير",
+          "قائمة احتياطية",
+          "الخطوة التالية"
         ],
-        "notPromised": "ليست تمثيلاً رسمياً."
+        "notPromised": "ليست تحقيقاً قانونياً ولا نصيحة قانونية."
+      },
+      {
+        "title": "تنظيم الوثائق",
+        "price": "39 $",
+        "duration": "30 دقيقة",
+        "bestFor": "لترتيب أوراقك قبل السفر أو بعد الوصول.",
+        "included": [
+          "ترتيب بسيط",
+          "الوثائق الأساسية",
+          "ما يجب تحضيره"
+        ],
+        "notPromised": "لا يوجد ملف رسمي ولا نصيحة قانونية."
+      },
+      {
+        "title": "دعم الطالب",
+        "price": "59 $",
+        "duration": "45 دقيقة",
+        "bestFor": "للطالب الذي يريد نقطة مرجعية عملية قبل الوصول أو بعده.",
+        "included": [
+          "أولويات الطالب",
+          "موارد مفيدة",
+          "ملخص واضح"
+        ],
+        "notPromised": "لا ضمان للقبول أو التصريح أو السكن."
       }
     ],
-    "steps": [
+    "formIntro": "أجب ببساطة. لا حاجة إلى رسالة طويلة.",
+    "formSafety": "لا تشارك رقم التأمين أو كلمات المرور أو المعلومات المصرفية.",
+    "processEyebrow": "من الغموض إلى خطة واضحة",
+    "processTitle": "ما يحدث بعد طلبك.",
+    "processSteps": [
       {
-        "title": "املأ النموذج",
-        "text": "دقيقتان تكفيان لتخبرنا بما تريد توضيحه."
+        "title": "تشرح وضعك",
+        "text": "شاركني السياق، المدينة، وما الذي تريد حله."
       },
       {
-        "title": "نؤكد الشكل المناسب",
-        "text": "نتأكد أن مكالمة التوجيه تناسب وضعك."
+        "title": "نؤكد الصيغة المناسبة",
+        "text": "نتأكد أن الخدمة المختارة تناسب حاجتك فعلاً."
       },
       {
         "title": "تجري المكالمة",
-        "text": "نوضح الأولويات والخطوات العملية وإشارات التحذير."
+        "text": "نوضح الأولويات والخطوات العملية وما يجب التحقق منه."
       },
       {
         "title": "تستلم ملخصاً واضحاً",
         "text": "تخرج بخارطة طريق قصيرة ومفيدة."
       }
     ],
+    "faqEyebrow": "أسئلة شائعة",
+    "faqTitle": "قبل الحجز.",
     "faq": [
       {
         "q": "هل هذه خدمة هجرة؟",
@@ -374,22 +529,44 @@
     "form": {
       "name": "الاسم الأول",
       "email": "البريد الإلكتروني",
-      "status": "الوضع",
+      "phone": "الهاتف (اختياري)",
+      "status": "الوضع الحالي",
+      "statusPlaceholder": "اختر وضعك",
       "statusOptions": {
-        "student": "طالب دولي",
-        "worker": "عامل مؤقت",
-        "pr": "مقيم دائم",
-        "preparing": "أنا أحضّر لوصولي",
+        "preparing": "أحضّر لوصولي",
         "arrived": "وصلت بالفعل",
+        "student": "طالب",
+        "worker": "عامل",
+        "housing": "أبحث عن سكن",
+        "scam": "أخشى من احتيال",
         "other": "أخرى"
       },
       "city": "المدينة المستهدفة في كندا",
+      "service": "الخدمة المطلوبة",
+      "serviceHint": "اختر الخدمة الأقرب لوضعك",
+      "urgency": "درجة الاستعجال",
+      "urgencyHint": "اختر مستوى الاستعجال",
+      "urgencyOptions": {
+        "low": "منخفضة",
+        "medium": "متوسطة",
+        "high": "عالية"
+      },
+      "language": "اللغة المفضلة",
+      "languageHint": "اختر لغة المكالمة",
+      "languageOptions": {
+        "fr": "الفرنسية",
+        "en": "الإنجليزية",
+        "ar": "العربية"
+      },
       "need": "الحاجة الرئيسية",
-      "message": "رسالة",
       "needPlaceholder": "اشرح بإيجاز ما يعيقك أو ما تريد توضيحه",
+      "consent": "أفهم أن مرحبا كندا تقدم توجيهاً ومعلومات عامة، ولا تحل محل محامٍ أو مستشار هجرة مرخص أو مؤسسة حكومية.",
       "submit": "إرسال طلبي"
     },
-    "confirmation": "شكرًا. سنتواصل معك عبر البريد الإلكتروني خلال 24 ساعة لتأكيد موعدك.",
-    "errorText": "حدث خطأ. حاول مرة أخرى."
+    "confirmation": "شكراً. سنتواصل معك عبر البريد الإلكتروني خلال 24 ساعة لتأكيد موعدك.",
+    "errorText": "حدث خطأ. حاول مرة أخرى.",
+    "finalTitle": "لا تعرف من أين تبدأ؟",
+    "finalText": "احجز مكالمة توجيه واخرج بخطواتك التالية.",
+    "finalCta": "احجز مكالمة"
   }
 }

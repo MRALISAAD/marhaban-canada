@@ -8,39 +8,22 @@ import { useLanguage } from '@/components/LanguageProvider';
 import { LOCALES, type Locale } from '@/i18n/locales';
 import { withLocale } from '@/lib/i18n-utils';
 import { bookingPath } from '@/lib/routes';
-
-// Types for Navbar labels based on content.shared.nav
-type NavbarLabels = {
-  home: string;
-  parcours: string;
-  checklist: string;
-  ressources: string;
-  arnaques: string;
-  about: string;
-  contact: string;
-  legal: string;
-  switchToFr: string;
-  switchToEn: string;
-  switchToAr: string;
-};
+import { getNavigationContent } from '@/content/navigation';
 
 // Type for navigation link configuration
 type NavLinkConfig = {
-  key: keyof Pick<NavbarLabels, 'home' | 'parcours' | 'checklist' | 'ressources' | 'arnaques' | 'about' | 'contact' | 'legal'>;
+  key: 'services' | 'start' | 'antiScam' | 'resources' | 'about';
   path: string;
   group: 'primary' | 'secondary';
 };
 
 // Navigation links configuration - single source of truth
-// Note: 'legal' is intentionally excluded from navbar - accessible via footer only
 export const NAV_LINKS_CONFIG: readonly NavLinkConfig[] = [
-  { key: 'home', path: '', group: 'primary' },
-  { key: 'parcours', path: '/parcours', group: 'primary' },
-  { key: 'checklist', path: '/checklist', group: 'primary' },
-  { key: 'ressources', path: '/ressources', group: 'primary' },
-  { key: 'arnaques', path: '/arnaques', group: 'primary' },
-  { key: 'about', path: '/about', group: 'secondary' },
-  { key: 'contact', path: '/contact', group: 'secondary' },
+  { key: 'services', path: '/services', group: 'primary' },
+  { key: 'start', path: '/commencer', group: 'primary' },
+  { key: 'antiScam', path: '/anti-arnaque', group: 'primary' },
+  { key: 'resources', path: '/ressources', group: 'primary' },
+  { key: 'about', path: '/a-propos', group: 'secondary' },
 ] as const;
 
 /**
@@ -81,23 +64,8 @@ export function Navbar() {
   const firstMenuItemRef = useRef<HTMLAnchorElement>(null);
   const prevPathnameRef = useRef<string>(pathname);
 
-  // Access navigation labels from content.shared.nav, with fallbacks for safety
-  const nav: NavbarLabels = useMemo(() => {
-    const navData = content.shared?.nav;
-    return {
-      home: navData?.home ?? 'Accueil',
-      parcours: navData?.parcours ?? 'Parcours',
-      checklist: navData?.checklist ?? 'Checklist',
-      ressources: navData?.ressources ?? 'Ressources',
-      arnaques: navData?.arnaques ?? 'Arnaques',
-      about: navData?.about ?? 'About',
-      contact: navData?.contact ?? 'Contact',
-      legal: navData?.legal ?? 'Legal',
-      switchToFr: navData?.switchToFr ?? 'FR',
-      switchToEn: navData?.switchToEn ?? 'EN',
-      switchToAr: navData?.switchToAr ?? 'AR',
-    };
-  }, [content.shared?.nav]);
+  const navigation = useMemo(() => getNavigationContent(locale), [locale]);
+  const nav = navigation.labels;
 
   // Cycle through locales for language switch
   const currentLocaleIndex = LOCALES.indexOf(locale);
@@ -135,20 +103,20 @@ export function Navbar() {
 
   const languageSwitchAriaLabel = useMemo(() => {
     if (otherLocale === 'fr') {
-      if (locale === 'en') return `${nav.switchToFr}, Switch to French`;
-      if (locale === 'ar') return `${nav.switchToFr}, التبديل إلى الفرنسية`;
-      return `${nav.switchToFr}, Changer pour le français`;
+      if (locale === 'en') return `FR, switch to French`;
+      if (locale === 'ar') return `FR، التبديل إلى الفرنسية`;
+      return `FR, changer pour le français`;
     }
     if (otherLocale === 'en') {
-      if (locale === 'fr') return `${nav.switchToEn}, Change to English`;
-      if (locale === 'ar') return `${nav.switchToEn}, التبديل إلى الإنجليزية`;
-      return `${nav.switchToEn}, Switch to English`;
+      if (locale === 'fr') return `EN, changer pour l’anglais`;
+      if (locale === 'ar') return `EN، التبديل إلى الإنجليزية`;
+      return `EN, switch to English`;
     }
     // otherLocale === 'ar'
-    if (locale === 'fr') return `${nav.switchToAr}, Changer pour l'arabe`;
-    if (locale === 'en') return `${nav.switchToAr}, Switch to Arabic`;
-    return `${nav.switchToAr}, التبديل إلى العربية`;
-  }, [otherLocale, locale, nav]);
+    if (locale === 'fr') return `AR, changer pour l’arabe`;
+    if (locale === 'en') return `AR, switch to Arabic`;
+    return `AR، التبديل إلى العربية`;
+  }, [otherLocale, locale]);
 
   const bookCallLabel = useMemo(() => {
     if (locale === 'fr') return 'Réserver un appel';
@@ -282,9 +250,9 @@ export function Navbar() {
   const secondaryLinks = useMemo(() => navLinks.filter((link) => link.group === 'secondary'), [navLinks]);
   
   return (
-    <header className={`sticky top-0 z-50 border-b border-forest/5 bg-marhaban-cream/90 backdrop-blur-md transition-shadow duration-300${scrolled ? ' shadow-warm-sm' : ''}`}>
+    <header className={`sticky top-0 z-50 border-b border-marhaban-leaf/8 bg-marhaban-cream/92 backdrop-blur-xl transition-shadow duration-300${scrolled ? ' shadow-warm-sm' : ''}`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between gap-3">
+        <div className="flex h-[72px] items-center justify-between gap-3">
           {/* Brand */}
           <Link
             href={localizeHref('/')}
@@ -303,12 +271,12 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden items-center gap-1 text-sm text-marhaban-ink/70 md:flex" aria-label={navAriaLabel}>
+          <nav className="hidden items-center gap-1 text-sm text-marhaban-ink/78 md:flex" aria-label={navAriaLabel}>
             {primaryLinks.map((link) => (
               <Link
                 key={link.key}
                 className={`relative flex min-h-[44px] items-center px-3 transition-all duration-150 ease-in-out hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md ${
-                  link.isActive ? 'font-semibold text-marhaban-ink' : 'font-medium text-marhaban-ink/60'
+                  link.isActive ? 'font-semibold text-marhaban-ink' : 'font-medium text-marhaban-ink/68'
                 }`}
                 href={link.href}
                 aria-current={link.isActive ? 'page' : undefined}
@@ -327,7 +295,7 @@ export function Navbar() {
               <Link
                 key={link.key}
                 className={`relative flex min-h-[44px] items-center px-3 transition-all duration-150 ease-in-out hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md ${
-                  link.isActive ? 'font-semibold text-marhaban-ink' : 'font-medium text-marhaban-ink/60'
+                  link.isActive ? 'font-semibold text-marhaban-ink' : 'font-medium text-marhaban-ink/68'
                 }`}
                 href={link.href}
                 aria-current={link.isActive ? 'page' : undefined}
@@ -347,7 +315,7 @@ export function Navbar() {
           <div className="flex items-center gap-2">
             <Link
               href={bookingPath(locale)}
-              className="hidden min-h-[44px] items-center justify-center rounded-full bg-marhaban-forestDark px-5 py-2.5 text-sm font-bold text-white shadow-[0_14px_38px_rgba(8,42,36,0.2)] transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/45 focus-visible:ring-offset-2 sm:inline-flex"
+              className="hidden min-h-[48px] items-center justify-center rounded-full border border-marhaban-gold/18 bg-marhaban-forestDark px-6 py-3 text-sm font-bold text-white shadow-[0_16px_42px_rgba(8,42,36,0.2)] transition hover:bg-marhaban-leaf hover:shadow-[0_22px_54px_rgba(8,42,36,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/45 focus-visible:ring-offset-2 sm:inline-flex"
             >
               {bookCallLabel}
             </Link>
@@ -355,10 +323,10 @@ export function Navbar() {
             {/* Language Switch */}
             <Link
               href={otherHref}
-              className="flex min-h-[44px] items-center justify-center rounded-full border border-marhaban-leaf/20 bg-white/70 px-3 py-2 text-sm font-medium transition-colors hover:bg-marhaban-mint/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2"
+              className="flex min-h-[44px] items-center justify-center rounded-full border border-marhaban-leaf/20 bg-white/70 px-3 py-2 text-sm font-medium text-marhaban-ink/78 transition-colors hover:bg-marhaban-mint/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2"
               aria-label={languageSwitchAriaLabel}
             >
-              {otherLocale === 'fr' ? nav.switchToFr : otherLocale === 'en' ? nav.switchToEn : nav.switchToAr}
+              {otherLocale === 'fr' ? 'FR' : otherLocale === 'en' ? 'EN' : 'AR'}
             </Link>
 
             {/* Mobile Menu Button */}
@@ -366,7 +334,7 @@ export function Navbar() {
               ref={menuButtonRef}
               type="button"
               onClick={toggleMobileMenu}
-              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full p-2 text-marhaban-ink/70 transition-all duration-200 ease-in-out hover:bg-marhaban-mint/60 active:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 md:hidden"
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full p-2 text-marhaban-ink/78 transition-all duration-200 ease-in-out hover:bg-marhaban-mint/60 active:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 md:hidden"
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
               aria-label={menuButtonAriaLabel}
@@ -416,7 +384,7 @@ export function Navbar() {
               <Link
                 key={link.key}
                 ref={index === 0 ? firstMenuItemRef : null}
-                className={`flex min-h-[44px] items-center px-4 py-3 text-base text-marhaban-ink/70 transition-all duration-150 ease-in-out hover:bg-marhaban-mint/50 hover:text-marhaban-ink active:bg-marhaban-mint/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-inset ${
+                className={`flex min-h-[44px] items-center px-4 py-3 text-base text-marhaban-ink/78 transition-all duration-150 ease-in-out hover:bg-marhaban-mint/50 hover:text-marhaban-ink active:bg-marhaban-mint/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-inset ${
                   link.isActive ? 'bg-marhaban-mint/60 font-semibold text-marhaban-ink' : ''
                 }`}
                 href={link.href}
@@ -431,7 +399,7 @@ export function Navbar() {
             {secondaryLinks.map((link) => (
               <Link
                 key={link.key}
-                className={`flex min-h-[44px] items-center px-4 py-3 text-base text-marhaban-ink/70 transition-all duration-150 ease-in-out hover:bg-marhaban-mint/50 hover:text-marhaban-ink active:bg-marhaban-mint/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-inset ${
+                className={`flex min-h-[44px] items-center px-4 py-3 text-base text-marhaban-ink/78 transition-all duration-150 ease-in-out hover:bg-marhaban-mint/50 hover:text-marhaban-ink active:bg-marhaban-mint/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-inset ${
                   link.isActive ? 'bg-marhaban-mint/60 font-semibold text-marhaban-ink' : ''
                 }`}
                 href={link.href}

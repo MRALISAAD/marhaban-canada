@@ -1,12 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { GoogleAnalytics, CookieBanner } from '@/components/analytics';
-import { Noto_Sans, Playfair_Display } from "next/font/google";
-import { cn } from "@/lib/utils";
-
-const playfairDisplayHeading = Playfair_Display({subsets:['latin'],variable:'--font-heading'});
-
-const notoSans = Noto_Sans({subsets:['latin'],variable:'--font-sans'});
 
 /**
  * Root layout: must include <html> and <body>.
@@ -60,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   // Root layout provides html/body structure
   // Locale-specific lang/dir are set by locale layout via script injection
   return (
-    <html lang="fr" dir="ltr" suppressHydrationWarning className={cn("font-sans", notoSans.variable, playfairDisplayHeading.variable)}>
+    <html lang="fr" dir="ltr" suppressHydrationWarning className="font-sans">
       <head>
         {/* GA4 loaded only after user consent */}
         <GoogleAnalytics />
@@ -73,4 +67,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-

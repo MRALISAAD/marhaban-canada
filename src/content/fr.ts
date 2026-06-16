@@ -776,7 +776,7 @@ export const frContent: LocaleContent = {
         title: "Transport et conduite",
         body: "Comprendre les règles locales avant de conduire.",
         ctaLabel: "Voir les ressources transport",
-        href: "/ressources/guides/transport",
+        href: "/ressources/transport",
       },
       creditCard: {
         title: "Crédit et banque",

@@ -12,24 +12,29 @@ type Props = {
 
 export function FinalCTA({ title, text, cta, href, disclaimer }: Props) {
   return (
-    <SectionReveal className="px-4 pb-14 sm:px-6 sm:pb-16 lg:px-8" data-floating-book-call-hide>
-      <div className="mx-auto max-w-6xl rounded-3xl border border-marhaban-leaf/15 bg-offwhite p-8 shadow-warm sm:p-10">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl font-semibold leading-tight text-marhaban-ink sm:text-4xl">{title}</h2>
-          <p className="mt-4 text-base leading-relaxed text-marhaban-ink/75 sm:text-lg">{text}</p>
-          {disclaimer ? (
-            <p className="mt-4 text-sm leading-relaxed text-marhaban-ink/60">{disclaimer}</p>
-          ) : null}
-        </div>
+    <SectionReveal
+      className="bg-marhaban-forestDark px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40"
+      data-floating-book-call-hide
+    >
+      <div className="mx-auto max-w-3xl text-center">
+        <h2 className="font-heading text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-[4rem] lg:leading-[1.05]">
+          {title}
+        </h2>
+        <p className="mt-6 text-lg leading-relaxed text-white/70 sm:text-xl lg:mx-auto lg:max-w-xl">{text}</p>
+
         <AnimatedCTA className="mt-8 inline-flex">
           <LocalizedLink
             href={href}
-            className="inline-flex min-h-[52px] items-center gap-2 rounded-full bg-marhaban-forestDark px-6 py-3 text-base font-semibold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
+            className="btn btn-lg btn-clay focus-visible:ring-white/40 focus-visible:ring-offset-marhaban-forestDark lg:min-h-[68px] lg:px-12 lg:text-xl"
           >
             {cta}
             <CalendarCheck className="h-5 w-5" aria-hidden="true" />
           </LocalizedLink>
         </AnimatedCTA>
+
+        {disclaimer ? (
+          <p className="mt-8 text-sm leading-relaxed text-white/40">{disclaimer}</p>
+        ) : null}
       </div>
     </SectionReveal>
   );

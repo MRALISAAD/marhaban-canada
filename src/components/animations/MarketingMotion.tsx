@@ -31,7 +31,7 @@ type CtaProps = HTMLMotionProps<'span'> & {
 
 const revealVariants = {
   hidden: {
-    opacity: 1,
+    opacity: 0,
     y: 12,
   },
   visible: (delay: number) => ({
@@ -46,7 +46,7 @@ const revealVariants = {
 };
 
 const staggerItem = {
-  hidden: { opacity: 1, y: 12 },
+  hidden: { opacity: 0, y: 12 },
   visible: {
     opacity: 1,
     y: 0,
@@ -108,13 +108,13 @@ export function AnimatedCard({ children, className, featured, ...props }: CardPr
         shouldReduceMotion
           ? undefined
           : {
-              y: -4,
+              y: -8,
               boxShadow: featured
-                ? '0 30px 70px rgba(31,45,43,0.22)'
-                : '0 20px 50px rgba(31,45,43,0.12)',
+                ? '0 40px 90px rgba(31,45,43,0.28)'
+                : '0 28px 80px rgba(31,45,43,0.18)',
             }
       }
-      transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
       {children}
     </motion.div>
