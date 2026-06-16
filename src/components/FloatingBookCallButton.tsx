@@ -71,7 +71,7 @@ export function FloatingBookCallButton() {
       dir={dir}
     >
       <LocalizedLink
-        href="/book"
+        href="/reserver"
         aria-label={label}
         className="inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-[1.25rem] border border-marhaban-gold/30 bg-marhaban-ink px-5 py-3 text-sm font-bold text-white shadow-[0_18px_45px_rgba(31,45,43,0.22)] transition hover:bg-marhaban-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream md:w-auto md:min-w-[184px] md:rounded-full"
       >

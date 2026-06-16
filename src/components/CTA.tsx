@@ -38,7 +38,7 @@ export function CTA({ onStart, primaryLabel, secondaryLabel }: CTAProps) {
   return (
     <div className="flex flex-wrap items-center gap-3">
       <LocalizedLink
-        href="/book"
+        href="/reserver"
         className="inline-flex min-h-[46px] items-center gap-2 rounded-full bg-marhaban-ink px-5 py-2.5 text-sm font-semibold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream"
       >
         {effectivePrimary}
@@ -47,14 +47,14 @@ export function CTA({ onStart, primaryLabel, secondaryLabel }: CTAProps) {
       <LocalizedLink
         href="/parcours"
         onClick={onStart}
-        className="inline-flex min-h-[46px] items-center gap-2 rounded-full border border-stone-300 bg-white/85 px-5 py-2.5 text-sm font-semibold text-marhaban-ink transition hover:border-marhaban-leaf/60 hover:bg-marhaban-mint/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/30 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream"
+        className="inline-flex min-h-[46px] items-center gap-2 rounded-full border border-marhaban-leaf/20 bg-white/85 px-5 py-2.5 text-sm font-semibold text-marhaban-ink transition hover:border-marhaban-leaf/60 hover:bg-marhaban-mint/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/30 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream"
       >
         {effectiveJourney}
         <ArrowRight size={16} />
       </LocalizedLink>
       <Link
         href="/checklist.pdf"
-        className="inline-flex min-h-[44px] items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold text-slate-600 transition hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/30"
+        className="inline-flex min-h-[44px] items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold text-marhaban-ink/60 transition hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/30"
       >
         {effectiveSecondary}
         <Download size={16} />

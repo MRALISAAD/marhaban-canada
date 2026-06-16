@@ -83,7 +83,7 @@ export default async function OrientationPage({ params }: Props) {
           <p className="mt-5 max-w-3xl text-base text-slate-700 sm:text-lg">{t.intro}</p>
           <div className="mt-7 flex flex-wrap gap-3">
             <Link
-              href={withLocale('/book', locale)}
+              href={withLocale('/reserver', locale)}
               className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-marhaban-ink px-5 py-2.5 text-sm font-bold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
             >
               {t.cta}

@@ -400,7 +400,7 @@ export default function HomePage() {
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-3" data-animate="hero-item">
                 <AnimatedCTA className="inline-flex">
-                  <LocalizedLink href="/book" className="inline-flex min-h-[54px] items-center gap-2 rounded-full bg-marhaban-ink px-6 py-3 text-sm font-bold text-white shadow-warm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream">
+                  <LocalizedLink href="/reserver" className="inline-flex min-h-[54px] items-center gap-2 rounded-full bg-marhaban-ink px-6 py-3 text-sm font-bold text-white shadow-warm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream">
                     {t.primaryCta}
                     <CalendarCheck className="h-4 w-4" aria-hidden="true" />
                   </LocalizedLink>
@@ -586,7 +586,7 @@ export default function HomePage() {
                 <p className="mt-5 max-w-3xl text-xs leading-relaxed text-white/55">{disclaimer[locale]}</p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
-                <LocalizedLink href="/book" className="inline-flex min-h-[50px] items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-marhaban-ink transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-ink">
+                <LocalizedLink href="/reserver" className="inline-flex min-h-[50px] items-center justify-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-marhaban-ink transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-ink">
                   {t.primaryCta}
                   <CalendarCheck className="h-4 w-4" aria-hidden="true" />
                 </LocalizedLink>
@@ -609,7 +609,7 @@ function AnnouncementBar({ message, cta }: { message: string; cta: string }) {
     <section className="border-b border-marhaban-leaf/10 bg-marhaban-ink px-4 py-3 text-white sm:px-6 lg:px-8">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-3 text-center sm:justify-between sm:text-start">
         <p className="text-sm font-semibold text-white/88">{message}</p>
-        <LocalizedLink href="/book" className="inline-flex min-h-[36px] items-center rounded-full bg-white px-4 py-1.5 text-sm font-bold text-marhaban-ink transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50">
+        <LocalizedLink href="/reserver" className="inline-flex min-h-[36px] items-center rounded-full bg-white px-4 py-1.5 text-sm font-bold text-marhaban-ink transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50">
           {cta}
         </LocalizedLink>
       </div>
@@ -816,7 +816,7 @@ function OfferCard({ offer, cta, featured }: { offer: OfferData; cta: string; fe
         <p className={cn('mt-3 text-4xl font-semibold', featured ? 'text-white' : 'text-marhaban-leaf')}>{offer.price}</p>
         <p className={cn('mt-4 text-sm', featured ? 'text-white/76' : 'text-marhaban-ink/70')}>{offer.benefit}</p>
         <p className={cn('mt-4 rounded-2xl px-3 py-2 text-xs font-semibold', featured ? 'bg-white/[0.08] text-white/70' : 'bg-white/75 text-marhaban-ink/60')}>{offer.note}</p>
-        <LocalizedLink href="/book" className={cn('mt-auto inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2', featured ? 'bg-white text-marhaban-ink hover:bg-marhaban-mint focus-visible:ring-white/50 focus-visible:ring-offset-marhaban-ink' : 'bg-marhaban-ink text-white hover:bg-marhaban-leaf focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-marhaban-cream')}>
+        <LocalizedLink href="/reserver" className={cn('mt-auto inline-flex min-h-[46px] items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2', featured ? 'bg-white text-marhaban-ink hover:bg-marhaban-mint focus-visible:ring-white/50 focus-visible:ring-offset-marhaban-ink' : 'bg-marhaban-ink text-white hover:bg-marhaban-leaf focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-marhaban-cream')}>
           {cta}
           <CalendarCheck className="h-4 w-4" aria-hidden="true" />
         </LocalizedLink>
