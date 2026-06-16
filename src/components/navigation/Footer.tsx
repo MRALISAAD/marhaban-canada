@@ -93,13 +93,15 @@ export function Footer() {
         : "خدمة توجيه عملي للقادمين الجدد إلى كندا.");
 
   // Disclaimer text
+  const disclaimerFr =
+    "Marhaban Canada offre de l’accompagnement général et informatif. Ce service ne remplace pas un avocat, un consultant réglementé en immigration ou une institution gouvernementale.";
+  const disclaimerEn =
+    "Marhaban Canada provides general and informational guidance. This service does not replace a lawyer, a regulated immigration consultant, or a government institution.";
+  const disclaimerAr =
+    "تقدم مرحبا كندا توجيهاً عاماً وإعلامياً. لا تحلّ هذه الخدمة محل محامٍ أو مستشار هجرة معتمد أو مؤسسة حكومية.";
   const disclaimer =
     footerContent.disclaimer ??
-    (locale === 'fr'
-      ? 'Marhaban Canada offre de l’orientation pratique et de l’information générale. Nous ne fournissons pas de conseils juridiques ni de conseils en immigration. Pour les questions liées aux visas, permis, résidence permanente, admissibilité ou stratégie d’immigration, veuillez consulter un représentant autorisé.'
-      : locale === 'en'
-        ? 'Marhaban Canada offers practical orientation and general information. We do not provide legal advice or immigration advice. For questions related to visas, permits, permanent residence, admissibility, or immigration strategy, please consult an authorized representative.'
-        : 'تقدم مرحبا كندا توجيهاً عملياً ومعلومات عامة. نحن لا نقدم نصائح قانونية ولا نصائح في الهجرة. للأسئلة المتعلقة بالتأشيرات أو التصاريح أو الإقامة الدائمة أو الأهلية أو استراتيجية الهجرة، يرجى استشارة ممثل معتمد.');
+    (locale === "fr" ? disclaimerFr : locale === "en" ? disclaimerEn : disclaimerAr);
 
   return (
     <footer
