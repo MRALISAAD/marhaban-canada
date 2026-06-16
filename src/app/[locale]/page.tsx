@@ -114,18 +114,16 @@ const homeTexts = {
     visualDoc: 'Documents pratiques d’installation',
     visualTags: ['Logement', 'Banque', 'Téléphone', 'Priorités'],
     workflow: ['Situation', 'Priorités', 'Appel', 'Résumé'],
-    progressLabel: 'Après l’appel, tu repars avec du concret.',
-    progressHelper: 'Une mini-feuille de route, des ressources fiables et les erreurs à éviter en premier.',
+    progressLabel: 'Ce que tu reçois vite',
+    progressHelper: 'Après l’appel, tu repars avec des repères simples, des ressources fiables et les premières erreurs à éviter.',
     needsEyebrow: 'Choisis ton besoin',
     needsTitle: 'Commence par ce qui te bloque maintenant.',
     needsText: 'Choisis la situation qui te ressemble pour aller droit vers le bon repère.',
     needs: [
-      { label: 'Préparer', title: 'Préparer mon arrivée', text: 'Budget, documents pratiques d’installation, premières décisions et repères fiables.', href: '/parcours', icon: MapPinned },
+      { label: 'Préparer', title: 'Préparer mon arrivée', text: 'Budget, documents utiles et premières décisions avant le départ.', href: '/parcours', icon: MapPinned },
       { label: 'Semaine 1', title: 'Première semaine au Canada', text: 'Un ordre clair pour ne pas tout faire en même temps.', href: '/checklist/semaine-1', icon: ClipboardCheck },
       { label: 'Logement', title: 'Logement', text: 'Questions à poser, preuves à vérifier et signaux d’alerte avant de payer.', href: '/ressources', icon: Home },
-      { label: 'Documents', title: 'Documents pratiques d’installation', text: 'NAS, santé, preuves utiles et liens officiels à garder sous la main.', href: '/parcours/guide/steps/nas', icon: FileCheck2 },
-      { label: 'Emploi', title: 'Emploi / CV', text: 'Adapter ton CV, cibler tes premières recherches et éviter les fausses offres.', href: '/ressources', icon: BriefcaseBusiness },
-      { label: 'Études', title: 'Études', text: 'Organiser les questions importantes avant campus, logement et budget.', href: '/ressources', icon: GraduationCap },
+      { label: 'Documents', title: 'Documents essentiels', text: 'NAS, santé, preuves utiles et liens officiels à garder sous la main.', href: '/parcours/guide/steps/nas', icon: FileCheck2 },
       { label: 'Pratique', title: 'Banque / téléphone', text: 'Comparer les options, comprendre les frais et préparer les bons rendez-vous.', href: '/parcours/guide/steps/bank', icon: Phone },
       { label: 'Vérifier', title: 'Vérifier une situation suspecte', text: 'Ralentir, vérifier les preuves et repérer les demandes à risque.', href: '/arnaques', icon: AlertTriangle },
     ],
@@ -249,18 +247,16 @@ const homeTexts = {
     visualDoc: 'Practical settlement documents',
     visualTags: ['Housing', 'Banking', 'Phone', 'Priorities'],
     workflow: ['Situation', 'Priorities', 'Call', 'Summary'],
-    progressLabel: 'After the call, you leave with something concrete.',
-    progressHelper: 'A short roadmap, trusted resources, and the first mistakes to avoid.',
+    progressLabel: 'What you leave with',
+    progressHelper: 'After the call, you leave with simple markers, trusted resources, and the first mistakes to avoid.',
     needsEyebrow: 'Choose your need',
     needsTitle: 'Start with what is blocking you now.',
     needsText: 'Choose the situation that matches your moment so you can move to the right next step.',
     needs: [
-      { label: 'Prepare', title: 'Prepare my arrival', text: 'Budget, practical settlement documents, first decisions, and reliable markers.', href: '/parcours', icon: MapPinned },
+      { label: 'Prepare', title: 'Prepare my arrival', text: 'Budget, useful documents, and first decisions before departure.', href: '/parcours', icon: MapPinned },
       { label: 'Week 1', title: 'First week in Canada', text: 'A clear order so you do not do everything at once.', href: '/checklist/semaine-1', icon: ClipboardCheck },
       { label: 'Housing', title: 'Housing', text: 'Questions to ask, proof to check, and warning signs before paying.', href: '/ressources', icon: Home },
-      { label: 'Documents', title: 'Practical settlement documents', text: 'SIN, health, useful proofs, and official links to keep nearby.', href: '/parcours/guide/steps/nas', icon: FileCheck2 },
-      { label: 'Work', title: 'Work / CV', text: 'Adapt your CV, target early searches, and avoid fake offers.', href: '/ressources', icon: BriefcaseBusiness },
-      { label: 'Studies', title: 'Studies', text: 'Organize key questions before campus, housing, and budget decisions.', href: '/ressources', icon: GraduationCap },
+      { label: 'Documents', title: 'Essential documents', text: 'SIN, health, useful proofs, and official links to keep nearby.', href: '/parcours/guide/steps/nas', icon: FileCheck2 },
       { label: 'Practical', title: 'Bank / phone', text: 'Compare options, understand fees, and prepare the right appointments.', href: '/parcours/guide/steps/bank', icon: Phone },
       { label: 'Verify', title: 'Check a suspicious situation', text: 'Slow down, check evidence, and spot risky requests.', href: '/arnaques', icon: AlertTriangle },
     ],
@@ -384,18 +380,16 @@ const homeTexts = {
     visualDoc: 'وثائق عملية للاستقرار',
     visualTags: ['السكن', 'البنك', 'الهاتف', 'الأولويات'],
     workflow: ['الوضع', 'الأولويات', 'المكالمة', 'الملخص'],
-    progressLabel: 'بعد المكالمة، تخرج بخطوة واضحة.',
-    progressHelper: 'خارطة طريق قصيرة، وموارد موثوقة، وأول الأخطاء التي يجب تجنبها.',
+    progressLabel: 'ما ستحصل عليه سريعاً',
+    progressHelper: 'بعد المكالمة، تخرج بإشارات واضحة وموارد موثوقة وأول الأخطاء التي يجب تجنبها.',
     needsEyebrow: 'اختر حاجتك',
     needsTitle: 'ابدأ بما يوقفك الآن.',
     needsText: 'اختر الحالة التي تشبه وضعك لتصل بسرعة إلى الخطوة المناسبة.',
     needs: [
-      { label: 'تحضير', title: 'تحضير وصولي', text: 'ميزانية، وثائق عملية للاستقرار، قرارات أولى ومصادر موثوقة.', href: '/parcours', icon: MapPinned },
+      { label: 'تحضير', title: 'تحضير وصولي', text: 'ميزانية ووثائق مفيدة وقرارات أولى قبل السفر.', href: '/parcours', icon: MapPinned },
       { label: 'الأسبوع 1', title: 'الأسبوع الأول في كندا', text: 'ترتيب واضح حتى لا تفعل كل شيء في نفس الوقت.', href: '/checklist/semaine-1', icon: ClipboardCheck },
       { label: 'السكن', title: 'السكن', text: 'أسئلة مهمة، أدلة يجب التحقق منها، وإشارات تحذير قبل الدفع.', href: '/ressources', icon: Home },
-      { label: 'وثائق', title: 'وثائق عملية للاستقرار', text: 'رقم التأمين، الصحة، الإثباتات المفيدة والروابط الرسمية.', href: '/parcours/guide/steps/nas', icon: FileCheck2 },
-      { label: 'عمل', title: 'العمل / السيرة', text: 'تعديل السيرة، بدء البحث وتجنب العروض الوهمية.', href: '/ressources', icon: BriefcaseBusiness },
-      { label: 'دراسة', title: 'الدراسة', text: 'تنظيم الأسئلة المهمة قبل الجامعة والسكن والميزانية.', href: '/ressources', icon: GraduationCap },
+      { label: 'وثائق', title: 'الوثائق الأساسية', text: 'رقم التأمين، الصحة، الإثباتات المفيدة والروابط الرسمية.', href: '/parcours/guide/steps/nas', icon: FileCheck2 },
       { label: 'عملي', title: 'البنك / الهاتف', text: 'مقارنة الخيارات وفهم الرسوم وتحضير المواعيد المناسبة.', href: '/parcours/guide/steps/bank', icon: Phone },
       { label: 'تحقق', title: 'تحقق من وضع مشبوه', text: 'تمهل، تحقق من الأدلة، وانتبه للطلبات عالية المخاطر.', href: '/arnaques', icon: AlertTriangle },
     ],
@@ -560,20 +554,24 @@ export default function HomePage() {
       </SectionReveal>
 
       <SectionBand className="bg-[#FDF8EE]">
-        <div className="grid gap-4 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
-          <div className="rounded-3xl border border-marhaban-leaf/12 bg-white/80 p-5 shadow-warm-sm sm:p-6">
+        <div className="grid gap-4 lg:grid-cols-[1.12fr_0.88fr] lg:items-stretch">
+          <div className="rounded-3xl border border-marhaban-leaf/12 bg-white/86 p-5 shadow-warm-sm sm:p-6">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">{t.progressLabel}</p>
+            <h2 className="mt-3 text-2xl font-semibold leading-tight text-marhaban-ink sm:text-3xl">Tu repars avec des repères utiles, pas une liste floue.</h2>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-marhaban-ink/72">{t.progressHelper}</p>
-            <div className="mt-5 flex flex-wrap gap-2">
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {t.proof.map((item) => (
-                <span key={item} className="inline-flex items-center rounded-full border border-marhaban-leaf/15 bg-marhaban-mint/70 px-3 py-2 text-xs font-semibold text-marhaban-ink">
-                  {item}
-                </span>
+                <div key={item} className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-mint/55 p-4">
+                  <p className="text-sm font-semibold text-marhaban-ink">{item}</p>
+                </div>
               ))}
             </div>
           </div>
-          <div className="rounded-3xl border border-marhaban-leaf/12 bg-marhaban-cream/90 p-5 shadow-warm-sm sm:p-6">
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">Province / province / المقاطعة</p>
+          <div className="rounded-3xl border border-marhaban-leaf/12 bg-marhaban-cream/92 p-5 shadow-warm-sm sm:p-6">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">Choisis ta province</p>
+            <p className="mt-3 text-sm leading-relaxed text-marhaban-ink/72">
+              La sélection adapte les repères du parcours à ta réalité locale.
+            </p>
             <div className="mt-4">
               <ProvinceSelector />
             </div>
@@ -583,7 +581,7 @@ export default function HomePage() {
 
       <SectionBand>
         <SectionHeader eyebrow={t.needsEyebrow} title={t.needsTitle} text={t.needsText} />
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {t.needs.map((item) => (
             <NeedCard key={item.title} item={item} />
           ))}
@@ -595,7 +593,7 @@ export default function HomePage() {
           <SectionHeader eyebrow={t.howEyebrow} title={t.howTitle} text="Quatre étapes, sans friction, pour passer du doute à un plan clair." />
           <div className="relative">
             <div className="pointer-events-none absolute left-6 right-6 top-6 hidden h-px bg-gradient-to-r from-transparent via-marhaban-leaf/25 to-transparent xl:block" aria-hidden="true" />
-            <StaggerGroup className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <StaggerGroup className="grid gap-4 md:grid-cols-2 xl:grid-cols-2">
               {t.howSteps.map((step, index) => (
                 <StepCard key={step.title} step={step} index={index} />
               ))}
@@ -619,7 +617,7 @@ export default function HomePage() {
             className="aspect-[16/7] min-h-[240px]"
           />
         </FloatingVisual>
-        <StaggerGroup className="mt-8 grid gap-5 lg:grid-cols-2 xl:grid-cols-4">
+        <StaggerGroup className="mt-8 grid gap-5 lg:grid-cols-2">
           {t.offers.map((offer, index) => (
               <OfferCard key={offer.title} offer={offer} cta={t.reserve} featured={index === 1} href={bookingHref} />
           ))}
@@ -678,7 +676,7 @@ export default function HomePage() {
 
       <SectionBand>
         <SectionHeader eyebrow={t.guidesEyebrow} title={t.guidesTitle} text="Des guides courts, concrets et utiles pour avancer dans le bon ordre." />
-        <StaggerGroup className="mt-8 grid gap-5 lg:grid-cols-[1.05fr_0.95fr_0.95fr] lg:[&>*:first-child]:row-span-2">
+        <StaggerGroup className="mt-8 grid gap-5 lg:grid-cols-2">
           {t.guides.map((guide, index) => (
             <GuideCard key={guide.title} guide={guide} featured={index === 0} />
           ))}
@@ -728,7 +726,7 @@ function AnnouncementBar({ message, cta, href }: { message: string; cta: string;
 
 function SectionBand({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <SectionReveal className={cn('px-4 py-7 sm:px-6 sm:py-10 lg:px-8', className)}>
+    <SectionReveal className={cn('px-4 py-6 sm:px-6 sm:py-8 lg:px-8', className)}>
       <div className="mx-auto max-w-7xl">{children}</div>
     </SectionReveal>
   );
@@ -795,79 +793,64 @@ function HeroComposition({
     },
   } as const;
   const t = copy[locale];
+  const captions = [checklistLabel, planLabel, t.call, docLabel];
 
   return (
     <div className="relative order-first lg:order-none">
-      <div className="workflow-visual relative min-h-[340px] overflow-hidden rounded-[2rem] border border-white/12 bg-marhaban-forestDark p-5 shadow-[0_35px_110px_rgba(0,0,0,0.34)] sm:min-h-[420px] lg:min-h-[520px] lg:p-7">
+      <div className="workflow-visual relative overflow-hidden rounded-[2rem] border border-white/12 bg-marhaban-forestDark p-5 shadow-[0_35px_110px_rgba(0,0,0,0.34)] sm:p-6 lg:min-h-[520px] lg:p-7">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(213,168,79,0.15),transparent_22rem),radial-gradient(circle_at_82%_18%,rgba(122,144,130,0.16),transparent_18rem)]" aria-hidden="true" />
         <div className="pointer-events-none absolute inset-x-7 top-7 flex items-center justify-between border-b border-white/10 pb-3 text-[10px] font-bold uppercase tracking-[0.18em] text-white/45" aria-hidden="true">
           <span>Marhaban Canada</span>
           <span>FR / EN / AR</span>
         </div>
 
-        <div className="relative flex min-h-[300px] flex-col justify-end gap-5 pt-14 sm:min-h-[380px] lg:min-h-[480px]">
-          <div className="sm:hidden">
-            <AnimatedCard className="mx-auto max-w-xl rounded-[1.75rem] border border-white/12 bg-white/[0.08] p-5 text-white shadow-[0_30px_90px_rgba(0,0,0,0.28)] backdrop-blur-xl">
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-gold">{t.badge}</p>
-              <h2 className="mt-3 text-3xl font-semibold leading-tight text-white">{t.title}</h2>
-              <p className="mt-4 text-sm leading-relaxed text-white/72">{t.subtitle}</p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {workflow.slice(0, 2).map((item) => (
-                  <span key={item} className="inline-flex items-center rounded-full border border-white/12 bg-white/[0.08] px-3 py-2 text-xs font-semibold text-white/80">
-                    {item}
-                  </span>
-                ))}
+        <div className="relative flex h-full flex-col gap-4 pt-12">
+          <FloatingVisual float="gentle" className="w-full" delay={0.06}>
+            <AnimatedCard className="rounded-[1.85rem] border border-white/12 bg-white/[0.08] p-5 text-white shadow-[0_30px_90px_rgba(0,0,0,0.28)] backdrop-blur-xl">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-gold">{t.city}</p>
+                  <h2 className="mt-3 text-3xl font-semibold leading-tight text-white sm:text-4xl">{t.title}</h2>
+                </div>
+                <span className="rounded-full border border-marhaban-gold/35 bg-marhaban-gold/12 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-marhaban-gold">
+                  {t.badge}
+                </span>
+              </div>
+              <p className="mt-4 max-w-md text-sm leading-relaxed text-white/72">{t.subtitle}</p>
+
+              <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                {workflow.map((item, index) => {
+                  const stepIcons = [MessageCircle, ClipboardCheck, CalendarCheck, MailCheck];
+                  const Icon = stepIcons[index] ?? CheckCircle2;
+                  return (
+                    <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3">
+                      <div className="flex items-center gap-3">
+                        <span className="grid h-9 w-9 flex-shrink-0 place-items-center rounded-xl bg-marhaban-gold text-marhaban-ink shadow-[0_0_30px_rgba(213,168,79,0.25)]">
+                          <Icon className="h-4 w-4" aria-hidden="true" />
+                        </span>
+                        <div>
+                          <p className="text-sm font-semibold text-white">{item}</p>
+                          <p className="text-xs text-white/58">{captions[index]}</p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </AnimatedCard>
-          </div>
+          </FloatingVisual>
 
-          <div className="hidden sm:block">
-            <FloatingVisual float="gentle" className="mx-auto w-full max-w-xl" delay={0.08}>
-              <div className="rounded-[1.75rem] border border-white/12 bg-white/[0.08] p-5 shadow-[0_30px_90px_rgba(0,0,0,0.28)] backdrop-blur-xl">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-gold">{t.city}</p>
-                    <h2 className="mt-3 text-3xl font-semibold leading-tight text-white sm:text-4xl">{t.title}</h2>
-                  </div>
-                  <span className="rounded-full border border-marhaban-gold/35 bg-marhaban-gold/12 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-marhaban-gold">
-                    {t.badge}
-                  </span>
-                </div>
-                <p className="mt-4 max-w-md text-sm leading-relaxed text-white/72">{t.subtitle}</p>
-              </div>
-            </FloatingVisual>
-
-            <StaggerGroup className="grid gap-3 sm:grid-cols-4" delay={0.18}>
-              {workflow.map((item, index) => {
-                const icons = [MessageCircle, ClipboardCheck, CalendarCheck, MailCheck];
-                const Icon = icons[index] ?? CheckCircle2;
-                const captions = [checklistLabel, planLabel, t.call, docLabel];
-                return (
-                  <div key={item} className="workflow-node relative rounded-[1.35rem] border border-white/12 bg-white/[0.075] p-4 text-white shadow-[0_16px_42px_rgba(0,0,0,0.2)] backdrop-blur-md">
-                    <div className="mb-4 flex items-center justify-between gap-3">
-                      <span className="grid h-10 w-10 place-items-center rounded-2xl bg-marhaban-gold text-marhaban-ink shadow-[0_0_34px_rgba(213,168,79,0.34)]">
-                        <Icon className="h-4 w-4" aria-hidden="true" />
-                      </span>
-                      <span className="text-xs font-bold text-white/36">{String(index + 1).padStart(2, '0')}</span>
-                    </div>
-                    <p className="text-base font-semibold leading-tight text-white">{item}</p>
-                    <p className="mt-2 text-xs leading-relaxed text-white/58">{captions[index]}</p>
-                  </div>
-                );
-              })}
-            </StaggerGroup>
-
-            <div className="grid gap-3 sm:grid-cols-[1.05fr_0.95fr]">
-              <AnimatedCard className="rounded-[1.35rem] border border-marhaban-gold/20 bg-marhaban-gold/10 p-4 text-white shadow-warm-sm">
-                <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-gold">{scamLabel}</p>
-                <p className="mt-2 text-xl font-semibold leading-tight">{t.scam}</p>
-                <p className="mt-2 text-sm leading-relaxed text-white/66">{t.scamDetail}</p>
-              </AnimatedCard>
-              <AnimatedCard className="rounded-[1.35rem] border border-white/12 bg-white/[0.08] p-4 text-white shadow-warm-sm">
-                <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/45">{t.duration}</p>
-                <p className="mt-2 text-xl font-semibold">{t.call}</p>
-                <p className="mt-2 text-sm leading-relaxed text-white/66">{t.note}</p>
-              </AnimatedCard>
-            </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <AnimatedCard className="rounded-[1.5rem] border border-marhaban-gold/20 bg-marhaban-gold/10 p-4 text-white shadow-warm-sm">
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-gold">{scamLabel}</p>
+              <p className="mt-2 text-xl font-semibold leading-tight">{t.scam}</p>
+              <p className="mt-2 text-sm leading-relaxed text-white/66">{t.scamDetail}</p>
+            </AnimatedCard>
+            <AnimatedCard className="rounded-[1.5rem] border border-white/12 bg-white/[0.08] p-4 text-white shadow-warm-sm">
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/45">{t.duration}</p>
+              <p className="mt-2 text-xl font-semibold">{t.call}</p>
+              <p className="mt-2 text-sm leading-relaxed text-white/66">{t.note}</p>
+            </AnimatedCard>
           </div>
         </div>
       </div>
@@ -897,7 +880,7 @@ function NeedCard({ item }: { item: NeedCardData }) {
   const Icon = item.icon;
   return (
       <AnimatedCard className="group">
-      <LocalizedLink href={item.href} className="relative flex min-h-[225px] flex-col justify-between overflow-hidden rounded-[1.65rem] border border-marhaban-leaf/12 bg-white p-5 shadow-warm-sm transition hover:-translate-y-0.5 hover:border-marhaban-leaf/28 hover:shadow-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35">
+      <LocalizedLink href={item.href} className="relative flex min-h-[240px] flex-col justify-between overflow-hidden rounded-[1.65rem] border border-marhaban-leaf/12 bg-white p-5 shadow-warm-sm transition hover:-translate-y-0.5 hover:border-marhaban-leaf/28 hover:shadow-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35">
         <span className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-marhaban-gold via-marhaban-leaf to-marhaban-clay opacity-70" aria-hidden="true" />
         <div>
           <div className="flex items-start justify-between gap-4">
@@ -906,8 +889,8 @@ function NeedCard({ item }: { item: NeedCardData }) {
               <Icon className="h-5 w-5" aria-hidden="true" />
             </span>
           </div>
-          <h3 className="mt-7 text-xl font-semibold text-marhaban-ink">{item.title}</h3>
-          <p className="mt-3 text-sm text-marhaban-ink/65">{item.text}</p>
+          <h3 className="mt-6 text-[1.06rem] font-semibold leading-tight text-marhaban-ink">{item.title}</h3>
+          <p className="mt-3 text-sm leading-relaxed text-marhaban-ink/65">{item.text}</p>
         </div>
         <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-marhaban-leaf">
           <ArrowRight className="h-4 w-4 rtl-flip transition group-hover:translate-x-1" aria-hidden="true" />
@@ -991,13 +974,13 @@ function GuideCard({ guide, featured }: { guide: LinkCardData; featured: boolean
   const Icon = guide.icon;
   return (
     <AnimatedCard featured={featured}>
-      <article className={cn('flex min-h-[230px] flex-col justify-between rounded-3xl border p-5 shadow-warm-sm', featured ? 'bg-marhaban-ink text-white' : 'border-marhaban-leaf/10 bg-white text-marhaban-ink')}>
+      <article className={cn('flex min-h-[250px] flex-col justify-between rounded-3xl border p-5 shadow-warm-sm', featured ? 'bg-marhaban-ink text-white' : 'border-marhaban-leaf/10 bg-white text-marhaban-ink')}>
         <div>
           <span className={cn('grid h-11 w-11 place-items-center rounded-2xl', featured ? 'bg-white/10 text-marhaban-gold' : 'bg-marhaban-mint text-marhaban-leaf')}>
             <Icon className="h-5 w-5" aria-hidden="true" />
           </span>
-          <h3 className={cn('mt-6 text-xl font-semibold leading-tight', featured ? 'text-white sm:text-3xl' : 'text-marhaban-ink')}>{guide.title}</h3>
-          <p className={cn('mt-3 text-sm', featured ? 'text-white/72' : 'text-marhaban-ink/65')}>{guide.text}</p>
+          <h3 className={cn('mt-6 text-xl font-semibold leading-tight', featured ? 'text-white sm:text-2xl' : 'text-marhaban-ink')}>{guide.title}</h3>
+          <p className={cn('mt-3 text-sm leading-relaxed', featured ? 'text-white/72' : 'text-marhaban-ink/65')}>{guide.text}</p>
         </div>
         <LocalizedLink href={guide.href} className={cn('mt-6 inline-flex items-center gap-2 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35', featured ? 'text-white' : 'text-marhaban-leaf hover:text-marhaban-ink')}>
           <BookOpenCheck className="h-4 w-4" aria-hidden="true" />
