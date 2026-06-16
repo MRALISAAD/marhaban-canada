@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Image from 'next/image';
 import { Search, AlertTriangle } from 'lucide-react';
 import { scamCategories } from '@/content/scams';
 import { ScamCategoryGrid } from '@/components/scams/ScamCategoryGrid';
@@ -18,6 +19,12 @@ export default function ArnaquesPage() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   const filterAllLabel = locale === 'fr' ? 'Toutes' : locale === 'en' ? 'All' : 'الكل';
+  const headerImageAlt =
+    locale === 'fr'
+      ? 'Illustration Marhaban Canada sur la verification des situations suspectes'
+      : locale === 'en'
+        ? 'Marhaban Canada visual about checking suspicious situations'
+        : 'صورة من مرحبا كندا حول التحقق من الحالات المشبوهة';
 
   const categoryTitleByLocale: Record<string, Partial<Record<string, string>>> = {
     fr: {},
@@ -54,17 +61,30 @@ export default function ArnaquesPage() {
   return (
     <main className="warm-page px-4 py-12" dir={dir} lang={locale}>
       <div className="mx-auto w-full max-w-6xl space-y-8">
-        <div className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-6 shadow-warm-sm sm:p-8">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-clay">
-            {content.scams.microcopy.pageEyebrow}
-          </p>
-          <h1 className="mt-3 text-3xl font-semibold leading-tight text-marhaban-ink sm:text-4xl">
-            {content.scams.microcopy.pageTitle}
-          </h1>
-          <p className="mt-3 max-w-3xl text-sm text-slate-700 sm:text-base">{content.scams.microcopy.pageSubtitle}</p>
-          <p className="mt-2 text-xs text-slate-500">{content.serviceAccompagnementDefinition.body}</p>
-          <p className="mt-2 text-xs font-semibold text-slate-600">{content.serviceAccompagnementNoProxy}</p>
-          <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 sm:p-5">
+        <div className="overflow-hidden rounded-3xl border border-marhaban-leaf/15 bg-white/90 shadow-warm-sm">
+          <div className="grid gap-6 p-6 sm:p-8 lg:grid-cols-[1fr_0.82fr] lg:items-stretch">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-clay">
+                {content.scams.microcopy.pageEyebrow}
+              </p>
+              <h1 className="mt-3 text-3xl font-semibold leading-tight text-marhaban-ink sm:text-4xl">
+                {content.scams.microcopy.pageTitle}
+              </h1>
+              <p className="mt-3 max-w-3xl text-sm text-slate-700 sm:text-base">{content.scams.microcopy.pageSubtitle}</p>
+              <p className="mt-2 text-xs text-slate-500">{content.serviceAccompagnementDefinition.body}</p>
+              <p className="mt-2 text-xs font-semibold text-slate-600">{content.serviceAccompagnementNoProxy}</p>
+            </div>
+            <div className="relative min-h-[240px] overflow-hidden rounded-premium bg-marhaban-mint shadow-premium-card lg:min-h-full">
+              <Image
+                src="/assets/marhaban/visuel-arnaque.jpg"
+                alt={headerImageAlt}
+                fill
+                sizes="(min-width: 1024px) 38vw, calc(100vw - 3rem)"
+                className="object-cover"
+              />
+            </div>
+          </div>
+          <div className="mx-6 mb-6 mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 sm:mx-8 sm:mb-8 sm:p-5">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex-1">
                 <div className="flex items-start gap-3">

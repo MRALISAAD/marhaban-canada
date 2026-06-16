@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { ShieldCheck } from 'lucide-react';
 import { getHtmlAttrs, isLocale, type Locale } from '@/i18n/locales';
@@ -14,13 +15,14 @@ const disclaimer = {
   ar: 'تقدم مرحبا كندا توجيهاً عملياً ومعلومات عامة. نحن لا نقدم نصائح قانونية ولا نصائح في الهجرة. للأسئلة المتعلقة بالتأشيرات أو التصاريح أو الإقامة الدائمة أو الأهلية أو استراتيجية الهجرة، يرجى استشارة ممثل معتمد.',
 } as const;
 
-type PageText = ReserveTexts & { eyebrow: string; title: string; subtitle: string };
+type PageText = ReserveTexts & { eyebrow: string; title: string; subtitle: string; imageAlt: string };
 
 const pageTexts: Record<Locale, PageText> = {
   fr: {
     eyebrow: 'Formulaire de demande',
     title: "Réserver un appel d'orientation",
     subtitle: '30 minutes en ligne pour clarifier tes démarches et organiser tes priorités.',
+    imageAlt: 'Réservation d’un appel d’orientation Marhaban Canada',
     form: {
       name: 'Ton prénom',
       email: 'Ton email',
@@ -45,6 +47,7 @@ const pageTexts: Record<Locale, PageText> = {
     eyebrow: 'Request form',
     title: 'Book an orientation call',
     subtitle: '30 minutes online to clarify your steps and organize your priorities.',
+    imageAlt: 'Booking a Marhaban Canada orientation call',
     form: {
       name: 'Your first name',
       email: 'Your email',
@@ -69,6 +72,7 @@ const pageTexts: Record<Locale, PageText> = {
     eyebrow: 'نموذج الطلب',
     title: 'احجز مكالمة توجيه',
     subtitle: '30 دقيقة عبر الإنترنت لتوضيح خطواتك وتنظيم أولوياتك.',
+    imageAlt: 'حجز مكالمة توجيه مع مرحبا كندا',
     form: {
       name: 'اسمك الأول',
       email: 'بريدك الإلكتروني',
@@ -111,30 +115,42 @@ export default async function ReserverPage({ params }: Props) {
 
   return (
     <main className="warm-page px-4 py-10 sm:px-6 lg:px-8" dir={dir} lang={lang}>
-      <div className="mx-auto max-w-2xl">
-        <section className="mb-10">
-          <p className="inline-flex rounded-full bg-white/80 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-marhaban-leaf">
-            {t.eyebrow}
-          </p>
-          <h1 className="mt-6 text-4xl font-semibold leading-tight text-marhaban-ink sm:text-5xl">
-            {t.title}
-          </h1>
-          <p className="mt-4 text-base text-slate-700 sm:text-lg">{t.subtitle}</p>
-        </section>
+      <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-start">
+        <div>
+          <section className="mb-10">
+            <p className="inline-flex rounded-full bg-white/80 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-marhaban-leaf">
+              {t.eyebrow}
+            </p>
+            <h1 className="mt-6 text-4xl font-semibold leading-tight text-marhaban-ink sm:text-5xl">
+              {t.title}
+            </h1>
+            <p className="mt-4 text-base text-slate-700 sm:text-lg">{t.subtitle}</p>
+          </section>
 
-        <section className="rounded-3xl border border-marhaban-leaf/15 bg-white/[0.92] p-6 shadow-warm-sm sm:p-8">
-          <ReserveForm texts={t} dir={dir} />
-        </section>
+          <section className="rounded-3xl border border-marhaban-leaf/15 bg-white/[0.92] p-6 shadow-warm-sm sm:p-8">
+            <ReserveForm texts={t} dir={dir} />
+          </section>
 
-        <section className="mt-6 rounded-3xl border border-marhaban-leaf/10 bg-marhaban-mint/60 p-5">
-          <div className="flex items-start gap-3">
-            <ShieldCheck
-              className="mt-0.5 h-5 w-5 flex-shrink-0 text-marhaban-leaf"
-              aria-hidden="true"
-            />
-            <p className="text-xs leading-relaxed text-slate-700">{disclaimer[locale]}</p>
-          </div>
-        </section>
+          <section className="mt-6 rounded-3xl border border-marhaban-leaf/10 bg-marhaban-mint/60 p-5">
+            <div className="flex items-start gap-3">
+              <ShieldCheck
+                className="mt-0.5 h-5 w-5 flex-shrink-0 text-marhaban-leaf"
+                aria-hidden="true"
+              />
+              <p className="text-xs leading-relaxed text-slate-700">{disclaimer[locale]}</p>
+            </div>
+          </section>
+        </div>
+
+        <aside className="relative min-h-[320px] overflow-hidden rounded-premium bg-marhaban-mint shadow-premium-card lg:sticky lg:top-28 lg:min-h-[640px]">
+          <Image
+            src="/assets/marhaban/visuel-reservation.jpg"
+            alt={t.imageAlt}
+            fill
+            sizes="(min-width: 1024px) 420px, calc(100vw - 2rem)"
+            className="object-cover"
+          />
+        </aside>
       </div>
     </main>
   );

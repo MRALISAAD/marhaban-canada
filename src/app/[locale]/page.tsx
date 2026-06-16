@@ -2,12 +2,11 @@
 
 import { useCallback } from 'react';
 import type { ReactNode } from 'react';
+import Image from 'next/image';
 import type { LucideIcon } from 'lucide-react';
 import {
   AlertTriangle,
   ArrowRight,
-  BadgeCheck,
-  Banknote,
   BookOpenCheck,
   BriefcaseBusiness,
   CalendarCheck,
@@ -83,6 +82,9 @@ const homeTexts = {
     heroTitle: 'Tu arrives au Canada ? On t’aide à savoir quoi faire en premier.',
     heroSubtitle:
       'Un accompagnement clair et humain pour comprendre tes priorités, éviter les erreurs et avancer étape par étape.',
+    heroImageAlt: 'Nouvel arrivant accompagné par Marhaban Canada dans ses premières démarches au Canada',
+    offerImageAlt: 'Appel d’orientation Marhaban Canada pour clarifier les priorités d’installation',
+    howImageAlt: 'Checklist pratique Marhaban Canada pour organiser les premières étapes au Canada',
     primaryCta: 'Réserver un appel',
     secondaryCta: 'Voir mon parcours',
     proof: ['FR / EN / AR', 'Orientation pratique', 'Sources utiles', 'Approche humaine'],
@@ -181,6 +183,9 @@ const homeTexts = {
     heroTitle: 'Arriving in Canada? We help you know what to do first.',
     heroSubtitle:
       'Clear, human support to understand your priorities, avoid mistakes, and move step by step.',
+    heroImageAlt: 'Newcomer supported by Marhaban Canada through first steps in Canada',
+    offerImageAlt: 'Marhaban Canada orientation call to clarify settlement priorities',
+    howImageAlt: 'Marhaban Canada practical checklist for organizing first steps in Canada',
     primaryCta: 'Book a call',
     secondaryCta: 'View my journey',
     proof: ['FR / EN / AR', 'Practical orientation', 'Useful sources', 'Human approach'],
@@ -279,6 +284,9 @@ const homeTexts = {
     heroTitle: 'هل تصل إلى كندا؟ نساعدك على معرفة ما تفعله أولاً.',
     heroSubtitle:
       'مرافقة واضحة وإنسانية لفهم أولوياتك، تجنب الأخطاء، والتقدم خطوة بخطوة.',
+    heroImageAlt: 'وافد جديد يحصل على دعم مرحبا كندا في خطواته الأولى في كندا',
+    offerImageAlt: 'مكالمة توجيه من مرحبا كندا لتوضيح أولويات الاستقرار',
+    howImageAlt: 'قائمة تحقق عملية من مرحبا كندا لتنظيم الخطوات الأولى في كندا',
     primaryCta: 'احجز مكالمة',
     secondaryCta: 'اعرض مساري',
     proof: ['FR / EN / AR', 'توجيه عملي', 'مصادر مفيدة', 'نهج إنساني'],
@@ -424,11 +432,7 @@ export default function HomePage() {
             </div>
 
             <HeroVisual
-              checklist={t.visualChecklist}
-              scam={t.visualScam}
-              plan={t.visualPlan}
-              doc={t.visualDoc}
-              tags={t.visualTags}
+              alt={t.heroImageAlt}
             />
           </div>
         </section>
@@ -458,6 +462,12 @@ export default function HomePage() {
               <p className="text-sm font-semibold leading-relaxed text-marhaban-ink">{disclaimer[locale]}</p>
             </div>
           </div>
+          <BrandImagePanel
+            src="/assets/marhaban/visuel-appel.jpg"
+            alt={t.offerImageAlt}
+            sizes="(min-width: 1024px) 1120px, calc(100vw - 2rem)"
+            className="mt-8 aspect-[16/7] min-h-[260px]"
+          />
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4" data-animate-group>
             {t.offers.map((offer, index) => (
               <OfferCard key={offer.title} offer={offer} cta={t.reserve} featured={index === 1} />
@@ -467,8 +477,16 @@ export default function HomePage() {
 
         <SectionBand>
           <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-            <SectionHeader eyebrow={t.howEyebrow} title={t.howTitle} />
-            <div className="grid gap-4 md:grid-cols-3" data-animate-group>
+            <div className="space-y-6">
+              <SectionHeader eyebrow={t.howEyebrow} title={t.howTitle} />
+              <BrandImagePanel
+                src="/assets/marhaban/visuel-checklist.jpg"
+                alt={t.howImageAlt}
+                sizes="(min-width: 1024px) 38vw, calc(100vw - 2rem)"
+                className="aspect-[4/3] min-h-[280px]"
+              />
+            </div>
+            <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-1" data-animate-group>
               {t.howSteps.map((step, index) => (
                 <StepCard key={step.title} step={step} index={index} />
               ))}
@@ -616,71 +634,52 @@ function SectionHeader({ eyebrow, title, text }: { eyebrow: string; title: strin
 }
 
 function HeroVisual({
-  checklist,
-  scam,
-  plan,
-  doc,
-  tags,
+  alt,
 }: {
-  checklist: string;
-  scam: string;
-  plan: string;
-  doc: string;
-  tags: readonly string[];
+  alt: string;
 }) {
   return (
-    <div className="relative min-h-[560px] lg:min-h-[680px]" aria-hidden="true">
-      <div className="absolute inset-0 rounded-[2rem] bg-marhaban-mint shadow-warm" />
-      <div className="absolute left-8 top-8 h-40 w-40 rounded-[45%_55%_60%_40%/45%_35%_65%_55%] bg-marhaban-sand/45 blur-xl" data-animate="hero-float" />
-      <div className="absolute bottom-16 right-2 h-52 w-52 rounded-[55%_45%_42%_58%/40%_50%_50%_60%] bg-marhaban-clay/20 blur-2xl" data-animate="hero-float" />
-
-      <div className="absolute left-5 top-8 w-64 rotate-[-4deg] rounded-3xl border border-marhaban-leaf/15 bg-white p-5 shadow-warm sm:left-10 sm:w-72" data-animate="hero-card">
-        <div className="flex items-center justify-between">
-          <span className="grid h-11 w-11 place-items-center rounded-2xl bg-marhaban-ink text-white">
-            <ClipboardCheck className="h-5 w-5" />
-          </span>
-          <BadgeCheck className="h-7 w-7 text-marhaban-leaf" />
-        </div>
-        <p className="mt-7 text-xs font-bold uppercase tracking-[0.12em] text-marhaban-clay">{checklist}</p>
-        <div className="mt-4 space-y-3">
-          {[0, 1, 2].map((item) => (
-            <span key={item} className="flex items-center gap-3">
-              <span className="h-4 w-4 rounded-full bg-marhaban-mint ring-1 ring-marhaban-leaf/20" />
-              <span className={cn('h-2 rounded-full bg-stone-200', item === 1 ? 'w-2/3' : 'w-full')} />
-            </span>
-          ))}
-        </div>
+    <div className="order-first lg:order-none" data-animate="hero-card">
+      <div className="relative min-h-[360px] overflow-hidden rounded-premium bg-marhaban-mint shadow-premium-card sm:min-h-[460px] lg:min-h-[680px]">
+        <Image
+          src="/assets/marhaban/hero-image.jpg"
+          alt={alt}
+          fill
+          priority
+          sizes="(min-width: 1024px) 54vw, calc(100vw - 2rem)"
+          className="object-cover"
+        />
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/assets/marhaban/hero-image.jpg"
+          aria-hidden="true"
+        >
+          <source src="/assets/marhaban/hero-video.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-t from-marhaban-ink/28 via-transparent to-transparent" aria-hidden="true" />
       </div>
+    </div>
+  );
+}
 
-      <div className="absolute right-4 top-32 w-60 rotate-[5deg] rounded-3xl border border-amber-900/10 bg-[#FFF4E3] p-5 shadow-warm sm:right-10 sm:w-72" data-animate="hero-card">
-        <div className="flex items-center gap-3">
-          <span className="grid h-10 w-10 place-items-center rounded-2xl bg-amber-900 text-white">
-            <ShieldCheck className="h-5 w-5" />
-          </span>
-          <p className="text-sm font-bold text-amber-950">{scam}</p>
-        </div>
-        <p className="mt-5 text-2xl font-semibold leading-tight text-amber-950">{plan}</p>
-      </div>
-
-      <div className="absolute bottom-28 left-8 right-8 rounded-3xl bg-marhaban-ink p-6 text-white shadow-warm sm:left-16 sm:right-16" data-animate="hero-card">
-        <p className="text-xs font-bold uppercase tracking-[0.12em] text-marhaban-gold">{doc}</p>
-        <div className="mt-5 grid gap-3 sm:grid-cols-3">
-          {[FileCheck2, Banknote, Home].map((Icon, index) => (
-            <div key={index} className="rounded-2xl bg-white/[0.08] p-3">
-              <Icon className="h-5 w-5 text-white/78" />
-              <span className="mt-6 block h-2 rounded-full bg-white/18" />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="absolute bottom-8 left-4 right-4 flex flex-wrap justify-center gap-2">
-        {tags.map((tag, index) => (
-          <span key={tag} className={cn('rounded-full px-4 py-2 text-xs font-bold shadow-warm-sm', index % 2 === 0 ? 'bg-white text-marhaban-ink' : 'bg-marhaban-clay text-white')} data-animate="hero-card">
-            {tag}
-          </span>
-        ))}
-      </div>
+function BrandImagePanel({
+  src,
+  alt,
+  sizes,
+  className,
+}: {
+  src: string;
+  alt: string;
+  sizes: string;
+  className?: string;
+}) {
+  return (
+    <div className={cn('relative overflow-hidden rounded-premium bg-marhaban-mint shadow-premium-card', className)} data-animate="card">
+      <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
     </div>
   );
 }
