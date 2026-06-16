@@ -10,5 +10,5 @@ export default async function ReserverUnAppelPage({ params }: Props) {
   const { locale: localeParam } = await params;
   const locale: Locale = isLocale(localeParam) ? localeParam : 'fr';
 
-  redirect(withLocale('/book', locale));
+  redirect(withLocale('/reserver', locale));
 }
