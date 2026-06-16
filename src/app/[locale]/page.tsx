@@ -27,8 +27,10 @@ import { HeroVisual } from '@/components/marketing/HeroVisual';
 import { MarketingSection } from '@/components/marketing/MarketingSection';
 import { NeedCard } from '@/components/marketing/NeedCard';
 import { OfferCard } from '@/components/marketing/OfferCard';
+import { RoadmapSection } from '@/components/marketing/RoadmapSection';
 import { SectionHeader } from '@/components/marketing/SectionHeader';
 import { StepTimeline } from '@/components/marketing/StepTimeline';
+import { TestimonialCard } from '@/components/marketing/TestimonialCard';
 import { ValueStrip } from '@/components/marketing/ValueStrip';
 import homeCopyData from '@/content/homeCopy.json';
 import { legalDisclaimer } from '@/content/legalDisclaimer';
@@ -39,6 +41,9 @@ const needIcons: LucideIcon[] = [MapPinned, ClipboardCheck, Home, FileCheck2, Al
 const stepIcons: LucideIcon[] = [MessageCircle, Sparkles, CalendarCheck, CheckCircle2];
 const guideIcons: LucideIcon[] = [ClipboardCheck, BookOpenCheck, ShieldCheck, Landmark];
 const valueIcons: LucideIcon[] = [Clock3, CheckCircle2, BookOpenCheck, ShieldCheck];
+
+type RoadmapPhase = { label: string; items: string[] };
+type TestimonialItem = { quote: string; author: string; origin: string; city: string };
 
 const homeCopy = homeCopyData as Record<
   Locale,
@@ -55,6 +60,10 @@ const homeCopy = homeCopyData as Record<
     needsText: string;
     needsCta: string;
     needs: { title: string; description: string; href: string }[];
+    roadmapEyebrow: string;
+    roadmapTitle: string;
+    roadmapCta: string;
+    roadmapPhases: RoadmapPhase[];
     stepsEyebrow: string;
     stepsTitle: string;
     steps: { title: string; text: string }[];
@@ -82,6 +91,10 @@ const homeCopy = homeCopyData as Record<
     scamTitle: string;
     scamExamples: string[];
     scamCta: string;
+    testimonialEyebrow: string;
+    testimonialTitle: string;
+    testimonialDisclaimer: string;
+    testimonials: TestimonialItem[];
     guidesEyebrow: string;
     guidesTitle: string;
     guides: { title: string; description: string; href: string }[];
@@ -103,6 +116,8 @@ export default function HomePage() {
 
   return (
     <div className="warm-page" dir={dir}>
+
+      {/* 1 — Hero */}
       <SectionReveal className="border-b border-marhaban-leaf/10 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
           <div>
@@ -145,10 +160,12 @@ export default function HomePage() {
         </div>
       </SectionReveal>
 
+      {/* 2 — Value strip */}
       <MarketingSection variant="muted">
         <ValueStrip items={values} />
       </MarketingSection>
 
+      {/* 3 — Choose your need */}
       <MarketingSection>
         <SectionHeader eyebrow={t.needsEyebrow} title={t.needsTitle} text={t.needsText} />
         <StaggerGroup className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -158,29 +175,26 @@ export default function HomePage() {
         </StaggerGroup>
       </MarketingSection>
 
-      <MarketingSection variant="muted">
-        <SectionHeader eyebrow={t.stepsEyebrow} title={t.stepsTitle} />
-        <div className="mt-10">
-          <StepTimeline steps={steps} />
-        </div>
-      </MarketingSection>
+      {/* 4 — Guided roadmap (tabbed phases) */}
+      <RoadmapSection
+        eyebrow={t.roadmapEyebrow}
+        title={t.roadmapTitle}
+        cta={t.roadmapCta}
+        href="/parcours"
+        phases={t.roadmapPhases}
+      />
 
+      {/* 5 — Services / Offers */}
       <MarketingSection>
         <SectionHeader eyebrow={t.offersEyebrow} title={t.offersTitle} text={t.offersText} />
-        <StaggerGroup className="mt-10 grid gap-6 md:grid-cols-2">
+        <StaggerGroup className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {t.offers.map((offer, index) => (
             <OfferCard key={offer.title} offer={offer} cta={t.reserve} href={bookingHref} featured={index === 0} />
           ))}
         </StaggerGroup>
       </MarketingSection>
 
-      <MarketingSection variant="muted">
-        <SectionHeader eyebrow={t.scopeEyebrow} title={t.scopeTitle} />
-        <div className="mt-10">
-          <DoDontSection scope={t.scope} />
-        </div>
-      </MarketingSection>
-
+      {/* 6 — Anti-scam protection */}
       <MarketingSection variant="contrast" className="rounded-none">
         <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-center">
           <SectionHeader title={t.scamTitle} light />
@@ -206,6 +220,34 @@ export default function HomePage() {
         </AnimatedCTA>
       </MarketingSection>
 
+      {/* 7 — What we do / don't do */}
+      <MarketingSection variant="muted">
+        <SectionHeader eyebrow={t.scopeEyebrow} title={t.scopeTitle} />
+        <div className="mt-10">
+          <DoDontSection scope={t.scope} />
+        </div>
+      </MarketingSection>
+
+      {/* 8 — How it works */}
+      <MarketingSection>
+        <SectionHeader eyebrow={t.stepsEyebrow} title={t.stepsTitle} />
+        <div className="mt-10">
+          <StepTimeline steps={steps} />
+        </div>
+      </MarketingSection>
+
+      {/* 9 — Testimonials */}
+      <MarketingSection variant="muted">
+        <SectionHeader eyebrow={t.testimonialEyebrow} title={t.testimonialTitle} align="center" />
+        <StaggerGroup className="mt-10 grid gap-6 md:grid-cols-3">
+          {t.testimonials.map((item) => (
+            <TestimonialCard key={item.author} item={item} />
+          ))}
+        </StaggerGroup>
+        <p className="mt-8 text-center text-sm text-marhaban-muted">{t.testimonialDisclaimer}</p>
+      </MarketingSection>
+
+      {/* 10 — Guides */}
       <MarketingSection>
         <SectionHeader eyebrow={t.guidesEyebrow} title={t.guidesTitle} />
         <StaggerGroup className="mt-10 grid gap-5 sm:grid-cols-2">
@@ -215,6 +257,7 @@ export default function HomePage() {
         </StaggerGroup>
       </MarketingSection>
 
+      {/* Final CTA */}
       <FinalCTA
         title={t.finalTitle}
         text={t.finalText}

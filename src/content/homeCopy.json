@@ -188,7 +188,75 @@
       }
     ],
     "finalTitle": "Tu ne sais pas par quoi commencer ?",
-    "finalText": "Réserve un appel d'orientation et repars avec tes prochaines étapes."
+    "finalText": "Réserve un appel d'orientation et repars avec tes prochaines étapes.",
+    "roadmapEyebrow": "Un chemin clair",
+    "roadmapTitle": "De l'incertitude à la stabilité — étape par étape.",
+    "roadmapCta": "Voir le parcours complet",
+    "roadmapPhases": [
+      {
+        "label": "Avant d'arriver",
+        "items": [
+          "Rassembler les documents essentiels : passeport, lettres d'admission, offre d'emploi",
+          "Comprendre ce qu'il faut déclarer à la frontière",
+          "Rechercher ton premier quartier et options de logement temporaire",
+          "Ouvrir un compte bancaire canadien en ligne (certaines banques l'acceptent avant l'arrivée)",
+          "Préparer un budget pour les 3 premiers mois"
+        ]
+      },
+      {
+        "label": "Première semaine",
+        "items": [
+          "Obtenir ton NAS (numéro d'assurance sociale)",
+          "Ouvrir ton compte bancaire local",
+          "Activer ta carte SIM ou plan téléphonique",
+          "T'inscrire au régime de santé provincial",
+          "Repérer les épiceries, pharmacies et transports près de chez toi"
+        ]
+      },
+      {
+        "label": "Premier mois",
+        "items": [
+          "Trouver un logement à long terme",
+          "Inscrire les enfants à l'école si nécessaire",
+          "Rejoindre des communautés locales et groupes d'entraide",
+          "Explorer les ressources d'établissement dans ta ville",
+          "Commencer à construire ton historique de crédit"
+        ]
+      },
+      {
+        "label": "S'installer durablement",
+        "items": [
+          "Comprendre le système fiscal canadien",
+          "Préparer ton permis de conduire local",
+          "Explorer les formations et certifications reconnues",
+          "Suivre les renouvellements de permis ou étapes vers la résidence permanente",
+          "Trouver un médecin de famille"
+        ]
+      }
+    ],
+    "testimonialEyebrow": "Ce qu'ils en disent",
+    "testimonialTitle": "Des expériences vraies, de vraies personnes.",
+    "testimonialDisclaimer": "Les témoignages représentent des expériences individuelles. Les résultats ne sont pas garantis.",
+    "testimonials": [
+      {
+        "quote": "Je suis arrivée à Montréal sans savoir par quoi commencer. Après un appel, j'avais une liste claire de ce qu'il fallait faire cette semaine. C'était comme parler à une amie qui avait déjà tout vécu.",
+        "author": "Yasmine A.",
+        "origin": "Maroc",
+        "city": "Montréal"
+      },
+      {
+        "quote": "J'étais sur le point de verser un dépôt pour un appartement que je n'avais jamais vu. La checklist anti-arnaque m'a stoppé à temps. Ça m'a probablement évité de perdre plus de 1 000 $.",
+        "author": "Bilal M.",
+        "origin": "",
+        "city": "Montréal"
+      },
+      {
+        "quote": "Avoir quelqu'un qui explique le NAS, la carte santé et le compte bancaire en français simple — et dans le bon ordre — c'est exactement ce dont j'avais besoin.",
+        "author": "Houda K.",
+        "origin": "Tunisie",
+        "city": "Québec"
+      }
+    ]
   },
   "en": {
     "heroTitle": "Arrive in Canada with a clear plan, not with stress.",
@@ -379,7 +447,75 @@
       }
     ],
     "finalTitle": "Not sure where to start?",
-    "finalText": "Book an orientation call and leave with your next steps."
+    "finalText": "Book an orientation call and leave with your next steps.",
+    "roadmapEyebrow": "A clear path",
+    "roadmapTitle": "From uncertainty to stability — step by step.",
+    "roadmapCta": "See the full roadmap",
+    "roadmapPhases": [
+      {
+        "label": "Before arrival",
+        "items": [
+          "Gather key documents: passport, admission letters, job offer",
+          "Understand what to declare at the border",
+          "Research your first neighbourhood and temporary housing options",
+          "Open a Canadian bank account online (some banks allow this before arrival)",
+          "Prepare a budget for your first 3 months"
+        ]
+      },
+      {
+        "label": "First week",
+        "items": [
+          "Get your SIN (Social Insurance Number)",
+          "Open your local bank account",
+          "Activate your SIM card or phone plan",
+          "Register for provincial health coverage",
+          "Find grocery stores, pharmacies, and transit near you"
+        ]
+      },
+      {
+        "label": "First month",
+        "items": [
+          "Find long-term housing",
+          "Register children at school if needed",
+          "Join local communities and support groups",
+          "Explore settlement resources in your city",
+          "Start building your credit history"
+        ]
+      },
+      {
+        "label": "Settle long-term",
+        "items": [
+          "Understand the Canadian tax system",
+          "Get your local driver's licence",
+          "Explore recognized training and certifications",
+          "Track permit renewals or steps toward permanent residency",
+          "Find a family doctor"
+        ]
+      }
+    ],
+    "testimonialEyebrow": "What people say",
+    "testimonialTitle": "Real experiences from real newcomers.",
+    "testimonialDisclaimer": "Testimonials represent individual experiences. Results are not guaranteed.",
+    "testimonials": [
+      {
+        "quote": "I arrived in Montréal not knowing where to start. After one call, I had a clear list of what to do that week. It felt like talking to a friend who had already done it.",
+        "author": "Yasmine A.",
+        "origin": "Morocco",
+        "city": "Montréal"
+      },
+      {
+        "quote": "I was about to pay a deposit on an apartment I had never seen. The scam checklist stopped me in time. It probably saved me over $1,000.",
+        "author": "Bilal M.",
+        "origin": "",
+        "city": "Montréal"
+      },
+      {
+        "quote": "Having someone explain SIN, health card, and bank account in plain language — in the right order — was exactly what I needed.",
+        "author": "Houda K.",
+        "origin": "Tunisia",
+        "city": "Québec City"
+      }
+    ]
   },
   "ar": {
     "heroTitle": "صل إلى كندا بخطة واضحة، لا بالتوتر.",
@@ -570,6 +706,74 @@
       }
     ],
     "finalTitle": "لا تعرف من أين تبدأ؟",
-    "finalText": "احجز مكالمة توجيه واخرج بخطواتك التالية."
+    "finalText": "احجز مكالمة توجيه واخرج بخطواتك التالية.",
+    "roadmapEyebrow": "مسار واضح",
+    "roadmapTitle": "من الغموض إلى الاستقرار — خطوة بخطوة.",
+    "roadmapCta": "رؤية المسار الكامل",
+    "roadmapPhases": [
+      {
+        "label": "قبل الوصول",
+        "items": [
+          "جمع الوثائق الأساسية: جواز السفر ورسائل القبول وعرض العمل",
+          "فهم ما يجب التصريح به عند الحدود",
+          "البحث عن حيّك الأول وخيارات السكن المؤقت",
+          "فتح حساب بنكي كندي عبر الإنترنت (بعض البنوك تسمح بذلك قبل الوصول)",
+          "تحضير ميزانية للأشهر الثلاثة الأولى"
+        ]
+      },
+      {
+        "label": "الأسبوع الأول",
+        "items": [
+          "الحصول على رقم التأمين الاجتماعي (NAS)",
+          "فتح حسابك البنكي المحلي",
+          "تفعيل شريحة SIM أو خطة هاتفية",
+          "التسجيل في نظام الصحة الإقليمي",
+          "العثور على البقالات والصيدليات والمواصلات القريبة منك"
+        ]
+      },
+      {
+        "label": "الشهر الأول",
+        "items": [
+          "العثور على سكن طويل الأمد",
+          "تسجيل الأطفال في المدرسة إذا لزم الأمر",
+          "الانضمام إلى مجتمعات محلية ومجموعات دعم",
+          "استكشاف موارد التسوية في مدينتك",
+          "البدء في بناء سجلك الائتماني"
+        ]
+      },
+      {
+        "label": "الاستقرار على المدى البعيد",
+        "items": [
+          "فهم النظام الضريبي الكندي",
+          "الحصول على رخصة القيادة المحلية",
+          "استكشاف التدريبات والشهادات المعترف بها",
+          "متابعة تجديدات التصاريح أو خطوات الإقامة الدائمة",
+          "إيجاد طبيب عائلي"
+        ]
+      }
+    ],
+    "testimonialEyebrow": "ما يقوله الناس",
+    "testimonialTitle": "تجارب حقيقية من وافدين حقيقيين.",
+    "testimonialDisclaimer": "الشهادات تمثل تجارب فردية. النتائج غير مضمونة.",
+    "testimonials": [
+      {
+        "quote": "وصلت إلى مونتريال دون أن أعرف من أين أبدأ. بعد مكالمة واحدة أصبح لديّ قائمة واضحة بما يجب فعله تلك الأسبوع. كان الأمر كالتحدث مع صديقة مرّت بكل هذا من قبل.",
+        "author": "ياسمين أ.",
+        "origin": "المغرب",
+        "city": "مونتريال"
+      },
+      {
+        "quote": "كنت على وشك دفع وديعة لشقة لم أرها قط. توقفتني قائمة تحقق مكافحة الاحتيال في الوقت المناسب. ربما وفّرت أكثر من 1000 دولار.",
+        "author": "بلال م.",
+        "origin": "",
+        "city": "مونتريال"
+      },
+      {
+        "quote": "وجود شخص يشرح رقم التأمين والبطاقة الصحية والحساب البنكي بلغة بسيطة وبالترتيب الصحيح — هذا بالضبط ما كنت بحاجة إليه.",
+        "author": "هدى ك.",
+        "origin": "تونس",
+        "city": "مدينة كيبيك"
+      }
+    ]
   }
 }
