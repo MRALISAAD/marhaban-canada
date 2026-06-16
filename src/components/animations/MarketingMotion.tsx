@@ -1,38 +1,38 @@
 'use client';
 
-import type { ComponentPropsWithoutRef, ReactNode } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import React, { type ReactNode } from 'react';
+import { motion, useReducedMotion, type HTMLMotionProps } from 'motion/react';
 import { cn } from '@/lib/cn';
 
-type RevealProps = ComponentPropsWithoutRef<'section'> & {
+type RevealProps = HTMLMotionProps<'section'> & {
   children: ReactNode;
   delay?: number;
 };
 
-type StaggerProps = ComponentPropsWithoutRef<'div'> & {
+type StaggerProps = HTMLMotionProps<'div'> & {
   children: ReactNode;
   delay?: number;
 };
 
-type CardProps = ComponentPropsWithoutRef<'div'> & {
+type CardProps = HTMLMotionProps<'div'> & {
   children: ReactNode;
   featured?: boolean;
 };
 
-type FloatingVisualProps = ComponentPropsWithoutRef<'div'> & {
+type FloatingVisualProps = HTMLMotionProps<'div'> & {
   children: ReactNode;
   delay?: number;
   float?: 'soft' | 'gentle' | 'none';
 };
 
-type CtaProps = ComponentPropsWithoutRef<'span'> & {
+type CtaProps = HTMLMotionProps<'span'> & {
   children: ReactNode;
 };
 
 const revealVariants = {
   hidden: {
-    opacity: 0,
-    y: 18,
+    opacity: 1,
+    y: 12,
   },
   visible: (delay: number) => ({
     opacity: 1,
@@ -45,17 +45,8 @@ const revealVariants = {
   }),
 };
 
-const staggerContainer = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.08,
-    },
-  },
-};
-
 const staggerItem = {
-  hidden: { opacity: 0, y: 18 },
+  hidden: { opacity: 1, y: 12 },
   visible: {
     opacity: 1,
     y: 0,
@@ -66,12 +57,12 @@ const staggerItem = {
   },
 };
 
-export function SectionReveal({ children, className, delay = 0, id }: RevealProps) {
+export function SectionReveal({ children, className, delay = 0, ...props }: RevealProps) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.section
-      id={id}
+      {...props}
       className={className}
       variants={revealVariants}
       custom={delay}
@@ -84,28 +75,33 @@ export function SectionReveal({ children, className, delay = 0, id }: RevealProp
   );
 }
 
-export function StaggerGroup({ children, className, delay = 0 }: StaggerProps) {
+export function StaggerGroup({ children, className, delay = 0, ...props }: StaggerProps) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.div
+      {...props}
       className={className}
-      variants={staggerContainer}
+      variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.07, delayChildren: delay } } }}
       initial={shouldReduceMotion ? 'visible' : 'hidden'}
       whileInView="visible"
-      viewport={{ once: true, amount: 0.18 }}
-      transition={{ delayChildren: delay }}
+      viewport={{ once: true, amount: 0.1 }}
     >
-      {children}
+      {React.Children.map(children, (child, i) => (
+        <motion.div key={i} variants={staggerItem}>
+          {child}
+        </motion.div>
+      ))}
     </motion.div>
   );
 }
 
-export function AnimatedCard({ children, className, featured }: CardProps) {
+export function AnimatedCard({ children, className, featured, ...props }: CardProps) {
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <motion.div
+      {...props}
       className={cn(className)}
       variants={staggerItem}
       whileHover={
@@ -125,7 +121,7 @@ export function AnimatedCard({ children, className, featured }: CardProps) {
   );
 }
 
-export function FloatingVisual({ children, className, delay = 0, float = 'soft' }: FloatingVisualProps) {
+export function FloatingVisual({ children, className, delay = 0, float = 'soft', ...props }: FloatingVisualProps) {
   const shouldReduceMotion = useReducedMotion();
   const animate =
     float === 'none' || shouldReduceMotion
@@ -136,8 +132,9 @@ export function FloatingVisual({ children, className, delay = 0, float = 'soft' 
 
   return (
     <motion.div
+      {...props}
       className={className}
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 14, scale: 0.98 }}
+      initial={shouldReduceMotion ? false : { opacity: 1, y: 10, scale: 0.99 }}
       animate={animate}
       transition={
         shouldReduceMotion

@@ -26,11 +26,26 @@ Interactive, offline-first checklist for newcomers to Canada with WCAG accessibi
 # Install dependencies
 npm install
 
-# Start dev server
-npm run dev
+# Start dev server on the standard project port
+npm run dev:3000
 ```
 
 Open [http://localhost:3000](http://localhost:3000)
+
+If Next.js reports that port 3000 is already in use, check which local dev ports are occupied:
+
+```bash
+ss -ltnp | grep -E ':3000|:3001|:3002|:3010'
+```
+
+Stop old Next.js dev servers, then start the standard port again:
+
+```bash
+npm run kill:dev
+npm run dev:3000
+```
+
+`npm run dev` is still available as the normal Next.js dev command, but `npm run dev:3000` is the preferred command for predictable local development.
 
 ### Production Build
 

@@ -5,9 +5,10 @@ import Image from 'next/image';
 import { useLanguage } from '@/components/LanguageProvider';
 import { withLocale } from '@/lib/i18n-utils';
 import { getHtmlAttrs } from '@/i18n/locales';
+import { bookingPath } from '@/lib/routes';
 
 const SUPPORT_LINKS = [
-  { id: 'book', path: '/book' },
+  { id: 'book', path: '/reserver' },
   { id: 'contact', path: '/contact' },
   { id: 'parcours', path: '/parcours' },
 ] as const;
@@ -120,7 +121,7 @@ export function Footer() {
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
               <Link
-                href={localizeHref('/reserver')}
+                href={bookingPath(locale)}
                 className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-bold text-marhaban-ink transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-ink"
               >
                 {bookCallLabel}
