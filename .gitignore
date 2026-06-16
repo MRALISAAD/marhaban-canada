@@ -12,6 +12,9 @@
 
 # testing
 /coverage
+/test-results
+/playwright-report
+/playwright/.cache
 
 # next.js
 /.next/
@@ -20,8 +23,24 @@
 # production
 /build
 
-# misc
+# python — should not be here
+/.venv
+/venv
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+*.ipynb
+
+# editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# os
 .DS_Store
+Thumbs.db
 *.pem
 
 # debug
@@ -30,8 +49,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files — NEVER commit secrets
+.env
+.env.*
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +60,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# misc test/temp scripts
+test-redirects.sh
