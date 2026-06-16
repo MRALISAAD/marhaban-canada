@@ -61,7 +61,7 @@ export function FloatingBookCallButton() {
 
   return (
     <div
-      className={`fixed inset-x-3 bottom-3 z-40 transition duration-200 sm:inset-x-6 md:inset-x-auto md:bottom-6 ${
+      className={`fixed inset-x-3 bottom-3 z-40 max-w-[calc(100vw-1.5rem)] transition duration-200 sm:inset-x-6 md:inset-x-auto md:bottom-6 md:max-w-none ${
         dir === 'rtl' ? 'md:left-6' : 'md:right-6'
       } ${
         isHiddenByCta || !hasScrolled
@@ -73,7 +73,7 @@ export function FloatingBookCallButton() {
       <LocalizedLink
         href="/book"
         aria-label={label}
-        className="inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-2xl border border-marhaban-gold/30 bg-marhaban-ink px-5 py-3 text-sm font-bold text-white shadow-[0_18px_45px_rgba(31,45,43,0.22)] transition hover:bg-marhaban-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream md:w-auto md:min-w-[184px] md:rounded-full"
+        className="inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-[1.25rem] border border-marhaban-gold/30 bg-marhaban-ink px-5 py-3 text-sm font-bold text-white shadow-[0_18px_45px_rgba(31,45,43,0.22)] transition hover:bg-marhaban-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream md:w-auto md:min-w-[184px] md:rounded-full"
       >
         <CalendarCheck className="h-4 w-4" aria-hidden="true" />
         <span>{label}</span>

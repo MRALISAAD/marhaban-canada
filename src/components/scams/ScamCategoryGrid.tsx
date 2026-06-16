@@ -94,7 +94,7 @@ export function ScamCategoryGrid({ categories }: ScamCategoryGridProps) {
           <LocalizedLink
             key={category.id}
             href={`/arnaques/${category.guideSlug}`}
-            className="group rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-5 shadow-warm-sm transition hover:-translate-y-0.5 hover:border-marhaban-leaf/30 hover:shadow-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/30"
+            className="group rounded-[2rem] border border-marhaban-leaf/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(251,247,239,0.94))] p-5 shadow-[0_16px_48px_rgba(31,45,43,0.08)] transition hover:-translate-y-0.5 hover:border-marhaban-leaf/30 hover:shadow-[0_22px_60px_rgba(31,45,43,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/30"
           >
             <div className="flex items-start gap-3">
               <span className="mt-1 rounded-2xl border border-marhaban-leaf/15 bg-marhaban-mint p-2">

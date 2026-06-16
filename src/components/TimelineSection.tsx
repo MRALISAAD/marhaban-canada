@@ -41,7 +41,8 @@ export function TimelineSection({ section, checked, onToggle, labels }: Timeline
   const sectionPct = pct(sectionDone, sectionTotal);
 
   return (
-    <section id={section.id} className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-5 shadow-warm-sm">
+    <section id={section.id} className="relative overflow-hidden rounded-[2rem] border border-marhaban-leaf/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(251,247,239,0.94))] p-5 shadow-[0_18px_54px_rgba(31,45,43,0.08)]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-marhaban-sand via-marhaban-leaf to-marhaban-orange" aria-hidden="true" />
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-start gap-3">
           <div className="mt-1 rounded-2xl border border-marhaban-leaf/15 bg-marhaban-mint p-2">{iconMap[section.id]}</div>

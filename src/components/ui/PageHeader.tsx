@@ -40,12 +40,12 @@ export function PageHeader({
   return (
     <header
       className={cn(
-        'relative overflow-hidden rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-6 shadow-warm-sm sm:p-8',
+        'relative overflow-hidden rounded-[2rem] border border-marhaban-leaf/14 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(250,247,242,0.92))] p-6 shadow-[0_24px_70px_rgba(31,45,43,0.08)] sm:p-8',
         className
       )}
       dir={dir}
     >
-      <div className="pointer-events-none absolute -top-16 end-8 h-44 w-44 rounded-full bg-marhaban-mint/70 blur-2xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-marhaban-sand via-marhaban-leaf to-marhaban-orange" aria-hidden="true" />
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className={cn('relative flex-1', alignClass)}>
           {eyebrow && (
@@ -53,14 +53,14 @@ export function PageHeader({
               {eyebrow}
             </p>
           )}
-          <h1 className={cn('mt-3 max-w-4xl text-3xl font-semibold leading-tight text-marhaban-ink sm:text-4xl', alignClass)}>
+          <h1 className={cn('mt-3 max-w-4xl text-3xl font-semibold leading-tight text-marhaban-ink sm:text-4xl lg:text-5xl', alignClass)}>
             {title}
           </h1>
           {subtitle && (
             <p className={cn('mt-3 max-w-3xl text-sm text-slate-700 sm:text-base', alignClass)}>{subtitle}</p>
           )}
           {intro && (
-            <p className={cn('mt-3 max-w-3xl text-sm text-slate-700 sm:text-base', alignClass)}>{intro}</p>
+            <p className={cn('mt-4 max-w-3xl text-sm text-slate-700 sm:text-base', alignClass)}>{intro}</p>
           )}
           {cta && (
             <div className={cn('mt-4', alignClass)}>

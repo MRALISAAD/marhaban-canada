@@ -1,6 +1,5 @@
 'use client';
 
-import { useCallback } from 'react';
 import type { ReactNode } from 'react';
 import Image from 'next/image';
 import type { LucideIcon } from 'lucide-react';
@@ -25,11 +24,9 @@ import {
 } from 'lucide-react';
 import LocalizedLink from '@/components/LocalizedLink';
 import { ProvinceSelector } from '@/components/ProvinceSelector';
-import { ProgressBar } from '@/components/ProgressBar';
 import { useLanguage } from '@/components/LanguageProvider';
 import { HomepageGsapEffects } from '@/components/animations/HomepageGsapEffects';
 import { getHtmlAttrs, type Locale } from '@/i18n/locales';
-import { useLocalStorageState } from '@/lib/useLocalStorageState';
 import { cn } from '@/lib/cn';
 
 type NeedCardData = {
@@ -383,16 +380,7 @@ const homeTexts = {
 export default function HomePage() {
   const { locale } = useLanguage();
   const { dir } = getHtmlAttrs(locale);
-  const [hasStarted, setHasStarted] = useLocalStorageState<boolean>('mc_has_started', {
-    defaultValue: false,
-    parse: (value) => value === 'true',
-    serialize: (value) => (value ? 'true' : 'false'),
-  });
   const t = homeTexts[locale] ?? homeTexts.fr;
-
-  const handleStart = useCallback(() => {
-    setHasStarted(true);
-  }, [setHasStarted]);
 
   return (
     <HomepageGsapEffects>
@@ -416,7 +404,7 @@ export default function HomePage() {
                   {t.primaryCta}
                   <CalendarCheck className="h-4 w-4" aria-hidden="true" />
                 </LocalizedLink>
-                <LocalizedLink href="/parcours" onClick={handleStart} className="inline-flex min-h-[54px] items-center gap-2 rounded-full border border-marhaban-leaf/25 bg-white/85 px-6 py-3 text-sm font-bold text-marhaban-ink shadow-warm-sm transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream">
+                <LocalizedLink href="/parcours" className="inline-flex min-h-[54px] items-center gap-2 rounded-full border border-marhaban-leaf/25 bg-white/85 px-6 py-3 text-sm font-bold text-marhaban-ink shadow-warm-sm transition hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-cream">
                   {t.secondaryCta}
                   <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
                 </LocalizedLink>
@@ -438,19 +426,23 @@ export default function HomePage() {
         </section>
 
         <section className="bg-marhaban-ink px-4 py-5 text-white sm:px-6 lg:px-8">
-          <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-[1fr_1fr] md:items-center" data-animate="section">
-            <ProgressBar progress={hasStarted ? 16 : 0} label={t.progressLabel} helper={t.progressHelper} />
-            <div className="rounded-2xl border border-white/10 bg-white/[0.07] p-4">
+          <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-[1.05fr_0.95fr] md:items-center" data-animate="section">
+            <div className="rounded-premium border border-white/10 bg-white/[0.06] p-5 shadow-warm-sm">
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-gold">{t.progressLabel}</p>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/72">{t.progressHelper}</p>
+            </div>
+            <div className="rounded-premium border border-white/10 bg-white/[0.08] p-4 shadow-warm-sm">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-white/65">Province / province / المقاطعة</p>
               <ProvinceSelector />
             </div>
           </div>
         </section>
 
         <SectionBand>
-          <SectionHeader eyebrow={t.needsEyebrow} title={t.needsTitle} text={t.needsText} />
+            <SectionHeader eyebrow={t.needsEyebrow} title={t.needsTitle} text={t.needsText} />
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" data-animate-group>
             {t.needs.map((item) => (
-              <NeedCard key={item.title} item={item} onStart={handleStart} />
+              <NeedCard key={item.title} item={item} />
             ))}
           </div>
         </SectionBand>
@@ -499,7 +491,7 @@ export default function HomePage() {
             <SectionHeader eyebrow={t.pathsEyebrow} title={t.pathsTitle} />
             <div className="flex flex-wrap gap-3 rounded-3xl border border-marhaban-leaf/15 bg-marhaban-cream/85 p-5 shadow-warm-sm">
               {t.tags.map((tag, index) => (
-                <JourneyTag key={tag.label} tag={tag} index={index} onStart={handleStart} />
+                <JourneyTag key={tag.label} tag={tag} index={index} />
               ))}
             </div>
           </div>
@@ -684,10 +676,10 @@ function BrandImagePanel({
   );
 }
 
-function NeedCard({ item, onStart }: { item: NeedCardData; onStart: () => void }) {
+function NeedCard({ item }: { item: NeedCardData }) {
   const Icon = item.icon;
   return (
-    <LocalizedLink href={item.href} onClick={item.href === '/parcours' || item.href === '/checklist/semaine-1' ? onStart : undefined} className="group flex min-h-[240px] flex-col justify-between rounded-3xl border border-marhaban-leaf/10 bg-white p-5 shadow-warm-sm transition hover:-translate-y-1 hover:shadow-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35" data-animate="card">
+    <LocalizedLink href={item.href} className="group flex min-h-[240px] flex-col justify-between rounded-3xl border border-marhaban-leaf/10 bg-white p-5 shadow-warm-sm transition hover:-translate-y-1 hover:shadow-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35" data-animate="card">
       <div>
         <div className="flex items-start justify-between gap-4">
           <span className="rounded-full bg-marhaban-mint px-3 py-1 text-xs font-bold uppercase tracking-[0.1em] text-marhaban-leaf">{item.label}</span>
@@ -737,10 +729,10 @@ function StepCard({ step, index }: { step: StepData; index: number }) {
   );
 }
 
-function JourneyTag({ tag, index, onStart }: { tag: { label: string; href: string }; index: number; onStart: () => void }) {
+function JourneyTag({ tag, index }: { tag: { label: string; href: string }; index: number }) {
   const isDark = index % 4 === 0;
   return (
-    <LocalizedLink href={tag.href} onClick={tag.href === '/parcours' || tag.href === '/checklist' ? onStart : undefined} className={cn('inline-flex min-h-[48px] items-center rounded-full px-5 py-3 text-sm font-bold shadow-warm-sm transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35', isDark ? 'bg-marhaban-ink text-white' : 'bg-white text-marhaban-ink')} data-animate="pill">
+    <LocalizedLink href={tag.href} className={cn('inline-flex min-h-[48px] items-center rounded-full px-5 py-3 text-sm font-bold shadow-warm-sm transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35', isDark ? 'bg-marhaban-ink text-white' : 'bg-white text-marhaban-ink')} data-animate="pill">
       {tag.label}
     </LocalizedLink>
   );

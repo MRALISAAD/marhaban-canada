@@ -81,11 +81,12 @@ export function SectionBlock({
     <section
       id={id}
       className={cn(
-        'rounded-3xl border border-marhaban-leaf/12 bg-white/90 p-6 shadow-warm-sm',
+        'relative overflow-hidden rounded-[2rem] border border-marhaban-leaf/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(251,247,239,0.94))] p-6 shadow-[0_18px_54px_rgba(31,45,43,0.08)]',
         className
       )}
       dir={dir}
     >
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-marhaban-mint via-marhaban-leaf/70 to-marhaban-sand" aria-hidden="true" />
       <div className="flex items-start gap-3">
         {IconComponent && (
           <span className="mt-1 flex-shrink-0 rounded-2xl border border-marhaban-leaf/15 bg-marhaban-mint p-2.5">

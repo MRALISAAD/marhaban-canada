@@ -342,14 +342,11 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <nav className="hidden items-center gap-1 text-sm text-slate-700 md:flex" aria-label={navAriaLabel}>
-            {/* Primary links */}
             {primaryLinks.map((link) => (
               <Link
                 key={link.key}
                 className={`relative flex min-h-[44px] items-center px-3 transition-all duration-150 ease-in-out hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md ${
-                  link.isActive
-                    ? 'font-semibold text-marhaban-ink'
-                    : 'font-medium text-slate-600'
+                  link.isActive ? 'font-semibold text-marhaban-ink' : 'font-medium text-slate-600'
                 }`}
                 href={link.href}
                 aria-current={link.isActive ? 'page' : undefined}
@@ -363,75 +360,25 @@ export function Navbar() {
                 )}
               </Link>
             ))}
-            
-            {/* Plus dropdown */}
-            <div className="relative">
-              <button
-                ref={plusButtonRef}
-                type="button"
-                onClick={() => setIsPlusMenuOpen((prev) => !prev)}
-                onMouseEnter={() => setIsPlusMenuOpen(true)}
+            <span className="mx-1 h-5 w-px bg-stone-200" aria-hidden="true" />
+            {secondaryLinks.map((link) => (
+              <Link
+                key={link.key}
                 className={`relative flex min-h-[44px] items-center px-3 transition-all duration-150 ease-in-out hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md ${
-                  isSecondaryActive
-                    ? 'font-semibold text-marhaban-ink'
-                    : 'font-medium text-slate-600'
+                  link.isActive ? 'font-semibold text-marhaban-ink' : 'font-medium text-slate-600'
                 }`}
-                aria-expanded={isPlusMenuOpen}
-                aria-haspopup="true"
-                aria-label={`${nav.plus} ${locale === 'fr' ? 'menu' : locale === 'en' ? 'menu' : 'القائمة'}`}
+                href={link.href}
+                aria-current={link.isActive ? 'page' : undefined}
               >
-                {nav.plus}
-                <svg
-                  className={`h-4 w-4 transition-transform duration-200 ${
-                    dir === 'rtl' ? 'mr-1' : 'ml-1'
-                  } ${isPlusMenuOpen ? 'rotate-180' : ''}`}
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path d="M19 9l-7 7-7-7" />
-                </svg>
-                {isSecondaryActive && (
+                {link.label}
+                {link.isActive && (
                   <span
                     className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-marhaban-leaf"
                     aria-hidden="true"
                   />
                 )}
-              </button>
-              
-              {/* Dropdown menu */}
-              {isPlusMenuOpen && (
-                <div
-                  ref={plusMenuRef}
-                  className={`absolute ${dir === 'rtl' ? 'left-0' : 'right-0'} top-full mt-2 w-56 rounded-2xl border border-stone-200 bg-white/95 shadow-warm z-50 py-1`}
-                  role="menu"
-                  aria-orientation="vertical"
-                  onMouseLeave={() => setIsPlusMenuOpen(false)}
-                >
-                  {secondaryLinks.map((link, index) => (
-                    <Link
-                      key={link.key}
-                      ref={index === 0 ? firstPlusMenuItemRef : null}
-                      href={link.href}
-                      className={`block min-h-[44px] px-4 py-2.5 text-sm transition-colors hover:bg-marhaban-mint/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-inset ${
-                        link.isActive
-                          ? 'bg-marhaban-mint/60 font-semibold text-marhaban-ink'
-                          : 'text-slate-700'
-                      }`}
-                      role="menuitem"
-                      aria-current={link.isActive ? 'page' : undefined}
-                      onClick={() => setIsPlusMenuOpen(false)}
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+              </Link>
+            ))}
           </nav>
 
           {/* Actions */}
