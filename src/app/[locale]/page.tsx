@@ -102,7 +102,7 @@ export default function HomePage() {
   const guides = t.guides.map((guide, index) => ({ ...guide, icon: guideIcons[index] ?? BookOpenCheck }));
 
   return (
-    <main className="warm-page" dir={dir}>
+    <div className="warm-page" dir={dir}>
       <SectionReveal className="border-b border-marhaban-leaf/10 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
           <div>
@@ -222,6 +222,6 @@ export default function HomePage() {
         href={bookingHref}
         disclaimer={legalDisclaimer[locale]}
       />
-    </main>
+    </div>
   );
 }
