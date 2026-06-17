@@ -64,7 +64,41 @@ async function getSupabaseBookings() {
   }
 }
 
+async function getSupabaseCaseBookingIds() {
+  try {
+    const supabase = createServerClient();
+    const { data, error } = await supabase
+      .from('case_files')
+      .select('booking_id')
+      .not('booking_id', 'is', null);
+
+    if (error) {
+      console.error('Unable to load Supabase case booking ids', error);
+      return [];
+    }
+
+    return (data ?? [])
+      .map((row) => row.booking_id)
+      .filter((bookingId): bookingId is string => typeof bookingId === 'string');
+  } catch (error) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Supabase case booking ids unavailable', error);
+    }
+    return [];
+  }
+}
+
 export default async function AdminBookingsPage() {
-  const supabaseBookings = await getSupabaseBookings();
-  return <AdminBookingsClient supabaseBookings={supabaseBookings} mockBookings={mockBookings} />;
+  const [supabaseBookings, supabaseCaseBookingIds] = await Promise.all([
+    getSupabaseBookings(),
+    getSupabaseCaseBookingIds(),
+  ]);
+
+  return (
+    <AdminBookingsClient
+      supabaseBookings={supabaseBookings}
+      supabaseCaseBookingIds={supabaseCaseBookingIds}
+      mockBookings={mockBookings}
+    />
+  );
 }

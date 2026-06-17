@@ -4,10 +4,13 @@ import { useMemo, useState, useSyncExternalStore } from 'react';
 import { FolderOpen, Save } from 'lucide-react';
 import { AdminBadge, CaseStatusBadge } from '@/components/admin/AdminBadge';
 import { AdminCard } from '@/components/admin/AdminCard';
+import { AdminNotesPanel } from '@/components/admin/AdminNotesPanel';
 import { getLocalCases, subscribeToLocalCases, updateLocalCase, type CasePriority, type LocalCase } from '@/lib/admin/local-case-store';
 import type { CaseFile, CaseStatus } from '@/types/admin';
 
 type AdminCasesClientProps = {
+  supabaseCases?: readonly CaseFile[];
+  supabaseCaseIds?: ReadonlySet<string>;
   mockCases: readonly CaseFile[];
 };
 
@@ -73,7 +76,7 @@ function getPriority(caseFile: EditableCase): CasePriority {
   return caseFile.priority ?? 'normal';
 }
 
-export function AdminCasesClient({ mockCases }: AdminCasesClientProps) {
+export function AdminCasesClient({ supabaseCases = [], supabaseCaseIds, mockCases }: AdminCasesClientProps) {
   const [caseOverrides, setCaseOverrides] = useState<CaseOverrides>({});
   const [selectedCaseId, setSelectedCaseId] = useState<string | null>(null);
   const [statusDraft, setStatusDraft] = useState<CaseStatus>('active');
@@ -81,16 +84,33 @@ export function AdminCasesClient({ mockCases }: AdminCasesClientProps) {
   const [nextStepDraft, setNextStepDraft] = useState('');
   const [notesDraft, setNotesDraft] = useState('');
   const [savedMessage, setSavedMessage] = useState('');
+  const [isSavingCase, setIsSavingCase] = useState(false);
   const localCases = useSyncExternalStore(subscribeToLocalCases, getLocalCases, () => emptyCases);
+  const supabaseBookingIds = useMemo(
+    () => new Set(
+      (supabaseCases ?? [])
+        .map((caseFile) => caseFile.bookingId)
+        .filter(Boolean) as string[],
+    ),
+    [supabaseCases],
+  );
+  const deduplicatedLocalCases = useMemo(
+    () => localCases.filter((caseFile) => {
+      const bookingId = caseFile.sourceBookingId ?? caseFile.bookingId;
+      return !bookingId || !supabaseBookingIds.has(bookingId);
+    }),
+    [localCases, supabaseBookingIds],
+  );
 
   const cases = useMemo(
     () => [
-      ...localCases.map((caseFile) => applyOverride(caseFile, caseOverrides)),
+      ...(supabaseCases ?? []).map((caseFile) => applyOverride(caseFile, caseOverrides)),
+      ...deduplicatedLocalCases.map((caseFile) => applyOverride(caseFile, caseOverrides)),
       ...mockCases.map((caseFile) => applyOverride(caseFile, caseOverrides)),
     ],
-    [caseOverrides, localCases, mockCases],
+    [caseOverrides, deduplicatedLocalCases, mockCases, supabaseCases],
   );
-  const localCaseIds = useMemo(() => new Set(localCases.map((caseFile) => caseFile.id)), [localCases]);
+  const localCaseIds = useMemo(() => new Set(deduplicatedLocalCases.map((caseFile) => caseFile.id)), [deduplicatedLocalCases]);
   const selectedCase = selectedCaseId ? cases.find((caseFile) => caseFile.id === selectedCaseId) : undefined;
 
   function openCase(caseFile: EditableCase) {
@@ -102,7 +122,7 @@ export function AdminCasesClient({ mockCases }: AdminCasesClientProps) {
     setSavedMessage('');
   }
 
-  function saveCase() {
+  async function saveCase() {
     if (!selectedCase) return;
 
     const updates: Partial<EditableCase> = {
@@ -113,6 +133,45 @@ export function AdminCasesClient({ mockCases }: AdminCasesClientProps) {
       internalNotes: notesDraft.trim() ? [notesDraft.trim()] : [],
       updatedAt: new Date().toISOString(),
     };
+
+    const keepUpdatesInMemory = () => {
+      setCaseOverrides((current) => ({
+        ...current,
+        [selectedCase.id]: {
+          ...current[selectedCase.id],
+          ...updates,
+        },
+      }));
+    };
+
+    if (supabaseCaseIds?.has(selectedCase.id)) {
+      setIsSavingCase(true);
+
+      try {
+        const response = await fetch(`/api/cases/${selectedCase.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            status: statusDraft,
+            next_step: nextStepDraft.trim(),
+            internal_notes: notesDraft.trim() ? [notesDraft.trim()] : [],
+          }),
+        });
+        const result = await response.json();
+
+        keepUpdatesInMemory();
+        setSavedMessage(response.ok && result.ok === true
+          ? 'Dossier Supabase sauvegardé.'
+          : 'Erreur Supabase, changements gardés en mémoire.');
+      } catch {
+        keepUpdatesInMemory();
+        setSavedMessage('Erreur Supabase, changements gardés en mémoire.');
+      } finally {
+        setIsSavingCase(false);
+      }
+
+      return;
+    }
 
     setCaseOverrides((current) => ({
       ...current,
@@ -149,13 +208,14 @@ export function AdminCasesClient({ mockCases }: AdminCasesClientProps) {
           </div>
           <div className="flex flex-wrap gap-2">
             <AdminBadge label="Mock data" tone="dark" />
+            {supabaseCases.length > 0 ? <AdminBadge label={`${supabaseCases.length} Supabase`} tone="success" /> : null}
             {localCases.length > 0 ? <AdminBadge label={`${localCases.length} local`} tone="warning" /> : null}
           </div>
         </div>
       </header>
 
       <div className="rounded-[1.75rem] border border-marhaban-leaf/12 bg-white/75 px-5 py-4 text-sm leading-relaxed text-marhaban-muted shadow-warm-sm">
-        Les dossiers locaux viennent du navigateur actuel. Ils seront remplacés par Supabase plus tard.
+        Les dossiers Supabase sont affichés en premier. Les dossiers locaux du navigateur restent disponibles en fallback.
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_400px]">
@@ -163,6 +223,7 @@ export function AdminCasesClient({ mockCases }: AdminCasesClientProps) {
           {cases.map((caseFile) => {
             const priority = getPriority(caseFile);
             const isLocal = localCaseIds.has(caseFile.id);
+            const isSupabase = supabaseCaseIds?.has(caseFile.id);
 
             return (
               <AdminCard key={caseFile.id} className="p-5">
@@ -173,6 +234,7 @@ export function AdminCasesClient({ mockCases }: AdminCasesClientProps) {
                     </p>
                     <p className="mt-1 text-sm text-marhaban-muted">{caseFile.email}</p>
                   </div>
+                  {isSupabase ? <AdminBadge label="Supabase" tone="success" className="px-2 py-0.5 text-[10px]" /> : null}
                   {isLocal ? <AdminBadge label="Local" tone="warning" className="px-2 py-0.5 text-[10px]" /> : null}
                 </div>
                 <p className="mt-4 line-clamp-2 text-sm leading-relaxed text-marhaban-muted">
@@ -205,9 +267,10 @@ export function AdminCasesClient({ mockCases }: AdminCasesClientProps) {
           })}
         </section>
 
-        <AdminCard title="Détail dossier" eyebrow="Suivi">
-          {selectedCase ? (
-            <div className="space-y-5">
+        <div className="space-y-6">
+          <AdminCard title="Détail dossier" eyebrow="Suivi">
+            {selectedCase ? (
+              <div className="space-y-5">
               <div className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
@@ -302,25 +365,33 @@ export function AdminCasesClient({ mockCases }: AdminCasesClientProps) {
                 <button
                   type="button"
                   onClick={saveCase}
+                  disabled={isSavingCase}
                   className="mt-5 inline-flex min-h-[42px] items-center gap-2 rounded-full bg-marhaban-forestDark px-5 py-2 text-sm font-bold text-white shadow-warm-sm transition hover:bg-marhaban-clay"
                 >
                   <Save className="h-4 w-4" aria-hidden="true" />
-                  Sauvegarder
+                  {isSavingCase ? 'Sauvegarde...' : 'Sauvegarder'}
                 </button>
                 {savedMessage ? <p className="mt-3 text-xs font-semibold text-marhaban-clay">{savedMessage}</p> : null}
               </div>
-            </div>
-          ) : (
-            <div className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 p-5">
-              <p className="font-semibold text-marhaban-forestDark">
-                Sélectionne un dossier pour voir les détails.
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-marhaban-muted">
-                Les dossiers locaux sont sauvegardés dans ce navigateur. Les dossiers mock restent temporaires.
-              </p>
-            </div>
-          )}
-        </AdminCard>
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 p-5">
+                <p className="font-semibold text-marhaban-forestDark">
+                  Sélectionne un dossier pour voir les détails.
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-marhaban-muted">
+                  Les dossiers locaux sont sauvegardés dans ce navigateur. Les dossiers mock restent temporaires.
+                </p>
+              </div>
+            )}
+          </AdminCard>
+
+          {selectedCase ? (
+            <AdminCard title="Notes internes" eyebrow="Suivi">
+              <AdminNotesPanel targetType="case_file" targetId={selectedCase.id} />
+            </AdminCard>
+          ) : null}
+        </div>
       </div>
     </div>
   );
