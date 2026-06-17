@@ -1,5 +1,6 @@
 'use client';
 
+import { Check } from 'lucide-react';
 import { AnimatedCard } from '@/components/animations/MarketingMotion';
 
 type Props = {
@@ -25,10 +26,11 @@ export function TrustNotice({ title, text, bullets, tone = 'light' }: Props) {
           {text}
         </p>
         {bullets?.length ? (
-          <ul className="mt-4 space-y-2 text-sm">
+          <ul className="mt-4 space-y-3 text-sm">
             {bullets.map((bullet) => (
-              <li key={bullet} className={tone === 'dark' ? 'text-[#d8e7df]' : 'text-marhaban-ink/82'}>
-                • {bullet}
+              <li key={bullet} className={`flex items-start gap-2.5 ${tone === 'dark' ? 'text-[#d8e7df]' : 'text-marhaban-ink/82'}`}>
+                <Check className={`mt-0.5 h-4 w-4 flex-shrink-0 ${tone === 'dark' ? 'text-marhaban-gold/70' : 'text-marhaban-leaf'}`} aria-hidden="true" />
+                {bullet}
               </li>
             ))}
           </ul>

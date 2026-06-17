@@ -230,7 +230,7 @@ export function ScamCheckForm({ locale, dir }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="grid gap-5" dir={dir}>
-      <div className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-mint/40 px-4 py-3 text-xs leading-relaxed text-marhaban-ink/75">
+      <div className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-mint/40 px-4 py-4 text-sm leading-relaxed text-marhaban-ink/75">
         {t.trust}
       </div>
 
@@ -358,7 +358,7 @@ export function ScamCheckForm({ locale, dir }: Props) {
 
       <button
         type="submit"
-        className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-full bg-marhaban-forestDark px-6 py-3 text-sm font-bold text-white shadow-warm-sm transition hover:bg-marhaban-clay focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 sm:w-auto"
+        className="inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-full bg-marhaban-forestDark px-6 py-3 text-sm font-bold text-white shadow-warm-sm transition hover:bg-marhaban-clay focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 sm:w-auto"
       >
         {t.submit}
         <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
