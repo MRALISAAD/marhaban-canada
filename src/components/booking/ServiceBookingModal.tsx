@@ -5,6 +5,8 @@ import { createPortal } from 'react-dom';
 import { ArrowRight, CheckCircle2, X } from 'lucide-react';
 import type { Locale } from '@/i18n/locales';
 import type { CalendlyEvent } from '@/lib/calendly';
+import { addLocalBooking } from '@/lib/admin/local-booking-store';
+import type { Booking } from '@/types/admin';
 
 type BookingFormData = {
   fullName: string;
@@ -161,6 +163,29 @@ const copy = {
   },
 } as const;
 
+const bookingServiceMap: Record<CalendlyEvent['key'], Booking['service']> = {
+  discovery: 'discovery',
+  orientation: 'orientation',
+  antiScam: 'anti_scam',
+};
+
+function toClientStatus(value: string): Booking['clientStatus'] {
+  if (value === 'student' || value === 'worker' || value === 'newcomer' || value === 'other') {
+    return value;
+  }
+
+  return 'other';
+}
+
+function toPreferredLanguage(value: string, fallback: Locale): Locale {
+  if (value === 'fr' || value === 'en' || value === 'ar') return value;
+  return fallback;
+}
+
+function createLocalBookingId() {
+  return `local_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+}
+
 function getServiceReassurance(locale: Locale, serviceKey: CalendlyEvent['key']) {
   if (locale === 'en') {
     if (serviceKey === 'discovery') return 'We will help you confirm whether this is the right starting point before committing to a longer call.';
@@ -242,6 +267,23 @@ export function ServiceBookingModal({ isOpen, onClose, locale, service, price }:
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const localBooking: Booking = {
+      id: createLocalBookingId(),
+      createdAt: new Date().toISOString(),
+      fullName: formData.fullName.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim() || undefined,
+      cityProvince: formData.cityProvince.trim(),
+      service: bookingServiceMap[service.key],
+      serviceLabel: service.title,
+      duration: service.duration,
+      price,
+      status: 'new',
+      clientStatus: toClientStatus(formData.status),
+      preferredLanguage: toPreferredLanguage(formData.language, locale),
+      message: formData.message.trim(),
+      nextAction: 'Répondre avec les disponibilités.',
+    };
     const payload = {
       service: {
         key: service.key,
@@ -250,8 +292,10 @@ export function ServiceBookingModal({ isOpen, onClose, locale, service, price }:
         price,
       },
       requester: formData,
+      booking: localBooking,
     };
 
+    addLocalBooking(localBooking);
     console.log('Marhaban Canada booking request', payload);
     setIsSubmitted(true);
   }

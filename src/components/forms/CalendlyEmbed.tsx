@@ -6,7 +6,7 @@ import type { Locale } from '@/i18n/locales';
 import { cn } from '@/lib/cn';
 import { calendlyEvents, type CalendlyEvent } from '@/lib/calendly';
 import { AnimatedCard } from '@/components/animations/MarketingMotion';
-import { ServiceBookingModal } from '@/components/forms/ServiceBookingModal';
+import { ServiceBookingModal } from '@/components/booking/ServiceBookingModal';
 
 type Props = {
   locale: Locale;
