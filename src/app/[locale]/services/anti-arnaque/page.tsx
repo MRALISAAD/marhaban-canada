@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ArrowRight, AlertTriangle, ShieldCheck } from 'lucide-react';
 import { getHtmlAttrs, isLocale, type Locale } from '@/i18n/locales';
-import { bookingPath, resourcesPath, servicesPath } from '@/lib/routes';
+import { accompanimentPath, bookingPath, resourcesPath } from '@/lib/routes';
 import { PageShell } from '@/components/layout/PageShell';
 import { Section } from '@/components/layout/Section';
 import { PageHero } from '@/components/sections/PageHero';
@@ -162,21 +162,40 @@ export default async function AntiScamServicePage({ params }: Props) {
           title={t.situationsTitle}
           text={t.situationsText}
         />
-        <div className="mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {redFlags.map((flag) => (
-            <div
-              key={flag}
-              className="flex items-start gap-3 rounded-[1.75rem] border border-marhaban-clay/20 bg-white p-5 shadow-warm-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-marhaban-clay/35 hover:shadow-warm-sm"
-            >
-              <span className="mt-0.5 grid h-8 w-8 flex-shrink-0 place-items-center rounded-xl bg-marhaban-clay/8 text-marhaban-clay">
-                <AlertTriangle className="h-4 w-4" aria-hidden="true" />
+        <div className="mt-9 rounded-[2rem] border border-marhaban-clay/20 bg-white p-5 shadow-warm sm:rounded-[2.5rem] sm:p-6 lg:p-7">
+          <div className="grid gap-5 lg:grid-cols-[0.78fr_1.22fr] lg:items-center lg:gap-8">
+            <div className="rounded-[1.75rem] border border-marhaban-clay/20 bg-marhaban-alertBg/65 p-6">
+              <span className="grid h-12 w-12 place-items-center rounded-full border border-marhaban-clay/20 bg-white text-marhaban-clay shadow-warm-sm">
+                <AlertTriangle className="h-5 w-5" aria-hidden="true" />
               </span>
-              <div>
-                <p className="text-sm font-semibold text-marhaban-ink">{flag}</p>
-                <p className="mt-0.5 text-xs text-marhaban-clay">{signalLabel}</p>
-              </div>
+              <h3 className="mt-4 font-heading text-2xl font-semibold leading-tight text-marhaban-ink">
+                {locale === 'fr' ? 'Quelques signaux suffisent pour ralentir.' : locale === 'en' ? 'A few signals are enough to slow down.' : 'بعض الإشارات تكفي للتريث.'}
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-marhaban-muted">
+                {locale === 'fr'
+                  ? "Ce n'est pas un verdict. C'est une invitation à vérifier avant d'envoyer de l'argent ou des documents."
+                  : locale === 'en'
+                    ? 'This is not a verdict. It is an invitation to verify before sending money or documents.'
+                    : 'هذا ليس حكماً نهائياً. بل دعوة للتحقق قبل إرسال المال أو الوثائق.'}
+              </p>
             </div>
-          ))}
+            <div className="grid gap-3 sm:grid-cols-2">
+              {redFlags.map((flag) => (
+                <div
+                  key={flag}
+                  className="flex items-start gap-3 rounded-[1.25rem] border border-marhaban-clay/15 bg-marhaban-cream/60 p-4 transition-all duration-200 hover:border-marhaban-clay/35 hover:bg-marhaban-alertBg/45"
+                >
+                  <span className="mt-0.5 grid h-8 w-8 flex-shrink-0 place-items-center rounded-xl bg-marhaban-clay/8 text-marhaban-clay">
+                    <AlertTriangle className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-marhaban-ink">{flag}</p>
+                    <p className="mt-0.5 text-xs text-marhaban-clay">{signalLabel}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </Section>
 
@@ -220,7 +239,7 @@ export default async function AntiScamServicePage({ params }: Props) {
       {/* ── Sources + Avant de payer ── */}
       <Section tone="muted">
         <div className="grid gap-6 lg:grid-cols-[1fr_0.95fr] lg:items-start">
-          <div className="rounded-[1.75rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm-sm sm:p-7">
+          <div className="rounded-[2rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm-sm sm:p-7">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">
               {locale === 'fr' ? 'Sources sûres' : locale === 'en' ? 'Safe sources' : 'مصادر موثوقة'}
             </p>
@@ -243,7 +262,7 @@ export default async function AntiScamServicePage({ params }: Props) {
             </ul>
           </div>
 
-          <div className="rounded-[1.75rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm-sm sm:p-7">
+          <div className="rounded-[2rem] border border-marhaban-clay/20 bg-white p-6 shadow-warm-sm sm:p-7">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">
               {locale === 'fr' ? 'Avant de payer' : locale === 'en' ? 'Before paying' : 'قبل الدفع'}
             </p>
@@ -260,7 +279,7 @@ export default async function AntiScamServicePage({ params }: Props) {
                 <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
               </a>
               <a
-                href={servicesPath(locale)}
+                href={accompanimentPath(locale)}
                 className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-marhaban-leaf/20 bg-marhaban-mint/40 px-6 py-3 text-sm font-bold text-marhaban-ink transition hover:bg-marhaban-mint hover:border-marhaban-leaf/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
               >
                 {locale === 'fr' ? 'Voir les services' : locale === 'en' ? 'See services' : 'عرض الخدمات'}

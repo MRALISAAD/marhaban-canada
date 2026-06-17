@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-import { Briefcase, Bus, Globe, HeartPulse, Home, Shield, Star, Users } from 'lucide-react';
+import { ArrowRight, Briefcase, Bus, Globe, HeartPulse, Home, Shield, Star, Users } from 'lucide-react';
 import { useLanguage } from '@/components/LanguageProvider';
 import { resourcesData } from '@/content/resourcesData';
 import { useProvince } from '@/components/ProvinceProvider';
@@ -99,23 +99,27 @@ export default function RessourcesPage() {
   };
 
   return (
-    <main className="warm-page px-4 py-12" dir={dir} lang={locale}>
-      <div className="mx-auto w-full max-w-6xl space-y-6">
-        <div className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-6 shadow-warm-sm sm:p-8">
+    <main className="warm-page px-4 pt-16 pb-20 sm:px-6 sm:pt-20" dir={dir} lang={locale}>
+      <div className="mx-auto w-full max-w-6xl space-y-8">
+
+        {/* ── Hero / header + filters ── */}
+        <div className="rounded-[2rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-clay">
               {dictionary.labels.eyebrow}
             </p>
           </div>
-          <h1 className={`mt-3 text-3xl font-semibold leading-tight text-marhaban-ink sm:text-4xl ${alignClass}`}>
+          <h1 className={`mt-3 font-heading text-3xl font-semibold leading-tight text-marhaban-ink sm:text-4xl ${alignClass}`}>
             {resources.header.title}
           </h1>
-          <p className={`mt-3 max-w-3xl text-sm text-slate-700 sm:text-base ${alignClass}`}>{resources.header.subtitle}</p>
-          <div className={`mt-3 space-y-1 text-xs text-slate-500 ${alignClass}`}>
+          <p className={`mt-3 max-w-3xl text-sm leading-relaxed text-marhaban-ink/78 sm:text-base ${alignClass}`}>
+            {resources.header.subtitle}
+          </p>
+          <div className={`mt-3 space-y-1 text-xs text-marhaban-muted ${alignClass}`}>
             <p>{resources.accompaniment.shortDefinition}</p>
-            <p className="font-semibold text-slate-600">{resources.accompaniment.noProxyLine}</p>
+            <p className="font-semibold text-marhaban-ink/82">{resources.accompaniment.noProxyLine}</p>
           </div>
-          <div className="mt-4 grid gap-3 md:grid-cols-[1.2fr_0.8fr]">
+          <div className="mt-5 grid gap-3 md:grid-cols-[1.2fr_0.8fr]">
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
@@ -158,29 +162,54 @@ export default function RessourcesPage() {
           </div>
         </div>
 
-        <section className="grid gap-4 md:grid-cols-3">
-          {guideCards.map((guide) => (
-            <div key={guide.id} className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-5 shadow-warm-sm">
-              <p className="text-sm font-semibold text-marhaban-ink">{guide.data.title}</p>
-              <p className="mt-1 text-xs text-slate-600">{guide.data.body}</p>
-              <div className="mt-4">
-                <LocalizedLink
-                  href={guide.data.href}
-                  className="inline-flex items-center rounded-full bg-marhaban-ink px-4 py-2 text-xs font-semibold text-white hover:bg-marhaban-leaf"
-                >
-                  {guide.data.ctaLabel}
-                </LocalizedLink>
-              </div>
+        {/* ── Guide cards ── */}
+        <section className="rounded-[2rem] border border-marhaban-leaf/15 bg-marhaban-forestDark p-5 text-white shadow-warm sm:rounded-[2.5rem] sm:p-6 lg:p-7">
+          <div className="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-start lg:gap-8">
+            <div className={alignClass}>
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-gold">
+                {locale === 'fr' ? 'Guides rapides' : locale === 'en' ? 'Quick guides' : 'أدلة سريعة'}
+              </p>
+              <h2 className="mt-3 font-heading text-2xl font-semibold leading-tight text-white sm:text-3xl">
+                {locale === 'fr' ? 'Commencer par ce qui débloque le plus.' : locale === 'en' ? 'Start with what unlocks the most.' : 'ابدأ بما يفتح الطريق أكثر.'}
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-[#edf7f2]">
+                {locale === 'fr'
+                  ? 'Trois points de départ pour éviter de chercher partout à la fois.'
+                  : locale === 'en'
+                    ? 'Three starting points so you do not search everywhere at once.'
+                    : 'ثلاث نقاط بداية حتى لا تبحث في كل مكان دفعة واحدة.'}
+              </p>
             </div>
-          ))}
+            <div className="grid gap-3 md:grid-cols-3">
+              {guideCards.map((guide) => (
+                <div
+                  key={guide.id}
+                  className="flex flex-col rounded-[1.5rem] border border-white/12 bg-white/[0.07] p-5 transition duration-200 hover:bg-white/[0.11]"
+                >
+                  <p className="font-heading text-lg font-semibold leading-tight text-white">{guide.data.title}</p>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-[#edf7f2]">{guide.data.body}</p>
+                  <div className="mt-5">
+                    <LocalizedLink
+                      href={guide.data.href}
+                      className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-marhaban-gold px-5 py-2.5 text-sm font-bold text-marhaban-ink shadow-[0_14px_40px_rgba(213,168,79,0.22)] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
+                    >
+                      {guide.data.ctaLabel}
+                      <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+                    </LocalizedLink>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
 
         {filteredCategories.length === 0 ? (
-          <div className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-5 text-sm text-slate-600 shadow-warm-sm">
+          <div className="rounded-[1.75rem] border border-marhaban-leaf/15 bg-white p-6 text-sm text-marhaban-muted shadow-warm-sm">
             {dictionary.labels.emptyState}
           </div>
         ) : null}
 
+        {/* ── Categories ── */}
         <div className="space-y-6">
           {filteredCategories.map((category) => {
             const Icon = categoryIconMap[category.id] ?? Globe;
@@ -188,30 +217,36 @@ export default function RessourcesPage() {
             const hint = categoryHints[sectionKey]?.hint;
             const recommendedItem = category.items.find((item) => item.recommended);
             return (
-              <section key={category.id} className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-6 shadow-warm-sm">
+              <section
+                key={category.id}
+                className="rounded-[1.75rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm-sm sm:p-7"
+              >
                 <div className="flex items-start gap-3">
                   <span className="mt-1 rounded-2xl border border-marhaban-leaf/15 bg-marhaban-mint p-2">
                     <Icon className="h-4 w-4 text-marhaban-leaf" />
                   </span>
                   <div>
-                    <h2 className={`text-lg font-semibold text-marhaban-ink ${alignClass}`}>
+                    <h2 className={`font-heading text-xl font-semibold text-marhaban-ink ${alignClass}`}>
                       {categoryHints[sectionKey]?.title ?? category.title}
                     </h2>
                     {hint ? <SectionHint text={hint} alignClass={alignClass} /> : null}
                   </div>
                 </div>
-                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
                   {category.items.map((item) => {
                     const text = dictionary.items[item.id];
                     const isFav = favorites.includes(item.id);
                     const isRecommended = recommendedItem?.id === item.id;
                     return (
-                      <div key={item.id} className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 p-4">
+                      <div
+                        key={item.id}
+                        className="rounded-[1.25rem] border border-marhaban-leaf/12 bg-marhaban-cream/70 p-5"
+                      >
                         <div className="flex items-center justify-between gap-2">
                           <p className="text-sm font-semibold text-marhaban-ink">{text?.title ?? item.id}</p>
                           <div className="flex items-center gap-2">
                             {item.official ? (
-                              <span className="rounded-full border border-marhaban-leaf/15 bg-white px-2 py-0.5 text-[0.65rem] font-semibold text-slate-600">
+                              <span className="rounded-full border border-marhaban-leaf/15 bg-white px-2 py-0.5 text-[0.65rem] font-semibold text-marhaban-ink/60">
                                 {dictionary.labels.officialLabel}
                               </span>
                             ) : null}
@@ -219,32 +254,32 @@ export default function RessourcesPage() {
                           </div>
                         </div>
                         <div className="mt-2 flex flex-wrap gap-2">
-                          <span className="rounded-full border border-marhaban-leaf/15 bg-white px-2 py-0.5 text-[0.65rem] text-slate-600">
+                          <span className="rounded-full border border-marhaban-leaf/15 bg-white px-2 py-0.5 text-[0.65rem] text-marhaban-ink/60">
                             {category.title}
                           </span>
                           {item.provinces.includes('all') ? (
-                            <span className="rounded-full border border-marhaban-leaf/15 bg-white px-2 py-0.5 text-[0.65rem] text-slate-600">
+                            <span className="rounded-full border border-marhaban-leaf/15 bg-white px-2 py-0.5 text-[0.65rem] text-marhaban-ink/60">
                               {dictionary.labels.allProvincesLabel}
                             </span>
                           ) : (
                             item.provinces.map((prov) => (
                               <span
                                 key={prov}
-                                className="rounded-full border border-marhaban-leaf/15 bg-white px-2 py-0.5 text-[0.65rem] text-slate-600"
+                                className="rounded-full border border-marhaban-leaf/15 bg-white px-2 py-0.5 text-[0.65rem] text-marhaban-ink/60"
                               >
                                 {provinceLabelMap[prov] ?? prov}
                               </span>
                             ))
                           )}
                         </div>
-                        <p className="mt-1 text-xs text-slate-600">{text?.description ?? ''}</p>
+                        <p className="mt-2 text-xs leading-relaxed text-marhaban-muted">{text?.description ?? ''}</p>
                         <div className="mt-3 flex flex-wrap items-center gap-2">
                           {isExternal(item.url) ? (
                             <SecureExternalLink href={item.url} label={resources.ui.openResource} />
                           ) : (
                             <Link
                               href={item.url}
-                              className="inline-flex items-center rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs text-slate-700 hover:text-marhaban-ink"
+                              className="inline-flex items-center gap-1.5 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1.5 text-xs font-medium text-marhaban-ink/80 transition hover:border-marhaban-leaf/30 hover:text-marhaban-ink"
                             >
                               {resources.ui.openResource}
                             </Link>
@@ -252,9 +287,9 @@ export default function RessourcesPage() {
                           <button
                             type="button"
                             onClick={() => toggleFavorite(item.id)}
-                            className="inline-flex items-center gap-1 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs text-slate-700 hover:text-marhaban-ink"
+                            className="inline-flex items-center gap-1 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1.5 text-xs font-medium text-marhaban-ink/80 transition hover:border-marhaban-leaf/30 hover:text-marhaban-ink"
                           >
-                            <Star className={`h-3 w-3 ${isFav ? 'text-amber-500' : 'text-slate-400'}`} />
+                            <Star className={`h-3 w-3 ${isFav ? 'text-amber-500' : 'text-marhaban-muted'}`} />
                             {isFav ? dictionary.labels.removeFavoriteLabel : resources.ui.addFavorite}
                           </button>
                         </div>
@@ -269,14 +304,27 @@ export default function RessourcesPage() {
           })}
         </div>
 
-        <footer className="rounded-3xl border border-marhaban-leaf/15 bg-white/90 p-6 shadow-warm-sm">
-          <p className={`text-sm text-slate-700 ${alignClass}`}>{resources.accompaniment.footerHelp}</p>
-          <LocalizedLink
-            href="/parcours"
-            className={`mt-3 inline-flex items-center text-sm font-semibold text-marhaban-ink underline underline-offset-4 ${alignClass}`}
-          >
-            {resources.ui.backToPath}
-          </LocalizedLink>
+        {/* ── Footer / CTA ── */}
+        <footer className="rounded-[2rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm-sm sm:p-7">
+          <p className={`text-sm leading-relaxed text-marhaban-muted ${alignClass}`}>
+            {resources.accompaniment.footerHelp}
+          </p>
+          <div className={`mt-5 flex flex-wrap gap-3 ${isRtl ? 'justify-end' : ''}`}>
+            <LocalizedLink
+              href="/parcours"
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-marhaban-leaf/20 bg-marhaban-mint/40 px-5 py-2.5 text-sm font-bold text-marhaban-ink transition hover:bg-marhaban-mint hover:border-marhaban-leaf/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
+            >
+              {resources.ui.backToPath}
+              <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+            </LocalizedLink>
+            <LocalizedLink
+              href="/reserver"
+              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-marhaban-forestDark px-5 py-2.5 text-sm font-bold text-white shadow-warm-xs transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
+            >
+              {locale === 'fr' ? 'Réserver un appel' : locale === 'en' ? 'Book a call' : 'احجز مكالمة'}
+              <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+            </LocalizedLink>
+          </div>
         </footer>
       </div>
     </main>
@@ -284,7 +332,7 @@ export default function RessourcesPage() {
 }
 
 function SectionHint({ text, alignClass }: { text: string; alignClass: string }) {
-  return <p className={`mt-1 text-xs text-slate-500 ${alignClass}`}>{text}</p>;
+  return <p className={`mt-1 text-xs text-marhaban-muted ${alignClass}`}>{text}</p>;
 }
 
 function RecommendedBadge({ label }: { label: string }) {

@@ -417,3 +417,103 @@ caption         → 0.75rem, Inter
 - Tone dark : `text-marhaban-gold/70` pour l'icône
 - `space-y-3` (au lieu de `space-y-2`)
 - Ne jamais promettre un résultat, un visa, ou une autorisation
+
+---
+
+## Pages secondaires — Règles communes
+
+### Hero
+- Toujours `dark` (sauf a-propos qui peut être light pour la chaleur de marque)
+- Ajouter `pills` pour afficher les bénéfices clés
+- Ajouter `secondary` CTA vers une page complémentaire (ressources, anti-arnaque, booking)
+- Titre éditorial : pas descriptif ("Accompagnement pour…") mais émotionnel/bénéfice ("Des premières étapes claires…")
+
+### Service cards (accompagnement)
+- Ajouter step badges `01-04` en clay (`border-marhaban-clay/25 bg-marhaban-clay/8 text-marhaban-clay`)
+- `p-7` minimum, `gap-5`
+- Hover `-translate-y-1 hover:border-marhaban-clay/25 hover:shadow-warm`
+- Heading `font-heading text-xl sm:text-2xl`
+
+### Disclaimer (section "ce qu'on ne remplace pas")
+- Section tone="muted" dédiée
+- Card pleine largeur `bg-marhaban-forestDark` avec `border border-white/12`
+- Eyebrow gold : "Ce qu'on ne remplace pas"
+- Texte `text-[#edf7f2] text-[1.05rem] sm:text-lg`
+- Pas de CTA dans cette section — réservée au message légal
+
+### Final CTA dark (pages secondaires)
+- Pattern split 2 colonnes identique home/reserver/anti-arnaque
+- `py-14 sm:py-16 lg:py-20`
+- Gold CTA → `bookingPath(locale)` (toujours vers réservation)
+- Ghost CTA optionnel → page complémentaire
+- Footnote `legalDisclaimer[locale]` en `text-xs text-white/55`
+
+### Page ressources (client component)
+- Conserver toute la logique d'état : province/category filter, search, favorites, toggleFavorite
+- `font-heading` sur h1 et h2 catégories
+- Remplacer `text-slate-*` par tokens marhaban : `text-marhaban-ink`, `text-marhaban-muted`, `text-marhaban-ink/60`, `text-marhaban-ink/78`, `text-marhaban-ink/82`
+- Guide cards CTA : `min-h-[44px] px-5 py-2.5` avec ArrowRight (pas `text-xs px-4 py-2`)
+- Footer : ajouter CTA "Réserver un appel" en `bg-marhaban-forestDark` + ghost "/parcours"
+- Ne jamais toucher : `useLanguage`, `useProvince`, `useLocalStorageState`, `resourcesData`, filteredCategories logic
+
+### Page a-propos
+- Hero light (pas dark) — chaleur de marque, distinctif
+- Bug eyebrow : corriger `eyebrow={t.pillarsTitle}` → `eyebrow={t.pillarsEyebrow}` (champs séparés)
+- Pillars grid : `Check` icon + `font-heading` + `bg-marhaban-mint/30` (pas `bg-marhaban-warm/70`)
+- TrustNotice utilise les bullets améliorés (icônes Check depuis l'upgrade global)
+
+### Ce qu'on évite sur les pages secondaires
+- Jamais "on garantit", "on obtient ton permis", "on règle ton immigration"
+- Jamais "conseil juridique" ou "conseil d'immigration réglementé"
+- Jamais deux sections muted consécutives
+- Jamais `pt-0` sur une Section principale
+- CTAs clay (`bg-marhaban-clay`) seulement pour variété — préférer forestDark ou gold selon le fond
+
+---
+
+## Final launch design pass
+
+### Décisions finales
+- Le système de design existant reste la source de vérité : `marhaban-*`, Fraunces pour les titres, Inter pour le body, grands rayons éditoriaux et ombres chaudes.
+- Le document `DESIGN.md`, s'il existe, sert seulement d'inspiration théorique. Il ne remplace pas les tokens, fonts ou patterns actuels.
+- La finition vise à réduire l'effet template par des bandes éditoriales compactes, des surfaces moins répétitives et des CTA mieux hiérarchisés.
+- Les pages publiques principales gardent un ton premium léger : chaleureux, humain, rassurant, prudent légalement.
+
+### Pages harmonisées
+- `/fr` : home conservée, avec trust capsule, CTA final dark et sections à rythme distinct.
+- `/fr/reserver` : intention claire, booking visible, disclaimer sous la sélection et CTA mobile conservé.
+- `/fr/services/anti-arnaque` : signaux regroupés en capsule éditoriale, wording prudent, formulaire et disclaimer visibles.
+- `/fr/accompagnement` : couverture transformée en bande éditoriale avec items compacts au lieu d'une grille de grosses cards.
+- `/fr/ressources` : guides rapides regroupés dans un panneau forest pour créer un point de départ plus fort.
+- `/fr/a-propos` : hero light conservé, ajouté un panneau signature sur la posture de marque.
+
+### Règles pour éviter le look template
+- Éviter les grilles uniformes de 3 ou 4 grandes cards blanches quand l'information peut devenir une capsule, une checklist compacte ou un split éditorial.
+- Alterner les rythmes : hero, bande éditoriale, section muted, panneau dark, CTA final.
+- Garder une seule intention par section : clarifier, vérifier, réserver ou rassurer.
+- Utiliser les cards répétées pour des listes réellement scannables, pas comme remplissage visuel.
+
+### Règles mobile
+- Les sections denses passent en pile verticale avec `gap` court et items compacts.
+- Les CTA restent au minimum à `44px` ou `56px` selon leur importance.
+- Les panneaux dark ne doivent pas contenir trop de texte long sur mobile.
+- RTL arabe doit conserver les alignements hérités via `dir`, éviter les layouts dépendants d'un ordre visuel gauche-droite pour comprendre le contenu.
+
+### Règles CTA
+- Sur fond clair : CTA principal `bg-marhaban-forestDark`, hover leaf, shadow chaude.
+- Sur fond dark : CTA principal `bg-marhaban-gold`, CTA secondaire ghost blanc.
+- Ne pas multiplier les CTA identiques dans une même section.
+- Les CTA secondaires doivent mener vers une route publique existante et complémentaire.
+
+### Règles disclaimers
+- Les disclaimers légaux restent visibles dans les CTA finaux ou sous les formulaires.
+- Ne jamais promettre visa, permis, résultat, obtention ou qualification.
+- Utiliser le vocabulaire prudent : "signaux à vérifier", "vérification prudente", "ressources officielles", "clarifier les prochaines étapes", "accompagnement pratique".
+- Ne pas déclarer qu'une situation est une arnaque; parler d'éléments à vérifier.
+
+### Éléments volontairement non modifiés
+- Aucune modification du design system global ou de `tailwind.config.ts`.
+- Aucune nouvelle dépendance, aucun GSAP ajouté.
+- Aucun changement aux routes API, Supabase, Supabase Auth, Stripe, Resend ou Calendly backend.
+- Aucun changement à l'architecture App Router : le projet reste dans `src/app`.
+- Aucun changement admin, sauf si un composant partagé impose une correction visuelle future.
