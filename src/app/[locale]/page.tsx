@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Check, ShieldAlert } from 'lucide-react';
 import { getHtmlAttrs, type Locale } from '@/i18n/locales';
 import { bookingPath, orientationServicePath, antiScamServicePath, resourcesPath, startPath } from '@/lib/routes';
 import { withLocale } from '@/lib/i18n-utils';
@@ -265,13 +265,17 @@ export default async function HomePage({ params }: Props) {
   };
 
   const heroVisual = (
-    <div className="space-y-3">
-      <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-gold">{t.visualLabel}</p>
-      <div className="grid grid-cols-2 gap-2.5">
+    <div className="space-y-4">
+      <div className="flex items-center gap-3">
+        <span className="h-px flex-1 bg-marhaban-gold/25" aria-hidden="true" />
+        <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-gold">{t.visualLabel}</p>
+        <span className="h-px flex-1 bg-marhaban-gold/25" aria-hidden="true" />
+      </div>
+      <div className="grid grid-cols-2 gap-2">
         {t.visualTopics.map((topic) => (
           <div
             key={topic}
-            className="rounded-2xl border border-white/10 bg-white/[0.07] px-4 py-3 text-sm font-medium text-[#e8f4ee]"
+            className="rounded-[1rem] border border-white/12 bg-white/[0.08] px-4 py-3.5 text-sm font-medium text-[#e8f4ee] transition hover:bg-white/[0.13]"
           >
             {topic}
           </div>
@@ -301,9 +305,9 @@ export default async function HomePage({ params }: Props) {
           {t.trustItems.map((item) => (
             <div
               key={item.label}
-              className="flex items-start gap-4 rounded-[1.5rem] border border-marhaban-leaf/12 bg-white p-5 shadow-warm-xs"
+              className="flex items-start gap-4 rounded-[1.5rem] border border-marhaban-leaf/12 bg-white p-5 shadow-warm-xs transition-all duration-300 hover:-translate-y-0.5 hover:shadow-warm-sm"
             >
-              <span className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-2xl border border-marhaban-leaf/15 bg-marhaban-mint/60 text-marhaban-leaf text-base font-bold">
+              <span className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-2xl border border-marhaban-leaf/20 bg-marhaban-mint/80 text-marhaban-leaf text-base font-bold">
                 {item.icon}
               </span>
               <div>
@@ -325,7 +329,7 @@ export default async function HomePage({ params }: Props) {
             cta={locale === 'fr' ? 'Voir le service' : locale === 'en' ? 'See the service' : 'عرض الخدمة'}
             featured
           />
-          <div className="flex flex-col justify-between gap-4 rounded-[1.85rem] border border-marhaban-leaf/15 bg-marhaban-offwhite p-6 shadow-warm-sm">
+          <div className="flex flex-col gap-5 rounded-[1.85rem] border border-marhaban-leaf/15 bg-white p-7 shadow-warm-sm">
             <div>
               <p className="eyebrow">{locale === 'fr' ? 'Ce que tu repars avec' : locale === 'en' ? 'What you leave with' : 'ما الذي ستخرج به'}</p>
               <h3 className="heading-card mt-3">
@@ -339,24 +343,24 @@ export default async function HomePage({ params }: Props) {
                     : 'في 30 دقيقة، تفهم ما يجب فعله أولاً، وما تجنبه، وأين تطلب المساعدة.'}
               </p>
             </div>
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {[
                 locale === 'fr' ? 'Tes 3 priorités immédiates' : locale === 'en' ? 'Your 3 immediate priorities' : 'أولوياتك الثلاث الفورية',
                 locale === 'fr' ? 'Les erreurs courantes à éviter' : locale === 'en' ? 'Common mistakes to avoid' : 'الأخطاء الشائعة لتجنبها',
                 locale === 'fr' ? 'Des ressources adaptées à ta situation' : locale === 'en' ? 'Resources tailored to your situation' : 'موارد مكيّفة لوضعك',
               ].map((item) => (
-                <div key={item} className="flex items-center gap-3 rounded-2xl border border-marhaban-leaf/12 bg-white px-4 py-3 text-sm text-marhaban-ink">
-                  <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-marhaban-leaf" aria-hidden="true" />
+                <div key={item} className="flex items-center gap-3 rounded-[1.25rem] border border-marhaban-leaf/12 bg-marhaban-mint/30 px-4 py-3.5 text-sm font-medium text-marhaban-ink">
+                  <Check className="h-4 w-4 flex-shrink-0 text-marhaban-leaf" aria-hidden="true" />
                   {item}
                 </div>
               ))}
             </div>
             <a
               href={bookingPath(locale)}
-              className="btn btn-lg btn-primary mt-2 w-full text-center"
+              className="btn btn-md btn-primary mt-auto w-full justify-center"
             >
               {t.primary}
-              <ArrowRight className="h-5 w-5 rtl-flip" aria-hidden="true" />
+              <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
             </a>
           </div>
         </div>
@@ -364,7 +368,7 @@ export default async function HomePage({ params }: Props) {
 
       {/* ── Situation cards ── */}
       <Section tone="muted">
-        <SectionHeader eyebrow={t.situationEyebrow} title={t.situationTitle} text={t.situationText} />
+        <SectionHeader eyebrow={t.situationEyebrow} title={t.situationTitle} text={t.situationText} align="center" />
         <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {situationCards.map((route) => (
             <RouteCard
@@ -385,6 +389,7 @@ export default async function HomePage({ params }: Props) {
           eyebrow={t.processEyebrow}
           title={t.processTitle}
           text={t.processText}
+          align="center"
         />
         <div className="mt-10 grid gap-5 lg:grid-cols-3">
           {steps.map((step) => (
@@ -396,10 +401,10 @@ export default async function HomePage({ params }: Props) {
             />
           ))}
         </div>
-        <div className="mt-8 flex justify-center">
+        <div className="mt-10 flex justify-center">
           <LocalizedLink
             href={bookingPath(locale)}
-            className="btn btn-md btn-primary"
+            className="btn btn-lg btn-primary"
           >
             {t.primary}
             <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
@@ -409,14 +414,17 @@ export default async function HomePage({ params }: Props) {
 
       {/* ── Anti-scam section ── */}
       <Section tone="dark">
-        <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.07] p-6 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-10">
+        <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.07] p-8 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-12">
+          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-marhaban-gold/30 bg-marhaban-gold/10">
+            <ShieldAlert className="h-6 w-6 text-marhaban-gold" aria-hidden="true" />
+          </div>
           <p className="eyebrow-light">{t.antiEyebrow}</p>
           <h2 className="heading-section mt-3 !text-white">{t.antiTitle}</h2>
           <p className="body-lead mx-auto mt-4 max-w-2xl !text-[#edf7f2]">{t.antiText}</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a
               href={antiScamServicePath(locale)}
-              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-marhaban-gold px-7 py-3.5 text-sm font-bold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.22)] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-marhaban-gold px-7 py-3.5 text-sm font-bold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.28)] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
             >
               {t.antiCta}
               <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
@@ -433,13 +441,13 @@ export default async function HomePage({ params }: Props) {
 
       {/* ── Resource grid ── */}
       <Section tone="muted">
-        <SectionHeader eyebrow={t.resourceEyebrow} title={t.resourceTitle} text={t.resourceText} />
+        <SectionHeader eyebrow={t.resourceEyebrow} title={t.resourceTitle} text={t.resourceText} align="center" />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {resourceItems.map((res) => (
             <LocalizedLink
               key={res.label}
               href={res.href}
-              className="group flex items-center justify-between rounded-[1.5rem] border border-marhaban-leaf/15 bg-white p-5 shadow-warm-xs transition hover:-translate-y-1 hover:shadow-warm-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
+              className="group flex items-center justify-between rounded-[1.75rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-warm-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
             >
               <span className="text-sm font-semibold text-marhaban-ink">{res.label}</span>
               <span className="grid h-8 w-8 flex-shrink-0 place-items-center rounded-xl border border-marhaban-leaf/12 bg-marhaban-mint/60 text-marhaban-leaf transition group-hover:bg-marhaban-leaf group-hover:text-white">
@@ -461,8 +469,11 @@ export default async function HomePage({ params }: Props) {
 
       {/* ── Final CTA ── */}
       <Section tone="dark">
-        <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.07] p-6 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-10">
-          <h2 className="heading-section !text-white">{t.finalTitle}</h2>
+        <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.07] p-8 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-12">
+          <p className="eyebrow-light">
+            {locale === 'fr' ? 'Prêt à commencer ?' : locale === 'en' ? 'Ready to start?' : 'هل أنت مستعد؟'}
+          </p>
+          <h2 className="heading-section mt-3 !text-white">{t.finalTitle}</h2>
           <p className="body-lead mx-auto mt-4 max-w-2xl !text-[#edf7f2]">{t.finalText}</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a

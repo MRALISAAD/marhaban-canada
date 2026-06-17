@@ -1,20 +1,19 @@
 # Architecture future des outils
 
-Ce document prépare les intégrations futures de Marhaban Canada sans les activer. Le MVP actuel reste mock/local : réservation manuelle via modal, admin mock/local, pas d'authentification, pas de paiement, pas d'email automatique.
+Ce document prépare les intégrations futures de Marhaban Canada sans les activer. Le MVP actuel reste mock/local : réservation manuelle via modal, admin Supabase Auth, pas de paiement, pas d'email automatique.
 
 ## Principes
 
 - Ne pas brancher de service externe avant que le flux manuel soit validé.
 - Ne jamais exposer de clé serveur côté client.
 - Ne pas demander de documents sensibles dans le MVP.
-- Garder l'admin comme mock/local tant qu'une authentification solide n'est pas en place.
 - Ajouter chaque outil avec une étape de test dédiée avant production.
 
 ## Supabase
 
 Usage prévu :
 - Base de données pour les demandes de réservation, clients, dossiers, demandes anti-arnaque et ressources.
-- Auth admin plus tard.
+- Auth admin via Supabase Auth.
 - Storage documents plus tard, seulement si un vrai besoin est validé.
 
 ## État d'intégration Supabase (2026-06-17)
@@ -25,10 +24,14 @@ Usage prévu :
 - `case_files` — POST via `/api/cases`, PATCH via `/api/cases/[id]`, lecture Server Component `/admin/cases`
 - `resources` — GET via `/api/resources`, POST via `/api/resources`, PATCH via `/api/resources/[id]`, lecture Server Component `/admin/resources`
 - `admin_notes` — POST via `/api/admin-notes`, GET via `/api/admin-notes`, PATCH via `/api/admin-notes/[id]`, composant AdminNotesPanel
+- `Supabase Auth` — login admin via `signInWithPassword`, session SSR via `@supabase/ssr`, allowlist `ADMIN_ALLOWED_EMAILS`, logout via `/api/admin/logout`
 
 ### Pas encore branché
-- Supabase Auth — admin sans authentification réelle pour l'instant
 - Supabase Storage — exclu du MVP actuel
+- Resend
+- Stripe
+- Calendly
+- Durcissement RLS / rôles admin Supabase
 
 ### Sécurité
 - `SUPABASE_SERVICE_ROLE_KEY` utilisé uniquement dans les Route Handlers et Server Components.
@@ -37,7 +40,7 @@ Usage prévu :
 
 Risques :
 - Exposition accidentelle de `SUPABASE_SERVICE_ROLE_KEY`.
-- Admin public sans auth.
+- Mauvaise configuration de `ADMIN_ALLOWED_EMAILS`.
 - Stockage de données personnelles sans règles d'accès strictes.
 - Upload de documents avant d'avoir une politique de sécurité.
 
@@ -141,4 +144,4 @@ Risques :
 
 ## Non prêt production
 
-L'admin actuel est MVP mock/local seulement. Il ne doit pas être considéré prêt production sans authentification, règles d'accès, audit des données personnelles et revue des secrets d'environnement.
+L'admin actuel utilise Supabase Auth mais ne doit pas être considéré prêt production sans durcissement RLS, rôles admin Supabase, audit des données personnelles et revue des secrets d'environnement.

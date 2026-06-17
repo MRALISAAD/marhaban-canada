@@ -77,7 +77,7 @@ const fr: ArnaqueCopy = {
       quote:
         "Le poste est confirmé, mais l'employeur demande 350 $ pour les frais administratifs. C'est normal ici au Canada.",
       reality:
-        "Au Canada, un employeur légitime ne te demande jamais de payer pour accéder à un emploi. Les frais de permis de travail sont à la charge de l'employeur. Si quelqu'un demande de l'argent avant que tu commences, c'est une arnaque.",
+        "Au Canada, un employeur légitime ne te demande jamais de payer pour accéder à un emploi. Les frais de permis de travail sont à la charge de l'employeur. Si quelqu'un demande de l'argent avant que tu commences, c'est un signal d'alerte majeur.",
       flags: [
         'Offre reçue sans entretien préalable',
         "Salaire très attractif pour peu de qualifications demandées",
@@ -323,7 +323,7 @@ const en: ArnaqueCopy = {
       quote:
         "The position is confirmed, but the employer needs $350 for administrative fees. That's normal here in Canada.",
       reality:
-        "In Canada, a legitimate employer never asks you to pay for a job. Work permit fees are the employer's responsibility. If someone asks for money before you start working, it's a scam.",
+        "In Canada, a legitimate employer never asks you to pay for a job. Work permit fees are the employer's responsibility. If someone asks for money before you start working, treat it as a major warning sign.",
       flags: [
         'Offer received without an interview',
         'Very high salary for minimal qualifications',

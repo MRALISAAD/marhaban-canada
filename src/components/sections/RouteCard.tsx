@@ -19,10 +19,10 @@ export function RouteCard({ title, text, href, cta, badge, tone = 'light' }: Pro
     <AnimatedCard className="h-full">
       <article
         className={cn(
-          'flex h-full flex-col rounded-[1.85rem] border p-6 shadow-warm-sm transition',
+          'flex h-full flex-col rounded-[1.85rem] border p-6 shadow-warm-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-warm',
           tone === 'dark'
             ? 'border-white/12 bg-marhaban-forestDark text-white shadow-[0_24px_70px_rgba(0,0,0,0.18)]'
-            : 'border-marhaban-leaf/15 bg-white text-marhaban-ink',
+            : 'border-marhaban-leaf/12 bg-white text-marhaban-ink',
         )}
       >
         {badge ? (

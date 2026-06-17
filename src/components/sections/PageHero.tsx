@@ -38,12 +38,12 @@ export function PageHero({
   return (
     <SectionReveal
       className={cn(
-        'px-4 pt-10 sm:px-6 sm:pt-12 lg:px-8 lg:pt-14',
+        'px-4 pt-16 pb-12 sm:px-6 sm:pt-20 sm:pb-16 lg:px-8 lg:pt-28 lg:pb-20',
         dark ? 'bg-marhaban-forestDark text-white' : 'bg-transparent',
         className,
       )}
     >
-      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+      <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:items-center">
         <div className="space-y-6">
           <p
               className={cn(
@@ -54,7 +54,7 @@ export function PageHero({
             {eyebrow}
           </p>
           <div className="space-y-4">
-            <h1 className={cn('max-w-3xl font-heading text-[clamp(3rem,6vw,5.8rem)] font-semibold leading-[0.9] tracking-tight', dark ? 'text-white' : 'text-marhaban-ink')}>
+            <h1 className={cn('max-w-3xl font-heading text-[clamp(3.2rem,7vw,7rem)] font-semibold leading-[0.88] tracking-tight', dark ? 'text-white' : 'text-marhaban-ink')}>
               {title}
             </h1>
             <p className={cn('max-w-2xl text-[1.05rem] leading-relaxed sm:text-lg lg:text-xl', dark ? 'text-[#edf7f2]' : 'text-marhaban-ink/78')}>
@@ -83,13 +83,13 @@ export function PageHero({
               <LocalizedLink
                 href={primary.href}
                 className={cn(
-                  'inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+                  'inline-flex min-h-[60px] items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
                   primary.tone === 'secondary'
                     ? dark
                       ? 'border border-white/16 bg-white/[0.06] text-white hover:bg-white/12 focus-visible:ring-white/45 focus-visible:ring-offset-marhaban-forestDark'
                       : 'border border-marhaban-leaf/15 bg-white text-marhaban-ink hover:bg-marhaban-mint focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-white'
                     : dark
-                      ? 'bg-marhaban-gold text-marhaban-ink shadow-[0_22px_70px_rgba(213,168,79,0.28)] hover:bg-white focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-marhaban-forestDark'
+                      ? 'bg-marhaban-gold text-marhaban-ink shadow-[0_24px_80px_rgba(213,168,79,0.35)] hover:bg-white focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-marhaban-forestDark'
                       : 'bg-marhaban-forestDark text-white shadow-[0_22px_60px_rgba(8,42,36,0.18)] hover:bg-marhaban-leaf focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-white',
                 )}
               >
@@ -117,7 +117,7 @@ export function PageHero({
         </div>
 
         {visual ? (
-          <AnimatedCard className={cn('rounded-[2rem]', dark ? 'border border-white/10 bg-white/[0.04] p-5 text-white shadow-[0_28px_100px_rgba(0,0,0,0.24)] sm:p-6' : 'border border-marhaban-leaf/15 bg-offwhite p-5 shadow-warm-sm sm:p-6')}>
+          <AnimatedCard className={cn('rounded-[2rem]', dark ? 'border border-white/10 bg-white/[0.07] p-6 text-white shadow-[0_28px_100px_rgba(0,0,0,0.24)] sm:p-7' : 'border border-marhaban-leaf/15 bg-offwhite p-5 shadow-warm-sm sm:p-6')}>
             {visual}
           </AnimatedCard>
         ) : null}

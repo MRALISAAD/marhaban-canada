@@ -15,14 +15,27 @@ type CaseInsert = {
 
 const FORBIDDEN_FIELDS = [
   'sin', 'nas', 'social_insurance', 'social_insurance_number',
-  'passport', 'passport_number',
-  'card', 'credit_card', 'card_number', 'cvv',
-  'permit', 'work_permit', 'study_permit',
+  'passport', 'passport_number', 'passeport',
+  'card', 'credit_card', 'card_number', 'carte_bancaire', 'cvv',
+  'permit', 'work_permit', 'study_permit', 'permis',
   'document', 'upload',
   'bank_account', 'bank_number', 'iban',
 ];
+const ALLOWED_FIELDS = [
+  'clientName',
+  'fullName',
+  'email',
+  'phone',
+  'cityProvince',
+  'preferredLanguage',
+  'message',
+  'situation',
+  'bookingId',
+  'internalNote',
+] as const;
 
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const allowedFields = new Set<string>(ALLOWED_FIELDS);
 
 function jsonError(error: string, status: number) {
   return NextResponse.json({ ok: false, error }, { status });
@@ -39,6 +52,21 @@ function textField(input: Record<string, unknown>, key: string) {
 
 function validBookingId(value: string) {
   return uuidPattern.test(value) ? value : null;
+}
+
+function normalizeKey(key: string) {
+  return key.toLowerCase().replace(/[^a-z0-9_]/g, '_');
+}
+
+function hasForbiddenField(input: Record<string, unknown>) {
+  return Object.keys(input).some((key) => {
+    const normalizedKey = normalizeKey(key);
+    return FORBIDDEN_FIELDS.some((field) => normalizedKey.includes(field));
+  });
+}
+
+function hasOnlyAllowedFields(input: Record<string, unknown>) {
+  return Object.keys(input).every((key) => allowedFields.has(key));
 }
 
 export async function POST(request: Request) {
@@ -61,8 +89,12 @@ export async function POST(request: Request) {
     return jsonError('Missing required case fields', 400);
   }
 
-  if (FORBIDDEN_FIELDS.some((field) => Object.prototype.hasOwnProperty.call(body, field))) {
+  if (hasForbiddenField(body)) {
     return jsonError('Sensitive field rejected', 400);
+  }
+
+  if (!hasOnlyAllowedFields(body)) {
+    return jsonError('Unexpected case field rejected', 400);
   }
 
   const internalNote = textField(body, 'internalNote');

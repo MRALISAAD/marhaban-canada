@@ -12,12 +12,15 @@ type Props = {
 export function RoadmapStage({ number, title, text, bullets }: Props) {
   return (
     <AnimatedCard>
-      <article className="flex h-full flex-col rounded-[1.85rem] border border-marhaban-leaf/15 bg-offwhite p-6 shadow-warm-sm">
-        <p className="inline-flex w-fit rounded-full border border-marhaban-leaf/15 bg-marhaban-mint/60 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">
+      <article className="relative flex h-full flex-col overflow-hidden rounded-[1.85rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-warm">
+        <span className="pointer-events-none absolute -right-3 -top-5 select-none font-heading text-[8rem] font-bold leading-none text-marhaban-leaf/[0.055]" aria-hidden="true">
+          {number}
+        </span>
+        <p className="relative inline-flex w-fit rounded-full border border-marhaban-clay/25 bg-marhaban-clay/8 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">
           {number}
         </p>
-        <h3 className="mt-4 text-[1.15rem] font-semibold leading-tight text-marhaban-ink sm:text-[1.25rem]">{title}</h3>
-        <p className="mt-3 text-sm leading-relaxed text-marhaban-ink/82">{text}</p>
+        <h3 className="relative mt-4 text-[1.15rem] font-semibold leading-tight text-marhaban-ink sm:text-[1.25rem]">{title}</h3>
+        <p className="relative mt-3 text-sm leading-relaxed text-marhaban-ink/82">{text}</p>
         {bullets?.length ? (
           <ul className="mt-5 space-y-2 text-sm text-marhaban-ink/82">
             {bullets.map((bullet) => (

@@ -19,14 +19,28 @@ type BookingInsert = {
   source: string;
 };
 
-const sensitiveKeys = new Set([
+const sensitiveKeyFragments = [
   'supabase_service_role_key',
   'service_role_key',
   'password',
   'token',
   'access_token',
   'refresh_token',
-]);
+  'sin',
+  'nas',
+  'social_insurance',
+  'passport',
+  'passeport',
+  'card',
+  'credit_card',
+  'carte_bancaire',
+  'permit',
+  'permis',
+  'document',
+  'upload',
+  'bank_account',
+  'bank_number',
+];
 
 const allowedKeys = new Set([
   'full_name',
@@ -56,8 +70,8 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function hasSensitiveOrUnexpectedKeys(input: Record<string, unknown>) {
   return Object.keys(input).some((key) => {
-    const normalizedKey = key.toLowerCase();
-    return sensitiveKeys.has(normalizedKey) || !allowedKeys.has(key);
+    const normalizedKey = key.toLowerCase().replace(/[^a-z0-9_]/g, '_');
+    return sensitiveKeyFragments.some((fragment) => normalizedKey.includes(fragment)) || !allowedKeys.has(key);
   });
 }
 
