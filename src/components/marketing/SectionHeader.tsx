@@ -4,9 +4,10 @@ type Props = {
   text?: string;
   align?: "start" | "center";
   light?: boolean;
+  size?: "section" | "display";
 };
 
-export function SectionHeader({ eyebrow, title, text, align = "start", light = false }: Props) {
+export function SectionHeader({ eyebrow, title, text, align = "start", light = false, size = "section" }: Props) {
   return (
     <div className={align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
       {eyebrow ? (
@@ -14,7 +15,8 @@ export function SectionHeader({ eyebrow, title, text, align = "start", light = f
       ) : null}
       <h2
         className={[
-          "heading-section mt-3",
+          size === "display" ? "heading-display" : "heading-section",
+          "mt-3",
           light ? "!text-white" : "",
         ].join(" ")}
       >

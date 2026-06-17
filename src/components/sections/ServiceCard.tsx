@@ -36,28 +36,20 @@ export function ServiceCard({ service, href, cta, featured = false }: Props) {
             : 'border-marhaban-leaf/15 bg-white text-marhaban-ink',
         )}
       >
-        <div className="flex flex-wrap items-center gap-2">
-          <span
-            className={cn(
-              'rounded-full px-3 py-1 text-xs font-semibold',
-              featured
-                ? 'border border-white/12 bg-white/[0.06] text-[#edf7f2]'
-                : 'border border-marhaban-leaf/15 bg-marhaban-mint/60 text-marhaban-leaf',
-            )}
-          >
-            {service.duration}
-          </span>
-          {service.label ? <span className="badge-gold">{service.label}</span> : null}
-        </div>
+        {service.label ? (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="badge-gold">{service.label}</span>
+          </div>
+        ) : null}
 
-        <h3 className="mt-4 text-[1.35rem] font-semibold leading-tight sm:text-[1.5rem]">{service.title}</h3>
+        <h3 className="mt-4 font-heading text-[1.35rem] font-semibold leading-tight sm:text-[1.5rem]">{service.title}</h3>
         <div className="mt-4 flex flex-wrap items-end justify-between gap-3">
           <p className={cn('text-3xl font-semibold tracking-tight sm:text-4xl', featured ? 'text-marhaban-gold' : 'text-marhaban-forestDark')}>
             {service.price}
           </p>
           <span
             className={cn(
-              'rounded-full border px-3 py-1 text-xs font-semibold',
+              'rounded-full border px-3 py-1.5 text-xs font-semibold',
               featured ? 'border-white/12 bg-white/[0.06] text-[#edf7f2]' : 'border-marhaban-leaf/15 bg-marhaban-cream/70 text-marhaban-ink/80',
             )}
           >

@@ -44,7 +44,7 @@ export function PageHero({
       )}
     >
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:items-center">
-        <div className="space-y-6">
+        <div className="space-y-7">
           <p
               className={cn(
                 'inline-flex rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.14em]',
@@ -57,7 +57,7 @@ export function PageHero({
             <h1 className={cn('max-w-3xl font-heading text-[clamp(3.2rem,7vw,7rem)] font-semibold leading-[0.88] tracking-tight', dark ? 'text-white' : 'text-marhaban-ink')}>
               {title}
             </h1>
-            <p className={cn('max-w-2xl text-[1.05rem] leading-relaxed sm:text-lg lg:text-xl', dark ? 'text-[#edf7f2]' : 'text-marhaban-ink/78')}>
+            <p className={cn('max-w-2xl text-[1.1rem] leading-relaxed sm:text-lg lg:text-xl', dark ? 'text-[#edf7f2]' : 'text-marhaban-ink/78')}>
               {text}
             </p>
           </div>
@@ -68,7 +68,7 @@ export function PageHero({
                 <span
                   key={pill}
                   className={cn(
-                    'rounded-full px-4 py-2 text-xs font-semibold',
+                    'rounded-full px-4 py-2.5 text-xs font-semibold',
                     dark ? 'border border-white/12 bg-white/[0.06] text-[#edf7f2]' : 'border border-marhaban-leaf/15 bg-white/80 text-marhaban-ink/78',
                 )}
               >
@@ -102,7 +102,7 @@ export function PageHero({
                 <LocalizedLink
                 href={secondary.href}
                 className={cn(
-                    'inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+                    'inline-flex min-h-[60px] items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
                     dark
                       ? 'border border-white/16 bg-white/[0.06] text-white hover:bg-white/12 focus-visible:ring-white/45 focus-visible:ring-offset-marhaban-forestDark'
                       : 'border border-marhaban-leaf/15 bg-transparent text-marhaban-ink hover:bg-marhaban-mint/60 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-white',
