@@ -316,7 +316,7 @@ export function ServiceBookingModal({ isOpen, onClose, locale, service, price }:
     } catch (error) {
       addLocalBooking(localBooking);
       if (process.env.NODE_ENV === 'development') {
-        console.log('Marhaban Canada booking fallback to localStorage', { error, payload });
+        console.warn('Marhaban Canada booking fallback to localStorage', error);
       }
     }
 

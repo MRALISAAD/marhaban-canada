@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint-build:
+    name: Lint and build
+    runs-on: ubuntu-latest
+
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-anon-key
+      SUPABASE_SERVICE_ROLE_KEY: placeholder-service-role-key
+      ADMIN_ALLOWED_EMAILS: admin@example.com
+      NEXT_PUBLIC_SENTRY_DSN: ''
+      NEXT_PUBLIC_SITE_URL: https://example.com
+      NEXT_PUBLIC_GA_ID: ''
+      NEXT_PUBLIC_CALENDLY_DISCOVERY_URL: https://calendly.com/example/discovery
+      NEXT_PUBLIC_CALENDLY_ORIENTATION_URL: https://calendly.com/example/orientation
+      NEXT_PUBLIC_CALENDLY_ANTI_SCAM_URL: https://calendly.com/example/anti-scam
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
