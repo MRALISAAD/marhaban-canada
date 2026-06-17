@@ -25,7 +25,7 @@ const adminLinks: AdminLinkConfig[] = [
   { label: 'Réservations', href: '/admin/bookings', icon: FileText },
   { label: 'Dossiers', href: '/admin/cases', icon: FolderOpen },
   { label: 'Anti-arnaque', href: '/admin/scam-checks', icon: ShieldAlert },
-  { label: 'Ressources', href: '/admin/resources', icon: LifeBuoy, soon: true },
+  { label: 'Ressources', href: '/admin/resources', icon: LifeBuoy },
 ];
 
 export function AdminSidebar() {

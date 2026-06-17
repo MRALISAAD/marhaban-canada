@@ -226,3 +226,75 @@ Persister les overrides admin (statuts, notes, recommandations) dans localStorag
 
 **Priorité 3 — Connexion backend :**
 Brancher Supabase pour remplacer localStorage une fois l'authentification en place.
+
+## Flux 3 — Admin bookings → Créer dossier → Supabase case_files → Admin cases
+
+| Étape | Statut | Détail |
+|---|---|---|
+| POST `/api/cases` — créer dossier Supabase | OK | Route créée, service role côté serveur uniquement |
+| PATCH `/api/cases/[id]` — mettre à jour dossier Supabase | OK | Whitelist : status, next_step, internal_notes, action_plan |
+| Blocage champs sensibles (NAS, passeport, carte, permis) | OK | Vérification côté serveur avant insert |
+| Anti-duplication serveur par booking_id | OK | Vérification avant insert si booking_id est un UUID valide |
+| Dossiers Supabase affichés dans `/admin/cases` | OK | Server Component, order opened_at DESC |
+| Fallback localStorage si API échoue | OK | `addLocalCase()` appelé si POST échoue |
+| Déduplication Supabase / localStorage par bookingId | OK | localStorage caché si même bookingId que Supabase |
+| Badge "Supabase" sur les dossiers Supabase | OK | Composant AdminCasesClient |
+| Badge "Local" sur les dossiers localStorage | OK | Composant AdminCasesClient |
+| `SUPABASE_SERVICE_ROLE_KEY` côté serveur uniquement | OK | Jamais importé dans composant client |
+
+### Limitations MVP connues
+
+- Les updates de dossiers Supabase sont persistés via PATCH /api/cases/[id] (status, next_step, internal_notes uniquement).
+- priority et phone ne sont pas dans le schema Supabase v1 — restent localStorage/mock uniquement.
+- Supabase Auth n'est pas en place — admin accessible sans authentification réelle.
+
+## Flux 4 — Admin resources → Supabase resources
+
+| Étape | Statut | Détail |
+|---|---|---|
+| GET `/api/resources` — lire resources Supabase | OK | Service role, lit tout (draft/review/published/archived) |
+| POST `/api/resources` — créer guide Supabase | OK | Whitelist stricte, content stocké en jsonb |
+| PATCH `/api/resources/[id]` — modifier guide | OK | Whitelist stricte, status/title/slug/category/locale/summary/content |
+| Lecture Server Component `/admin/resources` | OK | Supabase triés updated_at DESC |
+| Mock data fallback si table vide | OK | mockResources affichés si Supabase vide |
+| Formulaire "Nouveau guide" | OK | Créé en session, persisté Supabase |
+| Formulaire "Modifier" | OK | PATCH Supabase, update local state |
+| Actions Publier / Dépublier / Archiver | OK | PATCH status via API |
+| Badge "Supabase" / "Mock" | OK | AdminResourcesClient |
+| Lien sidebar Ressources activé | OK | soon: true retiré |
+| `SUPABASE_SERVICE_ROLE_KEY` côté serveur uniquement | OK | Jamais dans composant client |
+
+### Limitations MVP connues
+
+- Pas de DELETE réel — archiver via status: archived.
+- Pas de Supabase Auth — admin accessible sans authentification.
+- content stocké comme jsonb { body: string } — pas d'éditeur riche.
+- slug + locale doivent être uniques — erreur 409 si conflit.
+
+## Flux 5 — Notes internes admin (admin_notes)
+
+| Étape | Statut | Détail |
+|---|---|---|
+| POST `/api/admin-notes` — créer note | OK | Whitelist stricte, body max 2000 chars |
+| GET `/api/admin-notes` — lire notes par cible | OK | target_type + target_id (UUID), status active |
+| PATCH `/api/admin-notes/[id]` — archiver note | OK | status: archived via PATCH |
+| AdminNotesPanel intégré dans /admin/cases | OK | Notes liées à case_file |
+| AdminNotesPanel intégré dans /admin/scam-checks | OK | Notes liées à scam_check |
+| AdminNotesPanel intégré dans /admin/bookings | OK | Notes liées à booking |
+| AdminNotesPanel intégré dans /admin/resources | OK | Notes liées à resource |
+| Notes disponibles uniquement pour UUIDs Supabase | OK | Mock/localStorage → message discret |
+| `SUPABASE_SERVICE_ROLE_KEY` côté serveur uniquement | OK | Jamais dans composant client |
+
+### Test manuel recommandé
+
+1. Ouvrir un dossier Supabase dans /admin/cases
+2. Ajouter une note via AdminNotesPanel
+3. Vérifier que la note apparaît immédiatement
+4. Refresh de la page → vérifier que la note est rechargée depuis Supabase
+5. Archiver la note → vérifier qu'elle disparaît de la liste
+
+### Limitations MVP connues
+
+- Pas de DELETE réel — archiver via PATCH status: archived.
+- author_id non utilisé (réservé pour Supabase Auth futur).
+- Notes indisponibles pour les enregistrements mock ou localStorage (target_id non UUID).

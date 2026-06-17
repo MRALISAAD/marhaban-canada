@@ -4,12 +4,14 @@ import { useMemo, useState, useSyncExternalStore } from 'react';
 import { CheckCircle2, Eye, FileText, MailCheck, PlusCircle } from 'lucide-react';
 import { AdminBadge, BookingStatusBadge } from '@/components/admin/AdminBadge';
 import { AdminCard } from '@/components/admin/AdminCard';
+import { AdminNotesPanel } from '@/components/admin/AdminNotesPanel';
 import { addLocalCase, getLocalCases, subscribeToLocalCases, type LocalCase } from '@/lib/admin/local-case-store';
 import { getLocalBookings, subscribeToLocalBookings, updateLocalBooking, type LocalBooking } from '@/lib/admin/local-booking-store';
 import type { Booking, BookingStatus } from '@/types/admin';
 
 type AdminBookingsClientProps = {
   supabaseBookings?: readonly Booking[];
+  supabaseCaseBookingIds?: readonly string[];
   mockBookings: readonly Booking[];
 };
 
@@ -43,12 +45,13 @@ function applyOverride(booking: Booking, overrides: BookingOverrides): EditableB
   return { ...booking, ...overrides[booking.id] };
 }
 
-export function AdminBookingsClient({ supabaseBookings = [], mockBookings }: AdminBookingsClientProps) {
+export function AdminBookingsClient({ supabaseBookings = [], supabaseCaseBookingIds = [], mockBookings }: AdminBookingsClientProps) {
   const [bookingOverrides, setBookingOverrides] = useState<BookingOverrides>({});
   const [selectedBookingId, setSelectedBookingId] = useState<string | null>(null);
   const [noteDraft, setNoteDraft] = useState('');
   const [noteEditorIsOpen, setNoteEditorIsOpen] = useState(false);
   const [caseMessage, setCaseMessage] = useState('');
+  const [isCreatingCase, setIsCreatingCase] = useState(false);
   const localBookings = useSyncExternalStore(subscribeToLocalBookings, getLocalBookings, () => emptyBookings);
   const localCases = useSyncExternalStore(subscribeToLocalCases, getLocalCases, () => emptyCases);
 
@@ -62,9 +65,12 @@ export function AdminBookingsClient({ supabaseBookings = [], mockBookings }: Adm
   );
   const supabaseBookingIds = useMemo(() => new Set(supabaseBookings.map((booking) => booking.id)), [supabaseBookings]);
   const localBookingIds = useMemo(() => new Set(localBookings.map((booking) => booking.id)), [localBookings]);
-  const caseBookingIds = useMemo(
-    () => new Set(localCases.flatMap((caseFile) => [caseFile.sourceBookingId, caseFile.bookingId].filter(Boolean) as string[])),
-    [localCases],
+  const allCaseBookingIds = useMemo(
+    () => new Set([
+      ...supabaseCaseBookingIds,
+      ...localCases.flatMap((caseFile) => [caseFile.sourceBookingId, caseFile.bookingId].filter(Boolean) as string[]),
+    ]),
+    [localCases, supabaseCaseBookingIds],
   );
   const selectedBooking = selectedBookingId ? bookings.find((booking) => booking.id === selectedBookingId) : undefined;
 
@@ -106,10 +112,40 @@ export function AdminBookingsClient({ supabaseBookings = [], mockBookings }: Adm
     setNoteEditorIsOpen(false);
   }
 
-  function createCaseFromBooking(booking: EditableBooking) {
-    if (caseBookingIds.has(booking.id)) {
-      setCaseMessage('Dossier déjà créé pour cette réservation.');
+  async function createCaseFromBooking(booking: EditableBooking) {
+    if (allCaseBookingIds.has(booking.id)) {
+      setCaseMessage('Dossier déjà créé.');
       return;
+    }
+
+    setIsCreatingCase(true);
+
+    try {
+      const response = await fetch('/api/cases', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          clientName: booking.fullName,
+          email: booking.email,
+          phone: booking.phone,
+          cityProvince: booking.cityProvince,
+          preferredLanguage: booking.preferredLanguage,
+          message: booking.message,
+          situation: booking.message,
+          bookingId: booking.id,
+          internalNote: booking.internalNote,
+        }),
+      });
+      const result = await response.json();
+
+      if (response.ok && result.ok === true) {
+        setCaseMessage('Dossier créé (Supabase).');
+        return;
+      }
+    } catch {
+      // Keep the local fallback below when Supabase is unavailable.
+    } finally {
+      setIsCreatingCase(false);
     }
 
     const now = new Date().toISOString();
@@ -133,7 +169,7 @@ export function AdminBookingsClient({ supabaseBookings = [], mockBookings }: Adm
       priority: 'normal',
       notes: booking.internalNote ?? '',
     });
-    setCaseMessage('Dossier créé localement.');
+    setCaseMessage('Dossier créé localement (fallback).');
   }
 
   const kpis = [
@@ -309,9 +345,10 @@ export function AdminBookingsClient({ supabaseBookings = [], mockBookings }: Adm
           </div>
         </AdminCard>
 
-        <AdminCard title="Détail rapide" eyebrow="Sélection">
-          {selectedBooking ? (
-            <div className="space-y-5">
+        <div className="space-y-6">
+          <AdminCard title="Détail rapide" eyebrow="Sélection">
+            {selectedBooking ? (
+              <div className="space-y-5">
               <div className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
@@ -377,10 +414,11 @@ export function AdminBookingsClient({ supabaseBookings = [], mockBookings }: Adm
                   <button
                     type="button"
                     onClick={() => createCaseFromBooking(selectedBooking)}
+                    disabled={isCreatingCase}
                     className="inline-flex min-h-[38px] items-center gap-2 rounded-full border border-marhaban-leaf/15 bg-marhaban-cream px-4 py-2 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:bg-marhaban-mint/70"
                   >
                     <PlusCircle className="h-4 w-4" aria-hidden="true" />
-                    {caseBookingIds.has(selectedBooking.id) ? 'Dossier créé' : 'Créer dossier'}
+                    {allCaseBookingIds.has(selectedBooking.id) ? 'Dossier créé' : isCreatingCase ? 'Création...' : 'Créer dossier'}
                   </button>
                 </div>
                 <p className="mt-3 text-xs leading-relaxed text-marhaban-muted">
@@ -428,18 +466,25 @@ export function AdminBookingsClient({ supabaseBookings = [], mockBookings }: Adm
                   </p>
                 ) : null}
               </div>
-            </div>
-          ) : (
-            <div className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 p-5">
-              <p className="font-semibold text-marhaban-forestDark">
-                Sélectionne une réservation pour voir les détails.
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-marhaban-muted">
-                Les statuts et notes des demandes locales sont sauvegardés dans ce navigateur. Les données mock restent temporaires.
-              </p>
-            </div>
-          )}
-        </AdminCard>
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 p-5">
+                <p className="font-semibold text-marhaban-forestDark">
+                  Sélectionne une réservation pour voir les détails.
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-marhaban-muted">
+                  Les statuts et notes des demandes locales sont sauvegardés dans ce navigateur. Les données mock restent temporaires.
+                </p>
+              </div>
+            )}
+          </AdminCard>
+
+          {selectedBooking ? (
+            <AdminCard title="Notes internes" eyebrow="Suivi">
+              <AdminNotesPanel targetType="booking" targetId={selectedBooking.id} />
+            </AdminCard>
+          ) : null}
+        </div>
       </div>
     </div>
   );

@@ -17,16 +17,23 @@ Usage prévu :
 - Auth admin plus tard.
 - Storage documents plus tard, seulement si un vrai besoin est validé.
 
-Phase d'intégration :
-1. Après stabilisation de l'admin mock/local.
-2. D'abord pour `bookings`.
-3. Ensuite pour `clients`, `case_files`, `scam_checks`, puis `resources`.
+## État d'intégration Supabase (2026-06-17)
 
-Exclu du MVP actuel :
-- Auth admin réelle.
-- Storage documents.
-- Row Level Security finalisée.
-- Données sensibles.
+### Branché et fonctionnel
+- `bookings` — POST via `/api/bookings`, lecture Server Component `/admin/bookings`
+- `scam_checks` — POST via `/api/scam-checks`, lecture Server Component `/admin/scam-checks`
+- `case_files` — POST via `/api/cases`, PATCH via `/api/cases/[id]`, lecture Server Component `/admin/cases`
+- `resources` — GET via `/api/resources`, POST via `/api/resources`, PATCH via `/api/resources/[id]`, lecture Server Component `/admin/resources`
+- `admin_notes` — POST via `/api/admin-notes`, GET via `/api/admin-notes`, PATCH via `/api/admin-notes/[id]`, composant AdminNotesPanel
+
+### Pas encore branché
+- Supabase Auth — admin sans authentification réelle pour l'instant
+- Supabase Storage — exclu du MVP actuel
+
+### Sécurité
+- `SUPABASE_SERVICE_ROLE_KEY` utilisé uniquement dans les Route Handlers et Server Components.
+- RLS activée sur toutes les tables. Aucune policy anon sauf `resources` (lecture publique des publiées).
+- Aucun secret dans les composants client.
 
 Risques :
 - Exposition accidentelle de `SUPABASE_SERVICE_ROLE_KEY`.

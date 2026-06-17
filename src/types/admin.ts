@@ -78,10 +78,26 @@ export type ScamCheck = {
 export type ResourceGuide = {
   id: string;
   title: string;
+  slug?: string;
   category: 'housing' | 'banking' | 'phone' | 'documents' | 'first_week' | 'students' | 'anti_scam';
   locale: Locale;
   status: ResourceStatus;
+  content?: string;
+  createdAt?: string;
   updatedAt: string;
+  publishedAt?: string;
   summary: string;
   owner: string;
+};
+
+export type AdminNoteTargetType = 'booking' | 'case_file' | 'scam_check' | 'resource';
+
+export type AdminNote = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  targetType: AdminNoteTargetType;
+  targetId: string;
+  body: string;
+  status: 'active' | 'archived';
 };

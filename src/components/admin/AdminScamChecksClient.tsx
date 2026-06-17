@@ -4,6 +4,7 @@ import { useMemo, useState, useSyncExternalStore } from 'react';
 import { CheckCircle2, Eye, Save, ShieldAlert } from 'lucide-react';
 import { AdminBadge } from '@/components/admin/AdminBadge';
 import { AdminCard } from '@/components/admin/AdminCard';
+import { AdminNotesPanel } from '@/components/admin/AdminNotesPanel';
 import {
   getLocalScamChecks,
   subscribeToLocalScamChecks,
@@ -313,9 +314,10 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
           </div>
         </AdminCard>
 
-        <AdminCard title={editMode ? 'Évaluation' : 'Détail rapide'} eyebrow="Sélection">
-          {selected ? (
-            <div className="space-y-5">
+        <div className="space-y-6">
+          <AdminCard title={editMode ? 'Évaluation' : 'Détail rapide'} eyebrow="Sélection">
+            {selected ? (
+              <div className="space-y-5">
               <div className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
@@ -486,18 +488,25 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
                   </p>
                 </div>
               )}
-            </div>
-          ) : (
-            <div className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 p-5">
-              <p className="font-semibold text-marhaban-forestDark">
-                Sélectionne une demande pour voir les détails.
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-marhaban-muted">
-                Utilise &quot;Voir&quot; ou &quot;Évaluer&quot; depuis le tableau pour ouvrir le panneau.
-              </p>
-            </div>
-          )}
-        </AdminCard>
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 p-5">
+                <p className="font-semibold text-marhaban-forestDark">
+                  Sélectionne une demande pour voir les détails.
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-marhaban-muted">
+                  Utilise &quot;Voir&quot; ou &quot;Évaluer&quot; depuis le tableau pour ouvrir le panneau.
+                </p>
+              </div>
+            )}
+          </AdminCard>
+
+          {selected ? (
+            <AdminCard title="Notes internes" eyebrow="Suivi">
+              <AdminNotesPanel targetType="scam_check" targetId={selected.id} />
+            </AdminCard>
+          ) : null}
+        </div>
       </div>
     </div>
   );
