@@ -24,7 +24,7 @@ export function SectionHeader({ eyebrow, title, text, align = "start", light = f
         <p
           className={[
             "mt-5 text-[1.02rem] leading-relaxed sm:text-lg lg:text-xl",
-            light ? "text-[#edf7f2]" : "text-marhaban-ink/82",
+            light ? "text-[#edf7f2]" : "text-marhaban-muted",
           ].join(" ")}
         >
           {text}

@@ -1,6 +1,20 @@
 import type { Metadata } from 'next';
+import { Fraunces, Inter } from 'next/font/google';
 import './globals.css';
 import { GoogleAnalytics, CookieBanner } from '@/components/analytics';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-heading',
+  display: 'swap',
+  axes: ['opsz'],
+});
 
 /**
  * Root layout: must include <html> and <body>.
@@ -54,14 +68,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   // Root layout provides html/body structure
   // Locale-specific lang/dir are set by locale layout via script injection
   return (
-    <html lang="fr" dir="ltr" suppressHydrationWarning className="font-sans">
+    <html lang="fr" dir="ltr" suppressHydrationWarning className={`${inter.variable} ${fraunces.variable} font-sans`}>
       <head>
-        {/* GA4 loaded only after user consent */}
         <GoogleAnalytics />
       </head>
-      <body className="min-h-screen bg-slate-50 text-slate-900">
+      <body className="min-h-screen bg-marhaban-cream text-marhaban-ink antialiased">
         {children}
-        {/* Cookie consent banner */}
         <CookieBanner />
       </body>
     </html>

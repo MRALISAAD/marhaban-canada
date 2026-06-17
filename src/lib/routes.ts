@@ -10,7 +10,7 @@ export function servicesPath(locale: Locale) {
 }
 
 export function startPath(locale: Locale) {
-  return withLocale('/commencer', locale);
+  return withLocale('/ressources', locale);
 }
 
 export function journeyPath(locale: Locale) {
@@ -18,7 +18,7 @@ export function journeyPath(locale: Locale) {
 }
 
 export function accompanimentPath(locale: Locale) {
-  return servicesPath(locale);
+  return withLocale('/accompagnement', locale);
 }
 
 export function orientationServicePath(locale: Locale) {

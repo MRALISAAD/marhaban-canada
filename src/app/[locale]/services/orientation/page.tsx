@@ -415,7 +415,7 @@ function LabelList({ items, dark = false }: { items: readonly string[]; dark?: b
             'rounded-2xl border px-4 py-3 text-sm leading-relaxed',
             dark
               ? 'border-white/12 bg-white/[0.06] text-[#edf7f2]'
-              : 'border-marhaban-leaf/12 bg-marhaban-cream/70 text-marhaban-ink/74',
+              : 'border-marhaban-leaf/12 bg-marhaban-cream/70 text-marhaban-muted',
           ].join(' ')}
         >
           {item}
@@ -508,7 +508,7 @@ export default async function OrientationServicePage({ params }: Props) {
               {t.whoItems.map((item) => (
                 <article key={item.title} className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 p-4">
                   <h3 className="text-base font-semibold text-marhaban-ink">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-marhaban-ink/78">{item.text}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-marhaban-muted">{item.text}</p>
                 </article>
               ))}
             </div>
@@ -540,7 +540,7 @@ export default async function OrientationServicePage({ params }: Props) {
             <article key={step.title} className="rounded-[1.6rem] border border-marhaban-leaf/15 bg-white p-5 shadow-warm-sm">
               <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">0{index + 1}</p>
               <h3 className="mt-3 text-lg font-semibold leading-tight text-marhaban-ink">{step.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-marhaban-ink/78">{step.text}</p>
+              <p className="mt-3 text-sm leading-relaxed text-marhaban-muted">{step.text}</p>
             </article>
           ))}
         </div>
@@ -576,7 +576,7 @@ export default async function OrientationServicePage({ params }: Props) {
           {t.faq.map(([question, answer]) => (
             <article key={question} className="rounded-[1.5rem] border border-marhaban-leaf/15 bg-white p-5 shadow-warm-sm">
               <h3 className="text-base font-semibold text-marhaban-ink">{question}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-marhaban-ink/78">{answer}</p>
+              <p className="mt-2 text-sm leading-relaxed text-marhaban-muted">{answer}</p>
             </article>
           ))}
         </div>

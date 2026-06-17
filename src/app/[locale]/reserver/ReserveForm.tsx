@@ -108,7 +108,7 @@ export function ReserveForm({ texts, extras, locale, dir }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="grid gap-5" dir={dir}>
-      <div className="rounded-3xl border border-marhaban-leaf/12 bg-marhaban-mint/55 p-4 text-sm leading-relaxed text-marhaban-ink/72">
+      <div className="rounded-3xl border border-marhaban-leaf/12 bg-marhaban-mint/55 p-4 text-sm leading-relaxed text-marhaban-ink">
         {extras.callout}
       </div>
 
@@ -211,7 +211,7 @@ export function ReserveForm({ texts, extras, locale, dir }: Props) {
         <textarea id="reserve-need" rows={4} required value={need} onChange={(e) => setNeed(e.target.value)} placeholder={texts.form.needPlaceholder} className={cn(inputClass, 'resize-none')} />
       </div>
 
-      <label className="flex cursor-pointer items-start gap-3 rounded-3xl border border-marhaban-leaf/12 bg-white/88 p-4 text-sm leading-relaxed text-marhaban-ink/76 shadow-warm-sm">
+      <label className="flex cursor-pointer items-start gap-3 rounded-3xl border border-marhaban-leaf/12 bg-white/88 p-4 text-sm leading-relaxed text-marhaban-ink shadow-warm-sm">
         <input
           type="checkbox"
           checked={consent}
@@ -235,7 +235,7 @@ export function ReserveForm({ texts, extras, locale, dir }: Props) {
         <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
       </button>
 
-      <p className="text-sm leading-relaxed text-marhaban-ink/65">{texts.confirmation}</p>
+      <p className="text-sm leading-relaxed text-marhaban-muted">{texts.confirmation}</p>
     </form>
   );
 }

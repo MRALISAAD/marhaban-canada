@@ -142,7 +142,7 @@ export default async function AntiScamServicePage({ params }: Props) {
         <div className="grid gap-6 lg:grid-cols-[1fr_0.95fr] lg:items-start">
           <div className="rounded-[1.75rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm-sm">
             <SectionHeader eyebrow={t.sourcesTitle} title={t.sourcesTitle} text={locale === 'fr' ? 'Vérifie d’abord les sources sûres.' : locale === 'en' ? 'Check safe sources first.' : 'تحقق من المصادر الآمنة أولاً.'} />
-            <ul className="mt-6 space-y-3 text-sm text-marhaban-ink/72">
+            <ul className="mt-6 space-y-3 text-sm text-marhaban-muted">
               {t.sourcesBullets.map((item) => (
                 <li key={item} className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 px-4 py-3">• {item}</li>
               ))}
@@ -153,7 +153,7 @@ export default async function AntiScamServicePage({ params }: Props) {
               {locale === 'fr' ? 'Avant de payer' : locale === 'en' ? 'Before paying' : 'قبل الدفع'}
             </p>
             <h2 className="mt-3 text-2xl font-semibold leading-tight text-marhaban-ink">{t.finalTitle}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-marhaban-ink/72">{t.finalText}</p>
+            <p className="mt-3 text-sm leading-relaxed text-marhaban-muted">{t.finalText}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href={bookingPath(locale)} className="inline-flex min-h-[46px] items-center justify-center rounded-full bg-marhaban-forestDark px-5 py-2.5 text-sm font-bold text-white">
                 {t.primary}

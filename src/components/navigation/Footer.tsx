@@ -8,15 +8,15 @@ import { getHtmlAttrs } from '@/i18n/locales';
 import { bookingPath } from '@/lib/routes';
 
 const SUPPORT_LINKS = [
-  { id: 'services', path: '/services' },
-  { id: 'start', path: '/commencer' },
+  { id: 'services', path: '/accompagnement' },
   { id: 'orientation', path: '/services/orientation' },
+  { id: 'reserver', path: '/reserver' },
 ] as const;
 
 const RESOURCE_LINKS = [
-  { id: 'antiScam', path: '/services/anti-arnaque' },
+  { id: 'antiScam', path: '/anti-arnaque' },
   { id: 'ressources', path: '/ressources' },
-  { id: 'checklist', path: '/checklist' },
+  { id: 'checklist', path: '/ressources' },
 ] as const;
 
 const TRUST_LINKS = [
@@ -55,8 +55,8 @@ export function Footer() {
   // Labels based on locale
   const labels = {
     book: locale === 'fr' ? 'Réserver un appel' : locale === 'en' ? 'Book a call' : 'احجز مكالمة',
-    services: locale === 'fr' ? 'Services' : locale === 'en' ? 'Services' : 'الخدمات',
-    start: locale === 'fr' ? 'Commencer' : locale === 'en' ? 'Start' : 'ابدأ',
+    services: locale === 'fr' ? 'Accompagnement' : locale === 'en' ? 'Services' : 'المرافقة',
+    reserver: locale === 'fr' ? 'Réserver un appel' : locale === 'en' ? 'Book a call' : 'احجز مكالمة',
     orientation: locale === 'fr' ? 'Appel orientation' : locale === 'en' ? 'Orientation call' : 'مكالمة توجيه',
     checklist: locale === 'fr' ? 'Checklist' : locale === 'en' ? 'Checklist' : 'قائمة التحقق',
     ressources: locale === 'fr' ? 'Ressources' : locale === 'en' ? 'Resources' : 'الموارد',

@@ -4,8 +4,7 @@ import {
   antiScamPath,
   bookingPath,
   resourcesPath,
-  startPath,
-  servicesPath,
+  accompanimentPath,
 } from '@/lib/routes';
 
 type NavLink = {
@@ -16,8 +15,7 @@ type NavLink = {
 export function getNavigationContent(locale: Locale) {
   const copy = {
     fr: {
-      services: 'Services',
-      start: 'Commencer',
+      services: 'Accompagnement',
       antiScam: 'Anti-arnaque',
       resources: 'Ressources',
       about: 'À propos',
@@ -25,15 +23,13 @@ export function getNavigationContent(locale: Locale) {
     },
     en: {
       services: 'Services',
-      start: 'Start',
       antiScam: 'Anti-scam',
       resources: 'Resources',
       about: 'About',
       book: 'Book a call',
     },
     ar: {
-      services: 'الخدمات',
-      start: 'ابدأ',
+      services: 'المرافقة',
       antiScam: 'مكافحة الاحتيال',
       resources: 'الموارد',
       about: 'من نحن',
@@ -44,8 +40,7 @@ export function getNavigationContent(locale: Locale) {
   const labels = copy[locale];
 
   const primary: NavLink[] = [
-    { label: labels.services, href: servicesPath(locale) },
-    { label: labels.start, href: startPath(locale) },
+    { label: labels.services, href: accompanimentPath(locale) },
     { label: labels.antiScam, href: antiScamPath(locale) },
     { label: labels.resources, href: resourcesPath(locale) },
   ];

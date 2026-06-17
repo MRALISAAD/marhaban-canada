@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
+import { ArrowRight } from 'lucide-react';
 import { getHtmlAttrs, type Locale } from '@/i18n/locales';
-import { bookingPath, orientationServicePath, antiScamServicePath, resourcesPath } from '@/lib/routes';
+import { bookingPath, orientationServicePath, antiScamServicePath, resourcesPath, startPath } from '@/lib/routes';
+import { withLocale } from '@/lib/i18n-utils';
 import { legalDisclaimer } from '@/content/legalDisclaimer';
 import { PageHero } from '@/components/sections/PageHero';
 import { RouteCard } from '@/components/sections/RouteCard';
@@ -9,133 +11,222 @@ import { RoadmapStage } from '@/components/sections/RoadmapStage';
 import { PageShell } from '@/components/layout/PageShell';
 import { Section } from '@/components/layout/Section';
 import { SectionHeader } from '@/components/marketing/SectionHeader';
+import LocalizedLink from '@/components/LocalizedLink';
 
 type Props = { params: Promise<{ locale: string }> };
 
 const homeCopy = {
   fr: {
     eyebrow: 'Marhaban Canada',
-    title: 'Un appel pour clarifier tes prochaines étapes au Canada.',
-    text: 'Tu prépares ton arrivée ou tu viens d’arriver ? Marhaban Canada t’aide à mettre de l’ordre dans tes priorités, éviter les erreurs courantes et avancer avec un plan simple.',
-    primary: 'Découvrir l’appel orientation',
-    secondary: 'Réserver un appel',
-    pills: ['Orientation pratique', 'FR / EN / AR', 'Pas de conseil juridique', 'Pas de garantie de résultat'],
-    problemTitle: 'Pourquoi les premiers jours sont confus',
-    problemText: 'On te demande de tout comprendre vite: logement, documents, banque, téléphone, transports, arnaques, ressources. Le bon ordre change tout.',
-    serviceTitle: 'Service principal',
-    serviceText: 'Appel orientation — 30 min, prix de lancement: 29 $. Tu repars avec une mini-feuille de route claire pour savoir quoi faire ensuite.',
-    serviceCta: 'Voir le service',
-    situationTitle: 'Situations qu’on aide',
-    situationText: 'Tu peux entrer par le besoin, puis aller vers le bon service, le bon guide ou la réservation.',
-    stepTitle: 'Comment ça marche',
-    antiTitle: 'Avant de payer, vérifie',
-    antiText: 'Quand un message t’appuie pour aller vite, ralentis et regarde les signaux d’alerte.',
-    finalTitle: 'Tu ne sais pas par où commencer ?',
-    finalText: 'Réserve un appel d’orientation et repars avec tes prochaines étapes, ou consulte d’abord la page du service principal.',
+    title: 'Arriver au Canada, sans te sentir perdu.',
+    text: 'Tu prépares ton arrivée ou tu viens d\'arriver ? On t\'aide à clarifier tes priorités, éviter les arnaques et avancer avec un plan simple.',
+    primary: 'Réserver un appel',
+    secondary: 'Comment ça marche',
+    pills: ['Accompagnement pratique', 'FR / EN / AR', 'Anti-arnaque', 'Pas de conseil juridique'],
+    visualLabel: 'Ce qu\'on couvre',
+    visualTopics: [
+      'Avant l\'arrivée', 'Première semaine',
+      'Logement', 'Documents',
+      'Banque', 'Santé',
+      'Études', 'Anti-arnaque',
+    ],
+    trustItems: [
+      { icon: '✦', label: 'Accompagnement pratique', desc: 'Priorités claires, pas de jargon.' },
+      { icon: '⬡', label: 'Anti-arnaque', desc: 'Vérifie avant d\'agir ou de payer.' },
+      { icon: '◈', label: 'Ressources claires', desc: 'Guides simples et vérifiés.' },
+      { icon: '◎', label: 'Appel personnalisé', desc: '30 min, un plan fait pour toi.' },
+    ],
+    serviceEyebrow: 'Service principal',
+    serviceTitle: 'Un appel pour clarifier ton départ.',
+    serviceText: 'En 30 minutes, on trie ce qui est urgent et tu repars avec tes prochaines étapes.',
+    situationEyebrow: 'Par où commencer',
+    situationTitle: 'Quelle est ta situation ?',
+    situationText: 'Choisis ton point de départ. On t\'oriente vers le bon service ou la bonne ressource.',
+    processEyebrow: 'Comment ça marche',
+    processTitle: 'Trois étapes. Du flou au plan clair.',
+    processText: 'Un parcours simple et direct pour savoir quoi faire ensuite.',
+    antiEyebrow: 'Anti-arnaque',
+    antiTitle: 'Avant de payer quelqu\'un, vérifie.',
+    antiText: 'Les arnaques ciblent les nouveaux arrivants. Quand un message t\'appuie pour aller vite, ralentis — c\'est souvent le signe qu\'il faut vérifier.',
+    antiCta: 'Vérifier une situation',
+    antiSecondary: 'Voir les ressources',
+    resourceEyebrow: 'Guides pratiques',
+    resourceTitle: 'Tout ce dont tu as besoin pour tes premiers jours.',
+    resourceText: 'Des guides clairs et vérifiés, organisés par thème.',
+    finalTitle: 'Tu n\'as pas besoin de tout comprendre seul.',
+    finalText: 'Un appel de 30 minutes suffit pour clarifier tes priorités et repartir avec un plan.',
     finalCta: 'Réserver un appel',
+    finalSecondary: 'Voir le service',
   },
   en: {
     eyebrow: 'Marhaban Canada',
-    title: 'A call to clarify your next steps in Canada.',
-    text: 'Arriving soon or already here? Marhaban Canada helps you bring order to your priorities, avoid common mistakes, and move forward with a simple plan.',
-    primary: 'Discover the orientation call',
-    secondary: 'Book a call',
-    pills: ['Practical orientation', 'FR / EN / AR', 'No legal advice', 'No guaranteed outcome'],
-    problemTitle: 'Why the first days feel messy',
-    problemText: 'You’re asked to understand housing, documents, banking, phone plans, transport, scams, and resources all at once. Order matters.',
-    serviceTitle: 'Main service',
-    serviceText: 'Orientation call — 30 min, launch price: $29. Leave with a clear mini-roadmap for what to do next.',
-    serviceCta: 'View service',
-    situationTitle: 'Situations we help with',
-    situationText: 'Start with your situation, then move to the right service, guide, or booking flow.',
-    stepTitle: 'How it works',
-    antiTitle: 'Before paying, check',
-    antiText: 'If a message pushes you to act fast, slow down and look for warning signs.',
-    finalTitle: 'Not sure where to start?',
-    finalText: 'Book an orientation call and leave with your next steps, or review the main service page first.',
+    title: 'Arriving in Canada, without feeling lost.',
+    text: 'Preparing your arrival or just landed? We help you clarify priorities, avoid scams, and move forward with a simple plan.',
+    primary: 'Book a call',
+    secondary: 'How it works',
+    pills: ['Practical guidance', 'FR / EN / AR', 'Anti-scam', 'No legal advice'],
+    visualLabel: 'What we cover',
+    visualTopics: [
+      'Before arrival', 'First week',
+      'Housing', 'Documents',
+      'Banking', 'Health',
+      'Studies', 'Anti-scam',
+    ],
+    trustItems: [
+      { icon: '✦', label: 'Practical support', desc: 'Clear priorities, no jargon.' },
+      { icon: '⬡', label: 'Anti-scam', desc: 'Check before you act or pay.' },
+      { icon: '◈', label: 'Clear resources', desc: 'Simple, verified guides.' },
+      { icon: '◎', label: 'Personal call', desc: '30 min, a plan made for you.' },
+    ],
+    serviceEyebrow: 'Main service',
+    serviceTitle: 'A call to clarify your first steps.',
+    serviceText: 'In 30 minutes, we sort what\'s urgent and you leave with your next steps.',
+    situationEyebrow: 'Where to start',
+    situationTitle: 'What is your situation?',
+    situationText: 'Choose your starting point. We\'ll guide you to the right service or resource.',
+    processEyebrow: 'How it works',
+    processTitle: 'Three steps. From uncertainty to clarity.',
+    processText: 'A simple, direct path to knowing what to do next.',
+    antiEyebrow: 'Anti-scam',
+    antiTitle: 'Before paying someone, check.',
+    antiText: 'Scams target newcomers. When a message pushes you to act fast, slow down — that\'s often the sign to verify.',
+    antiCta: 'Check a situation',
+    antiSecondary: 'See resources',
+    resourceEyebrow: 'Practical guides',
+    resourceTitle: 'Everything you need for your first days.',
+    resourceText: 'Clear, verified guides organized by topic.',
+    finalTitle: 'You don\'t need to figure it all out alone.',
+    finalText: 'A 30-minute call is enough to clarify your priorities and leave with a plan.',
     finalCta: 'Book a call',
+    finalSecondary: 'See the service',
   },
   ar: {
     eyebrow: 'مرحبا كندا',
-    title: 'مكالمة لتوضيح خطوتك التالية في كندا.',
-    text: 'سواء كنت على وشك الوصول أو وصلت بالفعل، تساعدك مرحبا كندا على ترتيب أولوياتك وتجنب الأخطاء الشائعة والمضي بخطة بسيطة.',
-    primary: 'اكتشف مكالمة التوجيه',
-    secondary: 'احجز مكالمة',
-    pills: ['توجيه عملي', 'FR / EN / AR', 'لا نصائح قانونية', 'لا ضمانات للنتيجة'],
-    problemTitle: 'لماذا تبدو الأيام الأولى مربكة',
-    problemText: 'يطلب منك فهم السكن والوثائق والبنك والهاتف والنقل والاحتيال والموارد دفعة واحدة. الترتيب مهم.',
-    serviceTitle: 'الخدمة الرئيسية',
-    serviceText: 'مكالمة توجيه — 30 دقيقة، سعر إطلاق: 29 $. ستخرج بخارطة طريق مختصرة لما يجب فعله بعد ذلك.',
-    serviceCta: 'عرض الخدمة',
-    situationTitle: 'الحالات التي نساعد فيها',
-    situationText: 'ابدأ من حالتك، ثم انتقل إلى الخدمة أو الدليل أو الحجز المناسب.',
-    stepTitle: 'كيف يعمل الأمر',
-    antiTitle: 'قبل أن تدفع، تحقق',
-    antiText: 'إذا دفعك أحدهم للتصرف بسرعة، فخفف السرعة وابحث عن إشارات التحذير.',
-    finalTitle: 'لا تعرف من أين تبدأ؟',
-    finalText: 'احجز مكالمة توجيه واخرج بخطواتك التالية، أو راجع صفحة الخدمة الرئيسية أولاً.',
+    title: 'الوصول إلى كندا، دون الشعور بالضياع.',
+    text: 'سواء كنت تستعد لقدومك أو وصلت للتو، نساعدك على توضيح أولوياتك وتجنب الاحتيال والتقدم بخطة بسيطة.',
+    primary: 'احجز مكالمة',
+    secondary: 'كيف يعمل',
+    pills: ['توجيه عملي', 'FR / EN / AR', 'مكافحة الاحتيال', 'لا نصائح قانونية'],
+    visualLabel: 'ما نغطيه',
+    visualTopics: [
+      'قبل الوصول', 'الأسبوع الأول',
+      'السكن', 'الوثائق',
+      'البنك', 'الصحة',
+      'الدراسة', 'مكافحة الاحتيال',
+    ],
+    trustItems: [
+      { icon: '✦', label: 'دعم عملي', desc: 'أولويات واضحة، بدون تعقيد.' },
+      { icon: '⬡', label: 'مكافحة الاحتيال', desc: 'تحقق قبل أن تتصرف أو تدفع.' },
+      { icon: '◈', label: 'موارد واضحة', desc: 'أدلة بسيطة وموثوقة.' },
+      { icon: '◎', label: 'مكالمة شخصية', desc: '30 دقيقة، خطة مصممة لك.' },
+    ],
+    serviceEyebrow: 'الخدمة الرئيسية',
+    serviceTitle: 'مكالمة لتوضيح خطواتك الأولى.',
+    serviceText: 'في 30 دقيقة، نرتب ما هو عاجل وتغادر بخطواتك التالية.',
+    situationEyebrow: 'من أين تبدأ',
+    situationTitle: 'ما هو وضعك؟',
+    situationText: 'اختر نقطة انطلاقك. سنرشدك إلى الخدمة أو المورد المناسب.',
+    processEyebrow: 'كيف يعمل',
+    processTitle: 'ثلاث خطوات. من الغموض إلى الوضوح.',
+    processText: 'مسار بسيط ومباشر لمعرفة ما يجب فعله بعد ذلك.',
+    antiEyebrow: 'مكافحة الاحتيال',
+    antiTitle: 'قبل أن تدفع لأحد، تحقق.',
+    antiText: 'تستهدف عمليات الاحتيال القادمين الجدد. عندما يضغط عليك أحدهم للتصرف بسرعة، تمهّل.',
+    antiCta: 'تحقق من وضع',
+    antiSecondary: 'عرض الموارد',
+    resourceEyebrow: 'أدلة عملية',
+    resourceTitle: 'كل ما تحتاجه لأيامك الأولى.',
+    resourceText: 'أدلة واضحة وموثوقة، منظمة حسب الموضوع.',
+    finalTitle: 'لا تحتاج إلى فهم كل شيء وحدك.',
+    finalText: 'مكالمة 30 دقيقة كافية لتوضيح أولوياتك والمغادرة بخطة.',
     finalCta: 'احجز مكالمة',
+    finalSecondary: 'عرض الخدمة',
   },
-} as const satisfies Record<Locale, {
-  eyebrow: string;
-  title: string;
-  text: string;
-  primary: string;
-  secondary: string;
-  pills: readonly string[];
-  problemTitle: string;
-  problemText: string;
-  serviceTitle: string;
-  serviceText: string;
-  serviceCta: string;
-  situationTitle: string;
-  situationText: string;
-  stepTitle: string;
-  antiTitle: string;
-  antiText: string;
-  finalTitle: string;
-  finalText: string;
-  finalCta: string;
+} as const satisfies Record<string, {
+  eyebrow: string; title: string; text: string;
+  primary: string; secondary: string; pills: readonly string[];
+  visualLabel: string; visualTopics: readonly string[];
+  trustItems: readonly { icon: string; label: string; desc: string }[];
+  serviceEyebrow: string; serviceTitle: string; serviceText: string;
+  situationEyebrow: string; situationTitle: string; situationText: string;
+  processEyebrow: string; processTitle: string; processText: string;
+  antiEyebrow: string; antiTitle: string; antiText: string; antiCta: string; antiSecondary: string;
+  resourceEyebrow: string; resourceTitle: string; resourceText: string;
+  finalTitle: string; finalText: string; finalCta: string; finalSecondary: string;
 }>;
 
 const situations = (locale: Locale) => [
-  { title: locale === 'fr' ? 'Je prépare mon arrivée' : locale === 'en' ? 'Preparing arrival' : 'أحضّر وصولي', text: locale === 'fr' ? 'Tu veux un ordre simple avant le départ.' : locale === 'en' ? 'You want a simple order before you leave.' : 'تريد ترتيباً بسيطاً قبل السفر.', href: orientationServicePath(locale), badge: locale === 'fr' ? 'Orientation' : locale === 'en' ? 'Orientation' : 'توجيه' },
-  { title: locale === 'fr' ? 'Je viens d’arriver' : locale === 'en' ? 'Just arrived' : 'وصلت للتو', text: locale === 'fr' ? 'Tu as besoin de repères rapides pour la première semaine.' : locale === 'en' ? 'You need quick landmarks for the first week.' : 'تحتاج إلى نقاط سريعة للأسبوع الأول.', href: orientationServicePath(locale), badge: locale === 'fr' ? 'Service' : locale === 'en' ? 'Service' : 'الخدمة' },
-  { title: locale === 'fr' ? 'Je cherche un logement' : locale === 'en' ? 'Looking for housing' : 'أبحث عن سكن', text: locale === 'fr' ? 'Tu veux chercher sans te faire piéger.' : locale === 'en' ? 'You want to search without getting trapped.' : 'تريد البحث من دون الوقوع في فخ.', href: resourcesPath(locale), badge: locale === 'fr' ? 'Resource' : locale === 'en' ? 'Resource' : 'مورد' },
-  { title: locale === 'fr' ? 'Je suis étudiant' : locale === 'en' ? 'I am a student' : 'أنا طالب', text: locale === 'fr' ? 'Tu veux comprendre ce qui compte maintenant.' : locale === 'en' ? 'You want to understand what matters now.' : 'تريد فهم ما يهم الآن.', href: orientationServicePath(locale), badge: locale === 'fr' ? 'Call' : locale === 'en' ? 'Call' : 'مكالمة' },
-  { title: locale === 'fr' ? 'J’ai peur d’une arnaque' : locale === 'en' ? 'I’m worried about a scam' : 'أخشى من احتيال', text: locale === 'fr' ? 'Tu veux vérifier avant d’envoyer de l’argent ou des documents.' : locale === 'en' ? 'You want to check before sending money or documents.' : 'تريد التحقق قبل إرسال المال أو الوثائق.', href: antiScamServicePath(locale), badge: locale === 'fr' ? 'Trust' : locale === 'en' ? 'Trust' : 'ثقة' },
-  { title: locale === 'fr' ? 'Je veux parler à quelqu’un' : locale === 'en' ? 'I want to speak with someone' : 'أريد التحدث مع شخص', text: locale === 'fr' ? 'Tu préfères une lecture humaine et directe.' : locale === 'en' ? 'You prefer a human, direct read of your situation.' : 'تفضّل قراءة إنسانية ومباشرة لوضعك.', href: bookingPath(locale), badge: locale === 'fr' ? 'Call' : locale === 'en' ? 'Call' : 'مكالمة' },
+  {
+    title: locale === 'fr' ? 'Je prépare mon arrivée' : locale === 'en' ? 'Preparing my arrival' : 'أحضّر وصولي',
+    text: locale === 'fr' ? 'Tu veux un ordre simple et les démarches prioritaires avant de partir.' : locale === 'en' ? 'You want a simple checklist and priority steps before you leave.' : 'تريد ترتيباً بسيطاً وخطوات أولوية قبل السفر.',
+    href: orientationServicePath(locale),
+    badge: locale === 'fr' ? 'Orientation' : locale === 'en' ? 'Orientation' : 'توجيه',
+    cta: locale === 'fr' ? 'Découvrir' : locale === 'en' ? 'Discover' : 'اكتشف',
+  },
+  {
+    title: locale === 'fr' ? 'Je viens d\'arriver' : locale === 'en' ? 'Just arrived' : 'وصلت للتو',
+    text: locale === 'fr' ? 'Tu as besoin de repères rapides pour ta première semaine.' : locale === 'en' ? 'You need quick landmarks for your first week.' : 'تحتاج إلى نقاط مرجعية سريعة لأسبوعك الأول.',
+    href: bookingPath(locale),
+    badge: locale === 'fr' ? 'Appel rapide' : locale === 'en' ? 'Quick call' : 'مكالمة سريعة',
+    cta: locale === 'fr' ? 'Réserver' : locale === 'en' ? 'Book' : 'احجز',
+  },
+  {
+    title: locale === 'fr' ? 'Étudiant international' : locale === 'en' ? 'International student' : 'طالب دولي',
+    text: locale === 'fr' ? 'Tu veux comprendre ce qui compte maintenant pour bien démarrer.' : locale === 'en' ? 'You want to understand what matters right now to start well.' : 'تريد فهم ما يهم الآن لبداية جيدة.',
+    href: orientationServicePath(locale),
+    badge: locale === 'fr' ? 'Étudiant' : locale === 'en' ? 'Student' : 'طالب',
+    cta: locale === 'fr' ? 'Voir le service' : locale === 'en' ? 'See the service' : 'عرض الخدمة',
+  },
+  {
+    title: locale === 'fr' ? 'Vérifier une arnaque' : locale === 'en' ? 'Verify a scam' : 'التحقق من احتيال',
+    text: locale === 'fr' ? 'Tu as reçu un message suspect ou on te demande de l\'argent. Vérifie avant d\'agir.' : locale === 'en' ? 'You received a suspicious message or someone is asking for money. Check before you act.' : 'تلقيت رسالة مشبوهة أو يطلب منك أحدهم المال. تحقق قبل أن تتصرف.',
+    href: antiScamServicePath(locale),
+    badge: locale === 'fr' ? 'Anti-arnaque' : locale === 'en' ? 'Anti-scam' : 'مكافحة الاحتيال',
+    cta: locale === 'fr' ? 'Vérifier' : locale === 'en' ? 'Verify' : 'تحقق',
+  },
+  {
+    title: locale === 'fr' ? 'Les bonnes démarches' : locale === 'en' ? 'The right steps' : 'الخطوات الصحيحة',
+    text: locale === 'fr' ? 'Tu veux savoir par où commencer sans te perdre dans les démarches.' : locale === 'en' ? 'You want to know where to start without getting lost in the process.' : 'تريد معرفة من أين تبدأ دون أن تضيع في الإجراءات.',
+    href: startPath(locale),
+    badge: locale === 'fr' ? 'Guide' : locale === 'en' ? 'Guide' : 'دليل',
+    cta: locale === 'fr' ? 'Commencer' : locale === 'en' ? 'Start' : 'ابدأ',
+  },
 ];
 
-const steps = (locale: Locale) => [
+const processSteps = (locale: Locale) => [
   {
-    number: '1',
+    number: '01',
     title: locale === 'fr' ? 'Tu expliques ta situation' : locale === 'en' ? 'You explain your situation' : 'تشرح وضعك',
-    text: locale === 'fr' ? 'Tu nous dis où tu es et ce qui te bloque.' : locale === 'en' ? 'You tell us where you are and what is blocking you.' : 'تقول لنا أين أنت وما الذي يعيقك.',
+    text: locale === 'fr' ? 'Tu nous dis où tu en es, ce qui te bloque, et ce que tu dois régler en premier.' : locale === 'en' ? 'You tell us where you are, what\'s blocking you, and what you need to sort out first.' : 'تقول لنا أين أنت، وما الذي يعيقك، وما الذي يجب ترتيبه أولاً.',
   },
   {
-    number: '2',
-    title: locale === 'fr' ? 'On clarifie tes priorités' : locale === 'en' ? 'We clarify your priorities' : 'نوضح الأولويات',
-    text: locale === 'fr' ? 'On trie ce qui est urgent, utile et secondaire.' : locale === 'en' ? 'We sort what is urgent, useful, and secondary.' : 'نرتب ما هو عاجل ومفيد وثانوي.',
+    number: '02',
+    title: locale === 'fr' ? 'On clarifie les priorités' : locale === 'en' ? 'We clarify your priorities' : 'نوضح الأولويات',
+    text: locale === 'fr' ? 'On trie ce qui est urgent, ce qui peut attendre, et ce qui nécessite une attention immédiate.' : locale === 'en' ? 'We sort what\'s urgent, what can wait, and what needs immediate attention.' : 'نرتب ما هو عاجل، وما يمكن الانتظار، وما يحتاج إلى اهتمام فوري.',
   },
   {
-    number: '3',
-    title: locale === 'fr' ? 'Tu réserves un appel' : locale === 'en' ? 'You book a call' : 'تحجز مكالمة',
-    text: locale === 'fr' ? 'Tu choisis le bon format selon ton besoin.' : locale === 'en' ? 'You choose the right format for your need.' : 'تختار الصيغة الأنسب لاحتياجك.',
+    number: '03',
+    title: locale === 'fr' ? 'Tu repars avec un plan simple' : locale === 'en' ? 'You leave with a simple plan' : 'تغادر بخطة بسيطة',
+    text: locale === 'fr' ? 'Tu sais quoi faire ensuite. Pas de liste infinie — juste les prochaines étapes qui comptent.' : locale === 'en' ? 'You know what to do next. No endless list — just the next steps that matter.' : 'تعرف ما تفعله بعد ذلك. لا قائمة لا نهاية لها — فقط الخطوات التالية المهمة.',
   },
-  {
-    number: '4',
-    title: locale === 'fr' ? 'Tu repars avec une mini-feuille de route' : locale === 'en' ? 'You leave with a mini roadmap' : 'تغادر بخارطة طريق مختصرة',
-    text: locale === 'fr' ? 'Tu sais quoi faire ensuite, sans te perdre.' : locale === 'en' ? 'You know what to do next, without getting lost.' : 'تعرف ما الذي تفعله بعد ذلك بلا ضياع.',
-  },
+];
+
+const resources = (locale: Locale) => [
+  { label: locale === 'fr' ? 'Checklist arrivée' : locale === 'en' ? 'Arrival checklist' : 'قائمة الوصول', href: withLocale('/checklist', locale) },
+  { label: locale === 'fr' ? 'Logement' : locale === 'en' ? 'Housing' : 'السكن', href: resourcesPath(locale) },
+  { label: locale === 'fr' ? 'Banque' : locale === 'en' ? 'Banking' : 'البنك', href: resourcesPath(locale) },
+  { label: locale === 'fr' ? 'Documents' : locale === 'en' ? 'Documents' : 'الوثائق', href: resourcesPath(locale) },
+  { label: locale === 'fr' ? 'Santé' : locale === 'en' ? 'Health' : 'الصحة', href: resourcesPath(locale) },
+  { label: locale === 'fr' ? 'Anti-arnaque' : locale === 'en' ? 'Anti-scam' : 'مكافحة الاحتيال', href: antiScamServicePath(locale) },
 ];
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: localeParam } = await params;
-  const locale = localeParam === 'en' || localeParam === 'ar' ? localeParam : 'fr';
+  const locale = localeParam === 'en' || localeParam === 'ar' ? localeParam as Locale : 'fr';
+  const t = homeCopy[locale];
   return {
-    title: `Marhaban Canada | ${homeCopy[locale].title}`,
-    description: homeCopy[locale].text,
+    title: `Marhaban Canada — ${t.title}`,
+    description: t.text,
   };
 }
 
@@ -145,137 +236,135 @@ export default async function HomePage({ params }: Props) {
   const { dir, lang } = getHtmlAttrs(locale);
   const t = homeCopy[locale];
   const situationCards = situations(locale);
-  const roadmap = steps(locale);
+  const steps = processSteps(locale);
+  const resourceItems = resources(locale);
+
   const orientationService = {
     title: locale === 'fr' ? 'Appel orientation' : locale === 'en' ? 'Orientation call' : 'مكالمة توجيه',
     price: locale === 'fr' ? '29 $' : '$29',
-    duration: locale === 'fr' ? '30 minutes' : '30 minutes',
+    duration: '30 min',
     label: locale === 'fr' ? 'Prix de lancement' : locale === 'en' ? 'Launch price' : 'سعر إطلاق',
     bestFor:
       locale === 'fr'
-        ? 'Pour les nouveaux arrivants, étudiants et familles qui veulent mettre de l’ordre avant de décider.'
+        ? 'Pour les nouveaux arrivants, étudiants et familles qui veulent de la clarté avant d\'agir.'
         : locale === 'en'
-          ? 'For newcomers, students, and families who want clarity before deciding.'
-          : 'للقادمين الجدد والطلاب والعائلات الذين يريدون الوضوح قبل اتخاذ القرار.',
+          ? 'For newcomers, students, and families who want clarity before acting.'
+          : 'للقادمين الجدد والطلاب والعائلات الذين يريدون الوضوح قبل التصرف.',
     included:
       locale === 'fr'
-        ? ['Analyse simple de la situation', 'Priorités à faire', 'Checklist personnalisée simple', 'Ressources utiles']
+        ? ['Analyse de ta situation', 'Tes 3 priorités immédiates', 'Checklist personnalisée', 'Ressources utiles ciblées']
         : locale === 'en'
-          ? ['Simple situation review', 'Priority actions', 'Simple personalized checklist', 'Useful resources']
-          : ['تحليل بسيط للوضع', 'الأولويات المطلوبة', 'قائمة تحقق شخصية مبسطة', 'موارد مفيدة'],
+          ? ['Situation review', 'Your 3 immediate priorities', 'Personalized checklist', 'Targeted useful resources']
+          : ['تحليل وضعك', 'أولوياتك الثلاث الفورية', 'قائمة تحقق شخصية', 'موارد مفيدة مستهدفة'],
     notIncluded:
       locale === 'fr'
-        ? 'Pas de conseil juridique, pas de conseil en immigration et pas de garantie de résultat.'
+        ? 'Pas de conseil juridique, pas de conseil en immigration, pas de garantie de résultat.'
         : locale === 'en'
-          ? 'No legal advice, no immigration advice, and no guarantee of outcome.'
+          ? 'No legal advice, no immigration advice, no guaranteed outcome.'
           : 'لا نصائح قانونية، ولا نصائح هجرة، ولا ضمان للنتيجة.',
   };
 
-  const visual = (
-    <div className="grid gap-4">
-      <div className="rounded-[1.5rem] border border-white/12 bg-white/[0.08] p-4">
-        <div className="flex flex-wrap gap-2">
-          <span className="rounded-full border border-white/12 bg-white/[0.06] px-3 py-1 text-xs font-semibold text-white/80">30 min</span>
-          <span className="rounded-full border border-marhaban-gold/20 bg-marhaban-gold/10 px-3 py-1 text-xs font-semibold text-marhaban-gold">
-            {locale === 'fr' ? 'Résumé après appel' : locale === 'en' ? 'Summary after the call' : 'ملخص بعد المكالمة'}
-          </span>
-        </div>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          {[
-            locale === 'fr' ? 'Priorités' : locale === 'en' ? 'Priorities' : 'الأولويات',
-            locale === 'fr' ? 'Documents' : locale === 'en' ? 'Documents' : 'الوثائق',
-            locale === 'fr' ? 'Logement' : locale === 'en' ? 'Housing' : 'السكن',
-            locale === 'fr' ? 'Anti-arnaque' : locale === 'en' ? 'Anti-scam' : 'مكافحة الاحتيال',
-          ].map((item) => (
-            <div key={item} className="rounded-2xl border border-white/10 bg-black/10 px-4 py-3 text-sm font-medium text-white/84">
-              {item}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="rounded-[1.5rem] border border-marhaban-gold/16 bg-marhaban-gold/10 p-4 text-sm leading-relaxed text-[#d8e7df]">
-        <p className="font-semibold text-marhaban-gold">
-          {locale === 'fr' ? 'Ce que tu repars avec' : locale === 'en' ? 'What you leave with' : 'ما الذي ستخرج به'}
-        </p>
-        <p className="mt-2">
-          {locale === 'fr'
-            ? 'Une prochaine étape claire, des ressources utiles et une lecture simple de ce qui mérite ton attention.'
-            : locale === 'en'
-              ? 'A clear next step, useful resources, and a simple read on what deserves your attention.'
-              : 'خطوة تالية واضحة، وموارد مفيدة، وفهم بسيط لما يستحق انتباهك.'}
-        </p>
+  const heroVisual = (
+    <div className="space-y-3">
+      <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-gold">{t.visualLabel}</p>
+      <div className="grid grid-cols-2 gap-2.5">
+        {t.visualTopics.map((topic) => (
+          <div
+            key={topic}
+            className="rounded-2xl border border-white/10 bg-white/[0.07] px-4 py-3 text-sm font-medium text-[#e8f4ee]"
+          >
+            {topic}
+          </div>
+        ))}
       </div>
     </div>
   );
 
   return (
     <PageShell dir={dir} lang={lang}>
+
+      {/* ── Hero ── */}
       <PageHero
         dark
         eyebrow={t.eyebrow}
         title={t.title}
         text={t.text}
-        primary={{ label: t.primary, href: orientationServicePath(locale) }}
-        secondary={{ label: t.secondary, href: bookingPath(locale) }}
+        primary={{ label: t.primary, href: bookingPath(locale) }}
+        secondary={{ label: t.secondary, href: '#comment-ca-marche' }}
         pills={t.pills}
-        visual={visual}
+        visual={heroVisual}
       />
 
+      {/* ── Trust strip ── */}
       <Section tone="muted">
-        <div className="grid gap-4 md:grid-cols-4">
-          {[
-            locale === 'fr' ? '30 minutes pour clarifier' : locale === 'en' ? '30 minutes to clarify' : '30 دقيقة لتوضيح الأمور',
-            locale === 'fr' ? 'Priorités simples' : locale === 'en' ? 'Simple priorities' : 'أولويات بسيطة',
-            locale === 'fr' ? 'Ressources utiles' : locale === 'en' ? 'Useful resources' : 'موارد مفيدة',
-            locale === 'fr' ? 'Erreurs à éviter' : locale === 'en' ? 'Mistakes to avoid' : 'أخطاء يجب تجنبها',
-          ].map((item) => (
-            <div key={item} className="rounded-[1.5rem] border border-marhaban-leaf/15 bg-white p-5 text-sm font-medium text-marhaban-ink shadow-warm-sm">
-              {item}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {t.trustItems.map((item) => (
+            <div
+              key={item.label}
+              className="flex items-start gap-4 rounded-[1.5rem] border border-marhaban-leaf/12 bg-white p-5 shadow-warm-xs"
+            >
+              <span className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-2xl border border-marhaban-leaf/15 bg-marhaban-mint/60 text-marhaban-leaf text-base font-bold">
+                {item.icon}
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-marhaban-ink">{item.label}</p>
+                <p className="mt-0.5 text-xs leading-relaxed text-marhaban-muted">{item.desc}</p>
+              </div>
             </div>
           ))}
         </div>
       </Section>
 
+      {/* ── Service card ── */}
       <Section>
-        <SectionHeader
-          eyebrow={locale === 'fr' ? 'Service principal' : locale === 'en' ? 'Main service' : 'الخدمة الرئيسية'}
-          title={t.serviceTitle}
-          text={t.serviceText}
-        />
-        <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <SectionHeader eyebrow={t.serviceEyebrow} title={t.serviceTitle} text={t.serviceText} />
+        <div className="mt-8 grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
           <ServiceCard
             service={orientationService}
             href={orientationServicePath(locale)}
-            cta={t.serviceCta}
+            cta={locale === 'fr' ? 'Voir le service' : locale === 'en' ? 'See the service' : 'عرض الخدمة'}
             featured
           />
-          <div className="rounded-[1.75rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm-sm">
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">
-              {locale === 'fr' ? 'Problème principal' : locale === 'en' ? 'Main problem' : 'المشكلة الرئيسية'}
-            </p>
-            <h2 className="mt-3 text-2xl font-semibold leading-tight text-marhaban-ink">{t.problemTitle}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-marhaban-ink/78">{t.problemText}</p>
-            <div className="mt-6 grid gap-3">
+          <div className="flex flex-col justify-between gap-4 rounded-[1.85rem] border border-marhaban-leaf/15 bg-marhaban-offwhite p-6 shadow-warm-sm">
+            <div>
+              <p className="eyebrow">{locale === 'fr' ? 'Ce que tu repars avec' : locale === 'en' ? 'What you leave with' : 'ما الذي ستخرج به'}</p>
+              <h3 className="heading-card mt-3">
+                {locale === 'fr' ? 'Un plan clair, pas une liste infinie.' : locale === 'en' ? 'A clear plan, not an endless list.' : 'خطة واضحة، وليست قائمة لا نهاية لها.'}
+              </h3>
+              <p className="body-sm mt-3">
+                {locale === 'fr'
+                  ? 'En 30 minutes, tu comprends quoi faire en premier, quoi éviter, et où aller chercher de l\'aide.'
+                  : locale === 'en'
+                    ? 'In 30 minutes, you understand what to do first, what to avoid, and where to get help.'
+                    : 'في 30 دقيقة، تفهم ما يجب فعله أولاً، وما تجنبه، وأين تطلب المساعدة.'}
+              </p>
+            </div>
+            <div className="space-y-2.5">
               {[
-                locale === 'fr' ? 'Tu arrives bientôt ou tu viens d’arriver.' : locale === 'en' ? 'You are arriving soon or already here.' : 'أنت على وشك الوصول أو وصلت بالفعل.',
-                locale === 'fr' ? 'Tu veux éviter les erreurs de départ.' : locale === 'en' ? 'You want to avoid early mistakes.' : 'تريد تجنب الأخطاء المبكرة.',
-                locale === 'fr' ? 'Tu cherches un ordre simple avant d’agir.' : locale === 'en' ? 'You want a simple order before acting.' : 'تريد ترتيباً بسيطاً قبل التصرف.',
-              ].map((point) => (
-                <div key={point} className="rounded-2xl border border-marhaban-leaf/15 bg-marhaban-mint/55 px-4 py-3 text-sm text-marhaban-ink">
-                  {point}
+                locale === 'fr' ? 'Tes 3 priorités immédiates' : locale === 'en' ? 'Your 3 immediate priorities' : 'أولوياتك الثلاث الفورية',
+                locale === 'fr' ? 'Les erreurs courantes à éviter' : locale === 'en' ? 'Common mistakes to avoid' : 'الأخطاء الشائعة لتجنبها',
+                locale === 'fr' ? 'Des ressources adaptées à ta situation' : locale === 'en' ? 'Resources tailored to your situation' : 'موارد مكيّفة لوضعك',
+              ].map((item) => (
+                <div key={item} className="flex items-center gap-3 rounded-2xl border border-marhaban-leaf/12 bg-white px-4 py-3 text-sm text-marhaban-ink">
+                  <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-marhaban-leaf" aria-hidden="true" />
+                  {item}
                 </div>
               ))}
             </div>
+            <a
+              href={bookingPath(locale)}
+              className="btn btn-lg btn-primary mt-2 w-full text-center"
+            >
+              {t.primary}
+              <ArrowRight className="h-5 w-5 rtl-flip" aria-hidden="true" />
+            </a>
           </div>
         </div>
       </Section>
 
+      {/* ── Situation cards ── */}
       <Section tone="muted">
-        <SectionHeader
-          eyebrow={t.situationTitle}
-          title={t.situationTitle}
-          text={t.situationText}
-        />
+        <SectionHeader eyebrow={t.situationEyebrow} title={t.situationTitle} text={t.situationText} />
         <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {situationCards.map((route) => (
             <RouteCard
@@ -283,61 +372,117 @@ export default async function HomePage({ params }: Props) {
               title={route.title}
               text={route.text}
               href={route.href}
-              cta={locale === 'fr' ? 'Continuer' : locale === 'en' ? 'Continue' : 'تابع'}
+              cta={route.cta}
               badge={route.badge}
             />
           ))}
         </div>
       </Section>
 
-      <Section>
-        <SectionHeader eyebrow={t.stepTitle} title={t.stepTitle} text={locale === 'fr' ? 'Un parcours simple, du flou au plan clair.' : locale === 'en' ? 'A simple journey from uncertainty to clarity.' : 'رحلة بسيطة من الغموض إلى الوضوح.'} />
-        <div className="mt-8 grid gap-5 lg:grid-cols-2">
-          {roadmap.map((step) => (
-            <RoadmapStage key={step.number} number={step.number} title={step.title} text={step.text} />
+      {/* ── Process steps ── */}
+      <Section id="comment-ca-marche">
+        <SectionHeader
+          eyebrow={t.processEyebrow}
+          title={t.processTitle}
+          text={t.processText}
+        />
+        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+          {steps.map((step) => (
+            <RoadmapStage
+              key={step.number}
+              number={step.number}
+              title={step.title}
+              text={step.text}
+            />
           ))}
-          </div>
+        </div>
+        <div className="mt-8 flex justify-center">
+          <LocalizedLink
+            href={bookingPath(locale)}
+            className="btn btn-md btn-primary"
+          >
+            {t.primary}
+            <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+          </LocalizedLink>
+        </div>
       </Section>
 
-      <Section tone="dark" className="py-10 sm:py-12 lg:py-14">
-        <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.07] p-6 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-8">
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-gold">
-            {locale === 'fr' ? 'Anti-arnaque' : locale === 'en' ? 'Anti-scam' : 'مكافحة الاحتيال'}
-          </p>
-          <h2 className="mt-3 text-2xl font-semibold leading-tight text-white sm:text-3xl">{t.antiTitle}</h2>
-          <p className="mt-3 text-sm leading-relaxed text-[#edf7f2]">{t.antiText}</p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
+      {/* ── Anti-scam section ── */}
+      <Section tone="dark">
+        <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.07] p-6 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-10">
+          <p className="eyebrow-light">{t.antiEyebrow}</p>
+          <h2 className="heading-section mt-3 !text-white">{t.antiTitle}</h2>
+          <p className="body-lead mx-auto mt-4 max-w-2xl !text-[#edf7f2]">{t.antiText}</p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a
               href={antiScamServicePath(locale)}
-              className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-marhaban-gold px-6 py-3 text-sm font-bold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.22)] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-marhaban-gold px-7 py-3.5 text-sm font-bold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.22)] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
             >
-              {locale === 'fr' ? 'Vérifier une situation' : locale === 'en' ? 'Check a situation' : 'تحقق من وضع'}
+              {t.antiCta}
+              <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
             </a>
             <a
               href={resourcesPath(locale)}
-              className="inline-flex min-h-[52px] items-center justify-center rounded-full border border-white/16 bg-white/[0.06] px-6 py-3 text-sm font-bold text-white transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-white/16 bg-white/[0.06] px-7 py-3.5 text-sm font-bold text-white transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
             >
-              {locale === 'fr' ? 'Voir les ressources' : locale === 'en' ? 'See resources' : 'عرض الموارد'}
+              {t.antiSecondary}
             </a>
           </div>
         </div>
       </Section>
 
-      <Section tone="dark" className="py-10 sm:py-12 lg:py-14">
-        <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.07] p-6 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-8">
-          <h2 className="text-2xl font-semibold text-white sm:text-3xl">{t.finalTitle}</h2>
-          <p className="mt-3 text-sm leading-relaxed text-[#edf7f2]">{t.finalText}</p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <a href={orientationServicePath(locale)} className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-marhaban-gold px-6 py-3 text-sm font-bold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.22)] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark">
-              {t.primary}
-            </a>
-            <a href={bookingPath(locale)} className="inline-flex min-h-[52px] items-center justify-center rounded-full border border-white/16 bg-white/[0.06] px-6 py-3 text-sm font-bold text-white transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark">
-              {t.secondary}
-            </a>
-          </div>
-          <p className="mt-6 text-xs leading-relaxed text-white/78">{legalDisclaimer[locale]}</p>
+      {/* ── Resource grid ── */}
+      <Section tone="muted">
+        <SectionHeader eyebrow={t.resourceEyebrow} title={t.resourceTitle} text={t.resourceText} />
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {resourceItems.map((res) => (
+            <LocalizedLink
+              key={res.label}
+              href={res.href}
+              className="group flex items-center justify-between rounded-[1.5rem] border border-marhaban-leaf/15 bg-white p-5 shadow-warm-xs transition hover:-translate-y-1 hover:shadow-warm-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
+            >
+              <span className="text-sm font-semibold text-marhaban-ink">{res.label}</span>
+              <span className="grid h-8 w-8 flex-shrink-0 place-items-center rounded-xl border border-marhaban-leaf/12 bg-marhaban-mint/60 text-marhaban-leaf transition group-hover:bg-marhaban-leaf group-hover:text-white">
+                <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+              </span>
+            </LocalizedLink>
+          ))}
+        </div>
+        <div className="mt-6 text-center">
+          <LocalizedLink
+            href={resourcesPath(locale)}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-marhaban-leaf underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:rounded-md"
+          >
+            {locale === 'fr' ? 'Voir tous les guides' : locale === 'en' ? 'See all guides' : 'عرض جميع الأدلة'}
+            <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+          </LocalizedLink>
         </div>
       </Section>
+
+      {/* ── Final CTA ── */}
+      <Section tone="dark">
+        <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.07] p-6 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-10">
+          <h2 className="heading-section !text-white">{t.finalTitle}</h2>
+          <p className="body-lead mx-auto mt-4 max-w-2xl !text-[#edf7f2]">{t.finalText}</p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <a
+              href={bookingPath(locale)}
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-marhaban-gold px-7 py-3.5 text-sm font-bold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.22)] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
+            >
+              {t.finalCta}
+              <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+            </a>
+            <a
+              href={orientationServicePath(locale)}
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-white/16 bg-white/[0.06] px-7 py-3.5 text-sm font-bold text-white transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
+            >
+              {t.finalSecondary}
+            </a>
+          </div>
+          <p className="mt-8 mx-auto max-w-3xl text-xs leading-relaxed text-white/70">{legalDisclaimer[locale]}</p>
+        </div>
+      </Section>
+
     </PageShell>
   );
 }
