@@ -368,4 +368,52 @@ caption         → 0.75rem, Inter
 ### Disclaimers réservation
 - Dans le modal : `trust` note (`bg-white/[0.06] rounded-2xl p-4`) côté dark
 - Sur la page : `text-xs text-marhaban-muted` sous le CalendlyEmbed
+
+---
+
+## Page anti-arnaque — Règles spécifiques
+
+### Wording
+- JAMAIS "c'est une arnaque" — utiliser : "signal à vérifier", "peut demander attention", "à clarifier avant de payer", "signaux de risque"
+- Toujours "évaluation informative et prudente" — pas conseil juridique, pas promesse de résultat
+- Disclaimers légaux obligatoires : `legalDisclaimer[locale]` dans le CTA final dark
+
+### Structure de page
+1. PageHero dark — "Avant de payer, prends 2 minutes pour vérifier les signaux."
+2. Section light — 6 red flag cards (clay/AlertTriangle icon, sublabel "Signal à vérifier")
+3. Section muted — "Comment ça marche" (3 how-cards, même style que booking)
+4. Section light — TrustNotice 2 col (checklist + questions)
+5. Section muted — Sources + "Avant de payer" card
+6. Section light (#signaler) — ScamCheckForm centré `max-w-2xl`
+7. Section dark — Final CTA split
+
+### Cards signaux de risque
+- Border `border-marhaban-clay/20` (pas green — visuel alerte sans alarme)
+- Icon badge : `h-8 w-8 rounded-xl bg-marhaban-clay/8 text-marhaban-clay`
+- Icône : `AlertTriangle` de lucide-react
+- Sublabel : "Signal à vérifier" en `text-xs text-marhaban-clay`
+- Hover : `-translate-y-0.5 hover:border-marhaban-clay/35 hover:shadow-warm-sm`
+
+### Sources officielles
+- Bullets avec `ShieldCheck` (lucide) en `text-marhaban-leaf`
+- Fond : `bg-marhaban-mint/30` avec `border-marhaban-leaf/12`
+- `px-4 py-3.5 text-sm font-medium`
+
+### ScamCheckForm
+- Trust notice : `text-sm py-4` (lisibilité, pas `text-xs`)
+- Submit CTA : `min-h-[56px]` (standard)
+- Pas de nouveaux champs sensibles (NAS, passeport, document, carte)
+
+### Final CTA dark (anti-arnaque)
+- Split 2 colonnes — même pattern home + reserver
+- Gold CTA → `#signaler` (scroll au formulaire)
+- Ghost CTA → `bookingPath(locale)` (réserver appel)
+- Disclaimer `legalDisclaimer[locale]` en `text-xs text-white/55` sous les CTAs
+- `py-14 sm:py-16 lg:py-20`
+
+### TrustNotice (upgrade global)
+- Bullets : icône `Check` (lucide) à la place de `• {bullet}`
+- Tone light : `text-marhaban-leaf` pour l'icône
+- Tone dark : `text-marhaban-gold/70` pour l'icône
+- `space-y-3` (au lieu de `space-y-2`)
 - Ne jamais promettre un résultat, un visa, ou une autorisation
