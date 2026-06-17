@@ -9,6 +9,7 @@ import { getLocalBookings, subscribeToLocalBookings, updateLocalBooking, type Lo
 import type { Booking, BookingStatus } from '@/types/admin';
 
 type AdminBookingsClientProps = {
+  supabaseBookings?: readonly Booking[];
   mockBookings: readonly Booking[];
 };
 
@@ -42,7 +43,7 @@ function applyOverride(booking: Booking, overrides: BookingOverrides): EditableB
   return { ...booking, ...overrides[booking.id] };
 }
 
-export function AdminBookingsClient({ mockBookings }: AdminBookingsClientProps) {
+export function AdminBookingsClient({ supabaseBookings = [], mockBookings }: AdminBookingsClientProps) {
   const [bookingOverrides, setBookingOverrides] = useState<BookingOverrides>({});
   const [selectedBookingId, setSelectedBookingId] = useState<string | null>(null);
   const [noteDraft, setNoteDraft] = useState('');
@@ -53,11 +54,13 @@ export function AdminBookingsClient({ mockBookings }: AdminBookingsClientProps) 
 
   const bookings = useMemo(
     () => [
+      ...supabaseBookings.map((booking) => applyOverride(booking, bookingOverrides)),
       ...localBookings.map((booking) => applyOverride(booking, bookingOverrides)),
       ...mockBookings.map((booking) => applyOverride(booking, bookingOverrides)),
     ],
-    [bookingOverrides, localBookings, mockBookings],
+    [bookingOverrides, localBookings, mockBookings, supabaseBookings],
   );
+  const supabaseBookingIds = useMemo(() => new Set(supabaseBookings.map((booking) => booking.id)), [supabaseBookings]);
   const localBookingIds = useMemo(() => new Set(localBookings.map((booking) => booking.id)), [localBookings]);
   const caseBookingIds = useMemo(
     () => new Set(localCases.flatMap((caseFile) => [caseFile.sourceBookingId, caseFile.bookingId].filter(Boolean) as string[])),
@@ -171,13 +174,14 @@ export function AdminBookingsClient({ mockBookings }: AdminBookingsClientProps) 
           </div>
           <div className="flex flex-wrap gap-2">
             <AdminBadge label="Mock data" tone="dark" />
+            {supabaseBookings.length > 0 ? <AdminBadge label={`${supabaseBookings.length} Supabase`} tone="success" /> : null}
             {localBookings.length > 0 ? <AdminBadge label={`${localBookings.length} local`} tone="warning" /> : null}
           </div>
         </div>
       </header>
 
       <div className="rounded-[1.75rem] border border-marhaban-leaf/12 bg-white/75 px-5 py-4 text-sm leading-relaxed text-marhaban-muted shadow-warm-sm">
-        Les demandes locales viennent du navigateur actuel. Elles seront remplacées par Supabase plus tard.
+        Les demandes Supabase sont affichées en premier. Les demandes locales du navigateur restent disponibles en fallback.
       </div>
 
       <section className="grid gap-4 md:grid-cols-3" aria-label="Indicateurs réservations">
@@ -246,6 +250,7 @@ export function AdminBookingsClient({ mockBookings }: AdminBookingsClientProps) 
                     <td className="py-4 pr-4">
                       <div className="flex flex-wrap items-center gap-2">
                         <p className="font-semibold text-marhaban-forestDark">{booking.fullName}</p>
+                        {supabaseBookingIds.has(booking.id) ? <AdminBadge label="Supabase" tone="success" className="px-2 py-0.5 text-[10px]" /> : null}
                         {localBookingIds.has(booking.id) ? <AdminBadge label="Local" tone="warning" className="px-2 py-0.5 text-[10px]" /> : null}
                       </div>
                       <p className="mt-1 text-xs text-marhaban-muted">{booking.clientStatus}</p>
