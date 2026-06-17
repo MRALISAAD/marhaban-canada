@@ -72,7 +72,7 @@ export function CalendlyEmbed({ locale, disclaimer }: Props) {
                 <div className="flex items-start justify-between gap-3">
                   <span
                     className={cn(
-                      'inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em]',
+                      'inline-flex rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em]',
                       selected
                         ? 'border border-white/12 bg-white/[0.06] text-[#edf7f2]'
                         : 'border border-marhaban-leaf/15 bg-marhaban-mint/60 text-marhaban-clay',
@@ -149,7 +149,7 @@ export function CalendlyEmbed({ locale, disclaimer }: Props) {
                 'mt-auto inline-flex min-h-[58px] w-full items-center justify-center gap-2 rounded-full px-7 py-3 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
                 isLight
                   ? 'bg-marhaban-forestDark text-white hover:bg-marhaban-clay focus-visible:ring-marhaban-leaf/40'
-                  : 'bg-marhaban-gold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.22)] hover:bg-white focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-marhaban-forestDark',
+                  : 'bg-marhaban-gold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.28)] hover:bg-white focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-marhaban-forestDark',
               )}
             >
               {requestLabel}

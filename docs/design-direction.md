@@ -321,3 +321,51 @@ caption         → 0.75rem, Inter
 - **Promesses visa/immigration** — aucun wording garantissant un résultat
 - **Focus invisible** — focus-visible obligatoire sur tous les interactifs
 - **Animations trop rapides** — respecter `prefers-reduced-motion`
+
+---
+
+## Reservation page rules (`/reserver`)
+
+### Structure
+```
+1. Hero (dark rounded card, NOT PageHero component)
+2. "Comment ça marche" (muted section, 3 how-cards)
+3. Booking section (light, CalendlyEmbed)
+4. Final CTA (dark section, split 2-col)
+```
+
+### Hero réservation
+- Pas `PageHero` — hero custom `rounded-[2.5rem] bg-marhaban-forestDark` avec padding généreux
+- Padding page : `pt-10 sm:pt-12 lg:pt-14` — plus court que la home (pas de navbar offset supplémentaire)
+- Inner padding : `py-10 sm:py-12 lg:py-14 px-6 sm:px-8 lg:px-12`
+- H1 : `clamp(3rem,6vw,6rem)` `leading-[0.9]` — plus petit que la home mais toujours fort
+- CTA gold : `min-h-[60px] px-8 py-4` — identique home
+- Badges : `py-2.5` — identique home
+- Right panel : `bg-white/[0.08]` — plus visible que `[0.05]`
+- Bullets right panel : icône `Check` de lucide-react, pas de dots unicode
+
+### How-cards (section "Comment ça marche")
+- Step badge : style `RoadmapStage` — `inline-flex rounded-full border border-marhaban-clay/25 bg-marhaban-clay/8 px-3 py-1 text-xs text-marhaban-clay`
+- Titre : `h3` (sémantique) + `font-heading` (Fraunces) + `sm:text-2xl`
+- `h2` interdit pour les cards quand la section a déjà un `SectionHeader` (qui utilise `h2`)
+
+### CalendlyEmbed
+- Duration badge : `py-1.5` (cohérent avec le système de badges)
+- Gold CTA shadow : `rgba(213,168,79,0.28)` minimum pour visibilité
+- Ne jamais toucher la logique `openServiceModal`, `activeKey`, `calendlyEvents`
+
+### Final CTA réservation
+- Split 2 colonnes : eyebrow + heading + note à gauche, CTA seul à droite
+- `eyebrow-light` + `heading-section` — même pattern que home final CTA
+- CTA : `min-h-[56px] px-8 py-4` (pas besoin de `[60px]` — page déjà chargée en intent)
+- Section spacing : `py-14 sm:py-16 lg:py-20` (légèrement plus compact que home `py-16/20/28`)
+
+### Mobile
+- Floating CTA `md:hidden` en bas → `min-h-[48px]` ok pour tap
+- Hero stacked sur mobile — right panel passe en dessous
+- How-cards → 1 col sur mobile, 3 sur md+
+
+### Disclaimers réservation
+- Dans le modal : `trust` note (`bg-white/[0.06] rounded-2xl p-4`) côté dark
+- Sur la page : `text-xs text-marhaban-muted` sous le CalendlyEmbed
+- Ne jamais promettre un résultat, un visa, ou une autorisation
