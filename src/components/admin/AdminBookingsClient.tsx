@@ -4,6 +4,7 @@ import { useMemo, useState, useSyncExternalStore } from 'react';
 import { CheckCircle2, Eye, FileText, MailCheck, PlusCircle } from 'lucide-react';
 import { AdminBadge, BookingStatusBadge } from '@/components/admin/AdminBadge';
 import { AdminCard } from '@/components/admin/AdminCard';
+import { addLocalCase, getLocalCases, subscribeToLocalCases, type LocalCase } from '@/lib/admin/local-case-store';
 import { getLocalBookings, subscribeToLocalBookings, updateLocalBooking, type LocalBooking } from '@/lib/admin/local-booking-store';
 import type { Booking, BookingStatus } from '@/types/admin';
 
@@ -35,6 +36,7 @@ const serviceLabels = {
 const statusOptions = ['Tous les statuts', 'Nouvelle', 'À contacter', 'Créneau proposé', 'Confirmée', 'Terminée', 'Annulée'];
 const serviceOptions = ['Tous les appels', 'Appel découverte', 'Orientation', 'Anti-arnaque'];
 const emptyBookings: LocalBooking[] = [];
+const emptyCases: LocalCase[] = [];
 
 function applyOverride(booking: Booking, overrides: BookingOverrides): EditableBooking {
   return { ...booking, ...overrides[booking.id] };
@@ -47,6 +49,7 @@ export function AdminBookingsClient({ mockBookings }: AdminBookingsClientProps) 
   const [noteEditorIsOpen, setNoteEditorIsOpen] = useState(false);
   const [caseMessage, setCaseMessage] = useState('');
   const localBookings = useSyncExternalStore(subscribeToLocalBookings, getLocalBookings, () => emptyBookings);
+  const localCases = useSyncExternalStore(subscribeToLocalCases, getLocalCases, () => emptyCases);
 
   const bookings = useMemo(
     () => [
@@ -56,6 +59,10 @@ export function AdminBookingsClient({ mockBookings }: AdminBookingsClientProps) 
     [bookingOverrides, localBookings, mockBookings],
   );
   const localBookingIds = useMemo(() => new Set(localBookings.map((booking) => booking.id)), [localBookings]);
+  const caseBookingIds = useMemo(
+    () => new Set(localCases.flatMap((caseFile) => [caseFile.sourceBookingId, caseFile.bookingId].filter(Boolean) as string[])),
+    [localCases],
+  );
   const selectedBooking = selectedBookingId ? bookings.find((booking) => booking.id === selectedBookingId) : undefined;
 
   function selectBooking(booking: EditableBooking) {
@@ -94,6 +101,36 @@ export function AdminBookingsClient({ mockBookings }: AdminBookingsClientProps) 
     if (!selectedBooking) return;
     updateBooking(selectedBooking.id, { internalNote: noteDraft.trim() });
     setNoteEditorIsOpen(false);
+  }
+
+  function createCaseFromBooking(booking: EditableBooking) {
+    if (caseBookingIds.has(booking.id)) {
+      setCaseMessage('Dossier déjà créé pour cette réservation.');
+      return;
+    }
+
+    const now = new Date().toISOString();
+    addLocalCase({
+      id: `case_local_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+      clientName: booking.fullName,
+      email: booking.email,
+      phone: booking.phone,
+      cityProvince: booking.cityProvince,
+      status: 'active',
+      preferredLanguage: booking.preferredLanguage,
+      openedAt: now,
+      createdAt: now,
+      updatedAt: now,
+      nextStep: 'Contacter la personne et préparer le premier suivi.',
+      actionPlan: [],
+      internalNotes: booking.internalNote ? [booking.internalNote] : [],
+      bookingId: booking.id,
+      sourceBookingId: booking.id,
+      situation: booking.message,
+      priority: 'normal',
+      notes: booking.internalNote ?? '',
+    });
+    setCaseMessage('Dossier créé localement.');
   }
 
   const kpis = [
@@ -334,16 +371,15 @@ export function AdminBookingsClient({ mockBookings }: AdminBookingsClientProps) 
                   </button>
                   <button
                     type="button"
-                    disabled
-                    onClick={() => setCaseMessage('La création de dossier arrive à l’étape suivante.')}
-                    className="inline-flex min-h-[38px] items-center gap-2 rounded-full border border-marhaban-leaf/15 bg-marhaban-cream px-4 py-2 text-xs font-bold text-marhaban-ink shadow-warm-sm disabled:cursor-not-allowed disabled:opacity-65"
+                    onClick={() => createCaseFromBooking(selectedBooking)}
+                    className="inline-flex min-h-[38px] items-center gap-2 rounded-full border border-marhaban-leaf/15 bg-marhaban-cream px-4 py-2 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:bg-marhaban-mint/70"
                   >
                     <PlusCircle className="h-4 w-4" aria-hidden="true" />
-                    Créer dossier
+                    {caseBookingIds.has(selectedBooking.id) ? 'Dossier créé' : 'Créer dossier'}
                   </button>
                 </div>
                 <p className="mt-3 text-xs leading-relaxed text-marhaban-muted">
-                  {caseMessage || 'La création de dossier arrive à l’étape suivante.'}
+                  {caseMessage || 'Crée un dossier local pour suivre cette personne dans /admin/cases.'}
                 </p>
               </div>
 
