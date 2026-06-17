@@ -12,15 +12,14 @@ import { getNavigationContent } from '@/content/navigation';
 
 // Type for navigation link configuration
 type NavLinkConfig = {
-  key: 'services' | 'start' | 'antiScam' | 'resources' | 'about';
+  key: 'services' | 'antiScam' | 'resources' | 'about';
   path: string;
   group: 'primary' | 'secondary';
 };
 
 // Navigation links configuration - single source of truth
 export const NAV_LINKS_CONFIG: readonly NavLinkConfig[] = [
-  { key: 'services', path: '/services', group: 'primary' },
-  { key: 'start', path: '/commencer', group: 'primary' },
+  { key: 'services', path: '/accompagnement', group: 'primary' },
   { key: 'antiScam', path: '/anti-arnaque', group: 'primary' },
   { key: 'resources', path: '/ressources', group: 'primary' },
   { key: 'about', path: '/a-propos', group: 'secondary' },
