@@ -208,6 +208,103 @@ caption         → 0.75rem, Inter
 
 ---
 
+## Pass 2 — Décisions desktop rhythm
+
+### Navigation mature
+- Brand : `font-bold` (pas `font-semibold`) pour plus de présence
+- Nav links inactifs : `text-marhaban-ink/78` (pas `/68`) — lisibles sans être actifs
+- CTA nav : `border-marhaban-gold/30` (pas `/18`) + shadow `shadow-[0_18px_50px_rgba(8,42,36,0.25)]`
+- Principe : la nav doit être lue facilement, jamais fondue dans le fond
+
+### Hero visual hiérarchisé
+- **2 premiers topics** (Avant l'arrivée, Première semaine) → gold accent `border-marhaban-gold/20 bg-marhaban-gold/10 text-marhaban-gold`
+- **6 topics restants** → standard `bg-white/[0.08] text-[#e8f4ee]`
+- Principe : créer un moment visuel mémorable dans le panneau droite, pas une grille uniforme
+- Les 2 premiers topics signalent "commence ici" visuellement
+
+### CTA hero cohérents
+- Primaire et secondaire identiques en hauteur : `min-h-[60px] px-8 py-4`
+- Jamais `min-h-[56px]` pour le secondaire quand le primaire est `[60px]`
+
+### Pills hero
+- `py-2.5` (pas `py-2`) pour plus de toucher et lisibilité
+
+### Situation cards — rupture visuelle
+- La 4ème card (Anti-arnaque, index=3) en `tone="dark"` — seule card dark dans la grille blanche
+- Principe : briser la répétition, signaler que le service anti-arnaque est différent (urgent vs orientatif)
+- Ne pas mettre 2+ cards dark consécutives dans une même section
+
+### Process section — réassurance post-CTA
+- Sous le bouton "Réserver un appel" : `<p>30 min · Sans engagement</p>`
+- `text-xs text-marhaban-muted` — subtil, rassurant, pas intrusif
+
+### Anti-scam — CTAs à hauteur
+- `min-h-[56px] px-8 py-4` (plus grands que les sections standard `min-h-[52px]`)
+- Inner container : `bg-white/[0.09]` (pas `[0.07]`) pour plus de lisibilité sur dark bg
+
+### Footer — cohérence dark theme
+- Dark banner : `bg-marhaban-forestDark` (pas `bg-marhaban-ink`)
+- Raison : `marhaban-ink = #1F2D2B` vs `marhaban-forestDark = #082A24` — le forestDark est la couleur dark canonique du site, ink est réservé au texte
+
+---
+
+## Pass 3 — Décisions éditoriales
+
+### Trust strip — Lucide icons
+- Remplacer les unicode decoratifs (`✦ ⬡ ◈ ◎`) par des icônes Lucide SVG
+- Map : `'✦' → Compass`, `'⬡' → ShieldCheck`, `'◈' → BookOpen`, `'◎' → Phone`
+- `trustIconMap: Record<string, typeof Compass>` défini au niveau module dans page.tsx
+- Les data restent en strings (compatibilité satisfies), la résolution en composant est au rendu
+- Taille icon : `h-5 w-5` dans un badge `h-11 w-11 bg-marhaban-mint/80`
+
+### ServiceCard — correction du doublon duration
+- Suppression du premier badge `service.duration` dans le header group
+- Seule la rangée prix conserve `service.duration` à droite
+- Le `service.label` ("Prix de lancement") est seul en haut si présent
+- Titres en `font-heading` (Fraunces) pour plus de caractère éditorial
+
+### SectionHeader — prop `size`
+- Ajout de `size?: 'section' | 'display'` 
+- `size="display"` → `heading-display` (`4.5rem`) au lieu de `heading-section` (`4.2rem`)
+- Utilisation : `size="display"` sur la section service principale uniquement
+- Principe : différencier visuellement L'offre principale des sections secondaires
+
+### RouteCard — titres éditoriaux
+- `font-heading` (Fraunces) ajouté aux titres h3 — rupture Inter → Fraunces
+- Taille : `text-[1.15rem] sm:text-[1.25rem]` → `text-[1.2rem] sm:text-[1.35rem]`
+- Badge : `py-1.5 tracking-wide` pour plus de présence
+- Padding card : `p-6` → `p-7` pour plus de respiration
+
+### Companion card CTA — cohérence avec ServiceCard
+- `btn btn-md` (`min-h-[48px]`) → `min-h-[54px]` pour matcher la hauteur ServiceCard
+- Classes manuelles pour contrôle précis : `inline-flex min-h-[54px] w-full items-center...`
+- Raison : le companion card est le point de conversion principal, pas une card secondaire
+
+### Resource grid — plus airy et premium
+- Labels : `text-sm font-semibold` → `text-base font-semibold` 
+- Padding items : `p-6` → `p-7`
+- Arrow icon badge : `h-8 w-8` → `h-9 w-9`
+- "Voir tous les guides" : inline link → `btn-secondary` style avec border + bg-white
+  `rounded-full border border-marhaban-leaf/25 bg-white px-6 py-3 shadow-warm-xs`
+- Spacing : `mt-6` → `mt-8` avant le lien "Voir tous"
+
+### Process steps — respiration
+- Grid gap : `gap-5` → `gap-6`
+- Service grid ratio : `[1.05fr_0.95fr]` → `[1.1fr_0.9fr]` (featured card plus dominante)
+
+### Final CTA — layout split 2 colonnes (différenciation de l'anti-scam)
+- **Suppression** de l'inner rounded box (`rounded-[2rem] border bg-white/[0.07]`)
+- Layout : `grid lg:grid-cols-[1.2fr_0.8fr] lg:gap-20`
+  - Gauche : eyebrow + heading + lead text
+  - Droite : 2 CTAs empilés + disclaimer
+- CTAs : `min-h-[52px] px-7` → `min-h-[56px] px-8 py-4`
+- CTAs desktop : `flex-col` (empilés pleine largeur) / tablet : `flex-row` (côte à côte)
+- Disclaimer : dans la colonne droite sous les CTAs (`text-white/55`)
+- Principe : anti-scam = centered box + icon + urgence / final CTA = split editorial + invitation
+- Les deux sections dark restent distinctes par structure ET contenu
+
+---
+
 ## Ce qu'il faut éviter
 
 - **Sections muted `bg-marhaban-warm/55`** — quasi invisible sur cream, utiliser `bg-marhaban-mint/25`

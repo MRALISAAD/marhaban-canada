@@ -19,7 +19,7 @@ export function RouteCard({ title, text, href, cta, badge, tone = 'light' }: Pro
     <AnimatedCard className="h-full">
       <article
         className={cn(
-          'flex h-full flex-col rounded-[1.85rem] border p-6 shadow-warm-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-warm',
+          'flex h-full flex-col rounded-[1.85rem] border p-7 shadow-warm-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-warm',
           tone === 'dark'
             ? 'border-white/12 bg-marhaban-forestDark text-white shadow-[0_24px_70px_rgba(0,0,0,0.18)]'
             : 'border-marhaban-leaf/12 bg-white text-marhaban-ink',
@@ -28,7 +28,7 @@ export function RouteCard({ title, text, href, cta, badge, tone = 'light' }: Pro
         {badge ? (
           <span
             className={cn(
-              'inline-flex w-fit rounded-full px-3 py-1 text-xs font-semibold',
+              'inline-flex w-fit rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide',
               tone === 'dark'
                 ? 'border border-white/12 bg-white/[0.06] text-[#edf7f2]'
                 : 'border border-marhaban-leaf/15 bg-marhaban-mint/60 text-marhaban-leaf',
@@ -37,7 +37,7 @@ export function RouteCard({ title, text, href, cta, badge, tone = 'light' }: Pro
             {badge}
           </span>
         ) : null}
-        <h3 className="mt-4 text-[1.15rem] font-semibold leading-tight sm:text-[1.25rem]">{title}</h3>
+        <h3 className="mt-4 font-heading text-[1.2rem] font-semibold leading-tight sm:text-[1.35rem]">{title}</h3>
         <p className={cn('mt-3 text-sm leading-relaxed', tone === 'dark' ? 'text-[#edf7f2]' : 'text-marhaban-ink/82')}>
           {text}
         </p>

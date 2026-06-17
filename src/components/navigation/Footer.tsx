@@ -113,7 +113,7 @@ export function Footer() {
       dir={dir}
     >
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div className="mb-10 overflow-hidden rounded-[2rem] border border-marhaban-leaf/14 bg-marhaban-ink p-6 text-white shadow-[0_24px_70px_rgba(31,45,43,0.18)]">
+        <div className="mb-10 overflow-hidden rounded-[2rem] border border-marhaban-leaf/14 bg-marhaban-forestDark p-6 text-white shadow-[0_24px_70px_rgba(8,42,36,0.22)]">
           <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-gold">

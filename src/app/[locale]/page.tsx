@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ArrowRight, Check, ShieldAlert } from 'lucide-react';
+import { ArrowRight, Check, ShieldAlert, Compass, ShieldCheck, BookOpen, Phone } from 'lucide-react';
 import { getHtmlAttrs, type Locale } from '@/i18n/locales';
 import { bookingPath, orientationServicePath, antiScamServicePath, resourcesPath, startPath } from '@/lib/routes';
 import { withLocale } from '@/lib/i18n-utils';
@@ -155,6 +155,13 @@ const homeCopy = {
   finalTitle: string; finalText: string; finalCta: string; finalSecondary: string;
 }>;
 
+const trustIconMap: Record<string, typeof Compass> = {
+  '✦': Compass,
+  '⬡': ShieldCheck,
+  '◈': BookOpen,
+  '◎': Phone,
+};
+
 const situations = (locale: Locale) => [
   {
     title: locale === 'fr' ? 'Je prépare mon arrivée' : locale === 'en' ? 'Preparing my arrival' : 'أحضّر وصولي',
@@ -265,14 +272,26 @@ export default async function HomePage({ params }: Props) {
   };
 
   const heroVisual = (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <div className="flex items-center gap-3">
         <span className="h-px flex-1 bg-marhaban-gold/25" aria-hidden="true" />
         <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-gold">{t.visualLabel}</p>
         <span className="h-px flex-1 bg-marhaban-gold/25" aria-hidden="true" />
       </div>
+      {/* First 2 topics — highlighted as starting points */}
       <div className="grid grid-cols-2 gap-2">
-        {t.visualTopics.map((topic) => (
+        {t.visualTopics.slice(0, 2).map((topic) => (
+          <div
+            key={topic}
+            className="rounded-[1rem] border border-marhaban-gold/20 bg-marhaban-gold/10 px-4 py-3.5 text-sm font-semibold text-marhaban-gold transition hover:bg-marhaban-gold/15"
+          >
+            {topic}
+          </div>
+        ))}
+      </div>
+      {/* Remaining topics */}
+      <div className="grid grid-cols-2 gap-2">
+        {t.visualTopics.slice(2).map((topic) => (
           <div
             key={topic}
             className="rounded-[1rem] border border-white/12 bg-white/[0.08] px-4 py-3.5 text-sm font-medium text-[#e8f4ee] transition hover:bg-white/[0.13]"
@@ -302,27 +321,33 @@ export default async function HomePage({ params }: Props) {
       {/* ── Trust strip ── */}
       <Section tone="muted">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {t.trustItems.map((item) => (
-            <div
-              key={item.label}
-              className="flex items-start gap-4 rounded-[1.5rem] border border-marhaban-leaf/12 bg-white p-5 shadow-warm-xs transition-all duration-300 hover:-translate-y-0.5 hover:shadow-warm-sm"
-            >
-              <span className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-2xl border border-marhaban-leaf/20 bg-marhaban-mint/80 text-marhaban-leaf text-base font-bold">
-                {item.icon}
-              </span>
-              <div>
-                <p className="text-sm font-semibold text-marhaban-ink">{item.label}</p>
-                <p className="mt-0.5 text-xs leading-relaxed text-marhaban-muted">{item.desc}</p>
+          {t.trustItems.map((item) => {
+            const TrustIcon = trustIconMap[item.icon];
+            return (
+              <div
+                key={item.label}
+                className="flex items-start gap-4 rounded-[1.5rem] border border-marhaban-leaf/12 bg-white p-5 shadow-warm-xs transition-all duration-300 hover:-translate-y-0.5 hover:shadow-warm-sm"
+              >
+                <span className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-2xl border border-marhaban-leaf/20 bg-marhaban-mint/80 text-marhaban-leaf">
+                  {TrustIcon
+                    ? <TrustIcon className="h-5 w-5" aria-hidden="true" />
+                    : <span className="text-base font-bold">{item.icon}</span>
+                  }
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-marhaban-ink">{item.label}</p>
+                  <p className="mt-0.5 text-xs leading-relaxed text-marhaban-muted">{item.desc}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </Section>
 
       {/* ── Service card ── */}
       <Section>
-        <SectionHeader eyebrow={t.serviceEyebrow} title={t.serviceTitle} text={t.serviceText} />
-        <div className="mt-8 grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+        <SectionHeader eyebrow={t.serviceEyebrow} title={t.serviceTitle} text={t.serviceText} size="display" />
+        <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <ServiceCard
             service={orientationService}
             href={orientationServicePath(locale)}
@@ -357,7 +382,7 @@ export default async function HomePage({ params }: Props) {
             </div>
             <a
               href={bookingPath(locale)}
-              className="btn btn-md btn-primary mt-auto w-full justify-center"
+              className="mt-auto inline-flex min-h-[54px] w-full items-center justify-center gap-2 rounded-full bg-marhaban-forestDark px-8 py-4 text-sm font-bold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
             >
               {t.primary}
               <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
@@ -370,7 +395,7 @@ export default async function HomePage({ params }: Props) {
       <Section tone="muted">
         <SectionHeader eyebrow={t.situationEyebrow} title={t.situationTitle} text={t.situationText} align="center" />
         <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {situationCards.map((route) => (
+          {situationCards.map((route, idx) => (
             <RouteCard
               key={route.title}
               title={route.title}
@@ -378,6 +403,7 @@ export default async function HomePage({ params }: Props) {
               href={route.href}
               cta={route.cta}
               badge={route.badge}
+              tone={idx === 3 ? 'dark' : 'light'}
             />
           ))}
         </div>
@@ -391,7 +417,7 @@ export default async function HomePage({ params }: Props) {
           text={t.processText}
           align="center"
         />
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+        <div className="mt-10 grid gap-6 lg:grid-cols-3">
           {steps.map((step) => (
             <RoadmapStage
               key={step.number}
@@ -401,7 +427,7 @@ export default async function HomePage({ params }: Props) {
             />
           ))}
         </div>
-        <div className="mt-10 flex justify-center">
+        <div className="mt-10 flex flex-col items-center gap-3">
           <LocalizedLink
             href={bookingPath(locale)}
             className="btn btn-lg btn-primary"
@@ -409,12 +435,15 @@ export default async function HomePage({ params }: Props) {
             {t.primary}
             <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
           </LocalizedLink>
+          <p className="text-xs text-marhaban-muted">
+            {locale === 'fr' ? '30 min · Sans engagement' : locale === 'en' ? '30 min · No commitment' : '٣٠ دقيقة · بدون التزام'}
+          </p>
         </div>
       </Section>
 
       {/* ── Anti-scam section ── */}
       <Section tone="dark">
-        <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.07] p-8 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-12">
+        <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.09] p-8 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-12">
           <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-marhaban-gold/30 bg-marhaban-gold/10">
             <ShieldAlert className="h-6 w-6 text-marhaban-gold" aria-hidden="true" />
           </div>
@@ -424,14 +453,14 @@ export default async function HomePage({ params }: Props) {
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a
               href={antiScamServicePath(locale)}
-              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-marhaban-gold px-7 py-3.5 text-sm font-bold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.28)] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
+              className="inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full bg-marhaban-gold px-8 py-4 text-sm font-bold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.30)] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
             >
               {t.antiCta}
               <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
             </a>
             <a
               href={resourcesPath(locale)}
-              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-white/16 bg-white/[0.06] px-7 py-3.5 text-sm font-bold text-white transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
+              className="inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full border border-white/16 bg-white/[0.06] px-8 py-4 text-sm font-bold text-white transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
             >
               {t.antiSecondary}
             </a>
@@ -447,19 +476,19 @@ export default async function HomePage({ params }: Props) {
             <LocalizedLink
               key={res.label}
               href={res.href}
-              className="group flex items-center justify-between rounded-[1.75rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-warm-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
+              className="group flex items-center justify-between rounded-[1.75rem] border border-marhaban-leaf/15 bg-white p-7 shadow-warm-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-warm-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
             >
-              <span className="text-sm font-semibold text-marhaban-ink">{res.label}</span>
-              <span className="grid h-8 w-8 flex-shrink-0 place-items-center rounded-xl border border-marhaban-leaf/12 bg-marhaban-mint/60 text-marhaban-leaf transition group-hover:bg-marhaban-leaf group-hover:text-white">
+              <span className="text-base font-semibold text-marhaban-ink">{res.label}</span>
+              <span className="grid h-9 w-9 flex-shrink-0 place-items-center rounded-xl border border-marhaban-leaf/12 bg-marhaban-mint/60 text-marhaban-leaf transition group-hover:bg-marhaban-leaf group-hover:text-white">
                 <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
               </span>
             </LocalizedLink>
           ))}
         </div>
-        <div className="mt-6 text-center">
+        <div className="mt-8 text-center">
           <LocalizedLink
             href={resourcesPath(locale)}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-marhaban-leaf underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:rounded-md"
+            className="inline-flex items-center gap-2 rounded-full border border-marhaban-leaf/25 bg-white px-6 py-3 text-sm font-semibold text-marhaban-leaf shadow-warm-xs transition hover:border-marhaban-leaf/50 hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
           >
             {locale === 'fr' ? 'Voir tous les guides' : locale === 'en' ? 'See all guides' : 'عرض جميع الأدلة'}
             <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
@@ -469,28 +498,34 @@ export default async function HomePage({ params }: Props) {
 
       {/* ── Final CTA ── */}
       <Section tone="dark">
-        <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.07] p-8 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-12">
-          <p className="eyebrow-light">
-            {locale === 'fr' ? 'Prêt à commencer ?' : locale === 'en' ? 'Ready to start?' : 'هل أنت مستعد؟'}
-          </p>
-          <h2 className="heading-section mt-3 !text-white">{t.finalTitle}</h2>
-          <p className="body-lead mx-auto mt-4 max-w-2xl !text-[#edf7f2]">{t.finalText}</p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a
-              href={bookingPath(locale)}
-              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-marhaban-gold px-7 py-3.5 text-sm font-bold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.22)] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
-            >
-              {t.finalCta}
-              <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
-            </a>
-            <a
-              href={orientationServicePath(locale)}
-              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-white/16 bg-white/[0.06] px-7 py-3.5 text-sm font-bold text-white transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
-            >
-              {t.finalSecondary}
-            </a>
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:gap-20">
+          {/* Left: heading */}
+          <div>
+            <p className="eyebrow-light">
+              {locale === 'fr' ? 'Prêt à commencer ?' : locale === 'en' ? 'Ready to start?' : 'هل أنت مستعد؟'}
+            </p>
+            <h2 className="heading-section mt-3 !text-white">{t.finalTitle}</h2>
+            <p className="mt-5 max-w-xl text-[1.05rem] leading-relaxed text-[#edf7f2] sm:text-lg">{t.finalText}</p>
           </div>
-          <p className="mt-8 mx-auto max-w-3xl text-xs leading-relaxed text-white/70">{legalDisclaimer[locale]}</p>
+          {/* Right: CTAs + disclaimer */}
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+              <a
+                href={bookingPath(locale)}
+                className="flex-1 inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full bg-marhaban-gold px-8 py-4 text-sm font-bold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.30)] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
+              >
+                {t.finalCta}
+                <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+              </a>
+              <a
+                href={orientationServicePath(locale)}
+                className="flex-1 inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full border border-white/16 bg-white/[0.06] px-8 py-4 text-sm font-bold text-white transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
+              >
+                {t.finalSecondary}
+              </a>
+            </div>
+            <p className="text-xs leading-relaxed text-white/55">{legalDisclaimer[locale]}</p>
+          </div>
         </div>
       </Section>
 
