@@ -1,18 +1,27 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useSyncExternalStore } from 'react';
 import { CheckCircle2, Eye, Save, ShieldAlert } from 'lucide-react';
 import { AdminBadge } from '@/components/admin/AdminBadge';
 import { AdminCard } from '@/components/admin/AdminCard';
+import {
+  getLocalScamChecks,
+  subscribeToLocalScamChecks,
+  type LocalScamCheck,
+} from '@/lib/admin/local-scam-check-store';
 import type { RiskLevel, ScamCheck } from '@/types/admin';
 
 type ScamCheckStatus = ScamCheck['status'];
 type ScamUrgency = ScamCheck['urgency'];
 type Tone = 'neutral' | 'info' | 'success' | 'warning' | 'danger' | 'dark';
 
+const emptyLocalChecks: LocalScamCheck[] = [];
+
 type EditableScamCheck = Omit<ScamCheck, 'notes'> & {
   notes: string[];
   recommendation?: string;
+  phone?: string;
+  cityProvince?: string;
 };
 
 type ScamCheckOverrides = Record<string, Partial<EditableScamCheck>>;
@@ -92,9 +101,22 @@ export function AdminScamChecksClient({ mockScamChecks }: { mockScamChecks: read
   const [notesDraft, setNotesDraft] = useState('');
   const [savedMessage, setSavedMessage] = useState('');
 
+  const localScamChecks = useSyncExternalStore(
+    subscribeToLocalScamChecks,
+    getLocalScamChecks,
+    () => emptyLocalChecks,
+  );
+  const localCheckIds = useMemo(
+    () => new Set(localScamChecks.map((sc) => sc.id)),
+    [localScamChecks],
+  );
+
   const scamChecks = useMemo(
-    () => mockScamChecks.map((sc) => applyOverride(toEditable(sc), overrides)),
-    [mockScamChecks, overrides],
+    () => [
+      ...localScamChecks.map((sc) => applyOverride(toEditable(sc), overrides)),
+      ...mockScamChecks.map((sc) => applyOverride(toEditable(sc), overrides)),
+    ],
+    [localScamChecks, mockScamChecks, overrides],
   );
 
   const selected = selectedId ? scamChecks.find((sc) => sc.id === selectedId) : undefined;
@@ -169,7 +191,12 @@ export function AdminScamChecksClient({ mockScamChecks }: { mockScamChecks: read
               Évaluer les situations signalées de manière informative et prudente.
             </p>
           </div>
-          <AdminBadge label="Mock data" tone="dark" />
+          <div className="flex flex-wrap gap-2">
+            <AdminBadge label="Mock data" tone="dark" />
+            {localScamChecks.length > 0 ? (
+              <AdminBadge label={`${localScamChecks.length} local`} tone="warning" />
+            ) : null}
+          </div>
         </div>
       </header>
 
@@ -209,7 +236,12 @@ export function AdminScamChecksClient({ mockScamChecks }: { mockScamChecks: read
                   <tr key={sc.id} className="align-top transition hover:bg-marhaban-cream/70">
                     <td className="py-4 pr-4 text-xs text-marhaban-muted">{formatDate(sc.createdAt)}</td>
                     <td className="px-4 py-4">
-                      <p className="font-semibold text-marhaban-forestDark">{sc.requesterName}</p>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="font-semibold text-marhaban-forestDark">{sc.requesterName}</p>
+                        {localCheckIds.has(sc.id) ? (
+                          <AdminBadge label="Local" tone="warning" className="px-2 py-0.5 text-[10px]" />
+                        ) : null}
+                      </div>
                       <p className="mt-1 line-clamp-2 text-xs text-marhaban-muted">{sc.situation}</p>
                     </td>
                     <td className="px-4 py-4 text-marhaban-muted">{sc.amountRequested ?? '—'}</td>
@@ -277,6 +309,18 @@ export function AdminScamChecksClient({ mockScamChecks }: { mockScamChecks: read
                     <dt className="font-bold text-marhaban-forestDark">Situation signalée</dt>
                     <dd className="mt-1 leading-relaxed text-marhaban-muted">{selected.situation}</dd>
                   </div>
+                  {selected.phone ? (
+                    <div>
+                      <dt className="font-bold text-marhaban-forestDark">Téléphone</dt>
+                      <dd className="mt-1 text-marhaban-muted">{selected.phone}</dd>
+                    </div>
+                  ) : null}
+                  {selected.cityProvince ? (
+                    <div>
+                      <dt className="font-bold text-marhaban-forestDark">Ville / province</dt>
+                      <dd className="mt-1 text-marhaban-muted">{selected.cityProvince}</dd>
+                    </div>
+                  ) : null}
                   {selected.amountRequested ? (
                     <div>
                       <dt className="font-bold text-marhaban-forestDark">Montant demandé</dt>
