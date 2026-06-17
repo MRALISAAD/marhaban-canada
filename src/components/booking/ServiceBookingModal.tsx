@@ -265,7 +265,7 @@ export function ServiceBookingModal({ isOpen, onClose, locale, service, price }:
     setFormData((current) => ({ ...current, [field]: value }));
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const localBooking: Booking = {
       id: createLocalBookingId(),
@@ -285,18 +285,41 @@ export function ServiceBookingModal({ isOpen, onClose, locale, service, price }:
       nextAction: 'Répondre avec les disponibilités.',
     };
     const payload = {
-      service: {
-        key: service.key,
-        title: service.title,
-        duration: service.duration,
-        price,
-      },
-      requester: formData,
-      booking: localBooking,
+      full_name: localBooking.fullName,
+      email: localBooking.email,
+      phone: localBooking.phone,
+      city_province: localBooking.cityProvince,
+      service: localBooking.service,
+      service_label: localBooking.serviceLabel,
+      duration: localBooking.duration,
+      price_label: localBooking.price,
+      client_status: localBooking.clientStatus,
+      preferred_language: localBooking.preferredLanguage,
+      message: localBooking.message,
+      next_action: localBooking.nextAction,
+      disclaimer_accepted: formData.consent,
+      status: localBooking.status,
+      source: 'reserver_modal',
     };
 
-    addLocalBooking(localBooking);
-    console.log('Marhaban Canada booking request', payload);
+    try {
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json().catch(() => ({ ok: false }));
+
+      if (!response.ok || result.ok !== true) {
+        throw new Error(typeof result.error === 'string' ? result.error : 'Booking API failed');
+      }
+    } catch (error) {
+      addLocalBooking(localBooking);
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Marhaban Canada booking fallback to localStorage', { error, payload });
+      }
+    }
+
     setIsSubmitted(true);
   }
 
