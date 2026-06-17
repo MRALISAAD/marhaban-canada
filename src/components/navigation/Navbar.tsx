@@ -251,11 +251,11 @@ export function Navbar() {
   return (
     <header className={`sticky top-0 z-50 border-b border-marhaban-leaf/8 bg-marhaban-cream/92 backdrop-blur-xl transition-shadow duration-300${scrolled ? ' shadow-warm-sm' : ''}`}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-[72px] items-center justify-between gap-3">
+        <div className="flex h-[72px] items-center justify-between gap-3 lg:h-[76px]">
           {/* Brand */}
           <Link
             href={localizeHref('/')}
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 font-bold tracking-tight text-marhaban-ink transition-colors hover:text-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md sm:justify-start"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center gap-2.5 font-bold tracking-tight text-marhaban-ink transition-colors hover:text-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md sm:justify-start"
             aria-label={brandAriaLabel}
           >
             <Image
@@ -263,19 +263,19 @@ export function Navbar() {
               alt=""
               width={32}
               height={32}
-              className="h-8 w-8 flex-shrink-0"
+              className="h-8 w-8 flex-shrink-0 lg:h-9 lg:w-9"
               aria-hidden="true"
             />
-            <span className="hidden sm:inline">{content.brand}</span>
+            <span className="hidden text-[1.02rem] sm:inline lg:text-[1.08rem]">{content.brand}</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden items-center gap-1 text-sm text-marhaban-ink/78 md:flex" aria-label={navAriaLabel}>
+          <nav className="hidden items-center gap-1 text-[0.94rem] text-marhaban-ink/82 md:flex" aria-label={navAriaLabel}>
             {primaryLinks.map((link) => (
               <Link
                 key={link.key}
-                className={`relative flex min-h-[44px] items-center px-3 transition-all duration-150 ease-in-out hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md ${
-                  link.isActive ? 'font-semibold text-marhaban-ink' : 'font-medium text-marhaban-ink/78'
+                className={`relative flex min-h-[46px] items-center px-3.5 transition-all duration-150 ease-in-out hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md ${
+                  link.isActive ? 'font-semibold text-marhaban-ink' : 'font-medium text-marhaban-ink/82'
                 }`}
                 href={link.href}
                 aria-current={link.isActive ? 'page' : undefined}
@@ -293,8 +293,8 @@ export function Navbar() {
             {secondaryLinks.map((link) => (
               <Link
                 key={link.key}
-                className={`relative flex min-h-[44px] items-center px-3 transition-all duration-150 ease-in-out hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md ${
-                  link.isActive ? 'font-semibold text-marhaban-ink' : 'font-medium text-marhaban-ink/78'
+                className={`relative flex min-h-[46px] items-center px-3.5 transition-all duration-150 ease-in-out hover:text-marhaban-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md ${
+                  link.isActive ? 'font-semibold text-marhaban-ink' : 'font-medium text-marhaban-ink/82'
                 }`}
                 href={link.href}
                 aria-current={link.isActive ? 'page' : undefined}
@@ -314,7 +314,7 @@ export function Navbar() {
           <div className="flex items-center gap-2">
             <Link
               href={bookingPath(locale)}
-              className="hidden min-h-[48px] items-center justify-center rounded-full border border-marhaban-gold/30 bg-marhaban-forestDark px-6 py-3 text-sm font-bold text-white shadow-[0_18px_50px_rgba(8,42,36,0.25)] transition hover:bg-marhaban-leaf hover:shadow-[0_24px_58px_rgba(8,42,36,0.32)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/45 focus-visible:ring-offset-2 sm:inline-flex"
+              className="hidden min-h-[50px] items-center justify-center rounded-full border border-marhaban-gold/35 bg-marhaban-forestDark px-7 py-3 text-[0.95rem] font-bold text-white shadow-[0_20px_54px_rgba(8,42,36,0.28)] transition hover:bg-marhaban-leaf hover:shadow-[0_24px_58px_rgba(8,42,36,0.32)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/45 focus-visible:ring-offset-2 sm:inline-flex"
             >
               {bookCallLabel}
             </Link>

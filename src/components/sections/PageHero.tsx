@@ -22,6 +22,7 @@ type Props = {
   visual?: ReactNode;
   dark?: boolean;
   className?: string;
+  scale?: 'default' | 'home';
 };
 
 export function PageHero({
@@ -34,7 +35,10 @@ export function PageHero({
   visual,
   dark = false,
   className,
+  scale = 'default',
 }: Props) {
+  const isHomeScale = scale === 'home';
+
   return (
     <SectionReveal
       className={cn(
@@ -43,7 +47,7 @@ export function PageHero({
         className,
       )}
     >
-      <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:items-center">
+      <div className={cn('mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center', isHomeScale ? 'lg:gap-20' : 'lg:gap-16')}>
         <div className="space-y-7">
           <p
               className={cn(
@@ -54,10 +58,22 @@ export function PageHero({
             {eyebrow}
           </p>
           <div className="space-y-4">
-            <h1 className={cn('max-w-3xl font-heading text-[clamp(3.2rem,7vw,7rem)] font-semibold leading-[0.88] tracking-tight', dark ? 'text-white' : 'text-marhaban-ink')}>
+            <h1
+              className={cn(
+                'max-w-3xl font-heading text-[clamp(3.2rem,7vw,7rem)] font-semibold leading-[0.88] tracking-tight',
+                isHomeScale ? 'lg:max-w-4xl lg:text-[clamp(3.2rem,7.6vw,7.45rem)]' : '',
+                dark ? 'text-white' : 'text-marhaban-ink',
+              )}
+            >
               {title}
             </h1>
-            <p className={cn('max-w-2xl text-[1.1rem] leading-relaxed sm:text-lg lg:text-xl', dark ? 'text-[#edf7f2]' : 'text-marhaban-ink/78')}>
+            <p
+              className={cn(
+                'max-w-2xl text-[1.1rem] leading-relaxed sm:text-lg lg:text-xl',
+                isHomeScale ? 'lg:max-w-3xl lg:text-[1.32rem]' : '',
+                dark ? 'text-[#edf7f2]' : 'text-marhaban-ink/78',
+              )}
+            >
               {text}
             </p>
           </div>
@@ -117,7 +133,7 @@ export function PageHero({
         </div>
 
         {visual ? (
-          <AnimatedCard className={cn('rounded-[2rem]', dark ? 'border border-white/10 bg-white/[0.07] p-6 text-white shadow-[0_28px_100px_rgba(0,0,0,0.24)] sm:p-7' : 'border border-marhaban-leaf/15 bg-offwhite p-5 shadow-warm-sm sm:p-6')}>
+          <AnimatedCard className={cn('rounded-[2rem]', dark ? 'border border-white/10 bg-white/[0.07] p-6 text-white shadow-[0_28px_100px_rgba(0,0,0,0.24)] sm:p-7' : 'border border-marhaban-leaf/15 bg-offwhite p-5 shadow-warm-sm sm:p-6', isHomeScale ? 'lg:p-8' : '')}>
             {visual}
           </AnimatedCard>
         ) : null}

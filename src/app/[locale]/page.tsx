@@ -31,11 +31,14 @@ const homeCopy = {
       'Études', 'Anti-arnaque',
     ],
     trustItems: [
-      { icon: '✦', label: 'Accompagnement pratique', desc: 'Priorités claires, pas de jargon.' },
-      { icon: '⬡', label: 'Anti-arnaque', desc: 'Vérifie avant d\'agir ou de payer.' },
-      { icon: '◈', label: 'Ressources claires', desc: 'Guides simples et vérifiés.' },
-      { icon: '◎', label: 'Appel personnalisé', desc: '30 min, un plan fait pour toi.' },
+      { icon: '✦', label: 'Priorités claires', desc: 'Organiser les prochaines étapes sans jargon.' },
+      { icon: '⬡', label: 'Vérification prudente', desc: 'Regarder les signaux importants avant de payer.' },
+      { icon: '◈', label: 'Guides fiables', desc: 'Des ressources simples pour comprendre quoi faire.' },
+      { icon: '◎', label: 'Appel humain', desc: '30 minutes pour repartir avec un plan clair.' },
     ],
+    trustEyebrow: 'CE QUE TU TROUVES ICI',
+    trustTitle: 'Avancer avec moins de confusion.',
+    trustText: 'Un accompagnement simple pour clarifier tes priorités, vérifier les bons signaux et savoir quoi faire ensuite.',
     serviceEyebrow: 'Service principal',
     serviceTitle: 'Un appel pour clarifier ton départ.',
     serviceText: 'En 30 minutes, on trie ce qui est urgent et tu repars avec tes prochaines étapes.',
@@ -73,11 +76,14 @@ const homeCopy = {
       'Studies', 'Anti-scam',
     ],
     trustItems: [
-      { icon: '✦', label: 'Practical support', desc: 'Clear priorities, no jargon.' },
-      { icon: '⬡', label: 'Anti-scam', desc: 'Check before you act or pay.' },
-      { icon: '◈', label: 'Clear resources', desc: 'Simple, verified guides.' },
-      { icon: '◎', label: 'Personal call', desc: '30 min, a plan made for you.' },
+      { icon: '✦', label: 'Clear priorities', desc: 'Organize the next steps without jargon.' },
+      { icon: '⬡', label: 'Careful verification', desc: 'Check the key signals before paying.' },
+      { icon: '◈', label: 'Reliable guides', desc: 'Simple resources to know what to do.' },
+      { icon: '◎', label: 'Human call', desc: '30 minutes to leave with a clear plan.' },
     ],
+    trustEyebrow: 'What you find here',
+    trustTitle: 'Move forward with less confusion.',
+    trustText: 'Simple support to clarify your priorities, check the key signals, and know what to do next.',
     serviceEyebrow: 'Main service',
     serviceTitle: 'A call to clarify your first steps.',
     serviceText: 'In 30 minutes, we sort what\'s urgent and you leave with your next steps.',
@@ -115,11 +121,14 @@ const homeCopy = {
       'الدراسة', 'مكافحة الاحتيال',
     ],
     trustItems: [
-      { icon: '✦', label: 'دعم عملي', desc: 'أولويات واضحة، بدون تعقيد.' },
-      { icon: '⬡', label: 'مكافحة الاحتيال', desc: 'تحقق قبل أن تتصرف أو تدفع.' },
-      { icon: '◈', label: 'موارد واضحة', desc: 'أدلة بسيطة وموثوقة.' },
-      { icon: '◎', label: 'مكالمة شخصية', desc: '30 دقيقة، خطة مصممة لك.' },
+      { icon: '✦', label: 'أولويات واضحة', desc: 'ترتيب الخطوات التالية بدون تعقيد.' },
+      { icon: '⬡', label: 'تحقق حذر', desc: 'مراجعة الإشارات المهمة قبل الدفع.' },
+      { icon: '◈', label: 'أدلة موثوقة', desc: 'موارد بسيطة لفهم ما يجب فعله.' },
+      { icon: '◎', label: 'مكالمة إنسانية', desc: '30 دقيقة لمغادرة بخطة واضحة.' },
     ],
+    trustEyebrow: 'ما تجده هنا',
+    trustTitle: 'التقدم بأقل قدر من الارتباك.',
+    trustText: 'مرافقة بسيطة لتوضيح أولوياتك والتحقق من الإشارات المهمة ومعرفة ما يجب فعله بعد ذلك.',
     serviceEyebrow: 'الخدمة الرئيسية',
     serviceTitle: 'مكالمة لتوضيح خطواتك الأولى.',
     serviceText: 'في 30 دقيقة، نرتب ما هو عاجل وتغادر بخطواتك التالية.',
@@ -147,6 +156,7 @@ const homeCopy = {
   primary: string; secondary: string; pills: readonly string[];
   visualLabel: string; visualTopics: readonly string[];
   trustItems: readonly { icon: string; label: string; desc: string }[];
+  trustEyebrow: string; trustTitle: string; trustText: string;
   serviceEyebrow: string; serviceTitle: string; serviceText: string;
   situationEyebrow: string; situationTitle: string; situationText: string;
   processEyebrow: string; processTitle: string; processText: string;
@@ -316,36 +326,50 @@ export default async function HomePage({ params }: Props) {
         secondary={{ label: t.secondary, href: '#comment-ca-marche' }}
         pills={t.pills}
         visual={heroVisual}
+        scale="home"
       />
 
-      {/* ── Trust strip ── */}
-      <Section tone="muted">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {t.trustItems.map((item) => {
-            const TrustIcon = trustIconMap[item.icon];
-            return (
-              <div
-                key={item.label}
-                className="flex items-start gap-4 rounded-[1.5rem] border border-marhaban-leaf/12 bg-white p-5 shadow-warm-xs transition-all duration-300 hover:-translate-y-0.5 hover:shadow-warm-sm"
-              >
-                <span className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-2xl border border-marhaban-leaf/20 bg-marhaban-mint/80 text-marhaban-leaf">
-                  {TrustIcon
-                    ? <TrustIcon className="h-5 w-5" aria-hidden="true" />
-                    : <span className="text-base font-bold">{item.icon}</span>
-                  }
-                </span>
-                <div>
-                  <p className="text-sm font-semibold text-marhaban-ink">{item.label}</p>
-                  <p className="mt-0.5 text-xs leading-relaxed text-marhaban-muted">{item.desc}</p>
-                </div>
-              </div>
-            );
-          })}
+      {/* ── Trust capsule ── */}
+      <Section tone="muted" className="py-10 sm:py-12 lg:py-12">
+        <div className="rounded-[2rem] border border-marhaban-leaf/15 bg-white p-5 shadow-warm-sm sm:rounded-[2.5rem] sm:p-6 lg:p-8">
+          <div className="grid gap-7 lg:grid-cols-[1fr_1.28fr] lg:items-center lg:gap-9">
+            <div className="lg:max-w-lg">
+              <p className="eyebrow">{t.trustEyebrow}</p>
+              <h2 className="mt-3 font-heading text-3xl font-semibold leading-tight text-marhaban-ink sm:text-4xl lg:text-[2.65rem]">
+                {t.trustTitle}
+              </h2>
+              <p className="mt-4 text-[1.05rem] leading-relaxed text-marhaban-muted">
+                {t.trustText}
+              </p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-5 lg:border-l lg:border-marhaban-leaf/15 lg:pl-8">
+              {t.trustItems.map((item) => {
+                const TrustIcon = trustIconMap[item.icon];
+                return (
+                  <div
+                    key={item.label}
+                    className="flex gap-3 rounded-[1.25rem] border border-marhaban-clay/15 bg-marhaban-mint/20 p-4 lg:p-[1.1rem]"
+                  >
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-marhaban-leaf/20 bg-white text-marhaban-leaf shadow-warm-sm">
+                      {TrustIcon
+                        ? <TrustIcon className="h-4 w-4" aria-hidden="true" />
+                        : <span className="text-sm font-bold">{item.icon}</span>
+                      }
+                    </span>
+                    <div className="min-w-0">
+                      <p className="font-heading text-[1.04rem] font-semibold leading-snug text-marhaban-ink">{item.label}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-marhaban-muted">{item.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </Section>
 
       {/* ── Service card ── */}
-      <Section>
+      <Section className="lg:py-24">
         <SectionHeader eyebrow={t.serviceEyebrow} title={t.serviceTitle} text={t.serviceText} size="display" />
         <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <ServiceCard
@@ -392,9 +416,9 @@ export default async function HomePage({ params }: Props) {
       </Section>
 
       {/* ── Situation cards ── */}
-      <Section tone="muted">
+      <Section tone="muted" className="lg:py-24">
         <SectionHeader eyebrow={t.situationEyebrow} title={t.situationTitle} text={t.situationText} align="center" />
-        <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-9 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {situationCards.map((route, idx) => (
             <RouteCard
               key={route.title}
@@ -410,7 +434,7 @@ export default async function HomePage({ params }: Props) {
       </Section>
 
       {/* ── Process steps ── */}
-      <Section id="comment-ca-marche">
+      <Section id="comment-ca-marche" className="lg:py-24">
         <SectionHeader
           eyebrow={t.processEyebrow}
           title={t.processTitle}
@@ -442,7 +466,7 @@ export default async function HomePage({ params }: Props) {
       </Section>
 
       {/* ── Anti-scam section ── */}
-      <Section tone="dark">
+      <Section tone="dark" className="lg:py-24">
         <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.09] p-8 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-12">
           <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-marhaban-gold/30 bg-marhaban-gold/10">
             <ShieldAlert className="h-6 w-6 text-marhaban-gold" aria-hidden="true" />
@@ -469,7 +493,7 @@ export default async function HomePage({ params }: Props) {
       </Section>
 
       {/* ── Resource grid ── */}
-      <Section tone="muted">
+      <Section tone="muted" className="lg:py-24">
         <SectionHeader eyebrow={t.resourceEyebrow} title={t.resourceTitle} text={t.resourceText} align="center" />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {resourceItems.map((res) => (
@@ -497,15 +521,15 @@ export default async function HomePage({ params }: Props) {
       </Section>
 
       {/* ── Final CTA ── */}
-      <Section tone="dark">
-        <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:gap-20">
+      <Section tone="dark" className="lg:py-24">
+        <div className="grid gap-12 lg:grid-cols-[1.22fr_0.78fr] lg:items-center lg:gap-[4.5rem]">
           {/* Left: heading */}
           <div>
             <p className="eyebrow-light">
               {locale === 'fr' ? 'Prêt à commencer ?' : locale === 'en' ? 'Ready to start?' : 'هل أنت مستعد؟'}
             </p>
             <h2 className="heading-section mt-3 !text-white">{t.finalTitle}</h2>
-            <p className="mt-5 max-w-xl text-[1.05rem] leading-relaxed text-[#edf7f2] sm:text-lg">{t.finalText}</p>
+            <p className="mt-5 max-w-2xl text-[1.08rem] leading-relaxed text-[#edf7f2] sm:text-lg">{t.finalText}</p>
           </div>
           {/* Right: CTAs + disclaimer */}
           <div className="flex flex-col gap-5">
