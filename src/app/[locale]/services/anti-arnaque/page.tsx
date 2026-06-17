@@ -172,7 +172,7 @@ export default async function AntiScamServicePage({ params }: Props) {
           <SectionHeader
             eyebrow={locale === 'fr' ? 'Signalement' : locale === 'en' ? 'Report' : 'بلاغ'}
             title={locale === 'fr' ? 'Soumettre une situation pour avis' : locale === 'en' ? 'Submit a situation for review' : 'تقديم وضع للمراجعة'}
-            text={locale === 'fr' ? "Nous l'examinons de maniere informative et prudente. Pas de conseil juridique." : locale === 'en' ? 'We review it in an informative and cautious way. No legal advice.' : 'سنراجعه بطريقة معلوماتية وحذرة. لا نصيحة قانونية.'}
+            text={locale === 'fr' ? "Nous l'examinons de manière informative et prudente. Pas de conseil juridique." : locale === 'en' ? 'We review it in an informative and cautious way. No legal advice.' : 'سنراجعه بطريقة معلوماتية وحذرة. لا نصيحة قانونية.'}
           />
           <div className="mt-8">
             <ScamCheckForm locale={locale} dir={dir} />

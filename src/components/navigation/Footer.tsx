@@ -108,7 +108,7 @@ export function Footer() {
 
   return (
     <footer
-      className="border-t border-marhaban-leaf/10 bg-[linear-gradient(180deg,rgba(247,241,230,0.98),rgba(243,233,218,0.96))]"
+      className="border-t-2 border-marhaban-leaf/15 bg-[linear-gradient(180deg,rgba(247,241,230,0.99),rgba(243,233,218,0.97))]"
       aria-label={locale === 'fr' ? 'Pied de page' : locale === 'en' ? 'Footer' : 'تذييل الصفحة'}
       dir={dir}
     >

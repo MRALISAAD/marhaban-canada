@@ -1,13 +1,23 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
-import { verifyAdminPassword } from '@/lib/admin/admin-auth';
+import { Suspense, useState, type FormEvent } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { createSupabaseBrowserClient } from '@/lib/supabase/browser';
 
-export default function AdminLoginPage() {
+function AdminLoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const errorCode = searchParams.get('error');
+  const initialError =
+    errorCode === 'missing_allowlist'
+      ? 'Configuration admin manquante. ADMIN_ALLOWED_EMAILS doit être renseigné.'
+      : errorCode === 'unauthorized'
+        ? 'Email non autorisé pour cet espace admin.'
+        : '';
+
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState(initialError);
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -15,14 +25,17 @@ export default function AdminLoginPage() {
     setLoading(true);
     setError('');
 
-    const result = await verifyAdminPassword(password);
+    const supabase = createSupabaseBrowserClient();
+    const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
 
-    if (result.ok) {
-      router.push('/admin/dashboard');
-    } else {
-      setError(result.error ?? 'Mot de passe incorrect.');
+    if (authError) {
+      setError('Identifiants incorrects. Vérifie ton email et mot de passe.');
       setLoading(false);
+      return;
     }
+
+    router.push('/admin/dashboard');
+    router.refresh();
   }
 
   return (
@@ -36,15 +49,26 @@ export default function AdminLoginPage() {
             Accès admin
           </h1>
           <p className="mt-3 text-xs leading-relaxed text-marhaban-muted">
-            Accès temporaire MVP — non prêt production sans authentification.
+            Connexion sécurisée via Supabase Auth. Réservé aux administrateurs autorisés.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
             <div>
-              <label
-                htmlFor="admin-password"
-                className="mb-2 block text-sm font-semibold text-marhaban-ink"
-              >
+              <label htmlFor="admin-email" className="mb-2 block text-sm font-semibold text-marhaban-ink">
+                Email
+              </label>
+              <input
+                id="admin-email"
+                type="email"
+                required
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full rounded-2xl border border-marhaban-leaf/18 bg-marhaban-cream px-4 py-3 text-sm text-marhaban-ink transition focus:border-marhaban-leaf focus:outline-none focus:ring-2 focus:ring-marhaban-leaf/20"
+              />
+            </div>
+            <div>
+              <label htmlFor="admin-password" className="mb-2 block text-sm font-semibold text-marhaban-ink">
                 Mot de passe
               </label>
               <input
@@ -59,10 +83,7 @@ export default function AdminLoginPage() {
             </div>
 
             {error ? (
-              <p
-                role="alert"
-                className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm leading-relaxed text-red-700"
-              >
+              <p role="alert" className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm leading-relaxed text-red-700">
                 {error}
               </p>
             ) : null}
@@ -72,11 +93,19 @@ export default function AdminLoginPage() {
               disabled={loading}
               className="inline-flex min-h-[48px] w-full items-center justify-center rounded-full bg-marhaban-forestDark px-6 py-3 text-sm font-bold text-white shadow-warm-sm transition hover:bg-marhaban-clay disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {loading ? 'Vérification...' : 'Entrer'}
+              {loading ? 'Connexion...' : 'Se connecter'}
             </button>
           </form>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense>
+      <AdminLoginForm />
+    </Suspense>
   );
 }

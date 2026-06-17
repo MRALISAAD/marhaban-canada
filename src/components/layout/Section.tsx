@@ -10,13 +10,13 @@ type Props = {
 
 const tones = {
   light: 'bg-transparent',
-  muted: 'bg-marhaban-warm/55',
+  muted: 'bg-marhaban-mint/25',
   dark: 'bg-marhaban-forestDark text-white',
 };
 
 export function Section({ children, className, id, tone = 'light' }: Props) {
   return (
-    <section id={id} className={cn('px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16', tones[tone], className)}>
+    <section id={id} className={cn('px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-28', tones[tone], className)}>
       <div className="mx-auto max-w-7xl">{children}</div>
     </section>
   );

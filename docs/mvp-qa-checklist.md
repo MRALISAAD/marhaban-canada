@@ -1,7 +1,7 @@
 # MVP QA Checklist — Marhaban Canada
-**Date :** 2026-06-17 (mis à jour protection admin)
+**Date :** 2026-06-17 (mis à jour Supabase Auth admin)
 **Branche :** fix/accompagnement-route
-**Portée :** QA globale des deux flux MVP public + admin + protection admin temporaire
+**Portée :** QA globale des flux MVP public + admin + Supabase Auth admin
 
 ---
 
@@ -10,7 +10,7 @@
 | Commande | Résultat |
 |---|---|
 | `npm run lint` | OK — 0 erreur |
-| `npm run build` | OK — 61 pages compilées, 0 erreur TypeScript |
+| `npm run build` | BLOQUÉ — `@supabase/ssr` absent de `node_modules` après échec DNS `npm install` |
 
 ---
 
@@ -28,7 +28,7 @@
 | `/admin/bookings` | OK (statique) | AdminBookingsClient + local store |
 | `/admin/cases` | OK (statique) | AdminCasesClient + local store |
 | `/admin/scam-checks` | OK (statique) | AdminScamChecksClient + local store |
-| `/admin/login` | MANQUANT | MVP sans auth — voir section limitations |
+| `/admin/login` | OK | Formulaire email + mot de passe Supabase Auth |
 
 ---
 
@@ -100,54 +100,44 @@ Corrections appliquées (6 strings) :
 
 ---
 
-## Protection admin temporaire MVP
+## Protection admin Supabase Auth
 
 ### Implémentation
 
 | Composant | Fichier | Rôle |
 |---|---|---|
-| Middleware Next.js | `src/middleware.ts` | Bloque `/admin/*` (sauf `/admin/login`) sans cookie |
-| Page login | `src/app/admin/login/page.tsx` | Formulaire standalone (sans sidebar) |
-| API verify | `src/app/api/admin/verify/route.ts` | Vérifie `ADMIN_PREVIEW_PASSWORD` côté serveur, pose le cookie |
-| API logout | `src/app/api/admin/logout/route.ts` | Vide le cookie, redirige vers `/admin/login` |
-| Utilitaire | `src/lib/admin/admin-auth.ts` | `verifyAdminPassword()` pour le formulaire client |
-| Sidebar | `src/components/admin/AdminSidebar.tsx` | Bouton "Déconnexion" ajouté |
-| Env | `docs/env-example.md` | `ADMIN_PREVIEW_PASSWORD` documenté |
-| Route group | `src/app/admin/(protected)/` | Pages protégées isolées — login sans sidebar |
+| Proxy Next.js 16 | `src/proxy.ts` | Bloque `/admin/*` via `supabase.auth.getUser()` |
+| Page login | `src/app/admin/login/page.tsx` | Formulaire email + mot de passe Supabase Auth |
+| Client browser auth | `src/lib/supabase/browser.ts` | `createBrowserClient` avec anon key uniquement |
+| Client serveur auth | `src/lib/supabase/server-auth.ts` | `createServerClient` SSR avec cookies Next |
+| API logout | `src/app/api/admin/logout/route.ts` | `signOut()` puis redirection `/admin/login` |
+| Sidebar | `src/components/admin/AdminSidebar.tsx` | Bouton "Déconnexion" vers `/api/admin/logout` |
+| Env | `docs/env-example.md` | `ADMIN_ALLOWED_EMAILS` documenté |
 
 ### Checklist protection
 
 - [x] `/admin/login` existe et s'affiche sans sidebar
-- [x] `/admin/dashboard` redirige vers `/admin/login` si pas de cookie
+- [x] `/admin/dashboard` redirige vers `/admin/login` sans session Supabase
 - [x] `/admin/bookings`, `/admin/cases`, `/admin/scam-checks` — même protection
-- [x] Login réussi pose le cookie `mhb_admin_prev` (httpOnly, SameSite=lax, 8h)
+- [x] Login email + mot de passe via `signInWithPassword`
 - [x] Login réussi redirige vers `/admin/dashboard`
-- [x] Mot de passe vérifié uniquement côté serveur (jamais exposé au client)
-- [x] Si `ADMIN_PREVIEW_PASSWORD` non configuré, message explicite sur la page login
-- [x] Bouton "Déconnexion" dans la sidebar vide le cookie et redirige vers login
+- [x] Email vérifié côté proxy via `ADMIN_ALLOWED_EMAILS`
+- [x] Bouton "Déconnexion" appelle `/api/admin/logout` et déclenche `signOut()`
 - [x] `npm run lint` — 0 erreur
-- [x] `npm run build` — 63 pages compilées, 0 erreur TypeScript
-
-### Rappel — Protection NON production-grade
-
-Cette protection est uniquement pour preview/MVP :
-- Cookie `httpOnly` mais pas `Secure` en HTTP local
-- Pas de rate limiting sur `/api/admin/verify`
-- Pas de rotation de token, pas d'expiration côté serveur
-- La vraie protection viendra avec Supabase Auth
+- [ ] `npm run build` — bloqué tant que `@supabase/ssr` n'est pas installé
 
 ### Variable requise
 
 Ajouter dans `.env.local` avant toute utilisation :
 ```
-ADMIN_PREVIEW_PASSWORD="change-me-for-preview"
+ADMIN_ALLOWED_EMAILS="admin@example.com,second@example.com"
 ```
 
 ## Limitations MVP restantes (non bloquantes)
 
 | Limitation | Niveau | Action requise avant production |
 |---|---|---|
-| Protection admin MVP, pas production-grade | Documenté | Remplacer par Supabase Auth |
+| Durcissement admin production | Documenté | Ajouter rôles admin Supabase et revue RLS |
 | `/admin/dashboard` affiche uniquement mock data (composant serveur) | Mineur | Les checks locaux sont visibles seulement dans `/admin/scam-checks` |
 | Notes et overrides admin non persistés (état React uniquement) | Mineur | Un refresh efface les modifications de statut/notes admin |
 | Données en localStorage — perdues si localStorage effacé | Connu | MVP uniquement, backend requis en production |
@@ -246,7 +236,7 @@ Brancher Supabase pour remplacer localStorage une fois l'authentification en pla
 
 - Les updates de dossiers Supabase sont persistés via PATCH /api/cases/[id] (status, next_step, internal_notes uniquement).
 - priority et phone ne sont pas dans le schema Supabase v1 — restent localStorage/mock uniquement.
-- Supabase Auth n'est pas en place — admin accessible sans authentification réelle.
+- Supabase Auth protège l'admin, mais les rôles admin Supabase et le durcissement RLS restent à faire.
 
 ## Flux 4 — Admin resources → Supabase resources
 
@@ -267,7 +257,7 @@ Brancher Supabase pour remplacer localStorage une fois l'authentification en pla
 ### Limitations MVP connues
 
 - Pas de DELETE réel — archiver via status: archived.
-- Pas de Supabase Auth — admin accessible sans authentification.
+- Supabase Auth protège l'admin, mais les rôles admin Supabase et le durcissement RLS restent à faire.
 - content stocké comme jsonb { body: string } — pas d'éditeur riche.
 - slug + locale doivent être uniques — erreur 409 si conflit.
 
@@ -298,3 +288,29 @@ Brancher Supabase pour remplacer localStorage une fois l'authentification en pla
 - Pas de DELETE réel — archiver via PATCH status: archived.
 - author_id non utilisé (réservé pour Supabase Auth futur).
 - Notes indisponibles pour les enregistrements mock ou localStorage (target_id non UUID).
+
+## Flux 6 — Supabase Auth admin
+
+| Étape | Statut | Détail |
+|---|---|---|
+| `/admin/dashboard` sans session → `/admin/login` | OK | Proxy vérifie `supabase.auth.getUser()` |
+| Login email + password valides + email autorisé → accès | OK | `signInWithPassword` + allowlist |
+| `ADMIN_ALLOWED_EMAILS` absent ou vide → refus + message clair | OK | Proxy redirect `/admin/login?error=missing_allowlist` |
+| Login email valide mais pas dans `ADMIN_ALLOWED_EMAILS` → refus | OK | Proxy redirect `/admin/login?error=unauthorized` |
+| Mauvais mot de passe → erreur claire | OK | Supabase auth error → message UI |
+| Déconnexion → retour `/admin/login` | OK | `signOut()` via `/api/admin/logout` |
+| Routes publiques `/fr`, `/en`, `/ar` non impactées | OK | Proxy ne touche pas aux routes non-admin |
+| Routes API data `/api/bookings`, `/api/cases`, etc. non impactées | OK | Proxy exclut `/api/*` |
+| `SUPABASE_SERVICE_ROLE_KEY` côté serveur uniquement | OK | Jamais dans browser.ts, login page, proxy |
+| Flux bookings/scam_checks/case_files/resources/admin_notes OK | OK | Routes API inchangées |
+
+### Configuration requise dans Supabase Dashboard
+
+1. Authentication > Users → créer le(s) utilisateur(s) admin
+2. Email confirmé obligatoire pour `signInWithPassword`
+3. `ADMIN_ALLOWED_EMAILS` dans `.env.local` avec les emails autorisés
+
+### Limitations
+
+- Pas de reset password depuis l'UI pour l'instant (géré depuis Supabase Dashboard).
+- Pas de signup public — les comptes admin sont créés manuellement dans Supabase.

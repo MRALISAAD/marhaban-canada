@@ -1,11 +1,10 @@
-# Variables d'environnement futures
+# Variables d'environnement
 
 Ne pas mettre de vraies clés dans ce fichier. Utiliser `.env.local` en local et les variables d'environnement Vercel en déploiement.
 
 ```bash
-# Admin MVP preview (protection temporaire, pas production-grade)
-# Valeur libre — à changer avant tout déploiement preview
-ADMIN_PREVIEW_PASSWORD="change-me-for-preview"
+# Supabase Auth admin — emails autorisés séparés par virgule
+ADMIN_ALLOWED_EMAILS="admin@example.com,second@example.com"
 
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL="https://example-project.supabase.co"
@@ -28,10 +27,10 @@ CALENDLY_ORIENTATION_URL="https://calendly.com/example/orientation"
 CALENDLY_SCAM_CHECK_URL="https://calendly.com/example/scam-check"
 ```
 
-## Notes
+## Notes de sécurité
 
-- Les variables `NEXT_PUBLIC_*` sont exposées au navigateur.
-- `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `STRIPE_SECRET_KEY` et `STRIPE_WEBHOOK_SECRET` doivent rester côté serveur.
-- `SUPABASE_SERVICE_ROLE_KEY` donne un accès privilégié à Supabase : ne jamais l'importer dans un composant client, ne jamais la préfixer `NEXT_PUBLIC_`.
+- `NEXT_PUBLIC_*` sont exposées au navigateur — ne jamais y mettre de secrets.
+- `SUPABASE_SERVICE_ROLE_KEY` donne un accès privilégié à Supabase contournant RLS : ne jamais l'importer dans un composant client, ne jamais la préfixer `NEXT_PUBLIC_`.
+- `ADMIN_ALLOWED_EMAILS` est une allowlist serveur : si absente ou vide, l'accès admin est refusé.
+- `ADMIN_PREVIEW_PASSWORD` : variable dépréciée, remplacée par Supabase Auth.
 - Ne jamais committer `.env.local`.
-- Ne pas activer ces intégrations avant que l'admin soit protégé par authentification.

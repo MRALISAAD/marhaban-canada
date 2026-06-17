@@ -8,6 +8,17 @@ type CaseUpdate = {
   action_plan?: string[];
 };
 
+const ALLOWED_FIELDS = ['status', 'next_step', 'internal_notes', 'action_plan'] as const;
+const FORBIDDEN_FIELDS = [
+  'sin', 'nas', 'social_insurance', 'social_insurance_number',
+  'passport', 'passport_number', 'passeport',
+  'card', 'credit_card', 'card_number', 'carte_bancaire', 'cvv',
+  'permit', 'work_permit', 'study_permit', 'permis',
+  'document', 'upload',
+  'bank_account', 'bank_number', 'iban',
+];
+const allowedFields = new Set<string>(ALLOWED_FIELDS);
+
 function jsonError(error: string, status: number) {
   return NextResponse.json({ ok: false, error }, { status });
 }
@@ -18,6 +29,21 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function textArray(value: unknown) {
   return Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : undefined;
+}
+
+function normalizeKey(key: string) {
+  return key.toLowerCase().replace(/[^a-z0-9_]/g, '_');
+}
+
+function hasForbiddenField(input: Record<string, unknown>) {
+  return Object.keys(input).some((key) => {
+    const normalizedKey = normalizeKey(key);
+    return FORBIDDEN_FIELDS.some((field) => normalizedKey.includes(field));
+  });
+}
+
+function hasOnlyAllowedFields(input: Record<string, unknown>) {
+  return Object.keys(input).every((key) => allowedFields.has(key));
 }
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -32,6 +58,14 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 
   if (!isRecord(body)) {
     return jsonError('Invalid case payload', 400);
+  }
+
+  if (hasForbiddenField(body)) {
+    return jsonError('Sensitive field rejected', 400);
+  }
+
+  if (!hasOnlyAllowedFields(body)) {
+    return jsonError('Unexpected case field rejected', 400);
   }
 
   const updates: CaseUpdate = {};

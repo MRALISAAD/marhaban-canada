@@ -2,6 +2,15 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const locales = ['fr', 'en', 'ar'];
+
+function localizedRedirects(sourcePath, destinationPath) {
+  return locales.map((locale) => ({
+    source: `/${locale}${sourcePath}`,
+    destination: `/${locale}${destinationPath}`,
+    permanent: true,
+  }));
+}
 
 const nextConfig = {
   turbopack: {
@@ -11,17 +20,17 @@ const nextConfig = {
   async redirects() {
     return [
       // ── Anciens alias → routes canoniques (301 permanent) ────────────────
-      { source: '/:locale/about',           destination: '/:locale/a-propos',    permanent: true },
-      { source: '/:locale/book',            destination: '/:locale/reserver',    permanent: true },
-      { source: '/:locale/reserver-un-appel', destination: '/:locale/reserver', permanent: true },
-      { source: '/:locale/orientation',     destination: '/:locale/accompagnement', permanent: true },
-      { source: '/:locale/arnaques',        destination: '/:locale/services/anti-arnaque', permanent: true },
-      { source: '/:locale/anti-arnaque',   destination: '/:locale/services/anti-arnaque', permanent: true },
-      { source: '/:locale/resources',       destination: '/:locale/ressources',  permanent: true },
-      { source: '/:locale/checklist',       destination: '/:locale/ressources',  permanent: true },
+      ...localizedRedirects('/about', '/a-propos'),
+      ...localizedRedirects('/book', '/reserver'),
+      ...localizedRedirects('/reserver-un-appel', '/reserver'),
+      ...localizedRedirects('/orientation', '/accompagnement'),
+      ...localizedRedirects('/arnaques', '/services/anti-arnaque'),
+      ...localizedRedirects('/anti-arnaque', '/services/anti-arnaque'),
+      ...localizedRedirects('/resources', '/ressources'),
+      ...localizedRedirects('/checklist', '/ressources'),
       // ── Routes absorbées ─────────────────────────────────────────────────
-      { source: '/:locale/services',        destination: '/:locale/accompagnement', permanent: true },
-      { source: '/:locale/commencer',       destination: '/:locale/ressources',  permanent: true },
+      ...localizedRedirects('/services', '/accompagnement'),
+      ...localizedRedirects('/commencer', '/ressources'),
     ];
   },
 };
