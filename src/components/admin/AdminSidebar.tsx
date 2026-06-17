@@ -8,6 +8,7 @@ import {
   FolderOpen,
   Gauge,
   LifeBuoy,
+  LogOut,
   ShieldAlert,
 } from 'lucide-react';
 import { cn } from '@/lib/cn';
@@ -81,13 +82,23 @@ export function AdminSidebar() {
         })}
       </nav>
 
-      <Link
-        href="/fr"
-        className="mt-6 flex min-h-[48px] items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-semibold text-[#edf7f2] transition hover:bg-white/[0.1] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
-      >
-        <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden="true" />
-        <span>Retour au site</span>
-      </Link>
+      <div className="mt-6 flex flex-col gap-2">
+        <Link
+          href="/fr"
+          className="flex min-h-[48px] items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-semibold text-[#edf7f2] transition hover:bg-white/[0.1] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
+        >
+          <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden="true" />
+          <span>Retour au site</span>
+        </Link>
+        <button
+          type="button"
+          onClick={() => { window.location.href = '/api/admin/logout'; }}
+          className="flex min-h-[44px] w-full items-center gap-3 rounded-2xl border border-red-900/20 bg-red-900/[0.06] px-4 py-3 text-sm font-semibold text-red-300/60 transition hover:bg-red-900/10 hover:text-red-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
+        >
+          <LogOut className="h-4 w-4 shrink-0" aria-hidden="true" />
+          <span>Déconnexion</span>
+        </button>
+      </div>
     </aside>
   );
 }

@@ -1,7 +1,7 @@
 # MVP QA Checklist — Marhaban Canada
-**Date :** 2026-06-17
+**Date :** 2026-06-17 (mis à jour protection admin)
 **Branche :** fix/accompagnement-route
-**Portée :** QA globale des deux flux MVP public + admin
+**Portée :** QA globale des deux flux MVP public + admin + protection admin temporaire
 
 ---
 
@@ -100,14 +100,56 @@ Corrections appliquées (6 strings) :
 
 ---
 
-## Limitations MVP documentées (pas des bugs)
+## Protection admin temporaire MVP
+
+### Implémentation
+
+| Composant | Fichier | Rôle |
+|---|---|---|
+| Middleware Next.js | `src/middleware.ts` | Bloque `/admin/*` (sauf `/admin/login`) sans cookie |
+| Page login | `src/app/admin/login/page.tsx` | Formulaire standalone (sans sidebar) |
+| API verify | `src/app/api/admin/verify/route.ts` | Vérifie `ADMIN_PREVIEW_PASSWORD` côté serveur, pose le cookie |
+| API logout | `src/app/api/admin/logout/route.ts` | Vide le cookie, redirige vers `/admin/login` |
+| Utilitaire | `src/lib/admin/admin-auth.ts` | `verifyAdminPassword()` pour le formulaire client |
+| Sidebar | `src/components/admin/AdminSidebar.tsx` | Bouton "Déconnexion" ajouté |
+| Env | `docs/env-example.md` | `ADMIN_PREVIEW_PASSWORD` documenté |
+| Route group | `src/app/admin/(protected)/` | Pages protégées isolées — login sans sidebar |
+
+### Checklist protection
+
+- [x] `/admin/login` existe et s'affiche sans sidebar
+- [x] `/admin/dashboard` redirige vers `/admin/login` si pas de cookie
+- [x] `/admin/bookings`, `/admin/cases`, `/admin/scam-checks` — même protection
+- [x] Login réussi pose le cookie `mhb_admin_prev` (httpOnly, SameSite=lax, 8h)
+- [x] Login réussi redirige vers `/admin/dashboard`
+- [x] Mot de passe vérifié uniquement côté serveur (jamais exposé au client)
+- [x] Si `ADMIN_PREVIEW_PASSWORD` non configuré, message explicite sur la page login
+- [x] Bouton "Déconnexion" dans la sidebar vide le cookie et redirige vers login
+- [x] `npm run lint` — 0 erreur
+- [x] `npm run build` — 63 pages compilées, 0 erreur TypeScript
+
+### Rappel — Protection NON production-grade
+
+Cette protection est uniquement pour preview/MVP :
+- Cookie `httpOnly` mais pas `Secure` en HTTP local
+- Pas de rate limiting sur `/api/admin/verify`
+- Pas de rotation de token, pas d'expiration côté serveur
+- La vraie protection viendra avec Supabase Auth
+
+### Variable requise
+
+Ajouter dans `.env.local` avant toute utilisation :
+```
+ADMIN_PREVIEW_PASSWORD="change-me-for-preview"
+```
+
+## Limitations MVP restantes (non bloquantes)
 
 | Limitation | Niveau | Action requise avant production |
 |---|---|---|
-| `/admin/login` n'existe pas — admin accessible directement | Critique | Créer page login + middleware auth |
-| Pas de `middleware.ts` pour protéger `/admin/*` | Critique | Requis avant tout déploiement |
+| Protection admin MVP, pas production-grade | Documenté | Remplacer par Supabase Auth |
 | `/admin/dashboard` affiche uniquement mock data (composant serveur) | Mineur | Les checks locaux sont visibles seulement dans `/admin/scam-checks` |
-| Notes et overrides admin non persistés (état React uniquement) | Mineur | Un refresh efface les modifications admin |
+| Notes et overrides admin non persistés (état React uniquement) | Mineur | Un refresh efface les modifications de statut/notes admin |
 | Données en localStorage — perdues si localStorage effacé | Connu | MVP uniquement, backend requis en production |
 
 ---
