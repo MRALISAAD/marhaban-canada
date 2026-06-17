@@ -146,23 +146,62 @@ export function ScamCheckForm({ locale, dir }: Props) {
   const [consent, setConsent] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
+  function saveLocalScamCheck(payload: {
+    requester_name: string;
+    email: string;
+    phone?: string;
+    city_province: string;
+    situation: string;
+    amount_requested?: string;
+    urgency: 'low' | 'normal' | 'high';
+  }) {
     addLocalScamCheck({
       id: createId(),
       createdAt: new Date().toISOString(),
-      requesterName: fullName.trim(),
-      email: email.trim(),
-      phone: phone.trim() || undefined,
-      cityProvince: cityProvince.trim(),
-      situation: `[${situationType}] ${description.trim()}`,
-      amountRequested: amountRequested.trim() || undefined,
-      urgency: urgency as 'low' | 'normal' | 'high',
+      requesterName: payload.requester_name,
+      email: payload.email,
+      phone: payload.phone,
+      cityProvince: payload.city_province,
+      situation: payload.situation,
+      amountRequested: payload.amount_requested,
+      urgency: payload.urgency,
       riskLevel: 'unreviewed',
       status: 'new',
       notes: [],
     });
+  }
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const payload = {
+      requester_name: fullName.trim(),
+      email: email.trim(),
+      phone: phone.trim() || undefined,
+      city_province: cityProvince.trim(),
+      situation: `[${situationType}] ${description.trim()}`,
+      amount_requested: amountRequested.trim() || undefined,
+      urgency: urgency as 'low' | 'normal' | 'high',
+      disclaimer_accepted: consent,
+    };
+
+    try {
+      const response = await fetch('/api/scam-checks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const result = (await response.json()) as { ok?: boolean };
+
+      if (!response.ok || result.ok !== true) {
+        throw new Error('Scam check API request failed');
+      }
+    } catch (error) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Scam check Supabase request failed, using localStorage fallback', error);
+      }
+      saveLocalScamCheck(payload);
+    }
 
     setIsSubmitted(true);
   }

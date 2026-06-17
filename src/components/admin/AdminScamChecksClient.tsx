@@ -17,7 +17,18 @@ type Tone = 'neutral' | 'info' | 'success' | 'warning' | 'danger' | 'dark';
 
 const emptyLocalChecks: LocalScamCheck[] = [];
 
-type EditableScamCheck = Omit<ScamCheck, 'notes'> & {
+type AdminScamCheck = ScamCheck & {
+  phone?: string;
+  cityProvince?: string;
+  recommendation?: string;
+};
+
+type AdminScamChecksClientProps = {
+  supabaseScamChecks?: readonly AdminScamCheck[];
+  mockScamChecks: readonly ScamCheck[];
+};
+
+type EditableScamCheck = Omit<AdminScamCheck, 'notes'> & {
   notes: string[];
   recommendation?: string;
   phone?: string;
@@ -80,7 +91,7 @@ function formatDate(value: string) {
   }).format(new Date(value));
 }
 
-function toEditable(sc: ScamCheck): EditableScamCheck {
+function toEditable(sc: AdminScamCheck): EditableScamCheck {
   return { ...sc, notes: [...sc.notes] };
 }
 
@@ -91,7 +102,7 @@ function applyOverride(sc: EditableScamCheck, overrides: ScamCheckOverrides): Ed
 const inputClass =
   'w-full rounded-2xl border border-marhaban-leaf/18 bg-marhaban-cream px-4 py-3 text-sm text-marhaban-ink focus:border-marhaban-leaf focus:outline-none focus:ring-2 focus:ring-marhaban-leaf/20';
 
-export function AdminScamChecksClient({ mockScamChecks }: { mockScamChecks: readonly ScamCheck[] }) {
+export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks }: AdminScamChecksClientProps) {
   const [overrides, setOverrides] = useState<ScamCheckOverrides>({});
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [editMode, setEditMode] = useState(false);
@@ -110,13 +121,18 @@ export function AdminScamChecksClient({ mockScamChecks }: { mockScamChecks: read
     () => new Set(localScamChecks.map((sc) => sc.id)),
     [localScamChecks],
   );
+  const supabaseCheckIds = useMemo(
+    () => new Set(supabaseScamChecks.map((sc) => sc.id)),
+    [supabaseScamChecks],
+  );
 
   const scamChecks = useMemo(
     () => [
+      ...supabaseScamChecks.map((sc) => applyOverride(toEditable(sc), overrides)),
       ...localScamChecks.map((sc) => applyOverride(toEditable(sc), overrides)),
       ...mockScamChecks.map((sc) => applyOverride(toEditable(sc), overrides)),
     ],
-    [localScamChecks, mockScamChecks, overrides],
+    [localScamChecks, mockScamChecks, overrides, supabaseScamChecks],
   );
 
   const selected = selectedId ? scamChecks.find((sc) => sc.id === selectedId) : undefined;
@@ -193,6 +209,9 @@ export function AdminScamChecksClient({ mockScamChecks }: { mockScamChecks: read
           </div>
           <div className="flex flex-wrap gap-2">
             <AdminBadge label="Mock data" tone="dark" />
+            {supabaseScamChecks.length > 0 ? (
+              <AdminBadge label={`${supabaseScamChecks.length} Supabase`} tone="success" />
+            ) : null}
             {localScamChecks.length > 0 ? (
               <AdminBadge label={`${localScamChecks.length} local`} tone="warning" />
             ) : null}
@@ -201,7 +220,7 @@ export function AdminScamChecksClient({ mockScamChecks }: { mockScamChecks: read
       </header>
 
       <div className="rounded-[1.75rem] border border-marhaban-leaf/12 bg-white/75 px-5 py-4 text-sm leading-relaxed text-marhaban-muted shadow-warm-sm">
-        Évaluation informative du risque uniquement — pas de conseil juridique. Recommander les ressources officielles : ACFC, Cybercrime.gc.ca.
+        Évaluation informative du risque. Signaux à vérifier. Recommandation prudente. Ressources officielles à consulter.
       </div>
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Indicateurs demandes anti-arnaque">
@@ -238,6 +257,9 @@ export function AdminScamChecksClient({ mockScamChecks }: { mockScamChecks: read
                     <td className="px-4 py-4">
                       <div className="flex flex-wrap items-center gap-2">
                         <p className="font-semibold text-marhaban-forestDark">{sc.requesterName}</p>
+                        {supabaseCheckIds.has(sc.id) ? (
+                          <AdminBadge label="Supabase" tone="success" className="px-2 py-0.5 text-[10px]" />
+                        ) : null}
                         {localCheckIds.has(sc.id) ? (
                           <AdminBadge label="Local" tone="warning" className="px-2 py-0.5 text-[10px]" />
                         ) : null}
