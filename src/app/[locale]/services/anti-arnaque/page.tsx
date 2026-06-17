@@ -8,6 +8,7 @@ import { PageHero } from '@/components/sections/PageHero';
 import { SectionHeader } from '@/components/marketing/SectionHeader';
 import { TrustNotice } from '@/components/sections/TrustNotice';
 import { legalDisclaimer } from '@/content/legalDisclaimer';
+import { ScamCheckForm } from '@/components/forms/ScamCheckForm';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -15,20 +16,20 @@ const copy = {
   fr: {
     eyebrow: 'Anti-arnaque',
     title: 'Avant de payer, prends le temps de vérifier.',
-    subtitle: 'On t’aide à repérer les signaux d’alerte avant de payer quelqu’un ou d’envoyer des documents.',
+    subtitle: "On t'aide à repérer les signaux d'alerte avant de payer quelqu'un ou d'envoyer des documents.",
     primary: 'Me faire orienter avant de payer',
     secondary: 'Voir les ressources',
-    pills: ['Red flags', 'Sources officielles', 'Avant de payer', 'Avant d’envoyer'],
+    pills: ['Red flags', 'Sources officielles', 'Avant de payer', "Avant d'envoyer"],
     situationsTitle: 'Situations fréquentes',
     situationsText: 'Logement trop beau pour être vrai, faux recruteur, frais urgents, faux agent, pression pour payer vite.',
-    checklistTitle: 'Ce qu’il faut vérifier',
-    checklistBullets: ['L’identité de la personne', 'Le contrat ou l’écrit', 'Le site officiel ou la source reconnue', 'La cohérence de la demande'],
+    checklistTitle: "Ce qu'il faut vérifier",
+    checklistBullets: ["L'identité de la personne", "Le contrat ou l'écrit", 'Le site officiel ou la source reconnue', 'La cohérence de la demande'],
     questionsTitle: 'Questions à poser avant de payer',
-    questionsBullets: ['Qui êtes-vous ?', 'Pourquoi ce paiement ?', 'Où puis-je vérifier l’information ?', 'Puis-je avoir un écrit ?'],
+    questionsBullets: ['Qui êtes-vous ?', 'Pourquoi ce paiement ?', "Où puis-je vérifier l'information ?", 'Puis-je avoir un écrit ?'],
     sourcesTitle: 'Sources officielles à consulter',
-    sourcesBullets: ['Sites gouvernementaux', 'Institutions reconnues', 'Organismes d’aide fiables'],
+    sourcesBullets: ['Sites gouvernementaux', 'Institutions reconnues', "Organismes d'aide fiables"],
     finalTitle: 'Si tu hésites, ralentis.',
-    finalText: 'Une lecture humaine avant d’agir peut éviter des erreurs coûteuses.',
+    finalText: "Une lecture humaine avant d'agir peut éviter des erreurs coûteuses.",
   },
   en: {
     eyebrow: 'Anti-scam',
@@ -40,7 +41,7 @@ const copy = {
     situationsTitle: 'Common situations',
     situationsText: 'Too-good-to-be-true housing, fake recruiter, urgent fees, fake agent, pressure to pay fast.',
     checklistTitle: 'What to verify',
-    checklistBullets: ['The person’s identity', 'The contract or written proof', 'The official website or recognized source', 'Whether the request makes sense'],
+    checklistBullets: ["The person's identity", 'The contract or written proof', 'The official website or recognized source', 'Whether the request makes sense'],
     questionsTitle: 'Questions to ask before paying',
     questionsBullets: ['Who are you?', 'Why is this payment needed?', 'Where can I verify this information?', 'Can I have it in writing?'],
     sourcesTitle: 'Official sources to check',
@@ -133,15 +134,15 @@ export default async function AntiScamServicePage({ params }: Props) {
 
       <Section tone="muted">
         <div className="grid gap-6 lg:grid-cols-2">
-          <TrustNotice title={t.checklistTitle} text={locale === 'fr' ? 'Avant d’agir, vérifie les bases.' : locale === 'en' ? 'Before acting, check the basics.' : 'قبل التصرف، تحقق من الأساسيات.'} bullets={t.checklistBullets} />
-          <TrustNotice title={t.questionsTitle} text={locale === 'fr' ? 'Des questions simples peuvent faire gagner du temps.' : locale === 'en' ? 'Simple questions can save time.' : 'الأسئلة البسيطة قد توفر الوقت.'} bullets={t.questionsBullets} />
+          <TrustNotice title={t.checklistTitle} text={locale === 'fr' ? "Avant d'agir, vérifie les bases." : locale === 'en' ? 'Before acting, check the basics.' : 'قبل التصرف، تحقق من الأساسيات.'} bullets={t.checklistBullets} />
+          <TrustNotice title={t.questionsTitle} text={locale === 'fr' ? "Des questions simples peuvent faire gagner du temps." : locale === 'en' ? 'Simple questions can save time.' : 'الأسئلة البسيطة قد توفر الوقت.'} bullets={t.questionsBullets} />
         </div>
       </Section>
 
       <Section>
         <div className="grid gap-6 lg:grid-cols-[1fr_0.95fr] lg:items-start">
           <div className="rounded-[1.75rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm-sm">
-            <SectionHeader eyebrow={t.sourcesTitle} title={t.sourcesTitle} text={locale === 'fr' ? 'Vérifie d’abord les sources sûres.' : locale === 'en' ? 'Check safe sources first.' : 'تحقق من المصادر الآمنة أولاً.'} />
+            <SectionHeader eyebrow={t.sourcesTitle} title={t.sourcesTitle} text={locale === 'fr' ? "Vérifie d'abord les sources sûres." : locale === 'en' ? 'Check safe sources first.' : 'تحقق من المصادر الآمنة أولاً.'} />
             <ul className="mt-6 space-y-3 text-sm text-marhaban-muted">
               {t.sourcesBullets.map((item) => (
                 <li key={item} className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 px-4 py-3">• {item}</li>
@@ -166,9 +167,22 @@ export default async function AntiScamServicePage({ params }: Props) {
         </div>
       </Section>
 
+      <Section id="signaler" className="scroll-mt-28 py-12 sm:py-14 lg:py-16">
+        <div className="mx-auto max-w-2xl">
+          <SectionHeader
+            eyebrow={locale === 'fr' ? 'Signalement' : locale === 'en' ? 'Report' : 'بلاغ'}
+            title={locale === 'fr' ? 'Soumettre une situation pour avis' : locale === 'en' ? 'Submit a situation for review' : 'تقديم وضع للمراجعة'}
+            text={locale === 'fr' ? "Nous l'examinons de maniere informative et prudente. Pas de conseil juridique." : locale === 'en' ? 'We review it in an informative and cautious way. No legal advice.' : 'سنراجعه بطريقة معلوماتية وحذرة. لا نصيحة قانونية.'}
+          />
+          <div className="mt-8">
+            <ScamCheckForm locale={locale} dir={dir} />
+          </div>
+        </div>
+      </Section>
+
       <Section tone="dark" className="py-10 sm:py-12 lg:py-14">
         <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/12 bg-white/[0.06] p-6 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-8">
-          <h2 className="text-2xl font-semibold text-white sm:text-3xl">{locale === 'fr' ? 'Si tu hésites, parle-en avant d’agir.' : locale === 'en' ? 'If you are unsure, talk it through first.' : 'إذا كنت غير متأكد، تحدث قبل التصرف.'}</h2>
+          <h2 className="text-2xl font-semibold text-white sm:text-3xl">{locale === 'fr' ? "Si tu hésites, parle-en avant d'agir." : locale === 'en' ? 'If you are unsure, talk it through first.' : 'إذا كنت غير متأكد، تحدث قبل التصرف.'}</h2>
             <p className="mt-3 text-sm leading-relaxed text-[#edf7f2]">{t.finalText}</p>
           <p className="mt-6 text-sm leading-relaxed text-[#d8e7df]">{legalDisclaimer[locale]}</p>
         </div>
