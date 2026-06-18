@@ -1,6 +1,14 @@
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/supabase/server';
 
+type PreferredLanguage = 'fr' | 'en' | 'ar';
+
+const VALID_LANGUAGES: readonly PreferredLanguage[] = ['fr', 'en', 'ar'];
+
+function isPreferredLanguage(v: string): v is PreferredLanguage {
+  return (VALID_LANGUAGES as readonly string[]).includes(v);
+}
+
 type BookingInsert = {
   full_name: string;
   email: string;
@@ -11,12 +19,12 @@ type BookingInsert = {
   duration: string;
   price_label: string;
   client_status: string;
-  preferred_language: string;
+  preferred_language: PreferredLanguage;
   message: string;
-  next_action?: string;
+  next_action: string;
   disclaimer_accepted: boolean;
-  status: string;
-  source: string;
+  status: 'new';
+  source: 'reserver_modal';
 };
 
 const sensitiveKeyFragments = [
@@ -111,6 +119,10 @@ export async function POST(request: Request) {
     return jsonError('Disclaimer must be accepted', 400);
   }
 
+  if (!isPreferredLanguage(preferredLanguage)) {
+    return jsonError('Invalid preferred_language', 400);
+  }
+
   const booking: BookingInsert = {
     full_name: fullName,
     email,
@@ -123,10 +135,10 @@ export async function POST(request: Request) {
     client_status: textField(body, 'client_status'),
     preferred_language: preferredLanguage,
     message: textField(body, 'message'),
-    next_action: textField(body, 'next_action') || undefined,
+    next_action: 'Répondre avec les disponibilités.',
     disclaimer_accepted: true,
-    status: textField(body, 'status') || 'new',
-    source: textField(body, 'source') || 'reserver_modal',
+    status: 'new',
+    source: 'reserver_modal',
   };
 
   try {
