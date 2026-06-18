@@ -25,6 +25,45 @@
 - `/admin/dashboard`, `/admin/bookings`, `/admin/scam-checks`, `/admin/cases`, `/admin/resources` redirigent vers `/admin/login` hors session.
 - La déconnexion `/api/admin/logout` invalide la session.
 
+## Admin CRUD v1
+
+### Migration préalable
+- `docs/supabase-admin-crud-migration.sql` appliqué sur l'environnement cible (ajoute 'archived' aux CHECK de bookings et scam_checks).
+- Vérifier que les contraintes CHECK ont bien été mises à jour après exécution.
+
+### Fonctionnalités CRUD
+- Réservations : mise à jour du statut, note interne, archivage soft-delete — vérifier via `/admin/bookings`
+- Demandes anti-arnaque : mise à jour statut, risk_level, notes, recommandation — vérifier via `/admin/scam-checks`
+- Dossiers : modification statut, prochaine étape, notes internes — vérifier via `/admin/cases`
+- Ressources : créer, modifier, publier/dépublier, archiver, supprimer — vérifier via `/admin/resources`
+- Notes internes : créer, modifier, supprimer — vérifier via le panneau notes dans chaque entité
+
+### Sécurité CRUD
+- Chaque route `/api/admin/*` retourne 401 si non authentifié, 403 si non autorisé.
+- Tester : appel non authentifié à `PATCH /api/admin/bookings/[uuid]` doit retourner 401.
+- Tester : email hors allowlist doit retourner 403.
+- `SUPABASE_SERVICE_ROLE_KEY` ne doit pas apparaître dans le bundle client (`next build` logs).
+- Champs sensibles (NAS, passeport, carte bancaire) rejetés par validation serveur.
+- Les actions archive/suppression demandent confirmation `window.confirm()` côté client.
+
+### QA manuel Admin CRUD
+- [ ] `/admin/login` redirige correctement après connexion réussie
+- [ ] Hors session, toutes les pages `/admin/(protected)/` redirigent vers `/admin/login`
+- [ ] Modifier le statut d'une réservation Supabase → persisté après reload
+- [ ] Ajouter une note interne sur une réservation → persistée après reload
+- [ ] Archiver une réservation → confirmation demandée, statut = 'archived'
+- [ ] Modifier risk_level d'un scam check Supabase → persisté après reload
+- [ ] Archiver un scam check → confirmation demandée, statut = 'archived'
+- [ ] Modifier statut d'un dossier → persisté après reload
+- [ ] Créer une ressource → apparaît dans la liste
+- [ ] Modifier une ressource → changements persistés
+- [ ] Publier/dépublier une ressource → statut mis à jour
+- [ ] Supprimer une ressource → confirmation demandée, guide disparu
+- [ ] Créer une note interne → apparaît dans le panneau
+- [ ] Modifier une note interne → contenu mis à jour
+- [ ] Supprimer une note interne → confirmation demandée, note disparue
+- [ ] Compte non admin → 403 sur toutes les routes `/api/admin/*`
+
 ## Formulaires
 
 - `/fr/reserver` crée une réservation Supabase depuis le modal.

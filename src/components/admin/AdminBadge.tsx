@@ -25,6 +25,7 @@ const bookingLabels: Record<BookingStatus, string> = {
   confirmed: 'Confirmée',
   completed: 'Terminée',
   cancelled: 'Annulée',
+  archived: 'Archivée',
 };
 
 const bookingTones: Record<BookingStatus, AdminBadgeTone> = {
@@ -34,6 +35,7 @@ const bookingTones: Record<BookingStatus, AdminBadgeTone> = {
   confirmed: 'success',
   completed: 'neutral',
   cancelled: 'danger',
+  archived: 'neutral',
 };
 
 const caseLabels: Record<CaseStatus, string> = {

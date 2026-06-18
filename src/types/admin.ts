@@ -6,7 +6,8 @@ export type BookingStatus =
   | 'slot_proposed'
   | 'confirmed'
   | 'completed'
-  | 'cancelled';
+  | 'cancelled'
+  | 'archived';
 
 export type CaseStatus =
   | 'new'
@@ -71,7 +72,7 @@ export type ScamCheck = {
   amountRequested?: string;
   urgency: 'low' | 'normal' | 'high';
   riskLevel: RiskLevel;
-  status: 'new' | 'reviewing' | 'responded' | 'closed';
+  status: 'new' | 'reviewing' | 'responded' | 'closed' | 'archived';
   notes: readonly string[];
 };
 

@@ -59,6 +59,7 @@ const scamStatusLabels: Record<ScamCheckStatus, string> = {
   reviewing: 'En évaluation',
   responded: 'Répondu',
   closed: 'Fermé',
+  archived: 'Archivé',
 };
 
 const scamStatusTones: Record<ScamCheckStatus, Tone> = {
@@ -66,6 +67,7 @@ const scamStatusTones: Record<ScamCheckStatus, Tone> = {
   reviewing: 'warning',
   responded: 'success',
   closed: 'neutral',
+  archived: 'neutral',
 };
 
 const urgencyLabels: Record<ScamUrgency, string> = {
@@ -81,7 +83,7 @@ const urgencyTones: Record<ScamUrgency, Tone> = {
 };
 
 const riskOptions: RiskLevel[] = ['unreviewed', 'low', 'medium', 'high', 'urgent'];
-const statusOptions: ScamCheckStatus[] = ['new', 'reviewing', 'responded', 'closed'];
+const statusOptions: ScamCheckStatus[] = ['new', 'reviewing', 'responded', 'closed', 'archived'];
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat('fr-CA', {
@@ -112,6 +114,7 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
   const [recommendationDraft, setRecommendationDraft] = useState('');
   const [notesDraft, setNotesDraft] = useState('');
   const [savedMessage, setSavedMessage] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
   const localScamChecks = useSyncExternalStore(
     subscribeToLocalScamChecks,
@@ -166,37 +169,71 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
     setSavedMessage('');
   }
 
-  function markResponded(id: string) {
+  async function persistScamCheckToSupabase(id: string, payload: Record<string, unknown>) {
+    setIsSaving(true);
+    try {
+      const res = await fetch(`/api/admin/scam-checks/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json();
+      setSavedMessage(
+        res.ok && result.ok === true
+          ? 'Évaluation sauvegardée dans Supabase.'
+          : `Erreur : ${result.error || 'sauvegarde impossible'}`,
+      );
+    } catch {
+      setSavedMessage('Erreur de connexion.');
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  async function markResponded(id: string) {
     setOverrides((prev) => ({
       ...prev,
       [id]: { ...prev[id], status: 'responded' as const },
     }));
     if (selectedId === id) setEditMode(false);
+
+    if (supabaseCheckIds.has(id)) {
+      await persistScamCheckToSupabase(id, { status: 'responded' });
+    }
   }
 
-  function saveEvaluation() {
+  async function saveEvaluation() {
     if (!selected) return;
+    const updatedNotes = notesDraft.trim() ? [notesDraft.trim()] : [];
+    const updatedRecommendation = recommendationDraft.trim() || undefined;
+
     setOverrides((prev) => ({
       ...prev,
       [selected.id]: {
         ...prev[selected.id],
         riskLevel: riskDraft,
         status: statusDraft,
-        recommendation: recommendationDraft.trim() || undefined,
-        notes: notesDraft.trim() ? [notesDraft.trim()] : [],
+        recommendation: updatedRecommendation,
+        notes: updatedNotes,
       },
     }));
     setEditMode(false);
-    setSavedMessage('Évaluation sauvegardée en mémoire.');
+
+    if (supabaseCheckIds.has(selected.id)) {
+      const payload: Record<string, unknown> = {
+        risk_level: riskDraft,
+        status: statusDraft,
+        notes: updatedNotes,
+      };
+      if (updatedRecommendation !== undefined) payload.recommendation = updatedRecommendation;
+      await persistScamCheckToSupabase(selected.id, payload);
+    } else {
+      setSavedMessage('Évaluation sauvegardée en mémoire.');
+    }
   }
 
   return (
     <div className="space-y-6">
-      <div className="rounded-[1.75rem] border border-marhaban-clay/20 bg-[#fff4e8] px-5 py-4 text-sm leading-relaxed text-marhaban-ink shadow-warm-sm">
-        <span className="font-bold text-marhaban-clay">Admin MVP mock/local</span>
-        <span className="text-marhaban-ink/75"> — non prêt production sans authentification.</span>
-      </div>
-
       <header className="rounded-[1.75rem] border border-marhaban-leaf/12 bg-white/85 p-6 shadow-warm-sm">
         <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">Signalements</p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
@@ -298,7 +335,7 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
                         {sc.status !== 'responded' && sc.status !== 'closed' ? (
                           <button
                             type="button"
-                            onClick={() => markResponded(sc.id)}
+                            onClick={() => void markResponded(sc.id)}
                             className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:border-marhaban-clay/30 hover:bg-marhaban-cream"
                           >
                             <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
@@ -440,11 +477,12 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
                   <div className="mt-5 flex flex-wrap gap-3">
                     <button
                       type="button"
-                      onClick={saveEvaluation}
-                      className="inline-flex min-h-[42px] items-center gap-2 rounded-full bg-marhaban-forestDark px-5 py-2 text-sm font-bold text-white shadow-warm-sm transition hover:bg-marhaban-clay"
+                      onClick={() => void saveEvaluation()}
+                      disabled={isSaving}
+                      className="inline-flex min-h-[42px] items-center gap-2 rounded-full bg-marhaban-forestDark px-5 py-2 text-sm font-bold text-white shadow-warm-sm transition hover:bg-marhaban-clay disabled:cursor-not-allowed disabled:opacity-60"
                     >
                       <Save className="h-4 w-4" aria-hidden="true" />
-                      Sauvegarder
+                      {isSaving ? 'Sauvegarde...' : 'Sauvegarder'}
                     </button>
                     <button
                       type="button"
@@ -472,7 +510,7 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
                     {selected.status !== 'responded' && selected.status !== 'closed' ? (
                       <button
                         type="button"
-                        onClick={() => markResponded(selected.id)}
+                        onClick={() => void markResponded(selected.id)}
                         className="inline-flex min-h-[38px] items-center gap-2 rounded-full bg-marhaban-clay px-4 py-2 text-xs font-bold text-white shadow-warm-sm transition hover:bg-marhaban-forestDark"
                       >
                         <CheckCircle2 className="h-4 w-4" aria-hidden="true" />

@@ -148,7 +148,7 @@ export function AdminCasesClient({ supabaseCases = [], supabaseCaseIds, mockCase
       setIsSavingCase(true);
 
       try {
-        const response = await fetch(`/api/cases/${selectedCase.id}`, {
+        const response = await fetch(`/api/admin/cases/${selectedCase.id}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -190,11 +190,6 @@ export function AdminCasesClient({ supabaseCases = [], supabaseCaseIds, mockCase
 
   return (
     <div className="space-y-6">
-      <div className="rounded-[1.75rem] border border-marhaban-clay/20 bg-[#fff4e8] px-5 py-4 text-sm leading-relaxed text-marhaban-ink shadow-warm-sm">
-        <span className="font-bold text-marhaban-clay">Admin MVP mock/local</span>
-        <span className="text-marhaban-ink/75"> — non prêt production sans authentification.</span>
-      </div>
-
       <header className="rounded-[1.75rem] border border-marhaban-leaf/12 bg-white/85 p-6 shadow-warm-sm">
         <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">Accompagnement</p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
