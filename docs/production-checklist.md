@@ -64,6 +64,67 @@
 - [ ] Supprimer une note interne → confirmation demandée, note disparue
 - [ ] Compte non admin → 403 sur toutes les routes `/api/admin/*`
 
+## Multilingual booking QA
+
+### Routes testées
+| Locale | Route | Statut |
+|---|---|---|
+| FR | `/fr/reserver` | À vérifier |
+| EN | `/en/reserver` | À vérifier |
+| AR | `/ar/reserver` | À vérifier |
+
+### Flux FR
+- [ ] `/fr/reserver` charge (200)
+- [ ] H1 "Réservez un appel d'orientation" visible
+- [ ] 3 cartes de service visibles
+- [ ] Clic sur une carte ouvre la modal
+- [ ] Étape 1 : champs requis bloquent l'avancée
+- [ ] Étape 2 : consentement requis avant submit
+- [ ] Submit → ligne créée dans Supabase `bookings` avec `status=new`
+- [ ] Message de succès "Demande envoyée" affiché
+- [ ] Admin peut voir la réservation sur `/admin/bookings`
+
+### Flux EN
+- [ ] `/en/reserver` charge (200)
+- [ ] H1 "Book an orientation call" visible
+- [ ] Modal titre "Request a time slot" visible
+- [ ] Submit avec `preferred_language=en` → stocké dans Supabase
+- [ ] Source stockée `reserver_modal`
+- [ ] Admin peut voir la réservation sur `/admin/bookings`
+
+### Flux AR
+- [ ] `/ar/reserver` charge (200)
+- [ ] H1 "احجز مكالمة توجيه" visible
+- [ ] `html[dir="rtl"]` défini après hydratation client
+- [ ] `body.classList` contient `rtl`
+- [ ] Labels du formulaire en arabe affichés correctement
+- [ ] Modal "طلب موعد" s'ouvre correctement
+- [ ] Submit avec `preferred_language=ar` → stocké dans Supabase
+- [ ] Message de succès "تم إرسال الطلب" affiché
+- [ ] Admin peut voir la réservation sur `/admin/bookings`
+
+### Sécurité API `/api/bookings`
+- [ ] Champs sensibles (NAS, passeport, carte, permis, upload) → 400
+- [ ] `disclaimer_accepted=false` → 400
+- [ ] `preferred_language` hors FR/EN/AR → 400
+- [ ] Champ inconnu dans le payload → 400
+- [ ] `status` toujours `new` côté serveur (ignoré si envoyé par le client)
+- [ ] `next_action` hardcodé côté serveur (non modifiable par le client)
+- [ ] Réponse d'erreur ne contient pas `SUPABASE_SERVICE_ROLE_KEY`
+- [ ] Réponse d'erreur retourne `{ ok: false, error: string }` en JSON
+
+### Tests automatisés Playwright
+- `tests/booking-multilingual.spec.ts` — flux E2E complet FR/EN/AR (require dev server)
+- `tests/booking-api-security.spec.ts` — validation API et sécurité (require dev server)
+- Exécution : `npx playwright test` (requiert `npm run dev` en parallèle)
+
+### Admin (post-soumissions)
+- [ ] `/admin/bookings` affiche les 3 soumissions test FR/EN/AR
+- [ ] Colonne `preferred_language` ou source visible
+- [ ] Modifier statut d'une réservation → persisté après reload
+- [ ] Ajouter une note → persistée après reload
+- [ ] Les actions Admin CRUD v1 fonctionnent toujours correctement
+
 ## Formulaires
 
 - `/fr/reserver` crée une réservation Supabase depuis le modal.
