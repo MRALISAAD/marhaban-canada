@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/supabase/server';
+import { requireAdmin } from '@/lib/admin/require-admin';
 import type { AdminNote, AdminNoteTargetType } from '@/types/admin';
 
 type AdminNoteRow = {
@@ -57,6 +58,9 @@ function mapNote(row: AdminNoteRow): AdminNote {
 }
 
 export async function GET(request: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return jsonError(auth.error, auth.status);
+
   const { searchParams } = new URL(request.url);
   const targetType = searchParams.get('target_type');
   const targetId = searchParams.get('target_id');
@@ -87,6 +91,9 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return jsonError(auth.error, auth.status);
+
   let payload: unknown;
 
   try {
