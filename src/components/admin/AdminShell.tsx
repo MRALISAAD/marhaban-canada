@@ -20,7 +20,7 @@ export function AdminShell({ children, title, subtitle, actions, className }: Ad
             <header className="mb-6 flex flex-wrap items-start justify-between gap-4 rounded-[1.75rem] border border-marhaban-leaf/12 bg-white/85 p-6 shadow-warm-sm">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">
-                  Admin MVP mock/local
+                  Espace admin
                 </p>
                 {title ? (
                   <h1 className="mt-2 font-heading text-3xl font-semibold leading-tight text-marhaban-forestDark sm:text-4xl">

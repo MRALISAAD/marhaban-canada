@@ -25,6 +25,26 @@
 - `/admin/dashboard`, `/admin/bookings`, `/admin/scam-checks`, `/admin/cases`, `/admin/resources` redirigent vers `/admin/login` hors session.
 - La déconnexion `/api/admin/logout` invalide la session.
 
+## Admin Dashboard — données réelles (2026-06-18)
+
+- Le dashboard `/admin/dashboard` n'utilise plus de données mock/locales.
+- Les KPIs et tableaux sont alimentés par Supabase en temps réel (Server Component).
+- Aucun localStorage ni mock dans le dashboard — données Supabase uniquement.
+- États vides prévus : "Rien à traiter pour le moment.", "Aucune réservation pour le moment.", "Aucune demande anti-arnaque pour le moment."
+- Texte "Admin MVP mock/local" supprimé de AdminShell et du dashboard.
+- Badge "Mock data" remplacé par "Espace admin sécurisé".
+- `requireAdmin()` toujours actif via le layout protégé.
+
+### QA dashboard Supabase
+- [ ] `/admin/dashboard` charge sans erreur après connexion
+- [ ] KPIs affichent des valeurs réelles (0 si tables vides)
+- [ ] Section "À traiter en priorité" : items réels ou état vide "Rien à traiter pour le moment."
+- [ ] Tableau réservations : données Supabase ou "Aucune réservation pour le moment."
+- [ ] Tableau anti-arnaque : données Supabase ou "Aucune demande anti-arnaque pour le moment."
+- [ ] Aucun nom fictif (Nadia Benali, Omar Haddad, etc.) visible
+- [ ] Aucun badge "Mock data" visible sur le dashboard
+- [ ] Hors session → redirige vers `/admin/login`
+
 ## Admin CRUD v1
 
 ### Migration préalable
