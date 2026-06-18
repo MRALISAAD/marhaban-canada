@@ -35,9 +35,9 @@ export function AdminSidebar() {
     <aside className="flex h-full w-full flex-col bg-marhaban-forestDark px-4 py-5 text-white shadow-[18px_0_70px_rgba(8,42,36,0.18)] md:min-h-screen md:w-64 lg:w-72 lg:px-5 lg:py-6">
       <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.06] p-5">
         <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-gold">Marhaban Admin</p>
-        <h1 className="mt-2 font-heading text-2xl font-semibold leading-tight text-marhaban-cream">Pilotage local</h1>
+        <h1 className="mt-2 font-heading text-2xl font-semibold leading-tight text-marhaban-cream">Pilotage</h1>
         <p className="mt-3 text-xs leading-relaxed text-[#d8e7df]">
-          MVP local uniquement. Non prêt production sans authentification.
+          Espace sécurisé — admin autorisés uniquement.
         </p>
       </div>
 

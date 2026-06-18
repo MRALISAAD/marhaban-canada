@@ -1,7 +1,7 @@
 'use client';
 
 import { FormEvent, useMemo, useState } from 'react';
-import { Archive, Edit3, Eye, PlusCircle, Save, Send, X } from 'lucide-react';
+import { Archive, Edit3, Eye, PlusCircle, Save, Send, Trash2, X } from 'lucide-react';
 import { AdminBadge, ResourceStatusBadge } from '@/components/admin/AdminBadge';
 import { AdminCard } from '@/components/admin/AdminCard';
 import { AdminNotesPanel } from '@/components/admin/AdminNotesPanel';
@@ -204,7 +204,7 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
     setIsSaving(true);
 
     try {
-      const response = await fetch(`/api/resources/${resource.id}`, {
+      const response = await fetch(`/api/admin/resources/${resource.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
@@ -230,7 +230,7 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
     setSaveMessage('');
 
     try {
-      const response = await fetch('/api/resources', {
+      const response = await fetch('/api/admin/resources', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -254,6 +254,40 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
     }
   }
 
+  async function deleteResource(resource: ResourceGuide) {
+    if (!window.confirm(`Supprimer définitivement « ${resource.title} » ? Cette action est irréversible.`)) return;
+
+    if (isMockResource(resource)) {
+      setLocalResources((current) => current.filter((r) => r.id !== resource.id));
+      if (selectedId === resource.id) setSelectedId(null);
+      setSaveMessage('Guide supprimé (session mock).');
+      return;
+    }
+
+    setIsSaving(true);
+    setSaveMessage('');
+
+    try {
+      const response = await fetch(`/api/admin/resources/${resource.id}`, { method: 'DELETE' });
+      const result = await parseApiResponse(response);
+
+      if (response.ok && result.ok === true) {
+        setLocalResources((current) => current.filter((r) => r.id !== resource.id));
+        if (selectedId === resource.id) {
+          setSelectedId(null);
+          setView('list');
+        }
+        setSaveMessage('Guide supprimé.');
+      } else {
+        setSaveMessage(`Erreur : ${result.error || 'suppression impossible'}`);
+      }
+    } catch {
+      setSaveMessage('Erreur : suppression impossible');
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
   async function updateResource(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!selectedResource) return;
@@ -271,7 +305,7 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
     setSaveMessage('');
 
     try {
-      const response = await fetch(`/api/resources/${selectedResource.id}`, {
+      const response = await fetch(`/api/admin/resources/${selectedResource.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -408,11 +442,6 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
 
   return (
     <div className="space-y-6">
-      <div className="rounded-[1.75rem] border border-marhaban-clay/20 bg-[#fff4e8] px-5 py-4 text-sm leading-relaxed text-marhaban-ink shadow-warm-sm">
-        <span className="font-bold text-marhaban-clay">Admin MVP Supabase</span>
-        <span className="text-marhaban-ink/75"> — ressources persistées côté serveur, sans DELETE réel.</span>
-      </div>
-
       <header className="rounded-[1.75rem] border border-marhaban-leaf/12 bg-white/85 p-6 shadow-warm-sm">
         <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">Contenu</p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
@@ -533,6 +562,15 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
                           >
                             <Archive className="h-3.5 w-3.5" aria-hidden="true" />
                             Archiver
+                          </button>
+                          <button
+                            type="button"
+                            disabled={isSaving}
+                            onClick={() => void deleteResource(resource)}
+                            className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-red-300 bg-red-100 px-3 py-1 text-xs font-bold text-red-800 shadow-warm-sm transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
+                            Supprimer
                           </button>
                         </div>
                       </td>

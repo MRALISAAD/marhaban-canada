@@ -19,12 +19,41 @@ Usage prévu :
 ## État d'intégration Supabase (2026-06-17)
 
 ### Branché et fonctionnel
-- `bookings` — POST via `/api/bookings`, lecture Server Component `/admin/bookings`
-- `scam_checks` — POST via `/api/scam-checks`, lecture Server Component `/admin/scam-checks`
-- `case_files` — POST via `/api/cases`, PATCH via `/api/cases/[id]`, lecture Server Component `/admin/cases`
-- `resources` — GET via `/api/resources`, POST via `/api/resources`, PATCH via `/api/resources/[id]`, lecture Server Component `/admin/resources`
-- `admin_notes` — POST via `/api/admin-notes`, GET via `/api/admin-notes`, PATCH via `/api/admin-notes/[id]`, composant AdminNotesPanel
+- `bookings` — POST via `/api/bookings`, lecture Server Component `/admin/bookings`, PATCH admin via `/api/admin/bookings/[id]`
+- `scam_checks` — POST via `/api/scam-checks`, lecture Server Component `/admin/scam-checks`, PATCH admin via `/api/admin/scam-checks/[id]`
+- `case_files` — POST via `/api/cases`, PATCH admin via `/api/admin/cases/[id]`, lecture Server Component `/admin/cases`
+- `resources` — GET/POST admin via `/api/admin/resources`, PATCH/DELETE admin via `/api/admin/resources/[id]`, lecture Server Component `/admin/resources`
+- `admin_notes` — GET/POST admin via `/api/admin/notes`, PATCH/DELETE admin via `/api/admin/notes/[id]`, composant AdminNotesPanel
 - `Supabase Auth` — login admin via `signInWithPassword`, session SSR via `@supabase/ssr`, allowlist `ADMIN_ALLOWED_EMAILS`, logout via `/api/admin/logout`
+
+## Admin CRUD v1 (2026-06-17)
+
+### Entités supportées
+| Entité | Lire | Créer | Modifier | Archiver | Supprimer |
+|---|---|---|---|---|---|
+| bookings | ✓ | — | ✓ status/note | ✓ soft (status=archived) | — |
+| scam_checks | ✓ | — | ✓ status/risk/notes | ✓ soft (status=archived) | — |
+| case_files | ✓ | ✓ (depuis booking) | ✓ status/next_step/notes | ✓ soft (status=archived) | — |
+| resources | ✓ | ✓ | ✓ tous champs | ✓ soft (status=archived) | ✓ hard delete |
+| admin_notes | ✓ | ✓ | ✓ body | — | ✓ hard delete |
+
+### Routes admin protégées (require-admin.ts)
+- `src/lib/admin/require-admin.ts` — vérifie session Supabase Auth + ADMIN_ALLOWED_EMAILS
+- `src/app/admin/(protected)/layout.tsx` — redirige vers `/admin/login` si non authentifié
+- Toutes les routes `/api/admin/*` vérifient l'authentification admin côté serveur
+
+### Règles soft-delete / archive
+- `bookings` et `scam_checks` : `status = 'archived'` — nécessite migration `docs/supabase-admin-crud-migration.sql`
+- `case_files` : `status = 'archived'` — déjà supporté dans le schema v1
+- `resources` : `status = 'archived'` OU suppression définitive possible
+- `admin_notes` : suppression définitive uniquement (hard delete)
+
+### Sécurité
+- `SUPABASE_SERVICE_ROLE_KEY` uniquement dans les Route Handlers et Server Components
+- Chaque route `/api/admin/*` appelle `requireAdmin()` avant toute mutation
+- Champs sensibles rejetés : NAS/SIN, passeport, carte bancaire, permis, upload
+- Confirmation `window.confirm()` avant archive/suppression
+- Les routes publiques `/api/bookings` et `/api/scam-checks` restent pour les formulaires publics
 
 ### Pas encore branché
 - Supabase Storage — exclu du MVP actuel

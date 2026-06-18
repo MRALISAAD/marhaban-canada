@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState, useSyncExternalStore } from 'react';
-import { CheckCircle2, Eye, FileText, MailCheck, PlusCircle } from 'lucide-react';
+import { Archive, CheckCircle2, Eye, FileText, MailCheck, PlusCircle } from 'lucide-react';
 import { AdminBadge, BookingStatusBadge } from '@/components/admin/AdminBadge';
 import { AdminCard } from '@/components/admin/AdminCard';
 import { AdminNotesPanel } from '@/components/admin/AdminNotesPanel';
@@ -36,7 +36,7 @@ const serviceLabels = {
   anti_scam: 'Anti-arnaque',
 } as const;
 
-const statusOptions = ['Tous les statuts', 'Nouvelle', 'À contacter', 'Créneau proposé', 'Confirmée', 'Terminée', 'Annulée'];
+const statusOptions = ['Tous les statuts', 'Nouvelle', 'À contacter', 'Créneau proposé', 'Confirmée', 'Terminée', 'Annulée', 'Archivée'];
 const serviceOptions = ['Tous les appels', 'Appel découverte', 'Orientation', 'Anti-arnaque'];
 const emptyBookings: LocalBooking[] = [];
 const emptyCases: LocalCase[] = [];
@@ -52,6 +52,8 @@ export function AdminBookingsClient({ supabaseBookings = [], supabaseCaseBooking
   const [noteEditorIsOpen, setNoteEditorIsOpen] = useState(false);
   const [caseMessage, setCaseMessage] = useState('');
   const [isCreatingCase, setIsCreatingCase] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [savedMessage, setSavedMessage] = useState('');
   const localBookings = useSyncExternalStore(subscribeToLocalBookings, getLocalBookings, () => emptyBookings);
   const localCases = useSyncExternalStore(subscribeToLocalCases, getLocalCases, () => emptyCases);
 
@@ -79,19 +81,47 @@ export function AdminBookingsClient({ supabaseBookings = [], supabaseCaseBooking
     setNoteDraft(booking.internalNote ?? '');
     setNoteEditorIsOpen(false);
     setCaseMessage('');
+    setSavedMessage('');
+  }
+
+  async function persistBookingToSupabase(id: string, updates: Partial<EditableBooking>) {
+    const payload: Record<string, unknown> = {};
+    if ('status' in updates) payload.status = updates.status;
+    if ('internalNote' in updates) payload.internal_note = updates.internalNote;
+    if (Object.keys(payload).length === 0) return;
+
+    setIsSaving(true);
+    try {
+      const res = await fetch(`/api/admin/bookings/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json();
+      setSavedMessage(
+        res.ok && result.ok === true
+          ? 'Sauvegardé dans Supabase.'
+          : `Erreur : ${result.error || 'sauvegarde impossible'}`,
+      );
+    } catch {
+      setSavedMessage('Erreur de connexion.');
+    } finally {
+      setIsSaving(false);
+    }
   }
 
   function updateBooking(id: string, updates: Partial<EditableBooking>) {
     setBookingOverrides((current) => ({
       ...current,
-      [id]: {
-        ...current[id],
-        ...updates,
-      },
+      [id]: { ...current[id], ...updates },
     }));
 
     if (localBookingIds.has(id)) {
       updateLocalBooking(id, updates);
+    }
+
+    if (supabaseBookingIds.has(id)) {
+      void persistBookingToSupabase(id, updates);
     }
   }
 
@@ -110,6 +140,11 @@ export function AdminBookingsClient({ supabaseBookings = [], supabaseCaseBooking
     if (!selectedBooking) return;
     updateBooking(selectedBooking.id, { internalNote: noteDraft.trim() });
     setNoteEditorIsOpen(false);
+  }
+
+  function archiveBooking(booking: EditableBooking) {
+    if (!window.confirm(`Archiver la réservation de ${booking.fullName} ? Cette action ne peut pas être annulée facilement.`)) return;
+    updateBookingStatus(booking, 'archived');
   }
 
   async function createCaseFromBooking(booking: EditableBooking) {
@@ -192,11 +227,6 @@ export function AdminBookingsClient({ supabaseBookings = [], supabaseCaseBooking
 
   return (
     <div className="space-y-6">
-      <div className="rounded-[1.75rem] border border-marhaban-clay/20 bg-[#fff4e8] px-5 py-4 text-sm leading-relaxed text-marhaban-ink shadow-warm-sm">
-        <span className="font-bold text-marhaban-clay">Admin MVP mock/local</span>
-        <span className="text-marhaban-ink/75"> — non prêt production sans authentification.</span>
-      </div>
-
       <header className="rounded-[1.75rem] border border-marhaban-leaf/12 bg-white/85 p-6 shadow-warm-sm">
         <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">Demandes</p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
@@ -209,16 +239,12 @@ export function AdminBookingsClient({ supabaseBookings = [], supabaseCaseBooking
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <AdminBadge label="Mock data" tone="dark" />
             {supabaseBookings.length > 0 ? <AdminBadge label={`${supabaseBookings.length} Supabase`} tone="success" /> : null}
             {localBookings.length > 0 ? <AdminBadge label={`${localBookings.length} local`} tone="warning" /> : null}
+            {mockBookings.length > 0 && supabaseBookings.length === 0 ? <AdminBadge label="Mock data" tone="dark" /> : null}
           </div>
         </div>
       </header>
-
-      <div className="rounded-[1.75rem] border border-marhaban-leaf/12 bg-white/75 px-5 py-4 text-sm leading-relaxed text-marhaban-muted shadow-warm-sm">
-        Les demandes Supabase sont affichées en premier. Les demandes locales du navigateur restent disponibles en fallback.
-      </div>
 
       <section className="grid gap-4 md:grid-cols-3" aria-label="Indicateurs réservations">
         {kpis.map((item) => (
@@ -251,7 +277,7 @@ export function AdminBookingsClient({ supabaseBookings = [], supabaseCaseBooking
             </select>
           </label>
           <label className="block">
-            <span className="mb-2 block text-sm font-semibold text-marhaban-forestDark">Filtre type d’appel</span>
+            <span className="mb-2 block text-sm font-semibold text-marhaban-forestDark">Filtre type d&apos;appel</span>
             <select className="w-full rounded-2xl border border-marhaban-leaf/18 bg-marhaban-cream px-4 py-3 text-sm text-marhaban-ink focus:border-marhaban-leaf focus:outline-none focus:ring-2 focus:ring-marhaban-leaf/20">
               {serviceOptions.map((option) => (
                 <option key={option}>{option}</option>
@@ -259,9 +285,6 @@ export function AdminBookingsClient({ supabaseBookings = [], supabaseCaseBooking
             </select>
           </label>
         </div>
-        <p className="mt-4 text-xs leading-relaxed text-marhaban-muted">
-          Filtres visuels pour le MVP mock/local. Le filtrage interactif sera ajouté avec la persistance des données.
-        </p>
       </AdminCard>
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
@@ -336,6 +359,16 @@ export function AdminBookingsClient({ supabaseBookings = [], supabaseCaseBooking
                           <FileText className="h-3.5 w-3.5" aria-hidden="true" />
                           Résumé
                         </button>
+                        {booking.status !== 'archived' ? (
+                          <button
+                            type="button"
+                            onClick={() => archiveBooking(booking)}
+                            className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-bold text-red-700 shadow-warm-sm transition hover:bg-white"
+                          >
+                            <Archive className="h-3.5 w-3.5" aria-hidden="true" />
+                            Archiver
+                          </button>
+                        ) : null}
                       </div>
                     </td>
                   </tr>
@@ -397,16 +430,18 @@ export function AdminBookingsClient({ supabaseBookings = [], supabaseCaseBooking
                 <div className="flex flex-wrap gap-2">
                   <button
                     type="button"
+                    disabled={isSaving}
                     onClick={() => updateBookingStatus(selectedBooking, 'to_contact')}
-                    className="inline-flex min-h-[38px] items-center gap-2 rounded-full bg-marhaban-forestDark px-4 py-2 text-xs font-bold text-white shadow-warm-sm transition hover:bg-marhaban-clay"
+                    className="inline-flex min-h-[38px] items-center gap-2 rounded-full bg-marhaban-forestDark px-4 py-2 text-xs font-bold text-white shadow-warm-sm transition hover:bg-marhaban-clay disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     <MailCheck className="h-4 w-4" aria-hidden="true" />
                     Marquer contacté
                   </button>
                   <button
                     type="button"
+                    disabled={isSaving}
                     onClick={() => updateBookingStatus(selectedBooking, 'confirmed')}
-                    className="inline-flex min-h-[38px] items-center gap-2 rounded-full bg-marhaban-clay px-4 py-2 text-xs font-bold text-white shadow-warm-sm transition hover:bg-marhaban-forestDark"
+                    className="inline-flex min-h-[38px] items-center gap-2 rounded-full bg-marhaban-clay px-4 py-2 text-xs font-bold text-white shadow-warm-sm transition hover:bg-marhaban-forestDark disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
                     Confirmer
@@ -415,15 +450,32 @@ export function AdminBookingsClient({ supabaseBookings = [], supabaseCaseBooking
                     type="button"
                     onClick={() => createCaseFromBooking(selectedBooking)}
                     disabled={isCreatingCase}
-                    className="inline-flex min-h-[38px] items-center gap-2 rounded-full border border-marhaban-leaf/15 bg-marhaban-cream px-4 py-2 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:bg-marhaban-mint/70"
+                    className="inline-flex min-h-[38px] items-center gap-2 rounded-full border border-marhaban-leaf/15 bg-marhaban-cream px-4 py-2 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:bg-marhaban-mint/70 disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     <PlusCircle className="h-4 w-4" aria-hidden="true" />
                     {allCaseBookingIds.has(selectedBooking.id) ? 'Dossier créé' : isCreatingCase ? 'Création...' : 'Créer dossier'}
                   </button>
+                  {selectedBooking.status !== 'archived' ? (
+                    <button
+                      type="button"
+                      disabled={isSaving}
+                      onClick={() => archiveBooking(selectedBooking)}
+                      className="inline-flex min-h-[38px] items-center gap-2 rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-bold text-red-700 shadow-warm-sm transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      <Archive className="h-4 w-4" aria-hidden="true" />
+                      Archiver
+                    </button>
+                  ) : null}
                 </div>
-                <p className="mt-3 text-xs leading-relaxed text-marhaban-muted">
-                  {caseMessage || 'Crée un dossier local pour suivre cette personne dans /admin/cases.'}
-                </p>
+                {caseMessage ? (
+                  <p className="mt-3 text-xs leading-relaxed text-marhaban-muted">{caseMessage}</p>
+                ) : null}
+                {savedMessage ? (
+                  <p className="mt-2 text-xs font-semibold text-marhaban-clay">{savedMessage}</p>
+                ) : null}
+                {isSaving ? (
+                  <p className="mt-2 text-xs text-marhaban-muted">Sauvegarde en cours...</p>
+                ) : null}
               </div>
 
               <div className="rounded-2xl border border-marhaban-leaf/12 bg-white p-5">
@@ -462,7 +514,7 @@ export function AdminBookingsClient({ supabaseBookings = [], supabaseCaseBooking
                 ) : null}
                 {!selectedBooking.internalNote && !noteEditorIsOpen ? (
                   <p className="mt-3 text-sm leading-relaxed text-marhaban-muted">
-                    Clique sur “Résumé” ou “Éditer” pour ajouter une note interne.
+                    Clique sur &quot;Éditer&quot; pour ajouter une note interne.
                   </p>
                 ) : null}
               </div>
@@ -473,7 +525,7 @@ export function AdminBookingsClient({ supabaseBookings = [], supabaseCaseBooking
                   Sélectionne une réservation pour voir les détails.
                 </p>
                 <p className="mt-3 text-sm leading-relaxed text-marhaban-muted">
-                  Les statuts et notes des demandes locales sont sauvegardés dans ce navigateur. Les données mock restent temporaires.
+                  Les statuts et notes des demandes locales sont sauvegardés dans ce navigateur.
                 </p>
               </div>
             )}
