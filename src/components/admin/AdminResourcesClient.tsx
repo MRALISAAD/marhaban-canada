@@ -1,6 +1,7 @@
 'use client';
 
 import { FormEvent, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Archive, Edit3, Eye, PlusCircle, Save, Send, Trash2, X } from 'lucide-react';
 import { AdminBadge, ResourceStatusBadge } from '@/components/admin/AdminBadge';
 import { AdminCard } from '@/components/admin/AdminCard';
@@ -10,8 +11,6 @@ import type { ResourceGuide, ResourceStatus } from '@/types/admin';
 
 type AdminResourcesClientProps = {
   supabaseResources?: readonly ResourceGuide[];
-  supabaseResourceIds?: ReadonlySet<string>;
-  mockResources: readonly ResourceGuide[];
 };
 
 type ResourceFormData = {
@@ -75,10 +74,6 @@ function categoryLabel(category: ResourceGuide['category']) {
   return categoryOptions.find((option) => option.value === category)?.label ?? category;
 }
 
-function isMockResource(resource: ResourceGuide) {
-  return resource.id.startsWith('res_');
-}
-
 function toFormData(resource: ResourceGuide): ResourceFormData {
   return {
     title: resource.title,
@@ -119,7 +114,8 @@ async function parseApiResponse(response: Response) {
   }
 }
 
-export function AdminResourcesClient({ supabaseResources = [], supabaseResourceIds, mockResources }: AdminResourcesClientProps) {
+export function AdminResourcesClient({ supabaseResources = [] }: AdminResourcesClientProps) {
+  const router = useRouter();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [view, setView] = useState<ResourceView>('list');
   const [formData, setFormData] = useState<ResourceFormData>(emptyFormData);
@@ -127,34 +123,19 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
   const [isSaving, setIsSaving] = useState(false);
   const [localResources, setLocalResources] = useState<ResourceGuide[]>([]);
 
-  const resources = useMemo(
-    () => [
-      ...(supabaseResources ?? []),
-      ...mockResources.filter((resource) => !(supabaseResourceIds?.has(resource.id))),
-    ],
-    [mockResources, supabaseResourceIds, supabaseResources],
-  );
-
   const allResources = useMemo(
     () => [
       ...localResources,
-      ...resources.filter((resource) => !localResources.find((localResource) => localResource.id === resource.id)),
+      ...supabaseResources.filter((r) => !localResources.find((lr) => lr.id === r.id)),
     ],
-    [localResources, resources],
+    [localResources, supabaseResources],
   );
 
   const total = allResources.length;
-  const published = allResources.filter((resource) => resource.status === 'published').length;
-  const drafts = allResources.filter((resource) => resource.status === 'draft').length;
-  const inReview = allResources.filter((resource) => resource.status === 'review').length;
-  const selectedResource = selectedId ? allResources.find((resource) => resource.id === selectedId) : undefined;
-  const sourceSupabaseIds = useMemo(
-    () => new Set([
-      ...(supabaseResourceIds ? Array.from(supabaseResourceIds) : []),
-      ...localResources.filter((resource) => !isMockResource(resource)).map((resource) => resource.id),
-    ]),
-    [localResources, supabaseResourceIds],
-  );
+  const published = allResources.filter((r) => r.status === 'published').length;
+  const drafts = allResources.filter((r) => r.status === 'draft').length;
+  const inReview = allResources.filter((r) => r.status === 'review').length;
+  const selectedResource = selectedId ? allResources.find((r) => r.id === selectedId) : undefined;
 
   function updateFormField<K extends keyof ResourceFormData>(key: K, value: ResourceFormData[K]) {
     setFormData((current) => ({ ...current, [key]: value }));
@@ -163,7 +144,7 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
   function upsertLocalResource(resource: ResourceGuide) {
     setLocalResources((current) => [
       resource,
-      ...current.filter((localResource) => localResource.id !== resource.id),
+      ...current.filter((lr) => lr.id !== resource.id),
     ]);
   }
 
@@ -195,14 +176,7 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
       publishedAt: status === 'published' ? resource.publishedAt ?? new Date().toISOString() : resource.publishedAt,
     };
 
-    if (isMockResource(resource)) {
-      upsertLocalResource(updatedResource);
-      setSaveMessage('Changement gardé en session pour ce mock.');
-      return;
-    }
-
     setIsSaving(true);
-
     try {
       const response = await fetch(`/api/admin/resources/${resource.id}`, {
         method: 'PATCH',
@@ -214,6 +188,7 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
       if (response.ok && result.ok === true) {
         upsertLocalResource(updatedResource);
         setSaveMessage(status === 'archived' ? 'Guide archivé.' : 'Statut mis à jour.');
+        router.refresh();
       } else {
         setSaveMessage(`Erreur : ${result.error || 'mise à jour impossible'}`);
       }
@@ -244,6 +219,7 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
         setFormData(emptyFormData);
         setSaveMessage('Guide créé.');
         setView('list');
+        router.refresh();
       } else {
         setSaveMessage(`Erreur : ${result.error || 'création impossible'}`);
       }
@@ -256,13 +232,6 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
 
   async function deleteResource(resource: ResourceGuide) {
     if (!window.confirm(`Supprimer définitivement « ${resource.title} » ? Cette action est irréversible.`)) return;
-
-    if (isMockResource(resource)) {
-      setLocalResources((current) => current.filter((r) => r.id !== resource.id));
-      if (selectedId === resource.id) setSelectedId(null);
-      setSaveMessage('Guide supprimé (session mock).');
-      return;
-    }
 
     setIsSaving(true);
     setSaveMessage('');
@@ -278,6 +247,7 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
           setView('list');
         }
         setSaveMessage('Guide supprimé.');
+        router.refresh();
       } else {
         setSaveMessage(`Erreur : ${result.error || 'suppression impossible'}`);
       }
@@ -294,13 +264,6 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
 
     const updatedResource = toResource(selectedResource.id, formData, selectedResource);
 
-    if (isMockResource(selectedResource)) {
-      upsertLocalResource(updatedResource);
-      setSaveMessage('Guide mis à jour en session.');
-      setView('list');
-      return;
-    }
-
     setIsSaving(true);
     setSaveMessage('');
 
@@ -316,6 +279,7 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
         upsertLocalResource(updatedResource);
         setSaveMessage('Guide mis à jour.');
         setView('list');
+        router.refresh();
       } else {
         setSaveMessage(`Erreur : ${result.error || 'mise à jour impossible'}`);
       }
@@ -454,8 +418,9 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <AdminBadge label={`${supabaseResources.length} Supabase`} tone="success" />
-            <AdminBadge label={`${mockResources.length} Mock`} tone="dark" />
+            {supabaseResources.length > 0 ? (
+              <AdminBadge label={`${supabaseResources.length} guide(s)`} tone="success" />
+            ) : null}
             <button
               type="button"
               onClick={openCreateForm}
@@ -467,10 +432,6 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
           </div>
         </div>
       </header>
-
-      <div className="rounded-[1.75rem] border border-marhaban-leaf/12 bg-white/75 px-5 py-4 text-sm leading-relaxed text-marhaban-muted shadow-warm-sm">
-        Les ressources sont stockées dans Supabase. Les mock data sont affichées si la table est vide.
-      </div>
 
       {saveMessage ? (
         <div className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream px-5 py-3 text-sm font-semibold text-marhaban-forestDark shadow-warm-sm">
@@ -492,94 +453,93 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_400px]">
         <AdminCard title="Tous les guides" eyebrow="Tableau">
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[980px] text-left text-sm">
-              <thead>
-                <tr className="border-b border-marhaban-leaf/12 text-xs font-bold uppercase tracking-[0.12em] text-marhaban-muted">
-                  <th className="py-3 pr-4">Titre</th>
-                  <th className="px-4 py-3">Catégorie</th>
-                  <th className="px-4 py-3">Langue</th>
-                  <th className="px-4 py-3">Statut</th>
-                  <th className="px-4 py-3">Date</th>
-                  <th className="px-4 py-3">Source</th>
-                  <th className="py-3 pl-4">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-marhaban-leaf/10">
-                {allResources.map((resource) => {
-                  const isSupabase = sourceSupabaseIds.has(resource.id);
-                  const isMock = isMockResource(resource);
-                  const nextPublishStatus: ResourceStatus = resource.status === 'published' ? 'draft' : 'published';
+          {allResources.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[860px] text-left text-sm">
+                <thead>
+                  <tr className="border-b border-marhaban-leaf/12 text-xs font-bold uppercase tracking-[0.12em] text-marhaban-muted">
+                    <th className="py-3 pr-4">Titre</th>
+                    <th className="px-4 py-3">Catégorie</th>
+                    <th className="px-4 py-3">Langue</th>
+                    <th className="px-4 py-3">Statut</th>
+                    <th className="px-4 py-3">Date</th>
+                    <th className="py-3 pl-4">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-marhaban-leaf/10">
+                  {allResources.map((resource) => {
+                    const nextPublishStatus: ResourceStatus = resource.status === 'published' ? 'draft' : 'published';
 
-                  return (
-                    <tr key={resource.id} className="align-top transition hover:bg-marhaban-cream/70">
-                      <td className="py-4 pr-4">
-                        <p className="font-semibold text-marhaban-forestDark">{resource.title}</p>
-                        <p className="mt-1 text-xs text-marhaban-muted">{resource.slug || 'Slug non renseigné'}</p>
-                      </td>
-                      <td className="px-4 py-4 text-marhaban-ink/80">{categoryLabel(resource.category)}</td>
-                      <td className="px-4 py-4 uppercase text-marhaban-ink/80">{resource.locale}</td>
-                      <td className="px-4 py-4">
-                        <ResourceStatusBadge status={resource.status} />
-                      </td>
-                      <td className="px-4 py-4 text-marhaban-ink/80">{formatDate(resource.updatedAt)}</td>
-                      <td className="px-4 py-4">
-                        {isSupabase ? <AdminBadge label="Supabase" tone="success" className="px-2 py-0.5 text-[10px]" /> : null}
-                        {isMock ? <AdminBadge label="Mock" tone="dark" className="px-2 py-0.5 text-[10px]" /> : null}
-                      </td>
-                      <td className="py-4 pl-4">
-                        <div className="flex flex-wrap gap-2">
-                          <button
-                            type="button"
-                            onClick={() => openDetails(resource)}
-                            className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:border-marhaban-clay/30 hover:bg-marhaban-cream"
-                          >
-                            <Eye className="h-3.5 w-3.5" aria-hidden="true" />
-                            Voir
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => openEditForm(resource)}
-                            className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:border-marhaban-clay/30 hover:bg-marhaban-cream"
-                          >
-                            <Edit3 className="h-3.5 w-3.5" aria-hidden="true" />
-                            Modifier
-                          </button>
-                          <button
-                            type="button"
-                            disabled={isSaving}
-                            onClick={() => updateStatus(resource, nextPublishStatus)}
-                            className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:border-marhaban-clay/30 hover:bg-marhaban-cream disabled:cursor-not-allowed disabled:opacity-60"
-                          >
-                            <Send className="h-3.5 w-3.5" aria-hidden="true" />
-                            {resource.status === 'published' ? 'Dépublier' : 'Publier'}
-                          </button>
-                          <button
-                            type="button"
-                            disabled={isSaving}
-                            onClick={() => updateStatus(resource, 'archived')}
-                            className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-bold text-red-700 shadow-warm-sm transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
-                          >
-                            <Archive className="h-3.5 w-3.5" aria-hidden="true" />
-                            Archiver
-                          </button>
-                          <button
-                            type="button"
-                            disabled={isSaving}
-                            onClick={() => void deleteResource(resource)}
-                            className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-red-300 bg-red-100 px-3 py-1 text-xs font-bold text-red-800 shadow-warm-sm transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
-                            Supprimer
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                    return (
+                      <tr key={resource.id} className="align-top transition hover:bg-marhaban-cream/70">
+                        <td className="py-4 pr-4">
+                          <p className="font-semibold text-marhaban-forestDark">{resource.title}</p>
+                          <p className="mt-1 text-xs text-marhaban-muted">{resource.slug || 'Slug non renseigné'}</p>
+                        </td>
+                        <td className="px-4 py-4 text-marhaban-ink/80">{categoryLabel(resource.category)}</td>
+                        <td className="px-4 py-4 uppercase text-marhaban-ink/80">{resource.locale}</td>
+                        <td className="px-4 py-4">
+                          <ResourceStatusBadge status={resource.status} />
+                        </td>
+                        <td className="px-4 py-4 text-marhaban-ink/80">{formatDate(resource.updatedAt)}</td>
+                        <td className="py-4 pl-4">
+                          <div className="flex flex-wrap gap-2">
+                            <button
+                              type="button"
+                              onClick={() => openDetails(resource)}
+                              className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:border-marhaban-clay/30 hover:bg-marhaban-cream"
+                            >
+                              <Eye className="h-3.5 w-3.5" aria-hidden="true" />
+                              Voir
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => openEditForm(resource)}
+                              className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:border-marhaban-clay/30 hover:bg-marhaban-cream"
+                            >
+                              <Edit3 className="h-3.5 w-3.5" aria-hidden="true" />
+                              Modifier
+                            </button>
+                            <button
+                              type="button"
+                              disabled={isSaving}
+                              onClick={() => void updateStatus(resource, nextPublishStatus)}
+                              className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:border-marhaban-clay/30 hover:bg-marhaban-cream disabled:cursor-not-allowed disabled:opacity-60"
+                            >
+                              <Send className="h-3.5 w-3.5" aria-hidden="true" />
+                              {resource.status === 'published' ? 'Dépublier' : 'Publier'}
+                            </button>
+                            <button
+                              type="button"
+                              disabled={isSaving}
+                              onClick={() => void updateStatus(resource, 'archived')}
+                              className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-bold text-red-700 shadow-warm-sm transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+                            >
+                              <Archive className="h-3.5 w-3.5" aria-hidden="true" />
+                              Archiver
+                            </button>
+                            <button
+                              type="button"
+                              disabled={isSaving}
+                              onClick={() => void deleteResource(resource)}
+                              className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-red-300 bg-red-100 px-3 py-1 text-xs font-bold text-red-800 shadow-warm-sm transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
+                              Supprimer
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 p-4 text-sm text-marhaban-muted">
+              Aucun guide pour le moment. Clique sur &quot;Nouveau guide&quot; pour en créer un.
+            </p>
+          )}
         </AdminCard>
 
         <div className="space-y-6">
@@ -654,9 +614,6 @@ export function AdminResourcesClient({ supabaseResources = [], supabaseResourceI
               <div className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 p-5">
                 <p className="font-semibold text-marhaban-forestDark">
                   Sélectionne une ressource pour voir les détails.
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-marhaban-muted">
-                  Les guides Supabase sont persistés. Les guides mock servent de fallback MVP.
                 </p>
               </div>
             )}

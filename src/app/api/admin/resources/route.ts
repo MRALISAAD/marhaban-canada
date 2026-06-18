@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { createServerClient } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/admin/require-admin';
 
@@ -108,6 +109,8 @@ export async function POST(request: Request) {
       .single();
 
     if (error) return jsonError(error.message || 'Resource insert failed', conflictStatus(error));
+
+    revalidatePath('/admin/resources');
 
     return NextResponse.json({ ok: true, resourceId: data.id });
   } catch (err) {

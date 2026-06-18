@@ -1,5 +1,6 @@
+export const dynamic = 'force-dynamic';
+
 import { AdminScamChecksClient } from '@/components/admin/AdminScamChecksClient';
-import { mockScamChecks } from '@/lib/admin/mock-data';
 import { createServerClient } from '@/lib/supabase/server';
 import type { RiskLevel, ScamCheck } from '@/types/admin';
 
@@ -67,5 +68,5 @@ async function getSupabaseScamChecks() {
 
 export default async function AdminScamChecksPage() {
   const supabaseScamChecks = await getSupabaseScamChecks();
-  return <AdminScamChecksClient supabaseScamChecks={supabaseScamChecks} mockScamChecks={mockScamChecks} />;
+  return <AdminScamChecksClient supabaseScamChecks={supabaseScamChecks} />;
 }

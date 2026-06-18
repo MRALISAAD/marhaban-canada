@@ -1,6 +1,7 @@
+export const dynamic = 'force-dynamic';
+
 import { AdminCasesClient } from '@/components/admin/AdminCasesClient';
 import type { Locale } from '@/i18n/locales';
-import { mockCases } from '@/lib/admin/mock-data';
 import { createServerClient } from '@/lib/supabase/server';
 import type { CaseFile, CaseStatus } from '@/types/admin';
 
@@ -61,13 +62,10 @@ async function getSupabaseCases() {
 
 export default async function AdminCasesPage() {
   const supabaseCases = await getSupabaseCases();
-  const supabaseCaseIds = new Set(supabaseCases.map((caseFile) => caseFile.id));
 
   return (
     <AdminCasesClient
       supabaseCases={supabaseCases}
-      supabaseCaseIds={supabaseCaseIds}
-      mockCases={mockCases}
     />
   );
 }

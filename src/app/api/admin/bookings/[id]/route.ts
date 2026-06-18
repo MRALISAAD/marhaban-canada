@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { createServerClient } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/admin/require-admin';
 
@@ -81,14 +82,19 @@ export async function PATCH(
 
   try {
     const supabase = createServerClient();
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('bookings')
       .update(updates)
-      .eq('id', id);
+      .eq('id', id)
+      .select('id, status, internal_note, next_action')
+      .single();
 
     if (error) return jsonError(error.message || 'Booking update failed', 500);
 
-    return NextResponse.json({ ok: true });
+    revalidatePath('/admin/bookings');
+    revalidatePath('/admin/dashboard');
+
+    return NextResponse.json({ ok: true, item: data });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Booking update failed';
     return jsonError(message, 500);
