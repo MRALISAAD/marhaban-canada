@@ -1,22 +1,16 @@
 'use client';
 
-import { useMemo, useState, useSyncExternalStore } from 'react';
+import { useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { CheckCircle2, Eye, Save, ShieldAlert } from 'lucide-react';
 import { AdminBadge } from '@/components/admin/AdminBadge';
 import { AdminCard } from '@/components/admin/AdminCard';
 import { AdminNotesPanel } from '@/components/admin/AdminNotesPanel';
-import {
-  getLocalScamChecks,
-  subscribeToLocalScamChecks,
-  type LocalScamCheck,
-} from '@/lib/admin/local-scam-check-store';
 import type { RiskLevel, ScamCheck } from '@/types/admin';
 
 type ScamCheckStatus = ScamCheck['status'];
 type ScamUrgency = ScamCheck['urgency'];
 type Tone = 'neutral' | 'info' | 'success' | 'warning' | 'danger' | 'dark';
-
-const emptyLocalChecks: LocalScamCheck[] = [];
 
 type AdminScamCheck = ScamCheck & {
   phone?: string;
@@ -26,7 +20,6 @@ type AdminScamCheck = ScamCheck & {
 
 type AdminScamChecksClientProps = {
   supabaseScamChecks?: readonly AdminScamCheck[];
-  mockScamChecks: readonly ScamCheck[];
 };
 
 type EditableScamCheck = Omit<AdminScamCheck, 'notes'> & {
@@ -105,7 +98,8 @@ function applyOverride(sc: EditableScamCheck, overrides: ScamCheckOverrides): Ed
 const inputClass =
   'w-full rounded-2xl border border-marhaban-leaf/18 bg-marhaban-cream px-4 py-3 text-sm text-marhaban-ink focus:border-marhaban-leaf focus:outline-none focus:ring-2 focus:ring-marhaban-leaf/20';
 
-export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks }: AdminScamChecksClientProps) {
+export function AdminScamChecksClient({ supabaseScamChecks = [] }: AdminScamChecksClientProps) {
+  const router = useRouter();
   const [overrides, setOverrides] = useState<ScamCheckOverrides>({});
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [editMode, setEditMode] = useState(false);
@@ -116,27 +110,9 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
   const [savedMessage, setSavedMessage] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
-  const localScamChecks = useSyncExternalStore(
-    subscribeToLocalScamChecks,
-    getLocalScamChecks,
-    () => emptyLocalChecks,
-  );
-  const localCheckIds = useMemo(
-    () => new Set(localScamChecks.map((sc) => sc.id)),
-    [localScamChecks],
-  );
-  const supabaseCheckIds = useMemo(
-    () => new Set(supabaseScamChecks.map((sc) => sc.id)),
-    [supabaseScamChecks],
-  );
-
   const scamChecks = useMemo(
-    () => [
-      ...supabaseScamChecks.map((sc) => applyOverride(toEditable(sc), overrides)),
-      ...localScamChecks.map((sc) => applyOverride(toEditable(sc), overrides)),
-      ...mockScamChecks.map((sc) => applyOverride(toEditable(sc), overrides)),
-    ],
-    [localScamChecks, mockScamChecks, overrides, supabaseScamChecks],
+    () => supabaseScamChecks.map((sc) => applyOverride(toEditable(sc), overrides)),
+    [overrides, supabaseScamChecks],
   );
 
   const selected = selectedId ? scamChecks.find((sc) => sc.id === selectedId) : undefined;
@@ -169,7 +145,7 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
     setSavedMessage('');
   }
 
-  async function persistScamCheckToSupabase(id: string, payload: Record<string, unknown>) {
+  async function persistScamCheck(id: string, payload: Record<string, unknown>) {
     setIsSaving(true);
     try {
       const res = await fetch(`/api/admin/scam-checks/${id}`, {
@@ -178,11 +154,24 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
         body: JSON.stringify(payload),
       });
       const result = await res.json();
-      setSavedMessage(
-        res.ok && result.ok === true
-          ? 'Évaluation sauvegardée dans Supabase.'
-          : `Erreur : ${result.error || 'sauvegarde impossible'}`,
-      );
+      if (res.ok && result.ok === true) {
+        setSavedMessage('Évaluation sauvegardée.');
+        if (result.item) {
+          setOverrides((prev) => ({
+            ...prev,
+            [id]: {
+              ...prev[id],
+              status: result.item.status,
+              riskLevel: result.item.risk_level,
+              notes: result.item.notes ?? [],
+              recommendation: result.item.recommendation ?? undefined,
+            },
+          }));
+        }
+        router.refresh();
+      } else {
+        setSavedMessage(`Erreur : ${result.error || 'sauvegarde impossible'}`);
+      }
     } catch {
       setSavedMessage('Erreur de connexion.');
     } finally {
@@ -196,10 +185,7 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
       [id]: { ...prev[id], status: 'responded' as const },
     }));
     if (selectedId === id) setEditMode(false);
-
-    if (supabaseCheckIds.has(id)) {
-      await persistScamCheckToSupabase(id, { status: 'responded' });
-    }
+    await persistScamCheck(id, { status: 'responded' });
   }
 
   async function saveEvaluation() {
@@ -219,17 +205,13 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
     }));
     setEditMode(false);
 
-    if (supabaseCheckIds.has(selected.id)) {
-      const payload: Record<string, unknown> = {
-        risk_level: riskDraft,
-        status: statusDraft,
-        notes: updatedNotes,
-      };
-      if (updatedRecommendation !== undefined) payload.recommendation = updatedRecommendation;
-      await persistScamCheckToSupabase(selected.id, payload);
-    } else {
-      setSavedMessage('Évaluation sauvegardée en mémoire.');
-    }
+    const payload: Record<string, unknown> = {
+      risk_level: riskDraft,
+      status: statusDraft,
+      notes: updatedNotes,
+    };
+    if (updatedRecommendation !== undefined) payload.recommendation = updatedRecommendation;
+    await persistScamCheck(selected.id, payload);
   }
 
   return (
@@ -245,15 +227,9 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
               Évaluer les situations signalées de manière informative et prudente.
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <AdminBadge label="Mock data" tone="dark" />
-            {supabaseScamChecks.length > 0 ? (
-              <AdminBadge label={`${supabaseScamChecks.length} Supabase`} tone="success" />
-            ) : null}
-            {localScamChecks.length > 0 ? (
-              <AdminBadge label={`${localScamChecks.length} local`} tone="warning" />
-            ) : null}
-          </div>
+          {supabaseScamChecks.length > 0 ? (
+            <AdminBadge label={`${supabaseScamChecks.length} demande(s)`} tone="success" />
+          ) : null}
         </div>
       </header>
 
@@ -275,80 +251,78 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
         <AdminCard title="Toutes les demandes" eyebrow="Tableau">
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[860px] text-left text-sm">
-              <thead>
-                <tr className="border-b border-marhaban-leaf/12 text-xs font-bold uppercase tracking-[0.12em] text-marhaban-muted">
-                  <th className="py-3 pr-4">Date</th>
-                  <th className="px-4 py-3">Demandeur / situation</th>
-                  <th className="px-4 py-3">Montant</th>
-                  <th className="px-4 py-3">Urgence</th>
-                  <th className="px-4 py-3">Signaux</th>
-                  <th className="px-4 py-3">Statut</th>
-                  <th className="py-3 pl-4">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-marhaban-leaf/10">
-                {scamChecks.map((sc) => (
-                  <tr key={sc.id} className="align-top transition hover:bg-marhaban-cream/70">
-                    <td className="py-4 pr-4 text-xs text-marhaban-muted">{formatDate(sc.createdAt)}</td>
-                    <td className="px-4 py-4">
-                      <div className="flex flex-wrap items-center gap-2">
+          {scamChecks.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[860px] text-left text-sm">
+                <thead>
+                  <tr className="border-b border-marhaban-leaf/12 text-xs font-bold uppercase tracking-[0.12em] text-marhaban-muted">
+                    <th className="py-3 pr-4">Date</th>
+                    <th className="px-4 py-3">Demandeur / situation</th>
+                    <th className="px-4 py-3">Montant</th>
+                    <th className="px-4 py-3">Urgence</th>
+                    <th className="px-4 py-3">Signaux</th>
+                    <th className="px-4 py-3">Statut</th>
+                    <th className="py-3 pl-4">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-marhaban-leaf/10">
+                  {scamChecks.map((sc) => (
+                    <tr key={sc.id} className="align-top transition hover:bg-marhaban-cream/70">
+                      <td className="py-4 pr-4 text-xs text-marhaban-muted">{formatDate(sc.createdAt)}</td>
+                      <td className="px-4 py-4">
                         <p className="font-semibold text-marhaban-forestDark">{sc.requesterName}</p>
-                        {supabaseCheckIds.has(sc.id) ? (
-                          <AdminBadge label="Supabase" tone="success" className="px-2 py-0.5 text-[10px]" />
-                        ) : null}
-                        {localCheckIds.has(sc.id) ? (
-                          <AdminBadge label="Local" tone="warning" className="px-2 py-0.5 text-[10px]" />
-                        ) : null}
-                      </div>
-                      <p className="mt-1 line-clamp-2 text-xs text-marhaban-muted">{sc.situation}</p>
-                    </td>
-                    <td className="px-4 py-4 text-marhaban-muted">{sc.amountRequested ?? '—'}</td>
-                    <td className="px-4 py-4">
-                      <AdminBadge label={urgencyLabels[sc.urgency]} tone={urgencyTones[sc.urgency]} />
-                    </td>
-                    <td className="px-4 py-4">
-                      <AdminBadge label={scamRiskLabels[sc.riskLevel]} tone={scamRiskTones[sc.riskLevel]} />
-                    </td>
-                    <td className="px-4 py-4">
-                      <AdminBadge label={scamStatusLabels[sc.status]} tone={scamStatusTones[sc.status]} />
-                    </td>
-                    <td className="py-4 pl-4">
-                      <div className="flex flex-wrap gap-2">
-                        <button
-                          type="button"
-                          onClick={() => openDetail(sc)}
-                          className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:border-marhaban-clay/30 hover:bg-marhaban-cream"
-                        >
-                          <Eye className="h-3.5 w-3.5" aria-hidden="true" />
-                          Voir
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => openEvaluation(sc)}
-                          className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:border-marhaban-clay/30 hover:bg-marhaban-cream"
-                        >
-                          <ShieldAlert className="h-3.5 w-3.5" aria-hidden="true" />
-                          Évaluer
-                        </button>
-                        {sc.status !== 'responded' && sc.status !== 'closed' ? (
+                        <p className="mt-1 line-clamp-2 text-xs text-marhaban-muted">{sc.situation}</p>
+                      </td>
+                      <td className="px-4 py-4 text-marhaban-muted">{sc.amountRequested ?? '—'}</td>
+                      <td className="px-4 py-4">
+                        <AdminBadge label={urgencyLabels[sc.urgency]} tone={urgencyTones[sc.urgency]} />
+                      </td>
+                      <td className="px-4 py-4">
+                        <AdminBadge label={scamRiskLabels[sc.riskLevel]} tone={scamRiskTones[sc.riskLevel]} />
+                      </td>
+                      <td className="px-4 py-4">
+                        <AdminBadge label={scamStatusLabels[sc.status]} tone={scamStatusTones[sc.status]} />
+                      </td>
+                      <td className="py-4 pl-4">
+                        <div className="flex flex-wrap gap-2">
                           <button
                             type="button"
-                            onClick={() => void markResponded(sc.id)}
+                            onClick={() => openDetail(sc)}
                             className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:border-marhaban-clay/30 hover:bg-marhaban-cream"
                           >
-                            <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
-                            Marquer répondu
+                            <Eye className="h-3.5 w-3.5" aria-hidden="true" />
+                            Voir
                           </button>
-                        ) : null}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                          <button
+                            type="button"
+                            onClick={() => openEvaluation(sc)}
+                            className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:border-marhaban-clay/30 hover:bg-marhaban-cream"
+                          >
+                            <ShieldAlert className="h-3.5 w-3.5" aria-hidden="true" />
+                            Évaluer
+                          </button>
+                          {sc.status !== 'responded' && sc.status !== 'closed' ? (
+                            <button
+                              type="button"
+                              onClick={() => void markResponded(sc.id)}
+                              className="inline-flex min-h-[34px] items-center gap-1.5 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:border-marhaban-clay/30 hover:bg-marhaban-cream"
+                            >
+                              <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
+                              Marquer répondu
+                            </button>
+                          ) : null}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="rounded-2xl border border-marhaban-leaf/12 bg-marhaban-cream/70 p-4 text-sm text-marhaban-muted">
+              Aucune demande anti-arnaque pour le moment.
+            </p>
+          )}
         </AdminCard>
 
         <div className="space-y-6">
@@ -511,7 +485,8 @@ export function AdminScamChecksClient({ supabaseScamChecks = [], mockScamChecks 
                       <button
                         type="button"
                         onClick={() => void markResponded(selected.id)}
-                        className="inline-flex min-h-[38px] items-center gap-2 rounded-full bg-marhaban-clay px-4 py-2 text-xs font-bold text-white shadow-warm-sm transition hover:bg-marhaban-forestDark"
+                        disabled={isSaving}
+                        className="inline-flex min-h-[38px] items-center gap-2 rounded-full bg-marhaban-clay px-4 py-2 text-xs font-bold text-white shadow-warm-sm transition hover:bg-marhaban-forestDark disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
                         Marquer répondu

@@ -1,6 +1,7 @@
+export const dynamic = 'force-dynamic';
+
 import { AdminResourcesClient } from '@/components/admin/AdminResourcesClient';
 import type { Locale } from '@/i18n/locales';
-import { mockResources } from '@/lib/admin/mock-data';
 import { createServerClient } from '@/lib/supabase/server';
 import type { ResourceGuide, ResourceStatus } from '@/types/admin';
 
@@ -60,13 +61,10 @@ async function getSupabaseResources() {
 
 export default async function AdminResourcesPage() {
   const supabaseResources = await getSupabaseResources();
-  const supabaseResourceIds = new Set(supabaseResources.map((resource) => resource.id));
 
   return (
     <AdminResourcesClient
       supabaseResources={supabaseResources}
-      supabaseResourceIds={supabaseResourceIds}
-      mockResources={mockResources}
     />
   );
 }

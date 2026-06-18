@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { createServerClient } from '@/lib/supabase/server';
 import { requireAdmin } from '@/lib/admin/require-admin';
 
@@ -81,11 +82,18 @@ export async function PATCH(
 
   try {
     const supabase = createServerClient();
-    const { error } = await supabase.from('resources').update(updates).eq('id', id);
+    const { data, error } = await supabase
+      .from('resources')
+      .update(updates)
+      .eq('id', id)
+      .select('id, title, slug, locale, category, summary, content, status, owner, updated_at')
+      .single();
 
     if (error) return jsonError(error.message || 'Resource update failed', conflictStatus(error));
 
-    return NextResponse.json({ ok: true });
+    revalidatePath('/admin/resources');
+
+    return NextResponse.json({ ok: true, item: data });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Resource update failed';
     return jsonError(message, 500);
@@ -107,6 +115,8 @@ export async function DELETE(
     const { error } = await supabase.from('resources').delete().eq('id', id);
 
     if (error) return jsonError(error.message || 'Resource delete failed', 500);
+
+    revalidatePath('/admin/resources');
 
     return NextResponse.json({ ok: true });
   } catch (err) {

@@ -1,5 +1,6 @@
+export const dynamic = 'force-dynamic';
+
 import { AdminBookingsClient } from '@/components/admin/AdminBookingsClient';
-import { mockBookings } from '@/lib/admin/mock-data';
 import { createServerClient } from '@/lib/supabase/server';
 import type { Locale } from '@/i18n/locales';
 import type { Booking, BookingStatus } from '@/types/admin';
@@ -98,7 +99,6 @@ export default async function AdminBookingsPage() {
     <AdminBookingsClient
       supabaseBookings={supabaseBookings}
       supabaseCaseBookingIds={supabaseCaseBookingIds}
-      mockBookings={mockBookings}
     />
   );
 }

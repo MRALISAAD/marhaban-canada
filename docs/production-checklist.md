@@ -25,6 +25,28 @@
 - `/admin/dashboard`, `/admin/bookings`, `/admin/scam-checks`, `/admin/cases`, `/admin/resources` redirigent vers `/admin/login` hors session.
 - La déconnexion `/api/admin/logout` invalide la session.
 
+## Admin — production-ready (2026-06-18)
+
+### Mock/local suppression et refresh CRUD
+
+- Toutes les pages admin (`/admin/bookings`, `/admin/scam-checks`, `/admin/cases`, `/admin/resources`) utilisent uniquement des données Supabase.
+- `useSyncExternalStore` et local stores supprimés des composants admin (local-booking-store, local-scam-check-store, local-case-store).
+- `mock-data.ts` conservé (utilisé par les formulaires publics via `ServiceBookingModal` et `ScamCheckForm` uniquement).
+- Chaque route API mutation ajoute `revalidatePath()` après succès et retourne `{ ok: true, item: updatedRow }`.
+- Les composants client appellent `router.refresh()` après chaque mutation réussie.
+- `export const dynamic = 'force-dynamic'` ajouté sur toutes les pages admin server.
+- Badges "Mock data" et "Local" supprimés de l'interface admin.
+- États vides ajoutés pour chaque entité quand Supabase est vide.
+
+#### QA admin production-ready
+- [ ] `/admin/bookings` — aucun nom fictif visible, données Supabase uniquement
+- [ ] Changer le statut d'une réservation → UI mise à jour sans rechargement manuel
+- [ ] `/admin/scam-checks` — aucune donnée mock, "Évaluer" persiste en Supabase
+- [ ] `/admin/cases` — aucune donnée mock, modifier statut/étape → persisté
+- [ ] `/admin/resources` — aucune donnée mock, créer/modifier/supprimer → persisté
+- [ ] Aucun badge "Mock data" visible sur aucune page admin
+- [ ] Après mutation, la liste se rafraîchit correctement (router.refresh)
+
 ## Admin Dashboard — données réelles (2026-06-18)
 
 - Le dashboard `/admin/dashboard` n'utilise plus de données mock/locales.
