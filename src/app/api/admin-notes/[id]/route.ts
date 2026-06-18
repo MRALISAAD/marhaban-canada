@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/supabase/server';
+import { requireAdmin } from '@/lib/admin/require-admin';
 
 type AdminNoteUpdate = {
   body?: string;
@@ -50,6 +51,9 @@ async function updateNote(id: string, updates: AdminNoteUpdate) {
 }
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return jsonError(auth.error, auth.status);
+
   const { id } = await params;
   let payload: unknown;
 
@@ -87,6 +91,9 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 }
 
 export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return jsonError(auth.error, auth.status);
+
   const { id } = await params;
   return updateNote(id, { status: 'archived' });
 }
