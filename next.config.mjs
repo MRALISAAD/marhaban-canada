@@ -14,6 +14,8 @@ function localizedRedirects(sourcePath, destinationPath) {
 }
 
 const nextConfig = {
+  output: 'standalone',
+
   turbopack: {
     root: __dirname,
   },
