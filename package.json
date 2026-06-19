@@ -7,11 +7,15 @@
     "test:axe": "playwright test tests/axe.spec.ts",
     "e2e": "playwright test",
     "dev": "next dev",
-    "dev:3000": "next dev -p 3000",
+    "dev:3000": "next dev --webpack -p 3000",
     "kill:dev": "pkill -f \"next dev\" || true",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "docker:dev": "docker compose -f docker-compose.dev.yml up --build",
+    "docker:prod": "docker compose up --build",
+    "docker:down": "docker compose down",
+    "docker:clean": "docker compose down -v --remove-orphans"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
