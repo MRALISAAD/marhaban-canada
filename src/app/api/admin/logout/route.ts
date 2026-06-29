@@ -5,6 +5,10 @@ import { createSupabaseServerAuthClient } from '@/lib/supabase/server-auth';
 export async function GET(request: NextRequest) {
   const supabase = await createSupabaseServerAuthClient();
   await supabase.auth.signOut();
-  const loginUrl = new URL('/admin/login', request.url);
-  return NextResponse.redirect(loginUrl);
+
+  const rawRedirect = request.nextUrl.searchParams.get('redirectTo') ?? '/admin/login';
+  // Validate redirectTo to prevent open redirect — only allow /admin/* paths
+  const safeRedirect = rawRedirect.startsWith('/admin/') ? rawRedirect : '/admin/login';
+
+  return NextResponse.redirect(new URL(safeRedirect, request.url));
 }

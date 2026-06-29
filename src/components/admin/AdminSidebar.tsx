@@ -5,11 +5,10 @@ import { usePathname } from 'next/navigation';
 import {
   ArrowLeft,
   FileText,
-  FolderOpen,
   Gauge,
   LifeBuoy,
   LogOut,
-  ShieldAlert,
+  Settings,
 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 
@@ -17,15 +16,13 @@ type AdminLinkConfig = {
   label: string;
   href: string;
   icon: React.ElementType;
-  soon?: boolean;
 };
 
 const adminLinks: AdminLinkConfig[] = [
   { label: 'Dashboard', href: '/admin/dashboard', icon: Gauge },
   { label: 'Réservations', href: '/admin/bookings', icon: FileText },
-  { label: 'Dossiers', href: '/admin/cases', icon: FolderOpen },
-  { label: 'Anti-arnaque', href: '/admin/scam-checks', icon: ShieldAlert },
   { label: 'Ressources', href: '/admin/resources', icon: LifeBuoy },
+  { label: 'Paramètres', href: '/admin/settings', icon: Settings },
 ];
 
 export function AdminSidebar() {
@@ -45,24 +42,6 @@ export function AdminSidebar() {
         {adminLinks.map((link) => {
           const Icon = link.icon;
           const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
-
-          if (link.soon) {
-            return (
-              <span
-                key={link.href}
-                className="flex min-h-[48px] cursor-not-allowed items-center gap-3 rounded-2xl border-l-4 border-transparent px-4 py-3 text-sm font-semibold text-marhaban-cream/30"
-                aria-disabled="true"
-                title="Bientôt disponible"
-              >
-                <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                <span>{link.label}</span>
-                <span className="ml-auto rounded-full border border-white/10 bg-white/[0.05] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-marhaban-cream/40">
-                  Soon
-                </span>
-              </span>
-            );
-          }
-
           return (
             <Link
               key={link.href}

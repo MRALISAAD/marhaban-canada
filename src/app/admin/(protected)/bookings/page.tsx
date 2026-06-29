@@ -1,6 +1,5 @@
 export const dynamic = 'force-dynamic';
 
-import Link from 'next/link';
 import { AdminBookingsClient } from '@/components/admin/AdminBookingsClient';
 import { createServerClient } from '@/lib/supabase/server';
 import type { Locale } from '@/i18n/locales';
@@ -160,30 +159,6 @@ async function getSupabasePreparationForms() {
   }
 }
 
-async function getSupabaseCaseBookingIds() {
-  try {
-    const supabase = createServerClient();
-    const { data, error } = await supabase
-      .from('case_files')
-      .select('booking_id')
-      .not('booking_id', 'is', null);
-
-    if (error) {
-      console.error('Unable to load Supabase case booking ids', error);
-      return [];
-    }
-
-    return (data ?? [])
-      .map((row) => row.booking_id)
-      .filter((bookingId): bookingId is string => typeof bookingId === 'string');
-  } catch (error) {
-    if (process.env.NODE_ENV === 'development') {
-      console.error('Supabase case booking ids unavailable', error);
-    }
-    return [];
-  }
-}
-
 export default async function AdminBookingsPage() {
   const supabaseConfigured = Boolean(
     process.env.NEXT_PUBLIC_SUPABASE_URL &&
@@ -191,35 +166,18 @@ export default async function AdminBookingsPage() {
       process.env.SUPABASE_SERVICE_ROLE_KEY,
   );
 
-  const [supabaseBookings, supabaseCaseBookingIds, supabasePreparationForms] = supabaseConfigured
+  const [supabaseBookings, supabasePreparationForms] = supabaseConfigured
     ? await Promise.all([
         getSupabaseBookings(),
-        getSupabaseCaseBookingIds(),
         getSupabasePreparationForms(),
       ])
-    : [[], [], []];
+    : [[], []];
 
   return (
-    <>
-      {supabasePreparationForms.length > 0 ? (
-        <div className="mb-4 flex flex-wrap gap-2">
-          {supabasePreparationForms.slice(0, 5).map((form) => (
-            <Link
-              key={form.id}
-              href={`/admin/bookings/${form.id}`}
-              className="inline-flex items-center gap-1.5 rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1.5 text-xs font-bold text-marhaban-ink shadow-warm-sm transition hover:bg-marhaban-cream"
-            >
-              {form.firstName} {form.lastName} →
-            </Link>
-          ))}
-        </div>
-      ) : null}
-      <AdminBookingsClient
-        supabaseBookings={supabaseBookings}
-        supabaseCaseBookingIds={supabaseCaseBookingIds}
-        supabasePreparationForms={supabasePreparationForms}
-        supabaseConfigured={supabaseConfigured}
-      />
-    </>
+    <AdminBookingsClient
+      supabaseBookings={supabaseBookings}
+      supabasePreparationForms={supabasePreparationForms}
+      supabaseConfigured={supabaseConfigured}
+    />
   );
 }

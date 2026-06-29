@@ -8,18 +8,12 @@ function getAllowedEmails(): Set<string> {
   );
 }
 
-export default async function proxy(request: NextRequest) {
+export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // /admin/login is always accessible — no session required
-  if (pathname.startsWith('/admin/login')) {
-    return NextResponse.next();
-  }
-
-  // All other /admin/* routes require a valid Supabase Auth session
   let response = NextResponse.next({ request });
 
-  // Lazy import: avoids top-level module init failure in Node.js proxy context
+  // Lazy import: avoids top-level module init failure in Edge runtime
   const { createServerClient } = await import('@supabase/ssr');
 
   const supabase = createServerClient(
@@ -47,16 +41,47 @@ export default async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // /admin/login — accessible without session; redirect already-authenticated allowed users
+  if (pathname.startsWith('/admin/login')) {
+    if (user?.email) {
+      const allowedEmails = getAllowedEmails();
+      if (allowedEmails.size > 0 && allowedEmails.has(user.email.toLowerCase())) {
+        // Send to MFA page or dashboard depending on current AAL
+        const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+        const target = aal?.currentLevel === 'aal2' ? '/admin/dashboard' : '/admin/mfa';
+        return NextResponse.redirect(new URL(target, request.url));
+      }
+    }
+    return response;
+  }
+
+  // All other /admin/* routes require a valid session
   if (!user) {
     return NextResponse.redirect(new URL('/admin/login', request.url));
   }
 
   const allowedEmails = getAllowedEmails();
+
   if (allowedEmails.size === 0) {
     return NextResponse.redirect(new URL('/admin/login?error=missing_allowlist', request.url));
   }
+
   if (!allowedEmails.has((user.email ?? '').toLowerCase())) {
-    return NextResponse.redirect(new URL('/admin/login?error=unauthorized', request.url));
+    // Sign out the unauthorized user then redirect to login with error
+    const logoutUrl = new URL('/api/admin/logout', request.url);
+    logoutUrl.searchParams.set('redirectTo', '/admin/login?error=unauthorized');
+    return NextResponse.redirect(logoutUrl);
+  }
+
+  // /admin/mfa — allowed with just AAL1; user is setting up or verifying MFA
+  if (pathname.startsWith('/admin/mfa')) {
+    return response;
+  }
+
+  // All protected admin routes require AAL2 (MFA verified)
+  const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+  if (!aal || aal.currentLevel !== 'aal2') {
+    return NextResponse.redirect(new URL('/admin/mfa', request.url));
   }
 
   return response;

@@ -8,7 +8,7 @@
 - `ADMIN_ALLOWED_EMAILS`
 - `NEXT_PUBLIC_CALENDLY_FREE_CALL_URL` — optional; if set, the Calendly button appears in the booking form
 
-## Admin Setup
+## Admin Setup (First Deploy)
 
 Before the first login, the Supabase auth user must exist:
 
@@ -17,22 +17,62 @@ Before the first login, the Supabase auth user must exist:
 3. Enter the admin email and a strong password
 4. If email confirmation is required: click **Confirm** manually in the Users table, or disable email confirmation in **Authentication → Settings → Email**
 5. Add the same email to `ADMIN_ALLOWED_EMAILS` in `.env.local` (and in the hosting platform's env config)
-6. Test: open `/admin/login`, sign in — you should land on `/admin/dashboard`
+6. Make sure Supabase MFA is enabled: **Authentication → Settings → Multi-Factor Authentication → Enable TOTP**
 
-**Dev diagnostics**: in `NODE_ENV=development`, the login page shows detailed Supabase error messages (missing env vars, unconfirmed email, invalid credentials). In production it shows only the generic message.
+## Admin MFA Setup (Mandatory — First Deploy)
+
+Admin access requires password + MFA (TOTP AAL2). The QR code is gated by a temporary setup code to prevent rogue enrollment.
+
+### One-time setup
+
+1. Create Supabase Auth admin user (Dashboard → Authentication → Users → Add user + Confirm)
+2. Add email to `ADMIN_ALLOWED_EMAILS` in `.env.local` and hosting env
+3. Enable Supabase TOTP: **Authentication → Settings → Multi-Factor Authentication → Enable TOTP**
+4. Generate setup code: `openssl rand -base64 32`
+5. In `.env.local` (and hosting env):
+   ```
+   ADMIN_MFA_SETUP_ENABLED=true
+   ADMIN_MFA_SETUP_CODE=<generated>
+   ```
+6. Open `/admin/login` → sign in with email + password
+7. Redirected to `/admin/mfa` → enter setup code → QR code appears
+8. Scan QR with authenticator app → enter 6-digit code → "Vérifier et activer"
+9. Redirected to `/admin/dashboard` ✓
+10. **Immediately** set:
+    ```
+    ADMIN_MFA_SETUP_ENABLED=false
+    ADMIN_MFA_SETUP_CODE=
+    ```
+11. Restart/redeploy
+12. Log in again: email/password → `/admin/mfa` code entry only → dashboard
+13. Check `/admin/settings`: MFA = Activée, AAL2, Setup gate = Désactivé
+
+### Emergency MFA reset
+
+1. Supabase Dashboard → Authentication → Users → admin user → Factors tab → delete TOTP factor
+2. Temporarily re-enable setup gate (steps 4–5 above)
+3. Complete setup flow again
+4. Disable setup gate (step 10)
+
+## Security Checks
+
+- `SUPABASE_SERVICE_ROLE_KEY` must be server-only. Never prefix with `NEXT_PUBLIC_`.
+- No secret should appear in browser DevTools → Network → any response body
+- MFA TOTP secret (QR code) is never logged to server console
+- Admin routes require AAL2 — attempting to reach `/admin/dashboard` with only AAL1 redirects to `/admin/mfa`
 
 ## Supabase
 
 - Confirm the `booking_preparation_forms` table exists.
 - Confirm inserts are accepted from the server API using the service role key.
 - Confirm `SUPABASE_SERVICE_ROLE_KEY` is only set server-side and is not exposed to the browser.
+- Confirm MFA/TOTP is enabled in Supabase Auth Settings.
 
 ## Admin Route Check
 
-- Sign in at `/admin/login` with an email in `ADMIN_ALLOWED_EMAILS`.
-- Open `/admin`.
-- Open `/admin/bookings`.
-- Confirm real `booking_preparation_forms` rows appear with date, status, full name, email, phone, needs, urgency, availability, and preferred contact method.
+- Sign in at `/admin/login` → redirected to `/admin/mfa` → enter TOTP code → reach `/admin/dashboard`
+- Open `/admin/bookings` (requires AAL2 — confirm no redirect to MFA page)
+- Open `/admin/settings` — confirm MFA shows Activée + AAL2
 
 ## Form Submit Check
 
@@ -58,8 +98,8 @@ Before the first login, the Supabase auth user must exist:
 - `/fr/ressources`
 - `/fr/anti-arnaque`
 - `/fr/a-propos`
-- `/admin`
-- `/admin/bookings`
+- `/admin` (redirects to `/admin/login` if no session)
+- `/admin/bookings` (requires AAL2)
 
 Check each at 390px, 768px, and 1440px for no horizontal overflow, correct navbar placement, usable modal/form buttons, clean footer, Arabic RTL, disabled 45-minute offer, and free-call modal opening.
 

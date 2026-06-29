@@ -56,15 +56,6 @@ const ALLOWED_LOCATION_STATUSES = new Set([
   'prefer_not_say',
 ]);
 
-const ALLOWED_GENERAL_STATUSES = new Set([
-  '',
-  'studies',
-  'work',
-  'family',
-  'settlement',
-  'prefer_not_say',
-  'other',
-]);
 
 const ALLOWED_NEEDS = new Set([
   'housing',
@@ -79,7 +70,6 @@ const ALLOWED_NEEDS = new Set([
   'other',
 ]);
 
-const ALLOWED_URGENCIES = new Set(['', 'no', 'this_week', 'today_tomorrow']);
 
 const ALLOWED_CONTACT_METHODS = new Set([
   'whatsapp',
@@ -93,9 +83,6 @@ const ALLOWED_CONTACT_METHODS = new Set([
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-// Schema is v1-compatible: status='new', no v2-only columns.
-// Apply docs/supabase-migration-v2-booking-forms.sql to unlock v2 fields
-// (marketing_consent, privacy_notice_accepted, ip_hash, user_agent, retention_until, calendly_enabled).
 type PreparationInsert = {
   locale: Locale;
   first_name: string;
@@ -103,16 +90,15 @@ type PreparationInsert = {
   email: string;
   phone?: string;
   location_status: string;
-  general_status?: string;
   needs: string[];
   situation: string;
-  main_question?: string;
-  urgency?: string;
   availability: string;
   preferred_contact_method: string;
   consent: true;
-  source: 'booking_form';
-  status: 'new';
+  privacy_notice_accepted: true;
+  marketing_consent: boolean;
+  source: 'booking_modal';
+  status: 'form_submitted';
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -187,11 +173,8 @@ export async function POST(request: Request) {
   const lastName = textField(body, 'last_name');
   const email = textField(body, 'email');
   const locationStatus = textField(body, 'location_status');
-  const generalStatus = textField(body, 'general_status');
   const needs = stringArrayField(body, 'needs');
   const situation = textField(body, 'situation');
-  const mainQuestion = textField(body, 'main_question');
-  const urgency = textField(body, 'urgency');
   const availability = textField(body, 'availability');
   const preferredContactMethod = textField(body, 'preferred_contact_method');
 
@@ -219,7 +202,6 @@ export async function POST(request: Request) {
   if (email.length > 254) return jsonError(400);
   if (textField(body, 'phone').length > 30) return jsonError(400);
   if (situation.length > 2000) return jsonError(400);
-  if (mainQuestion.length > 1000) return jsonError(400);
   if (availability.length > 1000) return jsonError(400);
 
   // ── Format validation ───────────────────────────────────────────────────────
@@ -231,13 +213,10 @@ export async function POST(request: Request) {
   if (!ALLOWED_LOCATION_STATUSES.has(locationStatus)) {
     return jsonError(400);
   }
-  if (!ALLOWED_GENERAL_STATUSES.has(generalStatus)) {
+  if (needs.length > 3) {
     return jsonError(400);
   }
   if (needs.some((need) => !ALLOWED_NEEDS.has(need))) {
-    return jsonError(400);
-  }
-  if (urgency && !ALLOWED_URGENCIES.has(urgency)) {
     return jsonError(400);
   }
   if (!ALLOWED_CONTACT_METHODS.has(preferredContactMethod)) {
@@ -268,16 +247,15 @@ export async function POST(request: Request) {
     email,
     phone: textField(body, 'phone') || undefined,
     location_status: locationStatus,
-    general_status: generalStatus || undefined,
     needs,
     situation,
-    main_question: mainQuestion || undefined,
-    urgency: urgency || undefined,
     availability,
     preferred_contact_method: preferredContactMethod,
     consent: true,
-    source: 'booking_form',
-    status: 'new',
+    privacy_notice_accepted: true,
+    marketing_consent: body.marketing_consent === true,
+    source: 'booking_modal',
+    status: 'form_submitted',
   };
 
   try {
