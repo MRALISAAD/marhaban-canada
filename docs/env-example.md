@@ -22,11 +22,11 @@ NEXT_PUBLIC_SENTRY_DSN=""
 # Google Analytics, optionnel.
 NEXT_PUBLIC_GA_ID=""
 
-# Calendly public links, optionnels.
-NEXT_PUBLIC_CALENDLY_DISCOVERY_URL="https://calendly.com/example/discovery"
-NEXT_PUBLIC_CALENDLY_ORIENTATION_URL="https://calendly.com/example/orientation"
-NEXT_PUBLIC_CALENDLY_ANTI_SCAM_URL="https://calendly.com/example/anti-scam"
+# Calendly public links are not used by the active booking flow.
+# NEXT_PUBLIC_CALENDLY_FREE_CALL_URL=""
 ```
+
+Le flux de réservation actif utilise le formulaire interne `/[locale]/reserver/formulaire`. Calendly n'est pas requis pour réserver l'appel gratuit. L'URL Calendly orientation 45 min n'est pas requise tant que l'offre reste "bientôt disponible".
 
 ## Variables serveur futures ou optionnelles
 

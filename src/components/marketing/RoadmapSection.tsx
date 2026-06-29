@@ -57,9 +57,9 @@ export function RoadmapSection({ eyebrow, title, cta, href, phases }: Props) {
             role="tabpanel"
             id={`roadmap-panel-${activeIndex}`}
             aria-labelledby={`roadmap-tab-${activeIndex}`}
-            initial={{ opacity: 0, y: 10 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
+            exit={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className="mt-6 rounded-3xl border border-marhaban-leaf/15 bg-offwhite p-6 shadow-warm-sm sm:p-8"
           >

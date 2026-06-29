@@ -10,9 +10,9 @@ export function LocaleFade({ children }: { children: ReactNode }) {
   return (
     <motion.div
       key={locale}
-      initial={{ opacity: 0, y: 4, filter: 'blur(2px)' }}
+      initial={false}
       animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      exit={{ opacity: 0, y: -2, filter: 'blur(2px)' }}
+      exit={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       transition={{ duration: 0.18, ease: 'easeOut' }}
     >
       {children}

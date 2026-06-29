@@ -41,10 +41,10 @@ export function Section({
 
   const densityClass =
     density === 'tight'
-      ? 'py-12 sm:py-14'
+      ? 'py-8 sm:py-10'
       : density === 'loose'
-        ? 'py-20 sm:py-24'
-        : 'py-16 sm:py-20';
+        ? 'py-12 sm:py-14'
+        : 'py-10 sm:py-12';
 
   return (
     <section

@@ -2,6 +2,7 @@
 
 import Script from 'next/script';
 import { useSyncExternalStore, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Constants
@@ -83,6 +84,7 @@ export function track(eventName: string, params?: Record<string, unknown>): void
 
 export function CookieBanner() {
   const consent = useConsent();
+  const pathname = usePathname();
 
   const handleAccept = useCallback(() => {
     setConsent('accepted');
@@ -96,40 +98,48 @@ export function CookieBanner() {
   // Hide if choice already made
   if (consent !== null) return null;
 
+  // On the booking form page, always use compact corner position (never full-width)
+  // to avoid blocking form inputs or the submit button
+  const isFormPage = pathname?.includes('/reserver/formulaire') ?? false;
+  const positionClass = isFormPage
+    ? 'fixed bottom-4 right-4 z-[45] max-w-[280px]'
+    : 'fixed bottom-3 left-3 right-3 z-[45] sm:bottom-5 sm:left-auto sm:right-5 sm:max-w-sm';
+
   return (
     <div
       role="dialog"
-      aria-modal="true"
+      aria-modal="false"
       aria-labelledby="cookie-banner-title"
-      className="fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6"
+      className={positionClass}
     >
-      <div className="mx-auto max-w-2xl rounded-2xl border border-slate-200 bg-white p-5 shadow-xl">
-        <h2
-          id="cookie-banner-title"
-          className="text-base font-semibold text-slate-900"
-        >
-          Cookies et analyse
-        </h2>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600">
-          Nous utilisons des cookies pour analyser l&apos;utilisation du site et
-          améliorer votre expérience. Vos données sont anonymisées.
-        </p>
-        <div className="mt-4 flex flex-wrap gap-3">
-          <button
-            type="button"
-            onClick={handleAccept}
-            className="inline-flex items-center rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+      <div className="rounded-2xl border border-marhaban-leaf/15 bg-marhaban-cream/96 px-4 py-3 shadow-warm-sm backdrop-blur-sm sm:px-5 sm:py-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p
+            id="cookie-banner-title"
+            className="text-sm font-semibold text-marhaban-ink"
           >
-            Accepter
-          </button>
-          <button
-            type="button"
-            onClick={handleReject}
-            className="inline-flex items-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
-          >
-            Refuser
-          </button>
+            Cookies &amp; analyse
+          </p>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={handleReject}
+              className="rounded-lg border border-marhaban-leaf/20 bg-white px-3 py-1.5 text-xs font-semibold text-marhaban-muted transition hover:bg-marhaban-mint/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-1"
+            >
+              Refuser
+            </button>
+            <button
+              type="button"
+              onClick={handleAccept}
+              className="rounded-lg bg-marhaban-forestDark px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-1"
+            >
+              Accepter
+            </button>
+          </div>
         </div>
+        <p className="mt-1.5 text-xs leading-relaxed text-marhaban-muted">
+          Données anonymisées, analyse d&apos;utilisation uniquement.
+        </p>
       </div>
     </div>
   );

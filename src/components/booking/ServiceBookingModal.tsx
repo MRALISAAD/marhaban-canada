@@ -166,7 +166,6 @@ const copy = {
 const bookingServiceMap: Record<CalendlyEvent['key'], Booking['service']> = {
   discovery: 'discovery',
   orientation: 'orientation',
-  antiScam: 'anti_scam',
 };
 
 function toClientStatus(value: string): Booking['clientStatus'] {
@@ -189,18 +188,15 @@ function createLocalBookingId() {
 function getServiceReassurance(locale: Locale, serviceKey: CalendlyEvent['key']) {
   if (locale === 'en') {
     if (serviceKey === 'discovery') return 'We will help you confirm whether this is the right starting point before committing to a longer call.';
-    if (serviceKey === 'antiScam') return 'We will review the warning signs with you before you pay, share, or sign anything sensitive.';
     return 'We will help you organize priorities and prepare a practical next-step plan.';
   }
 
   if (locale === 'ar') {
     if (serviceKey === 'discovery') return 'سنساعدك على معرفة ما إذا كانت هذه نقطة البداية المناسبة قبل اختيار مكالمة أطول.';
-    if (serviceKey === 'antiScam') return 'سنراجع معك الإشارات المشبوهة قبل الدفع أو مشاركة معلومات حساسة أو توقيع أي شيء.';
     return 'سنساعدك على ترتيب الأولويات وتحضير خطة عملية للخطوة التالية.';
   }
 
   if (serviceKey === 'discovery') return 'Nous vous aidons à confirmer si c’est le bon point de départ avant de choisir un appel plus complet.';
-  if (serviceKey === 'antiScam') return 'Nous vérifions avec vous les signaux d’alerte avant de payer, partager ou signer quelque chose de sensible.';
   return 'Nous vous aidons à organiser vos priorités et à préparer un plan d’action concret.';
 }
 

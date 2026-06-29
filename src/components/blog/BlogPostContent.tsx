@@ -77,7 +77,7 @@ export function BlogPostContent({ post, relatedPosts }: BlogPostContentProps) {
               {post.sources.map((source, index) => (
                 <li key={index} className="flex items-center justify-between gap-3">
                   <span className="text-black/80">{source.label}</span>
-                  <a className="text-sm underline" href={source.url} target="_blank" rel="noreferrer">
+                  <a className="text-sm underline" href={source.url} target="_blank" rel="noopener noreferrer">
                     Ouvrir
                   </a>
                 </li>

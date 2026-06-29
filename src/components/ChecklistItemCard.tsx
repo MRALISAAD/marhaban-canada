@@ -65,7 +65,7 @@ export function ChecklistItemCard({ item, checked, onToggle, labels }: Checklist
                     <a
                       href={source.href}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       className="underline underline-offset-2 hover:text-slate-900"
                     >
                       {source.label}

@@ -19,7 +19,7 @@ export function MarketingSection({ children, className, id, variant = "default" 
   return (
     <SectionReveal
       id={id}
-      className={cn("px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-32", variants[variant], className)}
+      className={cn("px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14", variants[variant], className)}
     >
       <div className="mx-auto max-w-6xl">{children}</div>
     </SectionReveal>

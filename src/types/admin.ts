@@ -48,6 +48,51 @@ export type Booking = {
   nextAction?: string;
 };
 
+export type PreparationFormStatus =
+  | 'form_submitted'
+  | 'calendly_pending'
+  | 'calendly_confirmed'
+  | 'contacted'
+  | 'confirmed_manually'
+  | 'completed'
+  | 'cancelled'
+  | 'no_show';
+
+export type BookingPreparationForm = {
+  id: string;
+  createdAt: string;
+  updatedAt?: string;
+  locale: Locale;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  locationStatus: string;
+  generalStatus?: string;
+  needs: readonly string[];
+  situation: string;
+  mainQuestion?: string;
+  urgency?: string;
+  availability: string;
+  preferredContactMethod: string;
+  consent: boolean;
+  marketingConsent: boolean;
+  privacyNoticeAccepted: boolean;
+  source: string;
+  status: PreparationFormStatus;
+  retentionUntil?: string;
+  deletedAt?: string;
+  calendlyEnabled?: boolean;
+  calendlyEventUri?: string;
+  calendlyInviteeUri?: string;
+  calendlyEventStartTime?: string;
+  calendlyEventEndTime?: string;
+  calendlyInviteeEmail?: string;
+  calendlyInviteeName?: string;
+  calendlyCancelUrl?: string;
+  calendlyRescheduleUrl?: string;
+};
+
 export type CaseFile = {
   id: string;
   clientName: string;

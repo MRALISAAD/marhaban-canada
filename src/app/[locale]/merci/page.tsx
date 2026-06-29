@@ -4,7 +4,6 @@ import { ArrowRight, CheckCircle2, MailCheck, CalendarCheck, FileText } from 'lu
 import LocalizedLink from '@/components/LocalizedLink';
 import { AnimatedCTA, AnimatedCard } from '@/components/animations/MarketingMotion';
 import { getHtmlAttrs, isLocale, type Locale } from '@/i18n/locales';
-import { bookingIntegrationLinks } from '@/lib/booking-links';
 import { bookingPath } from '@/lib/routes';
 
 type Props = {
@@ -25,8 +24,8 @@ const thankYouTexts = {
     stepsTitle: 'Ce qui se passe ensuite',
     steps: [
       { title: 'On relit ta demande', text: 'On relit ta situation et les informations partagées pour préparer la bonne réponse.' },
-      { title: 'On confirme le bon format', text: 'On vérifie si l’appel d’orientation demandé est le bon point de départ.' },
-      { title: 'Tu reçois un lien de confirmation', text: 'Tu reçois un calendrier ou une confirmation avant l’appel.' },
+      { title: 'On confirme le bon format', text: 'On vérifie si l’appel gratuit est le bon point de départ.' },
+      { title: 'Tu reçois une confirmation', text: 'Tu reçois une confirmation par email avant l’appel.' },
       { title: 'Tu reçois un résumé après l’appel', text: 'Après l’échange, tu repars avec une mini-feuille de route claire.' },
     ],
     note: 'Tu recevras une confirmation avant l’appel.',
@@ -42,8 +41,8 @@ const thankYouTexts = {
     stepsTitle: 'What happens next',
     steps: [
       { title: 'We review your request', text: 'We read your situation and the information you shared to prepare the right response.' },
-      { title: 'We confirm the best format', text: 'We check whether the requested orientation call is the right starting point.' },
-      { title: 'You receive a confirmation link', text: 'You receive a calendar link or confirmation before the call.' },
+      { title: 'We confirm the best format', text: 'We check whether the free call is the right starting point.' },
+      { title: 'You receive a confirmation', text: 'You receive an email confirmation before the call.' },
       { title: 'You receive a summary after the call', text: 'After the conversation, you leave with a short clear roadmap.' },
     ],
     note: 'You will receive confirmation before the call.',
@@ -59,8 +58,8 @@ const thankYouTexts = {
     stepsTitle: 'ما يحدث بعد ذلك',
     steps: [
       { title: 'نراجع طلبك', text: 'نقرأ وضعك والمعلومات التي شاركتها لنحضّر الرد المناسب.' },
-      { title: 'نؤكد الصيغة المناسبة', text: 'نتحقق مما إذا كانت مكالمة التوجيه المطلوبة هي نقطة البداية الأفضل.' },
-      { title: 'تصلك رابط التأكيد', text: 'ستتلقى رابط تقويم أو تأكيداً قبل المكالمة.' },
+      { title: 'نؤكد الصيغة المناسبة', text: 'نتحقق مما إذا كانت المكالمة المجانية هي نقطة البداية الأفضل.' },
+      { title: 'يصلك تأكيد', text: 'ستتلقى تأكيداً عبر البريد الإلكتروني قبل المكالمة.' },
       { title: 'تحصل على ملخص بعد المكالمة', text: 'بعد الحديث، تخرج بخارطة طريق قصيرة وواضحة.' },
     ],
     note: 'ستتلقى تأكيداً قبل المكالمة.',
@@ -134,16 +133,15 @@ export default async function MerciPage({ params }: Props) {
               </div>
               <div className="rounded-[1.5rem] border border-marhaban-gold/18 bg-marhaban-gold/10 p-4">
                 <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-gold">
-                  {locale === 'fr' ? 'À venir' : locale === 'en' ? 'Coming next' : 'قريباً'}
+                  {locale === 'fr' ? 'Confirmation' : locale === 'en' ? 'Confirmation' : 'التأكيد'}
                 </p>
-                <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold text-white/74">
-                  <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-2">
-                    {bookingIntegrationLinks.tallyForm.label}
-                  </span>
-                  <span className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-2">
-                    {bookingIntegrationLinks.calendly.label}
-                  </span>
-                </div>
+                <p className="mt-3 text-sm leading-relaxed text-white/76">
+                  {locale === 'fr'
+                    ? 'On te contactera directement pour confirmer ton appel gratuit.'
+                    : locale === 'en'
+                      ? 'We will contact you directly to confirm your free call.'
+                      : 'سنتواصل معك مباشرة لتأكيد مكالمتك المجانية.'}
+                </p>
               </div>
             </div>
           </AnimatedCard>

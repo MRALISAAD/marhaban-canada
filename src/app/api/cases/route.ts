@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { requireAdmin } from '@/lib/admin/require-admin';
 import { createServerClient } from '@/lib/supabase/server';
 
 type CaseInsert = {
@@ -70,6 +71,9 @@ function hasOnlyAllowedFields(input: Record<string, unknown>) {
 }
 
 export async function POST(request: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return jsonError(auth.error, auth.status);
+
   let body: unknown;
 
   try {

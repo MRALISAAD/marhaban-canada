@@ -220,12 +220,12 @@ const fr: ArnaqueCopy = {
     },
   ],
   ctaEyebrow: "Doute ? Vérifie avant d'agir.",
-  ctaTitle: "Un appel de 30 minutes peut t'éviter une erreur coûteuse.",
+  ctaTitle: "Un appel peut t'éviter une erreur coûteuse.",
   ctaBody:
     "Tu as reçu une offre qui te semble douteuse ? Quelqu'un te demande des documents ou de l'argent et tu n'es pas sûr ? On t'écoute, on t'aide à analyser la situation, et on t'indique les démarches à suivre — sans te juger.",
   ctaNote:
     "Ce n'est pas un service juridique. On ne peut pas porter plainte pour toi. Mais on peut t'aider à comprendre ta situation et trouver les bonnes ressources.",
-  ctaButton: 'Réserver un appel — 29 $',
+  ctaButton: 'Réserver un appel',
   faqEyebrow: 'Questions fréquentes',
   faqTitle: 'Ce que les gens nous demandent souvent.',
   faqs: [

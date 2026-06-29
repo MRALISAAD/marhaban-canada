@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { requireAdmin } from '@/lib/admin/require-admin';
 import { createServerClient } from '@/lib/supabase/server';
 
 type ResourceUpdate = {
@@ -45,6 +46,9 @@ function conflictStatus(error: { code?: string; message?: string }) {
 }
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return jsonError(auth.error, auth.status);
+
   const { id } = await params;
   let body: unknown;
 

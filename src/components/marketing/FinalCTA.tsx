@@ -13,7 +13,7 @@ type Props = {
 export function FinalCTA({ title, text, cta, href, disclaimer }: Props) {
   return (
     <SectionReveal
-      className="bg-marhaban-forestDark px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40"
+      className="bg-marhaban-forestDark px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16"
       data-floating-book-call-hide
     >
       <div className="mx-auto max-w-3xl text-center">

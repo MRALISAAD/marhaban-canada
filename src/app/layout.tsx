@@ -31,11 +31,10 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+      { url: '/icon.png', type: 'image/png', sizes: '48x48' },
     ],
     apple: [
-      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/apple-icon.png', type: 'image/png', sizes: '180x180' },
     ],
   },
   manifest: '/manifest.json',
@@ -72,7 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <GoogleAnalytics />
       </head>
-      <body className="min-h-screen bg-marhaban-cream text-marhaban-ink antialiased">
+      <body className="min-h-fit bg-marhaban-cream text-marhaban-ink antialiased">
         {children}
         <CookieBanner />
       </body>

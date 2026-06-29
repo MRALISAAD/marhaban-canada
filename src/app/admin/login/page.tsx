@@ -25,11 +25,31 @@ function AdminLoginForm() {
     setLoading(true);
     setError('');
 
+    const isDev = process.env.NODE_ENV === 'development';
+
+    if (isDev) {
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        setError('[DEV] Variables Supabase manquantes dans .env.local — NEXT_PUBLIC_SUPABASE_URL et NEXT_PUBLIC_SUPABASE_ANON_KEY requis.');
+        setLoading(false);
+        return;
+      }
+    }
+
     const supabase = createSupabaseBrowserClient();
     const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
 
     if (authError) {
-      setError('Identifiants incorrects. Vérifie ton email et mot de passe.');
+      if (isDev) {
+        const msg = authError.message.toLowerCase();
+        const hint = msg.includes('not confirmed')
+          ? "L'email n'est pas confirmé. Va dans Supabase → Authentication → Users et confirme l'adresse."
+          : msg.includes('invalid login') || msg.includes('invalid credentials') || msg.includes('invalid email')
+            ? "Identifiants invalides. Crée l'utilisateur dans Supabase → Authentication → Users → Add user, puis ajoute son email dans ADMIN_ALLOWED_EMAILS."
+            : `Erreur Supabase (${authError.status ?? '?'}) : ${authError.message}`;
+        setError(`[DEV] ${hint}`);
+      } else {
+        setError('Identifiants incorrects. Vérifie ton email et mot de passe.');
+      }
       setLoading(false);
       return;
     }

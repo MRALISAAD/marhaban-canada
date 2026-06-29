@@ -57,14 +57,14 @@ export default async function ContactPage({ params }: Props) {
       offers: [
         {
           name: 'Appel Orientation bêta',
-          duration: '30 min',
+          duration: '45 min',
           price: '10 $ · 10 premiers appels',
           description: 'Clarification de ta situation, priorités pratiques, étapes recommandées, ressources utiles et résumé après l’appel.',
         },
         {
           name: 'Appel Orientation',
-          duration: '30 min',
-          price: '29 $',
+          duration: '45 min',
+          price: 'Sur demande',
           description: 'Pour comprendre quoi faire, dans quel ordre et avec quelles ressources utiles.',
         },
         {
@@ -116,8 +116,8 @@ export default async function ContactPage({ params }: Props) {
         ],
         formOffer: 'Offre souhaitée',
         formOfferOptions: [
-          { value: 'beta', label: 'Appel Orientation bêta — 30 min — 10 $' },
-          { value: 'orientation', label: 'Appel Orientation — 30 min — 29 $' },
+          { value: 'beta', label: 'Appel Orientation bêta — 45 min — 10 $' },
+          { value: 'orientation', label: 'Appel Orientation — 45 min — sur demande' },
           { value: 'installation', label: 'Pack Installation — 45 min + checklist — 69 $' },
           { value: 'complete', label: 'Pack Complet — 60 min + résumé détaillé — 99 $' },
         ],
@@ -140,14 +140,14 @@ export default async function ContactPage({ params }: Props) {
       offers: [
         {
           name: 'Beta Orientation Call',
-          duration: '30 min',
+          duration: '45 min',
           price: '$10 · first 10 calls',
           description: 'Clarification of your situation, practical priorities, recommended steps, useful resources, and summary after the call.',
         },
         {
           name: 'Orientation Call',
-          duration: '30 min',
-          price: '$29',
+          duration: '45 min',
+          price: 'Upon request',
           description: 'Understand what to do, in what order, and with which useful resources.',
         },
         {
@@ -199,8 +199,8 @@ export default async function ContactPage({ params }: Props) {
         ],
         formOffer: 'Preferred offer',
         formOfferOptions: [
-          { value: 'beta', label: 'Beta Orientation Call — 30 min — $10' },
-          { value: 'orientation', label: 'Orientation Call — 30 min — $29' },
+          { value: 'beta', label: 'Beta Orientation Call — 45 min — $10' },
+          { value: 'orientation', label: 'Orientation Call — 45 min — upon request' },
           { value: 'installation', label: 'Settlement Pack — 45 min + checklist — $69' },
           { value: 'complete', label: 'Complete Pack — 60 min + detailed summary — $99' },
         ],
@@ -222,14 +222,14 @@ export default async function ContactPage({ params }: Props) {
       offers: [
         {
           name: 'مكالمة توجيه بيتا',
-          duration: '30 دقيقة',
+          duration: '45 دقيقة',
           price: '10 $ · أول 10 مكالمات',
           description: 'توضيح وضعك العام، أولويات عملية، خطوات موصى بها، موارد مفيدة وملخص بعد المكالمة.',
         },
         {
           name: 'مكالمة توجيه',
-          duration: '30 دقيقة',
-          price: '29 $',
+          duration: '45 دقيقة',
+          price: 'حسب الطلب',
           description: 'لفهم ماذا تفعل، وبأي ترتيب، ومع أي موارد مفيدة.',
         },
         {
@@ -281,8 +281,8 @@ export default async function ContactPage({ params }: Props) {
         ],
         formOffer: 'العرض المطلوب',
         formOfferOptions: [
-          { value: 'beta', label: 'مكالمة توجيه بيتا — 30 دقيقة — 10 $' },
-          { value: 'orientation', label: 'مكالمة توجيه — 30 دقيقة — 29 $' },
+          { value: 'beta', label: 'مكالمة توجيه بيتا — 45 دقيقة — 10 $' },
+          { value: 'orientation', label: 'مكالمة توجيه — 45 دقيقة — حسب الطلب' },
           { value: 'installation', label: 'حزمة الاستقرار — 45 دقيقة + قائمة تحقق — 69 $' },
           { value: 'complete', label: 'الحزمة الكاملة — 60 دقيقة + ملخص مفصل — 99 $' },
         ],

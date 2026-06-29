@@ -12,7 +12,7 @@ export function PageShell({ children, className, dir, lang }: Props) {
   return (
     <main
       id="main-content"
-      className={cn('warm-page scroll-mt-28 pb-40 md:pb-36', className)}
+      className={cn('warm-page scroll-mt-28', className)}
       dir={dir}
       lang={lang}
       tabIndex={-1}

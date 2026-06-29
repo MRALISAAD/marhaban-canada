@@ -31,8 +31,8 @@ type CtaProps = HTMLMotionProps<'span'> & {
 
 const revealVariants = {
   hidden: {
-    opacity: 0,
-    y: 12,
+    opacity: 1,
+    y: 0,
   },
   visible: (delay: number) => ({
     opacity: 1,
@@ -46,7 +46,7 @@ const revealVariants = {
 };
 
 const staggerItem = {
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 1, y: 0 },
   visible: {
     opacity: 1,
     y: 0,
@@ -58,15 +58,13 @@ const staggerItem = {
 };
 
 export function SectionReveal({ children, className, delay = 0, ...props }: RevealProps) {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <motion.section
       {...props}
       className={className}
       variants={revealVariants}
       custom={delay}
-      initial={shouldReduceMotion ? 'visible' : 'hidden'}
+      initial={false}
       whileInView="visible"
       viewport={{ once: true, amount: 0.22 }}
     >
@@ -76,14 +74,12 @@ export function SectionReveal({ children, className, delay = 0, ...props }: Reve
 }
 
 export function StaggerGroup({ children, className, delay = 0, ...props }: StaggerProps) {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <motion.div
       {...props}
       className={className}
       variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.07, delayChildren: delay } } }}
-      initial={shouldReduceMotion ? 'visible' : 'hidden'}
+      initial={false}
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
     >

@@ -1,176 +1,173 @@
-'use client';
-
-import { useMemo, useState } from 'react';
-import { ArrowRight, BadgeCheck } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import type { Locale } from '@/i18n/locales';
-import { cn } from '@/lib/cn';
-import { calendlyEvents, type CalendlyEvent } from '@/lib/calendly';
-import { AnimatedCard } from '@/components/animations/MarketingMotion';
-import { ServiceBookingModal } from '@/components/booking/ServiceBookingModal';
+
+const CALENDLY_FREE_CALL_URL = process.env.NEXT_PUBLIC_CALENDLY_FREE_CALL_URL?.trim() || '';
 
 type Props = {
   locale: Locale;
   disclaimer: string;
 };
 
-function getPriceLabel(locale: Locale, key: CalendlyEvent['key']) {
-  if (key === 'discovery') return locale === 'fr' ? 'Gratuit' : locale === 'en' ? 'Free' : 'مجاني';
-  if (key === 'orientation') return '29 $';
-  return locale === 'fr' ? '20 à 30 min' : locale === 'en' ? '20 to 30 min' : '20 إلى 30 دقيقة';
+const copy = {
+  fr: {
+    unavailable: 'Le lien de réservation sera bientôt disponible.',
+    free: {
+      eyebrow: 'APPEL GRATUIT',
+      title: 'Appel gratuit — 15 min',
+      text: "Un appel gratuit pour clarifier ta situation et choisir le bon format d'accompagnement.",
+      badge: 'Gratuit · 15 min',
+      cta: 'Réserver gratuitement',
+    },
+    orientation: {
+      eyebrow: 'APPEL ORIENTATION',
+      title: 'Appel orientation — 45 min',
+      text: 'Clarifier les prochaines étapes et repartir avec un plan simple.',
+      badge: 'Bientôt disponible',
+      cta: 'Bientôt disponible',
+      supportText: "L'appel orientation 45 min arrive bientôt. Pour l'instant, commence par l'appel gratuit.",
+    },
+  },
+  en: {
+    unavailable: 'The booking link will be available soon.',
+    free: {
+      eyebrow: 'FREE CALL',
+      title: 'Free call — 15 min',
+      text: 'A free call to clarify your situation and choose the right support format.',
+      badge: 'Free · 15 min',
+      cta: 'Book for free',
+    },
+    orientation: {
+      eyebrow: 'ORIENTATION CALL',
+      title: 'Orientation call — 45 min',
+      text: 'Clarify the next steps and leave with a simple plan.',
+      badge: 'Coming soon',
+      cta: 'Coming soon',
+      supportText: 'The 45-minute orientation call is coming soon. For now, start with the free call.',
+    },
+  },
+  ar: {
+    unavailable: 'سيكون رابط الحجز متاحاً قريباً.',
+    free: {
+      eyebrow: 'مكالمة مجانية',
+      title: 'مكالمة مجانية — 15 دقيقة',
+      text: 'مكالمة مجانية لتوضيح وضعك واختيار صيغة المرافقة المناسبة.',
+      badge: 'مجاني · 15 دقيقة',
+      cta: 'احجز مجاناً',
+    },
+    orientation: {
+      eyebrow: 'مكالمة توجيه',
+      title: 'مكالمة توجيه — 45 دقيقة',
+      text: 'توضيح الخطوات التالية والخروج بخطة بسيطة.',
+      badge: 'قريباً',
+      cta: 'قريباً',
+      supportText: 'مكالمة التوجيه 45 دقيقة قادمة قريباً. في الوقت الحالي، ابدأ بالمكالمة المجانية.',
+    },
+  },
+} as const;
+
+function CallCard({
+  eyebrow,
+  title,
+  text,
+  badge,
+  cta,
+  url,
+  unavailable,
+  comingSoon = false,
+  comingSoonSupportText = '',
+}: {
+  eyebrow: string;
+  title: string;
+  text: string;
+  badge: string;
+  cta: string;
+  url: string;
+  unavailable: string;
+  comingSoon?: boolean;
+  comingSoonSupportText?: string;
+}) {
+  return (
+    <div className="flex flex-col rounded-[2rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm-sm sm:p-7">
+      <div className="flex items-start justify-between gap-2">
+        <p className="text-xs font-bold uppercase tracking-widest text-marhaban-clay">{eyebrow}</p>
+        {comingSoon && (
+          <span className="inline-flex rounded-full border border-marhaban-gold/30 bg-marhaban-gold/10 px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wide text-marhaban-clay">
+            {badge}
+          </span>
+        )}
+      </div>
+      <h3 className="mt-3 font-heading text-xl font-semibold leading-tight text-marhaban-ink sm:text-2xl">
+        {title}
+      </h3>
+      <p className="mt-3 text-sm leading-relaxed text-gray-600">{text}</p>
+      {!comingSoon && (
+        <div className="mt-4">
+          <span className="inline-flex rounded-full border border-marhaban-leaf/25 bg-marhaban-mint/50 px-4 py-1.5 text-xs font-semibold text-marhaban-ink">
+            {badge}
+          </span>
+        </div>
+      )}
+      <div className="mt-6 flex-1 flex flex-col justify-end gap-3">
+        {comingSoon ? (
+          <>
+            <span
+              aria-disabled="true"
+              role="button"
+              className="inline-flex min-h-[52px] cursor-not-allowed select-none items-center justify-center gap-2 rounded-full border border-marhaban-leaf/15 bg-marhaban-cream/70 px-7 py-3.5 text-sm font-semibold text-marhaban-muted"
+            >
+              {cta}
+            </span>
+            {comingSoonSupportText && (
+              <p className="text-xs leading-relaxed text-marhaban-muted">{comingSoonSupportText}</p>
+            )}
+          </>
+        ) : url ? (
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-marhaban-gold px-7 py-3.5 text-sm font-bold text-marhaban-ink shadow-[0_12px_40px_rgba(213,168,79,0.28)] transition hover:bg-marhaban-forestDark hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2"
+          >
+            {cta}
+            <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+          </a>
+        ) : (
+          <p className="rounded-2xl border border-marhaban-leaf/15 bg-marhaban-cream px-5 py-4 text-sm font-semibold text-marhaban-muted">
+            {unavailable}
+          </p>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export function CalendlyEmbed({ locale, disclaimer }: Props) {
-  const services = calendlyEvents[locale];
-  const [activeKey, setActiveKey] = useState<CalendlyEvent['key']>(services[1]?.key ?? services[0]?.key ?? 'orientation');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalSession, setModalSession] = useState(0);
-
-  const active = useMemo(() => services.find((service) => service.key === activeKey) ?? services[0], [activeKey, services]);
-
-  const rightPanelClass = active.key === 'orientation'
-    ? 'border-marhaban-gold/30 bg-marhaban-forestDark text-white shadow-premium-card'
-    : 'border-marhaban-leaf/15 bg-white text-marhaban-ink shadow-warm-sm';
-
-  const isLight = active.key !== 'orientation';
-
-  const requestLabel = locale === 'fr' ? 'Demander un appel' : locale === 'en' ? 'Request a call' : 'اطلب مكالمة';
-  const confirmNote = locale === 'fr'
-    ? 'Confirmation par email · Sans engagement'
-    : locale === 'en'
-      ? 'Email confirmation · No commitment'
-      : 'تأكيد عبر البريد · بدون التزام';
-
-  function openServiceModal(serviceKey: CalendlyEvent['key']) {
-    setActiveKey(serviceKey);
-    setModalSession((current) => current + 1);
-    setIsModalOpen(true);
-  }
-
+  const t = copy[locale];
   return (
-    <div className="space-y-6">
-
-      {/* ── Left: service selector + detail ── */}
-      <div className="space-y-5">
-        <div className="grid gap-4 lg:grid-cols-3">
-          {services.map((service) => {
-            const selected = service.key === active.key;
-            const priceLabel = getPriceLabel(locale, service.key);
-
-            return (
-              <button
-                key={service.key}
-                type="button"
-                onClick={() => openServiceModal(service.key)}
-                className={cn(
-                  'group flex min-h-[220px] cursor-pointer flex-col rounded-[1.75rem] border p-6 text-left shadow-warm-sm transition duration-200 hover:-translate-y-1 hover:shadow-warm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/35 focus-visible:ring-offset-2 sm:p-7',
-                  selected
-                    ? 'border-marhaban-gold/35 bg-marhaban-forestDark text-white shadow-premium-card ring-2 ring-marhaban-gold/20'
-                    : 'border-marhaban-leaf/15 bg-white text-marhaban-ink hover:border-marhaban-clay/30',
-                )}
-                aria-pressed={selected}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <span
-                    className={cn(
-                      'inline-flex rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em]',
-                      selected
-                        ? 'border border-white/12 bg-white/[0.06] text-[#edf7f2]'
-                        : 'border border-marhaban-leaf/15 bg-marhaban-mint/60 text-marhaban-clay',
-                    )}
-                  >
-                    {service.duration}
-                  </span>
-                  {selected ? <BadgeCheck className="mt-0.5 h-4 w-4 text-marhaban-gold" aria-hidden="true" /> : null}
-                </div>
-
-                <h3 className="mt-5 font-heading text-2xl font-semibold leading-tight">{service.title}</h3>
-                <p className={cn('mt-4 flex-1 text-sm leading-relaxed sm:text-base', selected ? 'text-[#edf7f2]' : 'text-marhaban-ink/78')}>
-                  {service.description}
-                </p>
-
-                <div className="mt-6 flex items-center justify-between gap-3">
-                  <span
-                    className={cn(
-                      'rounded-full px-3 py-1 text-xs font-semibold',
-                      selected
-                        ? 'border border-white/12 bg-white/[0.06] text-[#edf7f2]'
-                        : 'border border-marhaban-leaf/15 bg-marhaban-cream/70 text-marhaban-ink',
-                    )}
-                  >
-                    {priceLabel}
-                  </span>
-                  <span className={cn('text-xs font-bold uppercase tracking-[0.12em]', selected ? 'text-marhaban-gold' : 'text-marhaban-clay')}>
-                    {locale === 'fr' ? 'Sélectionner' : locale === 'en' ? 'Select' : 'اختيار'}
-                  </span>
-                </div>
-              </button>
-            );
-          })}
-        </div>
+    <div className="mx-auto max-w-3xl">
+      <div className="grid gap-5 sm:grid-cols-2">
+        <CallCard
+          eyebrow={t.free.eyebrow}
+          title={t.free.title}
+          text={t.free.text}
+          badge={t.free.badge}
+          cta={t.free.cta}
+          url={CALENDLY_FREE_CALL_URL}
+          unavailable={t.unavailable}
+        />
+        <CallCard
+          eyebrow={t.orientation.eyebrow}
+          title={t.orientation.title}
+          text={t.orientation.text}
+          badge={t.orientation.badge}
+          cta={t.orientation.cta}
+          url=""
+          unavailable={t.unavailable}
+          comingSoon={true}
+          comingSoonSupportText={t.orientation.supportText}
+        />
       </div>
-
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(360px,0.72fr)] lg:items-stretch">
-        {/* Selected service detail — no duplicate steps */}
-        <AnimatedCard className="h-full rounded-[2rem] border border-marhaban-leaf/15 bg-white p-5 shadow-warm-sm sm:p-6 lg:p-7">
-          <div className="flex h-full flex-col rounded-[1.5rem] border border-marhaban-leaf/12 bg-marhaban-mint/40 p-5 sm:p-6">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">
-                {locale === 'fr' ? 'Service sélectionné' : locale === 'en' ? 'Selected service' : 'الخدمة المختارة'}
-              </span>
-              <span className="inline-flex rounded-full border border-marhaban-leaf/15 bg-white px-3 py-1 text-xs font-semibold text-marhaban-ink">
-                {active.duration}
-              </span>
-            </div>
-            <h3 className="mt-5 font-heading text-3xl font-semibold leading-tight text-marhaban-ink">{active.title}</h3>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-marhaban-ink/80">{active.description}</p>
-            <p className="mt-auto pt-6 text-xs leading-relaxed text-marhaban-muted">{disclaimer}</p>
-          </div>
-        </AnimatedCard>
-
-        {/* ── Right: booking CTA ── */}
-        <AnimatedCard className={cn('h-full rounded-[2rem] border p-5 sm:p-6 lg:p-7', rightPanelClass)}>
-          <div className="flex h-full flex-col gap-5">
-            <div className={cn('rounded-[1.5rem] border p-5 sm:p-6', isLight ? 'border-marhaban-leaf/12 bg-marhaban-mint/30' : 'border-white/10 bg-white/[0.06]')}>
-              <p className={cn('text-xs font-bold uppercase tracking-[0.14em]', isLight ? 'text-marhaban-clay' : 'text-marhaban-gold')}>
-                {active.title}
-              </p>
-              <p className={cn('mt-4 text-5xl font-semibold tracking-tight', isLight ? 'text-marhaban-forestDark' : 'text-white')}>
-                {getPriceLabel(locale, active.key)}
-              </p>
-              <p className={cn('mt-3 text-sm leading-relaxed', isLight ? 'text-marhaban-ink/78' : 'text-[#edf7f2]')}>
-                {active.description}
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => openServiceModal(active.key)}
-              className={cn(
-                'mt-auto inline-flex min-h-[58px] w-full items-center justify-center gap-2 rounded-full px-7 py-3 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
-                isLight
-                  ? 'bg-marhaban-forestDark text-white hover:bg-marhaban-clay focus-visible:ring-marhaban-leaf/40'
-                  : 'bg-marhaban-gold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.28)] hover:bg-white focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-marhaban-forestDark',
-              )}
-            >
-              {requestLabel}
-              <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
-            </button>
-
-            <p className={cn('text-center text-xs', isLight ? 'text-marhaban-muted' : 'text-[#d8e7df]')}>
-              {confirmNote}
-            </p>
-          </div>
-        </AnimatedCard>
-      </div>
-
-      <ServiceBookingModal
-        key={`${active.key}-${modalSession}`}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        locale={locale}
-        service={active}
-        price={getPriceLabel(locale, active.key)}
-      />
+      <p className="mt-6 text-center text-xs leading-relaxed text-marhaban-muted">{disclaimer}</p>
     </div>
   );
 }

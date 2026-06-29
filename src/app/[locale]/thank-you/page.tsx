@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { isLocale, type Locale } from '@/i18n/locales';
-import { bookingThankYouPath } from '@/lib/routes';
+import { bookingPath } from '@/lib/routes';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -12,5 +12,5 @@ export default async function ThankYouRedirectPage({ params }: Props) {
     redirect('/fr/merci');
   }
 
-  redirect(bookingThankYouPath(localeParam as Locale));
+  redirect(bookingPath(localeParam as Locale));
 }
