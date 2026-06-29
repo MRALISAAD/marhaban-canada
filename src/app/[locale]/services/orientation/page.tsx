@@ -32,7 +32,7 @@ const copy = {
       'Tu prépares ton arrivée ou tu viens d’arriver ? Marhaban Canada t’aide à organiser tes priorités, éviter les erreurs courantes et repartir avec un plan simple.',
     primary: 'Réserver un appel',
     secondary: 'Voir comment ça marche',
-    heroPills: ['Orientation pratique', '30 minutes', '29 $', 'FR / EN / AR'],
+    heroPills: ['Orientation pratique', '45 minutes', 'FR / EN / AR'],
     problemEyebrow: 'Le problème',
     problemTitle: 'Quand tout arrive en même temps, on perd vite le fil.',
     problemText:
@@ -118,11 +118,11 @@ const copy = {
       },
     ],
     priceEyebrow: 'Prix',
-    priceTitle: 'Appel orientation — 30 min',
-    priceText: '29 $',
+    priceTitle: 'Appel orientation — 45 min',
+    priceText: 'Sur demande',
     priceBody:
       'C’est l’offre la plus simple pour commencer si tu veux un vrai point de départ, pas une liste d’informations de plus.',
-    priceHighlights: ['30 minutes', 'Orientation pratique', 'Résumé après l’appel', 'FR / EN / AR'],
+    priceHighlights: ['45 minutes', 'Orientation pratique', 'Résumé après l’appel', 'FR / EN / AR'],
     faqEyebrow: 'Questions fréquentes',
     faqTitle: 'Avant de réserver.',
     faq: [
@@ -145,7 +145,7 @@ const copy = {
       'If you are preparing to arrive or have just arrived, Marhaban Canada helps you organize priorities, avoid common mistakes, and leave with a simple plan.',
     primary: 'Book a call',
     secondary: 'See how it works',
-    heroPills: ['Practical orientation', '30 minutes', '$29', 'FR / EN / AR'],
+    heroPills: ['Practical orientation', '45 minutes', 'FR / EN / AR'],
     problemEyebrow: 'The problem',
     problemTitle: 'When everything happens at once, it is easy to lose the thread.',
     problemText:
@@ -231,11 +231,11 @@ const copy = {
       },
     ],
     priceEyebrow: 'Price',
-    priceTitle: 'Orientation call — 30 min',
-    priceText: '$29',
+    priceTitle: 'Orientation call — 45 min',
+    priceText: 'Upon request',
     priceBody:
       'This is the simplest starting offer if you want a real point of direction, not another pile of information.',
-    priceHighlights: ['30 minutes', 'Practical orientation', 'Summary after the call', 'FR / EN / AR'],
+    priceHighlights: ['45 minutes', 'Practical orientation', 'Summary after the call', 'FR / EN / AR'],
     faqEyebrow: 'FAQ',
     faqTitle: 'Before you book.',
     faq: [
@@ -258,7 +258,7 @@ const copy = {
       'إذا كنت تستعد للوصول أو وصلت للتو، تساعدك مرحبا كندا على ترتيب الأولويات وتجنب الأخطاء الشائعة والخروج بخطة بسيطة.',
     primary: 'احجز مكالمة',
     secondary: 'شاهد كيف يعمل الأمر',
-    heroPills: ['توجيه عملي', '30 دقيقة', '29 $', 'FR / EN / AR'],
+    heroPills: ['توجيه عملي', '45 دقيقة', 'FR / EN / AR'],
     problemEyebrow: 'المشكلة',
     problemTitle: 'عندما يحدث كل شيء دفعة واحدة، من السهل أن تضيع.',
     problemText:
@@ -344,11 +344,11 @@ const copy = {
       },
     ],
     priceEyebrow: 'السعر',
-    priceTitle: 'مكالمة توجيه — 30 دقيقة',
-    priceText: '29 $',
+    priceTitle: 'مكالمة توجيه — 45 دقيقة',
+    priceText: 'حسب الطلب',
     priceBody:
       'هذه هي أسهل نقطة بداية إذا كنت تريد توجيهاً حقيقياً، وليس مجرد معلومات إضافية.',
-    priceHighlights: ['30 دقيقة', 'توجيه عملي', 'ملخص بعد المكالمة', 'FR / EN / AR'],
+    priceHighlights: ['45 دقيقة', 'توجيه عملي', 'ملخص بعد المكالمة', 'FR / EN / AR'],
     faqEyebrow: 'أسئلة شائعة',
     faqTitle: 'قبل الحجز.',
     faq: [

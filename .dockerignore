@@ -1,14 +1,36 @@
+# Dependencies — installed inside the container
 node_modules
+
+# Next.js build output
 .next
+out
+
+# Git history
 .git
+.gitignore
+
+# Secrets — never copy into build context; pass via docker-compose env_file
 .env
 .env.*
 !.env.example
+
+# Debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Test / CI artifacts
 coverage
 playwright-report
 test-results
+.nyc_output
+
+# OS / editor
 .DS_Store
+*.swp
+*.swo
+
+# Docker files themselves (not needed inside the container)
+Dockerfile*
+docker-compose*.yml

@@ -8,19 +8,19 @@ type Props = {
 
 const copy = {
   fr: {
-    badge30: "30 min",
+    badge30: "45 min",
     badgeSummary: "Résumé après appel",
     badgeShield: "Anti-arnaque",
     title: "Tes premières étapes, en ordre",
   },
   en: {
-    badge30: "30 min",
+    badge30: "45 min",
     badgeSummary: "Summary after call",
     badgeShield: "Scam check",
     title: "Your first steps, in order",
   },
   ar: {
-    badge30: "30 دقيقة",
+    badge30: "45 دقيقة",
     badgeSummary: "ملخص بعد المكالمة",
     badgeShield: "مكافحة الاحتيال",
     title: "خطواتك الأولى، بالترتيب",

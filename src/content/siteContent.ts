@@ -3147,7 +3147,7 @@ const enContent: LocaleContent = {
       content: "Marhaban Canada — Practical orientation for newcomers to Canada. We simplify settlement by providing clear information based on official sources.",
     },
     whatWeDo: {
-      title: "What the platform does",
+      title: "What Marhaban Canada does",
       items: [
         "Provides reliable and verified information to help you settle in Canada.",
         "Offers an interactive checklist to track your steps.",
@@ -3157,7 +3157,7 @@ const enContent: LocaleContent = {
       ],
     },
     whatWeDontDo: {
-      title: "What the platform does not do",
+      title: "What Marhaban Canada does not do",
       items: [
         "Does not replace legal advice, immigration advice, or an authorized representative.",
         "Does not collect any personal data (your progress is saved locally on your device).",

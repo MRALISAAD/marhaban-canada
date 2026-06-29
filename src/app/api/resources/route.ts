@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { requireAdmin } from '@/lib/admin/require-admin';
 import { createServerClient } from '@/lib/supabase/server';
 
 type ResourceInsert = {
@@ -65,6 +66,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const auth = await requireAdmin();
+  if (!auth.ok) return NextResponse.json({ ok: false, error: auth.error }, { status: auth.status });
+
   let body: unknown;
 
   try {

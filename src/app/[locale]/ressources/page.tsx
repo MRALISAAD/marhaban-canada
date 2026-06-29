@@ -10,6 +10,8 @@ import { useLocalStorageState } from '@/lib/useLocalStorageState';
 import { SecureExternalLink } from '@/components/checklist/SecureExternalLink';
 import { getHtmlAttrs } from '@/i18n/locales';
 import LocalizedLink from '@/components/LocalizedLink';
+import { RESOURCE_GUIDE_SLUGS, resourceGuideMeta } from '@/content/resourceGuides';
+import type { Locale } from '@/i18n/locales';
 
 const categoryIconMap: Record<string, typeof Globe> = {
   arrival: Globe,
@@ -72,19 +74,9 @@ export default function RessourcesPage() {
       .filter((category) => category.items.length > 0);
   }, [dictionary.categories, dictionary.items, query, activeCategory, province]);
 
-  const guideCards = useMemo(
-    () => [
-      { id: 'documents', data: resources.quickGuides.documentsCard },
-      { id: 'transport', data: resources.quickGuides.transportCard },
-      { id: 'credit', data: resources.quickGuides.creditCard },
-    ],
-    [resources.quickGuides],
-  );
-
   const isRtl = dir === 'rtl';
   const alignClass = isRtl ? 'text-right' : 'text-left';
   const categoryHints = resources.sections;
-  // Guide links removed from ressources page - available via /parcours/guide
 
   const sectionKeyMap: Record<string, keyof typeof categoryHints> = {
     arrival: 'arrival',
@@ -98,9 +90,50 @@ export default function RessourcesPage() {
     integration: 'integration',
   };
 
+  const guideCardLabels: Record<Locale, { title: string; cta: string }> = {
+    fr: { title: 'Guides thématiques', cta: 'Lire le guide' },
+    en: { title: 'Thematic guides', cta: 'Read the guide' },
+    ar: { title: 'الأدلة الموضوعية', cta: 'اقرأ الدليل' },
+  };
+
   return (
-    <main className="warm-page px-4 pt-16 pb-20 sm:px-6 sm:pt-20" dir={dir} lang={locale}>
+    <main className="warm-page px-4 pt-6 pb-16 sm:px-6 sm:pt-8" dir={dir} lang={locale}>
       <div className="mx-auto w-full max-w-6xl space-y-8">
+
+        {/* ── Thematic guide cards ── */}
+        <section>
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-clay">
+            {guideCardLabels[locale as Locale].title}
+          </p>
+          <h2 className={`mt-2 font-heading text-2xl font-semibold leading-tight text-marhaban-ink sm:text-3xl ${dir === 'rtl' ? 'text-right' : 'text-left'}`}>
+            {locale === 'fr' ? 'Explorer par thème' : locale === 'en' ? 'Browse by topic' : 'استعرض حسب الموضوع'}
+          </h2>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {RESOURCE_GUIDE_SLUGS.map((slug) => {
+              const meta = resourceGuideMeta[slug];
+              return (
+                <Link
+                  key={slug}
+                  href={`/${locale}/ressources/${slug}`}
+                  className="group flex flex-col gap-3 rounded-[1.75rem] border border-marhaban-leaf/15 bg-white p-5 shadow-warm-sm transition hover:-translate-y-0.5 hover:border-marhaban-leaf/30 hover:shadow-warm"
+                >
+                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl border border-marhaban-leaf/15 bg-marhaban-mint text-2xl">
+                    {meta.icon}
+                  </span>
+                  <div>
+                    <p className="font-heading text-base font-semibold leading-snug text-marhaban-ink">
+                      {meta[locale as Locale]}
+                    </p>
+                    <p className="mt-1 flex items-center gap-1 text-xs font-medium text-marhaban-leaf">
+                      {guideCardLabels[locale as Locale].cta}
+                      <ArrowRight className="h-3 w-3 rtl-flip" aria-hidden="true" />
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
 
         {/* ── Hero / header + filters ── */}
         <div className="rounded-[2rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm sm:p-8">
@@ -161,47 +194,6 @@ export default function RessourcesPage() {
             </div>
           </div>
         </div>
-
-        {/* ── Guide cards ── */}
-        <section className="rounded-[2rem] border border-marhaban-leaf/15 bg-marhaban-forestDark p-5 text-white shadow-warm sm:rounded-[2.5rem] sm:p-6 lg:p-7">
-          <div className="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-start lg:gap-8">
-            <div className={alignClass}>
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-gold">
-                {locale === 'fr' ? 'Guides rapides' : locale === 'en' ? 'Quick guides' : 'أدلة سريعة'}
-              </p>
-              <h2 className="mt-3 font-heading text-2xl font-semibold leading-tight text-white sm:text-3xl">
-                {locale === 'fr' ? 'Commencer par ce qui débloque le plus.' : locale === 'en' ? 'Start with what unlocks the most.' : 'ابدأ بما يفتح الطريق أكثر.'}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-[#edf7f2]">
-                {locale === 'fr'
-                  ? 'Trois points de départ pour éviter de chercher partout à la fois.'
-                  : locale === 'en'
-                    ? 'Three starting points so you do not search everywhere at once.'
-                    : 'ثلاث نقاط بداية حتى لا تبحث في كل مكان دفعة واحدة.'}
-              </p>
-            </div>
-            <div className="grid gap-3 md:grid-cols-3">
-              {guideCards.map((guide) => (
-                <div
-                  key={guide.id}
-                  className="flex flex-col rounded-[1.5rem] border border-white/12 bg-white/[0.07] p-5 transition duration-200 hover:bg-white/[0.11]"
-                >
-                  <p className="font-heading text-lg font-semibold leading-tight text-white">{guide.data.title}</p>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-[#edf7f2]">{guide.data.body}</p>
-                  <div className="mt-5">
-                    <LocalizedLink
-                      href={guide.data.href}
-                      className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-marhaban-gold px-5 py-2.5 text-sm font-bold text-marhaban-ink shadow-[0_14px_40px_rgba(213,168,79,0.22)] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
-                    >
-                      {guide.data.ctaLabel}
-                      <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
-                    </LocalizedLink>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {filteredCategories.length === 0 ? (
           <div className="rounded-[1.75rem] border border-marhaban-leaf/15 bg-white p-6 text-sm text-marhaban-muted shadow-warm-sm">
@@ -293,12 +285,10 @@ export default function RessourcesPage() {
                             {isFav ? dictionary.labels.removeFavoriteLabel : resources.ui.addFavorite}
                           </button>
                         </div>
-                        {/* Guide link hidden on ressources page - available via /parcours/guide */}
                       </div>
                     );
                   })}
                 </div>
-                {/* Guide link hidden on ressources page */}
               </section>
             );
           })}
@@ -310,13 +300,6 @@ export default function RessourcesPage() {
             {resources.accompaniment.footerHelp}
           </p>
           <div className={`mt-5 flex flex-wrap gap-3 ${isRtl ? 'justify-end' : ''}`}>
-            <LocalizedLink
-              href="/parcours"
-              className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-marhaban-leaf/20 bg-marhaban-mint/40 px-5 py-2.5 text-sm font-bold text-marhaban-ink transition hover:bg-marhaban-mint hover:border-marhaban-leaf/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
-            >
-              {resources.ui.backToPath}
-              <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
-            </LocalizedLink>
             <LocalizedLink
               href="/reserver"
               className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-marhaban-forestDark px-5 py-2.5 text-sm font-bold text-white shadow-warm-xs transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
@@ -342,6 +325,3 @@ function RecommendedBadge({ label }: { label: string }) {
     </span>
   );
 }
-
-// SeeGuideLink removed - guide links hidden on ressources page
-// Users can access guides via /parcours/guide

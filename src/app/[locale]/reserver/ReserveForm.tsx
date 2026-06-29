@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/cn';
-import { bookingThankYouPath } from '@/lib/routes';
+import { bookingPath } from '@/lib/routes';
 import type { Locale } from '@/i18n/locales';
 
 type FormTexts = {
@@ -95,7 +95,7 @@ export function ReserveForm({ texts, extras, locale, dir }: Props) {
         body: JSON.stringify({ service, name, email, phone, status, city, need, urgency, language, consent }),
       });
       if (res.ok) {
-        router.push(bookingThankYouPath(locale));
+        router.push(bookingPath(locale));
         return;
       }
       setError(texts.errorText);

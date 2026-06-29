@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react';
 import { ArrowRight } from 'lucide-react';
 import LocalizedLink from '@/components/LocalizedLink';
-import { AnimatedCTA, AnimatedCard, SectionReveal } from '@/components/animations/MarketingMotion';
+import { AnimatedCTA, AnimatedCard } from '@/components/animations/MarketingMotion';
 import { cn } from '@/lib/cn';
 
 type Cta = {
@@ -40,9 +40,9 @@ export function PageHero({
   const isHomeScale = scale === 'home';
 
   return (
-    <SectionReveal
+    <section
       className={cn(
-        'px-4 pt-16 pb-12 sm:px-6 sm:pt-20 sm:pb-16 lg:px-8 lg:pt-28 lg:pb-20',
+        'px-4 pt-8 pb-6 sm:px-6 sm:pt-10 sm:pb-8 lg:px-8 lg:pt-12 lg:pb-10',
         dark ? 'bg-marhaban-forestDark text-white' : 'bg-transparent',
         className,
       )}
@@ -138,6 +138,6 @@ export function PageHero({
           </AnimatedCard>
         ) : null}
       </div>
-    </SectionReveal>
+    </section>
   );
 }

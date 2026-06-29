@@ -34,7 +34,7 @@ export default function NotFoundPage() {
   const labels = errorLabels[locale] || errorLabels.fr;
 
   return (
-    <main className="gov-container py-24">
+    <main className="gov-container py-12">
       <PageCard className="max-w-xl mx-auto text-center space-y-8">
         <p className="gov-meta">404</p>
         <h1 className="gov-heading gov-heading--dark text-3xl">{labels.title}</h1>

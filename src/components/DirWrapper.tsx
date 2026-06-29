@@ -9,7 +9,7 @@ export function DirWrapper({ children }: { children: ReactNode }) {
   const { dir } = getHtmlAttrs(locale);
 
   return (
-    <div dir={dir} lang={locale} className="min-h-screen">
+    <div dir={dir} lang={locale} className="min-h-fit">
       {children}
     </div>
   );

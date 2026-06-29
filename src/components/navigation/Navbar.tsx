@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { BrandLogo } from '@/components/site/BrandLogo';
+import { BookingModalTrigger } from '@/components/booking/BookingModalTrigger';
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
 import { LOCALES, type Locale } from '@/i18n/locales';
@@ -12,14 +13,13 @@ import { getNavigationContent } from '@/content/navigation';
 
 // Type for navigation link configuration
 type NavLinkConfig = {
-  key: 'services' | 'antiScam' | 'resources' | 'about';
+  key: 'antiScam' | 'resources' | 'about';
   path: string;
   group: 'primary' | 'secondary';
 };
 
 // Navigation links configuration - single source of truth
 export const NAV_LINKS_CONFIG: readonly NavLinkConfig[] = [
-  { key: 'services', path: '/accompagnement', group: 'primary' },
   { key: 'antiScam', path: '/anti-arnaque', group: 'primary' },
   { key: 'resources', path: '/ressources', group: 'primary' },
   { key: 'about', path: '/a-propos', group: 'secondary' },
@@ -255,18 +255,19 @@ export function Navbar() {
           {/* Brand */}
           <Link
             href={localizeHref('/')}
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center gap-2.5 font-bold tracking-tight text-marhaban-ink transition-colors hover:text-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md sm:justify-start"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center text-marhaban-ink transition-colors hover:text-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2 focus-visible:rounded-md sm:justify-start"
             aria-label={brandAriaLabel}
           >
-            <Image
-              src="/logo.png"
-              alt=""
-              width={32}
-              height={32}
-              className="h-8 w-8 flex-shrink-0 lg:h-9 lg:w-9"
-              aria-hidden="true"
+            <BrandLogo
+              size="sm"
+              showName={false}
+              className="sm:hidden"
             />
-            <span className="hidden text-[1.02rem] sm:inline lg:text-[1.08rem]">{content.brand}</span>
+            <BrandLogo
+              size="sm"
+              name={content.brand}
+              className="hidden text-[1.02rem] sm:inline-flex lg:text-[1.08rem]"
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -312,12 +313,13 @@ export function Navbar() {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            <Link
+            <BookingModalTrigger
+              locale={locale}
               href={bookingPath(locale)}
-              className="hidden min-h-[50px] items-center justify-center rounded-full border border-marhaban-gold/35 bg-marhaban-forestDark px-7 py-3 text-[0.95rem] font-bold text-white shadow-[0_20px_54px_rgba(8,42,36,0.28)] transition hover:bg-marhaban-leaf hover:shadow-[0_24px_58px_rgba(8,42,36,0.32)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/45 focus-visible:ring-offset-2 sm:inline-flex"
+              className="hidden min-h-[50px] items-center justify-center rounded-full border border-marhaban-gold/35 bg-marhaban-forestDark px-7 py-3 text-[0.95rem] font-bold text-white shadow-[0_20px_54px_rgba(8,42,36,0.28)] transition hover:bg-marhaban-leaf hover:shadow-[0_24px_58px_rgba(8,42,36,0.32)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/45 focus-visible:ring-offset-2 sm:inline-flex"
             >
               {bookCallLabel}
-            </Link>
+            </BookingModalTrigger>
 
             {/* Language Switch */}
             <Link
@@ -409,15 +411,14 @@ export function Navbar() {
               </Link>
             ))}
             <div className="px-4 pb-2 pt-4">
-              <Link
+              <BookingModalTrigger
+                locale={locale}
                 href={bookingPath(locale)}
-                className="flex min-h-[48px] w-full items-center justify-center rounded-full bg-marhaban-forestDark px-4 py-3 text-base font-bold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/45 focus-visible:ring-offset-2"
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                }}
+                className="flex min-h-[48px] w-full items-center justify-center rounded-full bg-marhaban-forestDark px-4 py-3 text-base font-bold text-white shadow-warm-sm transition hover:bg-marhaban-leaf active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/45 focus-visible:ring-offset-2"
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 {bookCallLabel}
-              </Link>
+              </BookingModalTrigger>
             </div>
           </nav>
         </div>

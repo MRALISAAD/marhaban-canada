@@ -298,6 +298,54 @@ ALTER TABLE public.admin_notes ENABLE ROW LEVEL SECURITY;
 
 
 -- ============================================================
+-- 6. booking_preparation_forms
+-- Demandes de réservation pour l'appel gratuit
+-- Source : /fr/reserver/formulaire
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS public.booking_preparation_forms (
+  id                  uuid          PRIMARY KEY DEFAULT gen_random_uuid(),
+  created_at          timestamptz   NOT NULL DEFAULT now(),
+
+  locale              text          NOT NULL CHECK (locale IN ('fr', 'en', 'ar')),
+  first_name          text          NOT NULL,
+  last_name           text          NOT NULL,
+  email               text          NOT NULL,
+  phone               text,
+
+  location_status     text          NOT NULL,
+  general_status      text,
+  needs               text[]        NOT NULL DEFAULT '{}',
+  situation           text          NOT NULL,
+  main_question       text,
+  urgency             text,
+  availability        text          NOT NULL,
+  preferred_contact_method text     NOT NULL,
+  consent             boolean       NOT NULL DEFAULT false,
+  source              text          NOT NULL DEFAULT 'booking_form',
+  status              text          NOT NULL DEFAULT 'new'
+    CHECK (status IN ('new', 'contacted', 'confirmed', 'completed', 'cancelled'))
+);
+
+-- Safe updates when the table already exists from an earlier draft.
+ALTER TABLE public.booking_preparation_forms
+  ADD COLUMN IF NOT EXISTS availability text NOT NULL DEFAULT '',
+  ADD COLUMN IF NOT EXISTS preferred_contact_method text NOT NULL DEFAULT 'any',
+  ADD COLUMN IF NOT EXISTS status text NOT NULL DEFAULT 'new';
+
+ALTER TABLE public.booking_preparation_forms
+  ALTER COLUMN source SET DEFAULT 'booking_form';
+
+CREATE INDEX IF NOT EXISTS booking_preparation_forms_created_at_idx ON public.booking_preparation_forms (created_at DESC);
+CREATE INDEX IF NOT EXISTS booking_preparation_forms_email_idx      ON public.booking_preparation_forms (email);
+CREATE INDEX IF NOT EXISTS booking_preparation_forms_urgency_idx    ON public.booking_preparation_forms (urgency);
+CREATE INDEX IF NOT EXISTS booking_preparation_forms_status_idx     ON public.booking_preparation_forms (status);
+
+ALTER TABLE public.booking_preparation_forms ENABLE ROW LEVEL SECURITY;
+-- Aucune policy anon : insertion/lecture via routes serveur avec service_role uniquement.
+
+
+-- ============================================================
 -- FIN DE LA MIGRATION v1
 -- ============================================================
 --
@@ -306,7 +354,7 @@ ALTER TABLE public.admin_notes ENABLE ROW LEVEL SECURITY;
 --   WHERE table_schema = 'public'
 --   ORDER BY table_name;
 --
--- Attendu : admin_notes, bookings, case_files, resources, scam_checks
+-- Attendu : admin_notes, booking_preparation_forms, bookings, case_files, resources, scam_checks
 --
 -- Vérifier que RLS est activée :
 --   SELECT tablename, rowsecurity

@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react';
+import { BookingModalProvider } from '@/components/booking/BookingModalProvider';
 import { FloatingBookCallButton } from '@/components/FloatingBookCallButton';
 import { Footer } from '@/components/navigation/Footer';
 import { Navbar } from '@/components/navigation/Navbar';
+import { FloatingMouseCTA } from '@/components/site/FloatingMouseCTA';
 
 type Props = {
   children: ReactNode;
@@ -10,7 +12,7 @@ type Props = {
 
 export function PublicLayout({ children, skipLabel }: Props) {
   return (
-    <>
+    <BookingModalProvider>
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-white focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
@@ -19,8 +21,9 @@ export function PublicLayout({ children, skipLabel }: Props) {
       </a>
       <Navbar />
       {children}
+      <FloatingMouseCTA />
       <FloatingBookCallButton />
       <Footer />
-    </>
+    </BookingModalProvider>
   );
 }

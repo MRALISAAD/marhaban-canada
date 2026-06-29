@@ -151,7 +151,7 @@ const miniFAQ: Record<string, Record<string, { q: string; a: string }[]>> = {
   fr: {
     nas_done: [
       { q: 'Est-ce obligatoire ?', a: 'Oui, pour travailler et ouvrir un compte.' },
-      { q: 'Combien de temps ?', a: 'En général, moins de 30 minutes sur place.' },
+      { q: 'Combien de temps ?', a: 'En général, moins d’une heure sur place.' },
     ],
     phone_done: [
       { q: 'Dois-je avoir une adresse ?', a: 'Non, une pièce d’identité suffit souvent.' },
@@ -173,7 +173,7 @@ const miniFAQ: Record<string, Record<string, { q: string; a: string }[]>> = {
   en: {
     nas_done: [
       { q: 'Is it mandatory?', a: 'Yes, for work and banking.' },
-      { q: 'How long does it take?', a: 'Usually less than 30 minutes in person.' },
+      { q: 'How long does it take?', a: 'Usually less than an hour in person.' },
     ],
     phone_done: [
       { q: 'Do I need an address?', a: 'No, just an ID is often enough.' },

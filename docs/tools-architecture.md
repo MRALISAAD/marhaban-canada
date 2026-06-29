@@ -98,16 +98,18 @@ Risques :
 ## Calendly
 
 Usage prévu :
-- Réservation automatique de créneaux.
-- Synchronisation ou redirection vers les événements Calendly selon le service.
+- Intégration future optionnelle.
+- Le flux actif utilise le formulaire interne et l'admin pour confirmer un créneau.
+- L'appel orientation 45 min reste "bientôt disponible" et ne nécessite pas d'URL Calendly.
 
 Phase d'intégration :
-1. Après validation du flux manuel "demande d'abord".
-2. Ajouter des liens par service.
+1. Conserver le flux formulaire interne.
+2. Ne pas exiger Calendly pour l'appel gratuit.
 3. Évaluer ensuite les webhooks Calendly si nécessaire.
 
 Exclu du MVP actuel :
 - Embed Calendly obligatoire.
+- Calendly dans le flux de réservation actif.
 - Confirmation automatique.
 - Synchronisation calendrier.
 

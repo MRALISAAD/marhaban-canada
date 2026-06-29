@@ -1478,7 +1478,7 @@ export const frContent: LocaleContent = {
       content: "Marhaban Canada — Orientation pratique pour nouveaux arrivants au Canada. Nous simplifions l'installation en fournissant des informations claires, basées sur des sources officielles.",
     },
     whatWeDo: {
-      title: "Ce que la plateforme fait",
+      title: "Ce que fait Marhaban Canada",
       items: [
         "Fournit des informations fiables et vérifiées pour t'aider à t'installer au Canada.",
         "Propose une checklist interactive pour suivre tes démarches.",
@@ -1488,7 +1488,7 @@ export const frContent: LocaleContent = {
       ],
     },
     whatWeDontDo: {
-      title: "Ce que la plateforme ne fait pas",
+      title: "Ce que Marhaban Canada ne fait pas",
       items: [
         "Ne remplace pas les services d'un représentant autorisé.",
         "Ne collecte aucune donnée personnelle (ta progression est sauvegardée localement sur ton appareil).",

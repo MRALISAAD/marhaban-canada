@@ -1,22 +1,24 @@
-import type { ReactNode } from 'react';
+import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 
-type Props = {
+type Props = ComponentPropsWithoutRef<'section'> & {
   children: ReactNode;
-  className?: string;
-  id?: string;
   tone?: 'light' | 'muted' | 'dark';
 };
 
 const tones = {
   light: 'bg-transparent',
-  muted: 'bg-marhaban-mint/25',
+  muted: 'bg-marhaban-cream/70',
   dark: 'bg-marhaban-forestDark text-white',
 };
 
-export function Section({ children, className, id, tone = 'light' }: Props) {
+export function Section({ children, className, id, tone = 'light', ...props }: Props) {
   return (
-    <section id={id} className={cn('px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-28', tones[tone], className)}>
+    <section
+      id={id}
+      className={cn('px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16', tones[tone], className)}
+      {...props}
+    >
       <div className="mx-auto max-w-7xl">{children}</div>
     </section>
   );

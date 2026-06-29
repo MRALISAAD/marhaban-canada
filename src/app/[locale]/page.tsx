@@ -1,558 +1,411 @@
 import type { Metadata } from 'next';
-import { ArrowRight, Check, ShieldAlert, Compass, ShieldCheck, BookOpen, Phone } from 'lucide-react';
-import { getHtmlAttrs, type Locale } from '@/i18n/locales';
-import { bookingPath, orientationServicePath, antiScamServicePath, resourcesPath, startPath } from '@/lib/routes';
-import { withLocale } from '@/lib/i18n-utils';
-import { legalDisclaimer } from '@/content/legalDisclaimer';
-import { PageHero } from '@/components/sections/PageHero';
-import { RouteCard } from '@/components/sections/RouteCard';
-import { ServiceCard } from '@/components/sections/ServiceCard';
-import { RoadmapStage } from '@/components/sections/RoadmapStage';
+import Link from 'next/link';
+import { ArrowRight, ShieldAlert } from 'lucide-react';
+import { notFound } from 'next/navigation';
+import { getHtmlAttrs, isLocale, type Locale } from '@/i18n/locales';
+import { BookingModalTrigger } from '@/components/booking/BookingModalTrigger';
 import { PageShell } from '@/components/layout/PageShell';
 import { Section } from '@/components/layout/Section';
 import { SectionHeader } from '@/components/marketing/SectionHeader';
-import LocalizedLink from '@/components/LocalizedLink';
 
 type Props = { params: Promise<{ locale: string }> };
 
-const homeCopy = {
+const copy = {
   fr: {
-    eyebrow: 'Marhaban Canada',
-    title: 'Arriver au Canada, sans te sentir perdu.',
-    text: 'Tu prépares ton arrivée ou tu viens d\'arriver ? On t\'aide à clarifier tes priorités, éviter les arnaques et avancer avec un plan simple.',
-    primary: 'Réserver un appel',
-    secondary: 'Comment ça marche',
-    pills: ['Accompagnement pratique', 'FR / EN / AR', 'Anti-arnaque', 'Pas de conseil juridique'],
-    visualLabel: 'Ce qu\'on couvre',
-    visualTopics: [
-      'Avant l\'arrivée', 'Première semaine',
-      'Logement', 'Documents',
-      'Banque', 'Santé',
-      'Études', 'Anti-arnaque',
+    metaTitle: 'Marhaban Canada — Arriver au Canada sans se perdre',
+    metaDesc: 'Marhaban Canada aide les nouveaux arrivants à comprendre quoi faire en premier, éviter les erreurs et avancer avec un plan simple.',
+
+    heroEyebrow: 'Marhaban Canada',
+    heroTitle: 'Bienvenue au Canada,\nsans te perdre dans\nles démarches.',
+    heroText: "Marhaban Canada t'aide à comprendre quoi faire, dans quel ordre, et comment avancer sans confusion.",
+    heroCta1: 'Réserver un appel gratuit',
+    heroCta2: 'Voir comment ça marche',
+
+    offersEyebrow: 'Deux options claires',
+    offersTitle: 'Commence par le bon appel.',
+
+    offer1Title: 'Appel gratuit',
+    offer1Duration: '15 min',
+    offer1Text: "Un premier appel pour comprendre ta situation et t'orienter vers la bonne prochaine étape.",
+    offer1Extra: 'Idéal si tu ne sais pas par où commencer.',
+    offer1Cta: 'Réserver un appel gratuit',
+
+    offer2Title: 'Appel orientation',
+    offer2Duration: '45 min',
+    offer2Text: 'Un appel plus complet pour clarifier tes démarches et repartir avec un plan simple.',
+    offer2Extra: 'Idéal si tu veux arrêter de chercher partout et avancer avec confiance.',
+    offer2Cta: 'Bientôt disponible',
+
+    antiTitle: "Avant de payer quelqu'un, vérifie.",
+    antiText: "Si une offre, un message ou une demande d'argent te semble douteuse, on t'aide à identifier les signaux d'alerte.",
+    antiCta: 'Voir anti-arnaque',
+
+    stepsEyebrow: 'Comment ça marche',
+    stepsTitle: 'Simple. Clair. Humain.',
+    steps: [
+      { num: '01', title: 'Tu remplis le formulaire', text: 'Quelques questions pour comprendre ta situation.' },
+      { num: '02', title: 'On te contacte', text: 'On confirme un créneau pour ton appel gratuit.' },
+      { num: '03', title: 'Tu repars avec une prochaine étape', text: 'Tu sais quoi faire maintenant, sans confusion.' },
     ],
-    trustItems: [
-      { icon: '✦', label: 'Priorités claires', desc: 'Organiser les prochaines étapes sans jargon.' },
-      { icon: '⬡', label: 'Vérification prudente', desc: 'Regarder les signaux importants avant de payer.' },
-      { icon: '◈', label: 'Guides fiables', desc: 'Des ressources simples pour comprendre quoi faire.' },
-      { icon: '◎', label: 'Appel humain', desc: '30 minutes pour repartir avec un plan clair.' },
-    ],
-    trustEyebrow: 'CE QUE TU TROUVES ICI',
-    trustTitle: 'Avancer avec moins de confusion.',
-    trustText: 'Un accompagnement simple pour clarifier tes priorités, vérifier les bons signaux et savoir quoi faire ensuite.',
-    serviceEyebrow: 'Service principal',
-    serviceTitle: 'Un appel pour clarifier ton départ.',
-    serviceText: 'En 30 minutes, on trie ce qui est urgent et tu repars avec tes prochaines étapes.',
-    situationEyebrow: 'Par où commencer',
-    situationTitle: 'Quelle est ta situation ?',
-    situationText: 'Choisis ton point de départ. On t\'oriente vers le bon service ou la bonne ressource.',
-    processEyebrow: 'Comment ça marche',
-    processTitle: 'Trois étapes. Du flou au plan clair.',
-    processText: 'Un parcours simple et direct pour savoir quoi faire ensuite.',
-    antiEyebrow: 'Anti-arnaque',
-    antiTitle: 'Avant de payer quelqu\'un, vérifie.',
-    antiText: 'Les arnaques ciblent les nouveaux arrivants. Quand un message t\'appuie pour aller vite, ralentis — c\'est souvent le signe qu\'il faut vérifier.',
-    antiCta: 'Vérifier une situation',
-    antiSecondary: 'Voir les ressources',
-    resourceEyebrow: 'Guides pratiques',
-    resourceTitle: 'Tout ce dont tu as besoin pour tes premiers jours.',
-    resourceText: 'Des guides clairs et vérifiés, organisés par thème.',
-    finalTitle: 'Tu n\'as pas besoin de tout comprendre seul.',
-    finalText: 'Un appel de 30 minutes suffit pour clarifier tes priorités et repartir avec un plan.',
-    finalCta: 'Réserver un appel',
-    finalSecondary: 'Voir le service',
+
+    finalTitle: "Tu n'as pas besoin de tout comprendre seul.",
+    finalText: "Commence par un appel gratuit de 15 minutes.",
+    finalCta1: 'Réserver un appel gratuit',
+    finalCta2: 'Bientôt disponible',
+
+    disclaimer: 'Marhaban Canada offre un accompagnement général et informatif. Ce service ne remplace pas un avocat, un consultant réglementé en immigration ou un organisme gouvernemental.',
+
+    heroCard1Status: 'Disponible',
+    heroCard2Status: 'Bientôt disponible',
   },
   en: {
-    eyebrow: 'Marhaban Canada',
-    title: 'Arriving in Canada, without feeling lost.',
-    text: 'Preparing your arrival or just landed? We help you clarify priorities, avoid scams, and move forward with a simple plan.',
-    primary: 'Book a call',
-    secondary: 'How it works',
-    pills: ['Practical guidance', 'FR / EN / AR', 'Anti-scam', 'No legal advice'],
-    visualLabel: 'What we cover',
-    visualTopics: [
-      'Before arrival', 'First week',
-      'Housing', 'Documents',
-      'Banking', 'Health',
-      'Studies', 'Anti-scam',
+    metaTitle: 'Marhaban Canada — Arriving in Canada without getting lost',
+    metaDesc: 'Marhaban Canada helps newcomers understand what to do first, avoid mistakes, and move forward with a simple plan.',
+
+    heroEyebrow: 'Marhaban Canada',
+    heroTitle: 'Welcome to Canada,\nwithout getting lost\nin the process.',
+    heroText: 'Marhaban Canada helps you understand what to do, in what order, and how to move forward without confusion.',
+    heroCta1: 'Book a free call',
+    heroCta2: 'See how it works',
+
+    offersEyebrow: 'Two clear options',
+    offersTitle: 'Start with the right call.',
+
+    offer1Title: 'Free call',
+    offer1Duration: '15 min',
+    offer1Text: 'A first call to understand your situation and point you to the right next step.',
+    offer1Extra: "Ideal if you don't know where to start.",
+    offer1Cta: 'Book a free call',
+
+    offer2Title: 'Orientation call',
+    offer2Duration: '45 min',
+    offer2Text: 'A more complete call to clarify your steps and leave with a simple plan.',
+    offer2Extra: 'Ideal if you want to stop searching everywhere and move forward with confidence.',
+    offer2Cta: 'Coming soon',
+
+    antiTitle: 'Before paying anyone, verify.',
+    antiText: 'If an offer, a message, or a request for money seems suspicious, we help you identify the warning signs.',
+    antiCta: 'See anti-scam',
+
+    stepsEyebrow: 'How it works',
+    stepsTitle: 'Simple. Clear. Human.',
+    steps: [
+      { num: '01', title: 'You fill out the form', text: 'A few questions to understand your situation.' },
+      { num: '02', title: 'We contact you', text: 'We confirm a time slot for your free call.' },
+      { num: '03', title: 'You leave with a next step', text: 'You know what to do now, without confusion.' },
     ],
-    trustItems: [
-      { icon: '✦', label: 'Clear priorities', desc: 'Organize the next steps without jargon.' },
-      { icon: '⬡', label: 'Careful verification', desc: 'Check the key signals before paying.' },
-      { icon: '◈', label: 'Reliable guides', desc: 'Simple resources to know what to do.' },
-      { icon: '◎', label: 'Human call', desc: '30 minutes to leave with a clear plan.' },
-    ],
-    trustEyebrow: 'What you find here',
-    trustTitle: 'Move forward with less confusion.',
-    trustText: 'Simple support to clarify your priorities, check the key signals, and know what to do next.',
-    serviceEyebrow: 'Main service',
-    serviceTitle: 'A call to clarify your first steps.',
-    serviceText: 'In 30 minutes, we sort what\'s urgent and you leave with your next steps.',
-    situationEyebrow: 'Where to start',
-    situationTitle: 'What is your situation?',
-    situationText: 'Choose your starting point. We\'ll guide you to the right service or resource.',
-    processEyebrow: 'How it works',
-    processTitle: 'Three steps. From uncertainty to clarity.',
-    processText: 'A simple, direct path to knowing what to do next.',
-    antiEyebrow: 'Anti-scam',
-    antiTitle: 'Before paying someone, check.',
-    antiText: 'Scams target newcomers. When a message pushes you to act fast, slow down — that\'s often the sign to verify.',
-    antiCta: 'Check a situation',
-    antiSecondary: 'See resources',
-    resourceEyebrow: 'Practical guides',
-    resourceTitle: 'Everything you need for your first days.',
-    resourceText: 'Clear, verified guides organized by topic.',
-    finalTitle: 'You don\'t need to figure it all out alone.',
-    finalText: 'A 30-minute call is enough to clarify your priorities and leave with a plan.',
-    finalCta: 'Book a call',
-    finalSecondary: 'See the service',
+
+    finalTitle: "You don't need to figure it all out alone.",
+    finalText: 'Start with a free 15-minute call.',
+    finalCta1: 'Book a free call',
+    finalCta2: 'Coming soon',
+
+    disclaimer: 'Marhaban Canada provides general and informational guidance. This service does not replace a lawyer, a regulated immigration consultant, or a government agency.',
+
+    heroCard1Status: 'Available',
+    heroCard2Status: 'Coming soon',
   },
   ar: {
-    eyebrow: 'مرحبا كندا',
-    title: 'الوصول إلى كندا، دون الشعور بالضياع.',
-    text: 'سواء كنت تستعد لقدومك أو وصلت للتو، نساعدك على توضيح أولوياتك وتجنب الاحتيال والتقدم بخطة بسيطة.',
-    primary: 'احجز مكالمة',
-    secondary: 'كيف يعمل',
-    pills: ['توجيه عملي', 'FR / EN / AR', 'مكافحة الاحتيال', 'لا نصائح قانونية'],
-    visualLabel: 'ما نغطيه',
-    visualTopics: [
-      'قبل الوصول', 'الأسبوع الأول',
-      'السكن', 'الوثائق',
-      'البنك', 'الصحة',
-      'الدراسة', 'مكافحة الاحتيال',
+    metaTitle: 'مرحبا كندا — الوصول إلى كندا دون ضياع',
+    metaDesc: 'مرحبا كندا تساعد الوافدين الجدد على فهم ما يجب فعله أولاً، وتجنب الأخطاء، والمضي قدماً بخطة بسيطة.',
+
+    heroEyebrow: 'مرحبا كندا',
+    heroTitle: 'أهلاً بك في كندا،\nدون أن تضيع\nفي الإجراءات.',
+    heroText: 'تساعدك مرحبا كندا على فهم ما يجب فعله، وبأي ترتيب، وكيفية المضي قدماً بدون ارتباك.',
+    heroCta1: 'احجز مكالمة مجانية',
+    heroCta2: 'اعرف كيف يعمل',
+
+    offersEyebrow: 'خيارين واضحين',
+    offersTitle: 'ابدأ بالمكالمة المناسبة.',
+
+    offer1Title: 'مكالمة مجانية',
+    offer1Duration: '15 دقيقة',
+    offer1Text: 'مكالمة أولى لفهم وضعك وتوجيهك نحو الخطوة الصحيحة التالية.',
+    offer1Extra: 'مثالي إذا كنت لا تعرف من أين تبدأ.',
+    offer1Cta: 'احجز مكالمة مجانية',
+
+    offer2Title: 'مكالمة توجيه',
+    offer2Duration: '45 دقيقة',
+    offer2Text: 'مكالمة أكثر تفصيلاً لتوضيح إجراءاتك والخروج بخطة بسيطة.',
+    offer2Extra: 'مثالي إذا كنت تريد التوقف عن البحث في كل مكان والمضي قدماً بثقة.',
+    offer2Cta: 'قريباً',
+
+    antiTitle: 'قبل أن تدفع لأي أحد، تحقّق.',
+    antiText: 'إذا بدا لك عرض أو رسالة أو طلب مال مريباً، نساعدك على تحديد الإشارات التحذيرية.',
+    antiCta: 'انظر مكافحة الاحتيال',
+
+    stepsEyebrow: 'كيف يعمل',
+    stepsTitle: 'بسيط. واضح. إنساني.',
+    steps: [
+      { num: '٠١', title: 'تملأ النموذج', text: 'بعض الأسئلة لفهم وضعك.' },
+      { num: '٠٢', title: 'نتواصل معك', text: 'نؤكد موعداً لمكالمتك المجانية.' },
+      { num: '٠٣', title: 'تخرج بخطوة تالية', text: 'ستعرف ماذا تفعل الآن، بدون ارتباك.' },
     ],
-    trustItems: [
-      { icon: '✦', label: 'أولويات واضحة', desc: 'ترتيب الخطوات التالية بدون تعقيد.' },
-      { icon: '⬡', label: 'تحقق حذر', desc: 'مراجعة الإشارات المهمة قبل الدفع.' },
-      { icon: '◈', label: 'أدلة موثوقة', desc: 'موارد بسيطة لفهم ما يجب فعله.' },
-      { icon: '◎', label: 'مكالمة إنسانية', desc: '30 دقيقة لمغادرة بخطة واضحة.' },
-    ],
-    trustEyebrow: 'ما تجده هنا',
-    trustTitle: 'التقدم بأقل قدر من الارتباك.',
-    trustText: 'مرافقة بسيطة لتوضيح أولوياتك والتحقق من الإشارات المهمة ومعرفة ما يجب فعله بعد ذلك.',
-    serviceEyebrow: 'الخدمة الرئيسية',
-    serviceTitle: 'مكالمة لتوضيح خطواتك الأولى.',
-    serviceText: 'في 30 دقيقة، نرتب ما هو عاجل وتغادر بخطواتك التالية.',
-    situationEyebrow: 'من أين تبدأ',
-    situationTitle: 'ما هو وضعك؟',
-    situationText: 'اختر نقطة انطلاقك. سنرشدك إلى الخدمة أو المورد المناسب.',
-    processEyebrow: 'كيف يعمل',
-    processTitle: 'ثلاث خطوات. من الغموض إلى الوضوح.',
-    processText: 'مسار بسيط ومباشر لمعرفة ما يجب فعله بعد ذلك.',
-    antiEyebrow: 'مكافحة الاحتيال',
-    antiTitle: 'قبل أن تدفع لأحد، تحقق.',
-    antiText: 'تستهدف عمليات الاحتيال القادمين الجدد. عندما يضغط عليك أحدهم للتصرف بسرعة، تمهّل.',
-    antiCta: 'تحقق من وضع',
-    antiSecondary: 'عرض الموارد',
-    resourceEyebrow: 'أدلة عملية',
-    resourceTitle: 'كل ما تحتاجه لأيامك الأولى.',
-    resourceText: 'أدلة واضحة وموثوقة، منظمة حسب الموضوع.',
-    finalTitle: 'لا تحتاج إلى فهم كل شيء وحدك.',
-    finalText: 'مكالمة 30 دقيقة كافية لتوضيح أولوياتك والمغادرة بخطة.',
-    finalCta: 'احجز مكالمة',
-    finalSecondary: 'عرض الخدمة',
+
+    finalTitle: 'لست بحاجة إلى فهم كل شيء وحدك.',
+    finalText: 'ابدأ بمكالمة مجانية مدتها 15 دقيقة.',
+    finalCta1: 'احجز مكالمة مجانية',
+    finalCta2: 'قريباً',
+
+    disclaimer: 'تقدم مرحبا كندا إرشادات عامة ومعلوماتية. لا تحل هذه الخدمة محل محامٍ أو مستشار هجرة معتمد أو جهة حكومية.',
+
+    heroCard1Status: 'متاحة',
+    heroCard2Status: 'قريباً',
   },
-} as const satisfies Record<string, {
-  eyebrow: string; title: string; text: string;
-  primary: string; secondary: string; pills: readonly string[];
-  visualLabel: string; visualTopics: readonly string[];
-  trustItems: readonly { icon: string; label: string; desc: string }[];
-  trustEyebrow: string; trustTitle: string; trustText: string;
-  serviceEyebrow: string; serviceTitle: string; serviceText: string;
-  situationEyebrow: string; situationTitle: string; situationText: string;
-  processEyebrow: string; processTitle: string; processText: string;
-  antiEyebrow: string; antiTitle: string; antiText: string; antiCta: string; antiSecondary: string;
-  resourceEyebrow: string; resourceTitle: string; resourceText: string;
-  finalTitle: string; finalText: string; finalCta: string; finalSecondary: string;
+} as const satisfies Record<Locale, {
+  metaTitle: string; metaDesc: string;
+  heroEyebrow: string; heroTitle: string; heroText: string; heroCta1: string; heroCta2: string;
+  offersEyebrow: string; offersTitle: string;
+  offer1Title: string; offer1Duration: string; offer1Text: string; offer1Extra: string; offer1Cta: string;
+  offer2Title: string; offer2Duration: string; offer2Text: string; offer2Extra: string; offer2Cta: string;
+  antiTitle: string; antiText: string; antiCta: string;
+  stepsEyebrow: string; stepsTitle: string; steps: readonly { num: string; title: string; text: string }[];
+  finalTitle: string; finalText: string; finalCta1: string; finalCta2: string;
+  disclaimer: string;
+  heroCard1Status: string; heroCard2Status: string;
 }>;
-
-const trustIconMap: Record<string, typeof Compass> = {
-  '✦': Compass,
-  '⬡': ShieldCheck,
-  '◈': BookOpen,
-  '◎': Phone,
-};
-
-const situations = (locale: Locale) => [
-  {
-    title: locale === 'fr' ? 'Je prépare mon arrivée' : locale === 'en' ? 'Preparing my arrival' : 'أحضّر وصولي',
-    text: locale === 'fr' ? 'Tu veux un ordre simple et les démarches prioritaires avant de partir.' : locale === 'en' ? 'You want a simple checklist and priority steps before you leave.' : 'تريد ترتيباً بسيطاً وخطوات أولوية قبل السفر.',
-    href: orientationServicePath(locale),
-    badge: locale === 'fr' ? 'Orientation' : locale === 'en' ? 'Orientation' : 'توجيه',
-    cta: locale === 'fr' ? 'Découvrir' : locale === 'en' ? 'Discover' : 'اكتشف',
-  },
-  {
-    title: locale === 'fr' ? 'Je viens d\'arriver' : locale === 'en' ? 'Just arrived' : 'وصلت للتو',
-    text: locale === 'fr' ? 'Tu as besoin de repères rapides pour ta première semaine.' : locale === 'en' ? 'You need quick landmarks for your first week.' : 'تحتاج إلى نقاط مرجعية سريعة لأسبوعك الأول.',
-    href: bookingPath(locale),
-    badge: locale === 'fr' ? 'Appel rapide' : locale === 'en' ? 'Quick call' : 'مكالمة سريعة',
-    cta: locale === 'fr' ? 'Réserver' : locale === 'en' ? 'Book' : 'احجز',
-  },
-  {
-    title: locale === 'fr' ? 'Étudiant international' : locale === 'en' ? 'International student' : 'طالب دولي',
-    text: locale === 'fr' ? 'Tu veux comprendre ce qui compte maintenant pour bien démarrer.' : locale === 'en' ? 'You want to understand what matters right now to start well.' : 'تريد فهم ما يهم الآن لبداية جيدة.',
-    href: orientationServicePath(locale),
-    badge: locale === 'fr' ? 'Étudiant' : locale === 'en' ? 'Student' : 'طالب',
-    cta: locale === 'fr' ? 'Voir le service' : locale === 'en' ? 'See the service' : 'عرض الخدمة',
-  },
-  {
-    title: locale === 'fr' ? 'Vérifier une arnaque' : locale === 'en' ? 'Verify a scam' : 'التحقق من احتيال',
-    text: locale === 'fr' ? 'Tu as reçu un message suspect ou on te demande de l\'argent. Vérifie avant d\'agir.' : locale === 'en' ? 'You received a suspicious message or someone is asking for money. Check before you act.' : 'تلقيت رسالة مشبوهة أو يطلب منك أحدهم المال. تحقق قبل أن تتصرف.',
-    href: antiScamServicePath(locale),
-    badge: locale === 'fr' ? 'Anti-arnaque' : locale === 'en' ? 'Anti-scam' : 'مكافحة الاحتيال',
-    cta: locale === 'fr' ? 'Vérifier' : locale === 'en' ? 'Verify' : 'تحقق',
-  },
-  {
-    title: locale === 'fr' ? 'Les bonnes démarches' : locale === 'en' ? 'The right steps' : 'الخطوات الصحيحة',
-    text: locale === 'fr' ? 'Tu veux savoir par où commencer sans te perdre dans les démarches.' : locale === 'en' ? 'You want to know where to start without getting lost in the process.' : 'تريد معرفة من أين تبدأ دون أن تضيع في الإجراءات.',
-    href: startPath(locale),
-    badge: locale === 'fr' ? 'Guide' : locale === 'en' ? 'Guide' : 'دليل',
-    cta: locale === 'fr' ? 'Commencer' : locale === 'en' ? 'Start' : 'ابدأ',
-  },
-];
-
-const processSteps = (locale: Locale) => [
-  {
-    number: '01',
-    title: locale === 'fr' ? 'Tu expliques ta situation' : locale === 'en' ? 'You explain your situation' : 'تشرح وضعك',
-    text: locale === 'fr' ? 'Tu nous dis où tu en es, ce qui te bloque, et ce que tu dois régler en premier.' : locale === 'en' ? 'You tell us where you are, what\'s blocking you, and what you need to sort out first.' : 'تقول لنا أين أنت، وما الذي يعيقك، وما الذي يجب ترتيبه أولاً.',
-  },
-  {
-    number: '02',
-    title: locale === 'fr' ? 'On clarifie les priorités' : locale === 'en' ? 'We clarify your priorities' : 'نوضح الأولويات',
-    text: locale === 'fr' ? 'On trie ce qui est urgent, ce qui peut attendre, et ce qui nécessite une attention immédiate.' : locale === 'en' ? 'We sort what\'s urgent, what can wait, and what needs immediate attention.' : 'نرتب ما هو عاجل، وما يمكن الانتظار، وما يحتاج إلى اهتمام فوري.',
-  },
-  {
-    number: '03',
-    title: locale === 'fr' ? 'Tu repars avec un plan simple' : locale === 'en' ? 'You leave with a simple plan' : 'تغادر بخطة بسيطة',
-    text: locale === 'fr' ? 'Tu sais quoi faire ensuite. Pas de liste infinie — juste les prochaines étapes qui comptent.' : locale === 'en' ? 'You know what to do next. No endless list — just the next steps that matter.' : 'تعرف ما تفعله بعد ذلك. لا قائمة لا نهاية لها — فقط الخطوات التالية المهمة.',
-  },
-];
-
-const resources = (locale: Locale) => [
-  { label: locale === 'fr' ? 'Checklist arrivée' : locale === 'en' ? 'Arrival checklist' : 'قائمة الوصول', href: withLocale('/checklist', locale) },
-  { label: locale === 'fr' ? 'Logement' : locale === 'en' ? 'Housing' : 'السكن', href: resourcesPath(locale) },
-  { label: locale === 'fr' ? 'Banque' : locale === 'en' ? 'Banking' : 'البنك', href: resourcesPath(locale) },
-  { label: locale === 'fr' ? 'Documents' : locale === 'en' ? 'Documents' : 'الوثائق', href: resourcesPath(locale) },
-  { label: locale === 'fr' ? 'Santé' : locale === 'en' ? 'Health' : 'الصحة', href: resourcesPath(locale) },
-  { label: locale === 'fr' ? 'Anti-arnaque' : locale === 'en' ? 'Anti-scam' : 'مكافحة الاحتيال', href: antiScamServicePath(locale) },
-];
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: localeParam } = await params;
-  const locale = localeParam === 'en' || localeParam === 'ar' ? localeParam as Locale : 'fr';
-  const t = homeCopy[locale];
+  const locale = isLocale(localeParam) ? localeParam : 'fr';
   return {
-    title: `Marhaban Canada — ${t.title}`,
-    description: t.text,
+    title: copy[locale].metaTitle,
+    description: copy[locale].metaDesc,
   };
 }
 
 export default async function HomePage({ params }: Props) {
   const { locale: localeParam } = await params;
-  const locale: Locale = localeParam === 'en' || localeParam === 'ar' ? localeParam : 'fr';
-  const { dir, lang } = getHtmlAttrs(locale);
-  const t = homeCopy[locale];
-  const situationCards = situations(locale);
-  const steps = processSteps(locale);
-  const resourceItems = resources(locale);
+  if (!isLocale(localeParam)) notFound();
+  const locale = localeParam as Locale;
+  const { dir } = getHtmlAttrs(locale);
+  const t = copy[locale];
 
-  const orientationService = {
-    title: locale === 'fr' ? 'Appel orientation' : locale === 'en' ? 'Orientation call' : 'مكالمة توجيه',
-    price: locale === 'fr' ? '29 $' : '$29',
-    duration: '30 min',
-    label: locale === 'fr' ? 'Prix de lancement' : locale === 'en' ? 'Launch price' : 'سعر إطلاق',
-    bestFor:
-      locale === 'fr'
-        ? 'Pour les nouveaux arrivants, étudiants et familles qui veulent de la clarté avant d\'agir.'
-        : locale === 'en'
-          ? 'For newcomers, students, and families who want clarity before acting.'
-          : 'للقادمين الجدد والطلاب والعائلات الذين يريدون الوضوح قبل التصرف.',
-    included:
-      locale === 'fr'
-        ? ['Analyse de ta situation', 'Tes 3 priorités immédiates', 'Checklist personnalisée', 'Ressources utiles ciblées']
-        : locale === 'en'
-          ? ['Situation review', 'Your 3 immediate priorities', 'Personalized checklist', 'Targeted useful resources']
-          : ['تحليل وضعك', 'أولوياتك الثلاث الفورية', 'قائمة تحقق شخصية', 'موارد مفيدة مستهدفة'],
-    notIncluded:
-      locale === 'fr'
-        ? 'Pas de conseil juridique, pas de conseil en immigration, pas de garantie de résultat.'
-        : locale === 'en'
-          ? 'No legal advice, no immigration advice, no guaranteed outcome.'
-          : 'لا نصائح قانونية، ولا نصائح هجرة، ولا ضمان للنتيجة.',
-  };
-
-  const heroVisual = (
-    <div className="space-y-3">
-      <div className="flex items-center gap-3">
-        <span className="h-px flex-1 bg-marhaban-gold/25" aria-hidden="true" />
-        <p className="text-xs font-bold uppercase tracking-[0.16em] text-marhaban-gold">{t.visualLabel}</p>
-        <span className="h-px flex-1 bg-marhaban-gold/25" aria-hidden="true" />
-      </div>
-      {/* First 2 topics — highlighted as starting points */}
-      <div className="grid grid-cols-2 gap-2">
-        {t.visualTopics.slice(0, 2).map((topic) => (
-          <div
-            key={topic}
-            className="rounded-[1rem] border border-marhaban-gold/20 bg-marhaban-gold/10 px-4 py-3.5 text-sm font-semibold text-marhaban-gold transition hover:bg-marhaban-gold/15"
-          >
-            {topic}
-          </div>
-        ))}
-      </div>
-      {/* Remaining topics */}
-      <div className="grid grid-cols-2 gap-2">
-        {t.visualTopics.slice(2).map((topic) => (
-          <div
-            key={topic}
-            className="rounded-[1rem] border border-white/12 bg-white/[0.08] px-4 py-3.5 text-sm font-medium text-[#e8f4ee] transition hover:bg-white/[0.13]"
-          >
-            {topic}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  const formHref = `/${locale}/reserver/formulaire`;
+  const antiHref = `/${locale}/anti-arnaque`;
 
   return (
-    <PageShell dir={dir} lang={lang}>
+    <PageShell dir={dir} lang={locale} className="pb-0">
 
-      {/* ── Hero ── */}
-      <PageHero
-        dark
-        eyebrow={t.eyebrow}
-        title={t.title}
-        text={t.text}
-        primary={{ label: t.primary, href: bookingPath(locale) }}
-        secondary={{ label: t.secondary, href: '#comment-ca-marche' }}
-        pills={t.pills}
-        visual={heroVisual}
-        scale="home"
-      />
+      {/* ── 1. HERO ── */}
+      <section className="relative overflow-hidden px-4 pt-10 sm:px-6 sm:pt-14 lg:px-8 lg:pt-16">
+        {/* Decorative background blobs */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute -top-40 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-marhaban-mint/35 blur-[120px]" />
+          <div className="absolute right-0 top-0 h-[360px] w-[360px] rounded-full bg-marhaban-gold/8 blur-[100px]" />
+        </div>
+        <div className="mx-auto max-w-7xl grid lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-14">
 
-      {/* ── Trust capsule ── */}
-      <Section tone="muted" className="py-10 sm:py-12 lg:py-12">
-        <div className="rounded-[2rem] border border-marhaban-leaf/15 bg-white p-5 shadow-warm-sm sm:rounded-[2.5rem] sm:p-6 lg:p-8">
-          <div className="grid gap-7 lg:grid-cols-[1fr_1.28fr] lg:items-center lg:gap-9">
-            <div className="lg:max-w-lg">
-              <p className="eyebrow">{t.trustEyebrow}</p>
-              <h2 className="mt-3 font-heading text-3xl font-semibold leading-tight text-marhaban-ink sm:text-4xl lg:text-[2.65rem]">
-                {t.trustTitle}
-              </h2>
-              <p className="mt-4 text-[1.05rem] leading-relaxed text-marhaban-muted">
-                {t.trustText}
-              </p>
+          {/* Left: copy + CTAs */}
+          <div>
+            <p className="inline-flex rounded-full border border-marhaban-leaf/25 bg-marhaban-leaf/8 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-marhaban-clay">
+              {t.heroEyebrow}
+            </p>
+            <h1 className="mt-6 max-w-4xl font-heading text-[clamp(2.8rem,7vw,6.5rem)] font-semibold leading-[0.92] tracking-tight text-marhaban-forestDark whitespace-pre-line">
+              {t.heroTitle}
+            </h1>
+            <p className="mt-7 max-w-2xl text-[1.1rem] leading-relaxed text-marhaban-ink/80 sm:text-lg">
+              {t.heroText}
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <BookingModalTrigger
+                locale={locale}
+                href={formHref}
+                className="inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full bg-marhaban-forestDark px-8 py-4 text-sm font-bold text-white shadow-[0_18px_55px_rgba(8,42,36,0.22)] transition hover:bg-marhaban-clay focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/50 focus-visible:ring-offset-2"
+              >
+                {t.heroCta1}
+                <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+              </BookingModalTrigger>
+              <a
+                href="#comment-ca-marche"
+                className="inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full border border-marhaban-forestDark/20 bg-white px-8 py-4 text-sm font-bold text-marhaban-forestDark transition hover:border-marhaban-forestDark/40 hover:bg-marhaban-mint/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/50 focus-visible:ring-offset-2"
+              >
+                {t.heroCta2}
+              </a>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-5 lg:border-l lg:border-marhaban-leaf/15 lg:pl-8">
-              {t.trustItems.map((item) => {
-                const TrustIcon = trustIconMap[item.icon];
-                return (
-                  <div
-                    key={item.label}
-                    className="flex gap-3 rounded-[1.25rem] border border-marhaban-clay/15 bg-marhaban-mint/20 p-4 lg:p-[1.1rem]"
-                  >
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-marhaban-leaf/20 bg-white text-marhaban-leaf shadow-warm-sm">
-                      {TrustIcon
-                        ? <TrustIcon className="h-4 w-4" aria-hidden="true" />
-                        : <span className="text-sm font-bold">{item.icon}</span>
-                      }
+          </div>
+
+          {/* Right: offer summary card — desktop only */}
+          <div className="hidden lg:block">
+            <div className="rounded-[2rem] border border-marhaban-leaf/15 bg-white p-6 shadow-warm">
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-marhaban-clay">
+                {t.offersEyebrow}
+              </p>
+              <div className="mt-4 space-y-3">
+                <div className="rounded-[1.5rem] border border-marhaban-leaf/12 bg-marhaban-cream/60 px-5 py-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="font-heading text-base font-semibold text-marhaban-ink">{t.offer1Title}</p>
+                    <span className="rounded-full border border-marhaban-gold/30 bg-marhaban-gold/10 px-2.5 py-1 text-xs font-bold text-marhaban-clay">
+                      {t.offer1Duration}
                     </span>
-                    <div className="min-w-0">
-                      <p className="font-heading text-[1.04rem] font-semibold leading-snug text-marhaban-ink">{item.label}</p>
-                      <p className="mt-1 text-sm leading-relaxed text-marhaban-muted">{item.desc}</p>
-                    </div>
                   </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* ── Service card ── */}
-      <Section className="lg:py-24">
-        <SectionHeader eyebrow={t.serviceEyebrow} title={t.serviceTitle} text={t.serviceText} size="display" />
-        <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <ServiceCard
-            service={orientationService}
-            href={orientationServicePath(locale)}
-            cta={locale === 'fr' ? 'Voir le service' : locale === 'en' ? 'See the service' : 'عرض الخدمة'}
-            featured
-          />
-          <div className="flex flex-col gap-5 rounded-[1.85rem] border border-marhaban-leaf/15 bg-white p-7 shadow-warm-sm">
-            <div>
-              <p className="eyebrow">{locale === 'fr' ? 'Ce que tu repars avec' : locale === 'en' ? 'What you leave with' : 'ما الذي ستخرج به'}</p>
-              <h3 className="heading-card mt-3">
-                {locale === 'fr' ? 'Un plan clair, pas une liste infinie.' : locale === 'en' ? 'A clear plan, not an endless list.' : 'خطة واضحة، وليست قائمة لا نهاية لها.'}
-              </h3>
-              <p className="body-sm mt-3">
-                {locale === 'fr'
-                  ? 'En 30 minutes, tu comprends quoi faire en premier, quoi éviter, et où aller chercher de l\'aide.'
-                  : locale === 'en'
-                    ? 'In 30 minutes, you understand what to do first, what to avoid, and where to get help.'
-                    : 'في 30 دقيقة، تفهم ما يجب فعله أولاً، وما تجنبه، وأين تطلب المساعدة.'}
+                  <p className="mt-1.5 text-xs font-semibold leading-relaxed text-marhaban-leaf">{t.heroCard1Status}</p>
+                </div>
+                <div className="rounded-[1.5rem] bg-marhaban-forestDark px-5 py-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="font-heading text-base font-semibold text-white">{t.offer2Title}</p>
+                    <span className="rounded-full border border-marhaban-gold/40 bg-marhaban-gold/15 px-2.5 py-1 text-xs font-bold text-marhaban-gold">
+                      {t.offer2Duration}
+                    </span>
+                  </div>
+                  <p className="mt-1.5 text-xs font-semibold leading-relaxed text-marhaban-gold/80">{t.heroCard2Status}</p>
+                </div>
+              </div>
+              <p className="mt-5 text-[0.7rem] leading-relaxed text-marhaban-muted">
+                {t.disclaimer}
               </p>
             </div>
-            <div className="space-y-3">
-              {[
-                locale === 'fr' ? 'Tes 3 priorités immédiates' : locale === 'en' ? 'Your 3 immediate priorities' : 'أولوياتك الثلاث الفورية',
-                locale === 'fr' ? 'Les erreurs courantes à éviter' : locale === 'en' ? 'Common mistakes to avoid' : 'الأخطاء الشائعة لتجنبها',
-                locale === 'fr' ? 'Des ressources adaptées à ta situation' : locale === 'en' ? 'Resources tailored to your situation' : 'موارد مكيّفة لوضعك',
-              ].map((item) => (
-                <div key={item} className="flex items-center gap-3 rounded-[1.25rem] border border-marhaban-leaf/12 bg-marhaban-mint/30 px-4 py-3.5 text-sm font-medium text-marhaban-ink">
-                  <Check className="h-4 w-4 flex-shrink-0 text-marhaban-leaf" aria-hidden="true" />
-                  {item}
-                </div>
-              ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── 2. TWO OFFER CARDS ── */}
+      <Section className="py-12 sm:py-16 lg:py-20">
+        <SectionHeader eyebrow={t.offersEyebrow} title={t.offersTitle} />
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 max-w-4xl mx-auto">
+
+          {/* Free call card */}
+          <article className="flex flex-col rounded-[2rem] border border-marhaban-leaf/15 bg-white p-7 shadow-warm-sm transition duration-200 hover:-translate-y-1 hover:border-marhaban-leaf/25 hover:shadow-warm sm:p-8">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex rounded-full border border-marhaban-gold/30 bg-marhaban-gold/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-marhaban-clay">
+                {t.offer1Duration}
+              </span>
+              <span className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
+                {t.heroCard1Status}
+              </span>
             </div>
-            <a
-              href={bookingPath(locale)}
-              className="mt-auto inline-flex min-h-[54px] w-full items-center justify-center gap-2 rounded-full bg-marhaban-forestDark px-8 py-4 text-sm font-bold text-white shadow-warm-sm transition hover:bg-marhaban-leaf focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
+            <h3 className="mt-5 font-heading text-2xl font-semibold leading-tight text-marhaban-forestDark sm:text-3xl">
+              {t.offer1Title}
+            </h3>
+            <p className="mt-3 flex-1 text-sm leading-relaxed text-marhaban-ink/75 sm:text-base">
+              {t.offer1Text}
+            </p>
+            <p className="mt-3 text-xs font-semibold text-marhaban-clay">
+              {t.offer1Extra}
+            </p>
+            <BookingModalTrigger
+              locale={locale}
+              href={formHref}
+              className="mt-7 inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-marhaban-forestDark px-7 text-sm font-bold text-white transition hover:bg-marhaban-clay focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/50 focus-visible:ring-offset-2"
             >
-              {t.primary}
+              {t.heroCta1}
               <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
-            </a>
+            </BookingModalTrigger>
+          </article>
+
+          {/* Orientation call card — coming soon */}
+          <article className="flex flex-col rounded-[2rem] border border-marhaban-gold/25 bg-marhaban-forestDark p-7 shadow-[0_20px_60px_rgba(8,42,36,0.22)] sm:p-8">
+            <div className="flex items-center justify-between gap-3">
+              <span className="inline-flex rounded-full border border-marhaban-gold/40 bg-marhaban-gold/15 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-marhaban-gold">
+                {t.offer2Duration}
+              </span>
+              <span className="inline-flex rounded-full border border-marhaban-gold/30 bg-marhaban-gold/10 px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wide text-marhaban-gold">
+                {t.offer2Cta}
+              </span>
+            </div>
+            <h3 className="mt-5 font-heading text-2xl font-semibold leading-tight text-white sm:text-3xl">
+              {t.offer2Title}
+            </h3>
+            <p className="mt-3 flex-1 text-sm leading-relaxed text-white/75 sm:text-base">
+              {t.offer2Text}
+            </p>
+            <p className="mt-3 text-xs font-semibold text-marhaban-gold/80">
+              {t.offer2Extra}
+            </p>
+            <span
+              aria-disabled="true"
+              role="button"
+              className="mt-7 inline-flex min-h-[52px] cursor-not-allowed select-none items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-7 text-sm font-semibold text-white/45"
+            >
+              {t.offer2Cta}
+            </span>
+          </article>
+        </div>
+      </Section>
+
+      {/* ── 3. ANTI-SCAM MINI ── */}
+      <Section tone="muted" className="py-12 sm:py-16 lg:py-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="rounded-[2.5rem] border border-marhaban-clay/20 bg-marhaban-cream px-8 py-10 shadow-warm-sm transition duration-200 hover:shadow-warm sm:px-10 sm:py-12 lg:px-14 lg:py-14">
+            <div className="flex items-start gap-4">
+              <span className="mt-1 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-marhaban-clay/20 bg-marhaban-clay/10">
+                <ShieldAlert className="h-5 w-5 text-marhaban-clay" aria-hidden="true" />
+              </span>
+              <div className="flex-1">
+                <h2 className="font-heading text-[clamp(1.8rem,4vw,3rem)] font-semibold leading-tight tracking-tight text-marhaban-forestDark">
+                  {t.antiTitle}
+                </h2>
+                <p className="mt-4 max-w-2xl text-base leading-relaxed text-marhaban-ink/75">
+                  {t.antiText}
+                </p>
+                <Link
+                  href={antiHref}
+                  className="mt-7 inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-marhaban-clay/30 bg-marhaban-clay/10 px-7 text-sm font-bold text-marhaban-clay transition hover:bg-marhaban-clay/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-clay/40 focus-visible:ring-offset-2"
+                >
+                  {t.antiCta}
+                  <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </Section>
 
-      {/* ── Situation cards ── */}
-      <Section tone="muted" className="lg:py-24">
-        <SectionHeader eyebrow={t.situationEyebrow} title={t.situationTitle} text={t.situationText} align="center" />
-        <div className="mt-9 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {situationCards.map((route, idx) => (
-            <RouteCard
-              key={route.title}
-              title={route.title}
-              text={route.text}
-              href={route.href}
-              cta={route.cta}
-              badge={route.badge}
-              tone={idx === 3 ? 'dark' : 'light'}
-            />
+      {/* ── 4. HOW IT WORKS ── */}
+      <Section id="comment-ca-marche" tone="dark" className="py-12 sm:py-16 lg:py-20">
+        <SectionHeader eyebrow={t.stepsEyebrow} title={t.stepsTitle} light />
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {t.steps.map((step) => (
+            <div
+              key={step.num}
+              className="rounded-[2rem] border border-white/10 bg-white/[0.08] p-7 transition-all duration-200 hover:bg-white/[0.12] hover:border-white/18 sm:p-8"
+            >
+              <span className="font-heading text-5xl font-semibold tracking-tight text-marhaban-gold/50">
+                {step.num}
+              </span>
+              <h3 className="mt-4 font-heading text-xl font-semibold leading-tight text-white sm:text-2xl">
+                {step.title}
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-white/70">
+                {step.text}
+              </p>
+            </div>
           ))}
         </div>
       </Section>
 
-      {/* ── Process steps ── */}
-      <Section id="comment-ca-marche" className="lg:py-24">
-        <SectionHeader
-          eyebrow={t.processEyebrow}
-          title={t.processTitle}
-          text={t.processText}
-          align="center"
-        />
-        <div className="mt-10 grid gap-6 lg:grid-cols-3">
-          {steps.map((step) => (
-            <RoadmapStage
-              key={step.number}
-              number={step.number}
-              title={step.title}
-              text={step.text}
-            />
-          ))}
+      {/* ── 5. FINAL CTA ── */}
+      <Section className="relative overflow-hidden py-12 sm:py-16 lg:py-20">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-marhaban-gold/6 blur-[100px]" />
         </div>
-        <div className="mt-10 flex flex-col items-center gap-3">
-          <LocalizedLink
-            href={bookingPath(locale)}
-            className="btn btn-lg btn-primary"
-          >
-            {t.primary}
-            <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
-          </LocalizedLink>
-          <p className="text-xs text-marhaban-muted">
-            {locale === 'fr' ? '30 min · Sans engagement' : locale === 'en' ? '30 min · No commitment' : '٣٠ دقيقة · بدون التزام'}
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="font-heading text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-tight tracking-tight text-marhaban-forestDark">
+            {t.finalTitle}
+          </h2>
+          <p className="mt-5 text-base leading-relaxed text-marhaban-ink/75 sm:text-lg">
+            {t.finalText}
+          </p>
+          <div className="mt-9 flex flex-wrap justify-center gap-4">
+            <BookingModalTrigger
+              locale={locale}
+              href={formHref}
+              className="inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full bg-marhaban-forestDark px-8 py-4 text-sm font-bold text-white shadow-[0_18px_55px_rgba(8,42,36,0.22)] transition hover:bg-marhaban-clay focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/50 focus-visible:ring-offset-2"
+            >
+              {t.heroCta1}
+              <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
+            </BookingModalTrigger>
+          </div>
+          <p className="mx-auto mt-7 max-w-xl text-xs leading-relaxed text-marhaban-muted">
+            {t.disclaimer}
           </p>
         </div>
       </Section>
 
-      {/* ── Anti-scam section ── */}
-      <Section tone="dark" className="lg:py-24">
-        <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-white/[0.09] p-8 text-center shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-12">
-          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-marhaban-gold/30 bg-marhaban-gold/10">
-            <ShieldAlert className="h-6 w-6 text-marhaban-gold" aria-hidden="true" />
-          </div>
-          <p className="eyebrow-light">{t.antiEyebrow}</p>
-          <h2 className="heading-section mt-3 !text-white">{t.antiTitle}</h2>
-          <p className="body-lead mx-auto mt-4 max-w-2xl !text-[#edf7f2]">{t.antiText}</p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a
-              href={antiScamServicePath(locale)}
-              className="inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full bg-marhaban-gold px-8 py-4 text-sm font-bold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.30)] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
-            >
-              {t.antiCta}
-              <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
-            </a>
-            <a
-              href={resourcesPath(locale)}
-              className="inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full border border-white/16 bg-white/[0.06] px-8 py-4 text-sm font-bold text-white transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
-            >
-              {t.antiSecondary}
-            </a>
-          </div>
-        </div>
-      </Section>
-
-      {/* ── Resource grid ── */}
-      <Section tone="muted" className="lg:py-24">
-        <SectionHeader eyebrow={t.resourceEyebrow} title={t.resourceTitle} text={t.resourceText} align="center" />
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {resourceItems.map((res) => (
-            <LocalizedLink
-              key={res.label}
-              href={res.href}
-              className="group flex items-center justify-between rounded-[1.75rem] border border-marhaban-leaf/15 bg-white p-7 shadow-warm-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-warm-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
-            >
-              <span className="text-base font-semibold text-marhaban-ink">{res.label}</span>
-              <span className="grid h-9 w-9 flex-shrink-0 place-items-center rounded-xl border border-marhaban-leaf/12 bg-marhaban-mint/60 text-marhaban-leaf transition group-hover:bg-marhaban-leaf group-hover:text-white">
-                <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
-              </span>
-            </LocalizedLink>
-          ))}
-        </div>
-        <div className="mt-8 text-center">
-          <LocalizedLink
-            href={resourcesPath(locale)}
-            className="inline-flex items-center gap-2 rounded-full border border-marhaban-leaf/25 bg-white px-6 py-3 text-sm font-semibold text-marhaban-leaf shadow-warm-xs transition hover:border-marhaban-leaf/50 hover:bg-marhaban-mint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/40 focus-visible:ring-offset-2"
-          >
-            {locale === 'fr' ? 'Voir tous les guides' : locale === 'en' ? 'See all guides' : 'عرض جميع الأدلة'}
-            <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
-          </LocalizedLink>
-        </div>
-      </Section>
-
-      {/* ── Final CTA ── */}
-      <Section tone="dark" className="lg:py-24">
-        <div className="grid gap-12 lg:grid-cols-[1.22fr_0.78fr] lg:items-center lg:gap-[4.5rem]">
-          {/* Left: heading */}
-          <div>
-            <p className="eyebrow-light">
-              {locale === 'fr' ? 'Prêt à commencer ?' : locale === 'en' ? 'Ready to start?' : 'هل أنت مستعد؟'}
-            </p>
-            <h2 className="heading-section mt-3 !text-white">{t.finalTitle}</h2>
-            <p className="mt-5 max-w-2xl text-[1.08rem] leading-relaxed text-[#edf7f2] sm:text-lg">{t.finalText}</p>
-          </div>
-          {/* Right: CTAs + disclaimer */}
-          <div className="flex flex-col gap-5">
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <a
-                href={bookingPath(locale)}
-                className="flex-1 inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full bg-marhaban-gold px-8 py-4 text-sm font-bold text-marhaban-ink shadow-[0_18px_60px_rgba(213,168,79,0.30)] transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
-              >
-                {t.finalCta}
-                <ArrowRight className="h-4 w-4 rtl-flip" aria-hidden="true" />
-              </a>
-              <a
-                href={orientationServicePath(locale)}
-                className="flex-1 inline-flex min-h-[56px] items-center justify-center gap-2 rounded-full border border-white/16 bg-white/[0.06] px-8 py-4 text-sm font-bold text-white transition hover:bg-white/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/45 focus-visible:ring-offset-2 focus-visible:ring-offset-marhaban-forestDark"
-              >
-                {t.finalSecondary}
-              </a>
-            </div>
-            <p className="text-xs leading-relaxed text-white/55">{legalDisclaimer[locale]}</p>
-          </div>
-        </div>
-      </Section>
-
+      {/* Mobile bottom padding so sticky CTA doesn't overlap content */}
+      <div className="h-20 md:hidden" aria-hidden="true" />
     </PageShell>
   );
 }

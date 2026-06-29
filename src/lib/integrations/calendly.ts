@@ -7,6 +7,6 @@
  * - Évaluer les webhooks seulement si l'admin doit synchroniser automatiquement les créneaux.
  */
 
-export type CalendlyServiceKey = 'discovery' | 'orientation' | 'scam_check';
+export type CalendlyServiceKey = 'discovery' | 'orientation';
 
-export const calendlyServiceKeys: readonly CalendlyServiceKey[] = ['discovery', 'orientation', 'scam_check'];
+export const calendlyServiceKeys: readonly CalendlyServiceKey[] = ['discovery', 'orientation'];

@@ -1,22 +1,26 @@
 services:
-  web:
-    image: marhaban-canada-dev
+  marhaban-web:
     build:
       context: .
-      dockerfile: Dockerfile
-      target: deps
+      dockerfile: Dockerfile.dev
     working_dir: /app
     command: npm run dev:3000
     ports:
       - "3000:3000"
     env_file:
-      - .env.local
+      - path: .env.local
+        required: false
     environment:
       NODE_ENV: development
-      NEXT_TELEMETRY_DISABLED: 1
+      NEXT_TELEMETRY_DISABLED: "1"
+      # Uncomment if hot reload stops working inside Docker (e.g. Windows filesystem):
+      # CHOKIDAR_USEPOLLING: "true"
+      # WATCHPACK_POLLING: "true"
     volumes:
       - .:/app
+      # Preserve container's node_modules — prevents host node_modules from leaking in
       - node_modules:/app/node_modules
+      # Cache Next.js build artifacts across restarts
       - next_cache:/app/.next
 
 volumes:

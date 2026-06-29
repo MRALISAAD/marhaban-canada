@@ -284,6 +284,24 @@ p {
   .divider {
     @apply border-t border-marhaban-leaf/10;
   }
+
+  /* Card hover lift — respects prefers-reduced-motion via the global rule above */
+  .card-lift {
+    @apply transition-all duration-200 hover:-translate-y-1 hover:shadow-warm;
+  }
+
+  /* Reusable focus ring */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marhaban-leaf/45 focus-visible:ring-offset-2;
+  }
+
+  /* Warm gradient heading text */
+  .text-gradient-warm {
+    background: linear-gradient(135deg, #082A24 0%, #61735A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 }
 
 /* ===============================
