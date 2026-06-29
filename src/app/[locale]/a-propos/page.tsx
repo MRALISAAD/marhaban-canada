@@ -6,6 +6,7 @@ import { BookingModalTrigger } from '@/components/booking/BookingModalTrigger';
 import { PageShell } from '@/components/layout/PageShell';
 import { Section } from '@/components/layout/Section';
 import { getHtmlAttrs, isLocale, type Locale } from '@/i18n/locales';
+import { publicPageMetadata } from '@/lib/seo';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -96,7 +97,12 @@ const copy = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: localeParam } = await params;
   const locale = isLocale(localeParam) ? localeParam : 'fr';
-  return { title: `${copy[locale].eyebrow} | Marhaban Canada`, description: copy[locale].subtitle };
+  return publicPageMetadata({
+    locale,
+    path: '/a-propos',
+    title: copy[locale].eyebrow,
+    description: copy[locale].subtitle,
+  });
 }
 
 export default async function AProposPage({ params }: Props) {
