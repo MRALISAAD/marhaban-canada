@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next';
-
-const BASE_URL = 'https://marhabancanada.ca';
+import { SITE_URL } from '@/lib/seo';
 
 /**
  * Robots.txt configuration
@@ -12,11 +11,10 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/_next/'],
+        disallow: ['/admin', '/admin/*', '/api/admin', '/api/admin/*'],
       },
     ],
-    sitemap: `${BASE_URL}/sitemap.xml`,
-    host: BASE_URL,
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }
 

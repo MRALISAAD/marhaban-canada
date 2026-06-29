@@ -5,6 +5,7 @@ import { getHtmlAttrs, isLocale, type Locale } from '@/i18n/locales';
 import { BookingModalTrigger } from '@/components/booking/BookingModalTrigger';
 import { PageShell } from '@/components/layout/PageShell';
 import { Section } from '@/components/layout/Section';
+import { publicPageMetadata } from '@/lib/seo';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -312,10 +313,12 @@ type OfferCopy = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: localeParam } = await params;
   const locale = isLocale(localeParam) ? localeParam : 'fr';
-  return {
-    title: `${copy[locale].metaTitle} | Marhaban Canada`,
+  return publicPageMetadata({
+    locale,
+    path: '/reserver',
+    title: copy[locale].metaTitle,
     description: copy[locale].metaDescription,
-  };
+  });
 }
 
 function BookingLink({

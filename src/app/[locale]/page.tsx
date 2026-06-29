@@ -7,6 +7,7 @@ import { BookingModalTrigger } from '@/components/booking/BookingModalTrigger';
 import { PageShell } from '@/components/layout/PageShell';
 import { Section } from '@/components/layout/Section';
 import { SectionHeader } from '@/components/marketing/SectionHeader';
+import { publicPageMetadata } from '@/lib/seo';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -168,10 +169,12 @@ const copy = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: localeParam } = await params;
   const locale = isLocale(localeParam) ? localeParam : 'fr';
-  return {
+  return publicPageMetadata({
+    locale,
+    path: '',
     title: copy[locale].metaTitle,
     description: copy[locale].metaDesc,
-  };
+  });
 }
 
 export default async function HomePage({ params }: Props) {

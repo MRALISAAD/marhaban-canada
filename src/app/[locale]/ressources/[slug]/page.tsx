@@ -10,6 +10,7 @@ import {
   isResourceGuideSlug,
   RESOURCE_GUIDE_SLUGS,
 } from '@/content/resourceGuides';
+import { publicPageMetadata } from '@/lib/seo';
 
 const CALENDLY_FREE_CALL_URL = process.env.NEXT_PUBLIC_CALENDLY_FREE_CALL_URL?.trim() || '';
 
@@ -27,10 +28,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = isLocale(localeParam) ? localeParam : 'fr';
   const guide = getResourceGuide(slug, locale);
   if (!guide) return {};
-  return {
-    title: `${guide.title} | Marhaban Canada`,
+  return publicPageMetadata({
+    locale,
+    path: `/ressources/${slug}`,
+    title: guide.title,
     description: guide.description,
-  };
+  });
 }
 
 const unavailableText: Record<Locale, string> = {
