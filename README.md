@@ -1,6 +1,5 @@
 # 🇨🇦 Marhaban Canada - Newcomer Onboarding Checklist
 
-**Status:** ✅ Production Ready
 
 Interactive, offline-first checklist for newcomers to Canada with WCAG accessibility compliance and simplified French content.
 
@@ -14,7 +13,7 @@ Interactive, offline-first checklist for newcomers to Canada with WCAG accessibi
 - ✅ **Responsive** - Mobile-friendly design
 - ✅ **Multilingual** - French (default), English, Arabic with RTL support
 - ✅ **Fast** - < 2 second page load
-- ✅ **Tested** - 100% test coverage with E2E + a11y tests
+- ✅ **Tested** - E2E + accessibility tests (Playwright + axe)
 
 ---
 
@@ -320,4 +319,3 @@ See [TEAM_DOCUMENTATION.md](./TEAM_DOCUMENTATION.md) for detailed guidelines.
 ---
 
 **Last Updated:** December 21, 2024  
-**Status:** ✅ Production Ready
