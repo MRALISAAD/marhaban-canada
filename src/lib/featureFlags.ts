@@ -4,7 +4,6 @@
  * Ce fichier contrôle l'activation/désactivation des fonctionnalités du site.
  * Les flags permettent de gérer rapidement les features sans déploiement.
  * 
- * Documentation complète : docs/PHASE0_CADRAGE.md
  * 
  * Phase 0 - Cadrage : Les features suivantes sont figées :
  * - offline-first (toujours activé, pas de flag)
